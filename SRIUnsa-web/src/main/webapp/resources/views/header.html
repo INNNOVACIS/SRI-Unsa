@@ -1,0 +1,63 @@
+<div ng-controller="headerController">
+    <header>
+        <nav class="navbar navbar-default" ng-show="sharedService.userAutenticado">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img class="logotipo" alt="Brand" src="resources/images/logotipo.jpg">
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li ng-class="{'active' : menuTab == 1}" ng-show="rol_menu_1"><a href="#/home" ng-click="setMenuTab(1)">Actividades de Investigación</a>
+                        </li>
+
+                        <li class="dropdown" ng-show="rol_menu_2 || rol_menu_3 || rol_menu_5">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actividades <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li ng-class="{'active' : menuTab == 2}" ng-show="rol_menu_2"><a href="#investigacion" ng-click="setMenuTab(2)">Actividades Generadas</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 3}" ng-show="rol_menu_3"><a href="#actividadesRevisadas" ng-click="setMenuTab(3)">Actividades Revisadas</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 5}" ng-show="rol_menu_5"><a href="#actividadesPendientes" ng-click="setMenuTab(5)">Actividades Pendientes</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li ng-class="{'active' : menuTab == 6}" ng-show="rol_menu_6"><a href="#relacionDocentes" ng-click="setMenuTab(6)">Relación Docentes</a>
+                        </li>
+                        <li ng-class="{'active' : menuTab == 8}" ng-show="rol_menu_8"><a href="#generarDocente" ng-click="setMenuTab(8)">Relación Docentes</a>
+                        </li>
+                        <li ng-class="{'active' : menuTab == 7}" ng-show="rol_menu_7"><a href="#configuracion" ng-click="setMenuTab(7)">Configuración</a>
+                        </li>
+                    </ul>
+
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-2" style="margin-top: 8px;">Rol</label>
+                            <div class="col-md-8">
+                                <select class="form-control" style="margin:2px;" ng-model="usuario.rolDefault" ng-options="rol as rol for rol in usuario.roles" ng-init="selected=''" ng-change=rolChange(usuario.rolDefault)></select>
+                            </div>
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right" >
+                        <img class="usuario" src="resources/images/default-user.png">
+                        <p class="navbar-text">{{message}}</p>
+                        <button type="button" class="btn btn-default navbar-btn" ng-click="logout()">Salir</button>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </header>
+</div>

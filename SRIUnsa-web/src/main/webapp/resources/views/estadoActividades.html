@@ -1,0 +1,126 @@
+<div class="container">
+    <div class="row">
+      <div class="panel panel-danger" >
+        <div class="panel-body">
+            <div class="panel panel-info">
+              <div class="panel-heading">Filtrar Actividades de Investigación</div>
+              <div class="panel-body">
+                  <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="inpFacultad" class="control-label col-md-2">Tipo de Investigación</label>
+                    <div class="col-md-10">
+                      <select class="form-control" style="margin:2px;" ng-model="selected" ng-options="opt as opt for opt in actividadesInvestigacion" ng-init="selected=''" ng-change=actividadChange(selected)></select>
+                    </div>
+                    <label for="inpFacultad" class="control-label col-md-2">Estado</label>
+                    <div class="col-md-4">
+                      <select class="form-control" style="margin:2px;" id="inpFacultad">
+                          <option>Revisado</option>
+                          <option>Pendiente</option>
+                          <option>Generado</option>
+                      </select>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px;">
+                      <a type="submit" class="col-md-offset-2 btn btn-primary" >
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
+                      </a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="panel panel-danger">
+              <div class="panel-heading">Actividades de Investigación Generadas</div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre de la Actividad</th>
+                          <th>Tipo de Actividad de Investigación</th>
+                          <th>Duración</th>
+                          <th>Archivos subidos</th>
+                          <th>Estado</th>
+                          <th>Accion</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="actividad in actividades" ng-bind-html="getContent(actividad)">
+                          <td>{{actividad.id}}</td>
+                          <td>{{actividad.nombre}}</td>
+                          <td>{{actividad.tipo}}</td>
+                          <td>{{actividad.duracion}}</td>
+                          <td>{{actividad.file}}</td>
+                          <td>{{actividad.estado}}</td>
+                          <td>{{actividad.accion}}</td>
+                        </tr>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalVer" role="dialog">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+		        <div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+		          	<h4 class="modal-title">Reanimador de Uso Fácil </h4>
+		        </div>
+		        <div class="modal-body">
+		          	<form class="form-horizontal">
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Nombre :</label>
+                    <div class="col-md-9">
+                      <label class="control-label">Tratamiento sostenible y a bajo costo de agua con arsénico</label>  
+                    </div>
+                    <label class="control-label col-md-3">Facultad :</label>
+                    <div class="col-md-9">
+                      <label class="control-label">Facultad de Producción y Servicios</label>  
+                    </div>
+                    <label class="control-label col-md-3">Escuela :</label>
+                    <div class="col-md-9">
+                      <label class="control-label">Industrias Alimentarias</label>  
+                    </div>
+                    <label class="control-label col-md-3">Semestre :</label>
+                    <div class="col-md-9">
+                      <label class="control-label">Semestre II</label>  
+                    </div>
+                    <label class="control-label col-md-3">Fondo :</label>
+                    <div class="col-md-9">
+                      <label class="control-label">CONCYTEC</label>  
+                    </div>
+                    <label class="control-label col-md-3">Tipo :</label>
+                    <div class="col-md-9">
+                      <label class="control-label">Produción Intelectual</label>  
+                    </div>
+                    <label class="control-label col-md-3">Descripción :</label>
+                    <div class="col-md-9">
+                      <label class="control-label" style="text-align: left;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</label>  
+                    </div>
+                    
+                  </div>
+                </form>
+                <div class="panel panel-success">
+                  <div class="panel-body">
+                      <label class="control-label col-md-3">Observación :</label>
+                      <div class="col-md-9">
+                        <textarea style="margin:2px;" class="form-control" rows="5" placeholder="descripcion del proyecto">
+                          
+                        </textarea>  
+                      </div>
+                  </div>
+                </div>
+		        </div>
+		        <div class="modal-footer">
+              <button type="button" class="btn-sm btn-success" ng-click="estadoChange(Revisado)" data-dismiss="modal">Aprobado</button>
+              <button type="button" class="btn-sm btn-warning" ng-click="estadoChange(Pendiente)" data-dismiss="modal">Pendiente</button>
+		        	<button type="button" class="btn-sm btn-danger"  data-dismiss="modal">Cancelar</button>
+		        </div>
+	        </div>
+	    </div>
+	</div>

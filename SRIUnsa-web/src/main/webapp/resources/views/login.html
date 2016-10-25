@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>login</title>
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap-3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+</head>
+<body class="fondo_login">
+	<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Sistema de Registro de Investigaciones</h1>
+            <div class="account-wall">
+                <img class="profile-img" src="resources/images/unsa-2015-3.png" alt="">
+                <form class="form-signin">
+	                <input ng-model="persona.usuario" type="text" class="form-control" placeholder="USUARIO" required autofocus>
+	                <input ng-model="persona.clave" type="password" class="form-control" placeholder="CONTRASEÑA" required>
+	                <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">
+	                    Registrar
+	                </button>
+	                <label class="checkbox pull-left">
+	                    <input type="checkbox" value="recuerdame">
+	                    Remember me
+	                </label>
+	                <a href="#" class="pull-right need-help">necesita ayuda?</a><span class="clearfix"></span>
+
+
+                </form>
+                <!-- <button ng-click="openPdf()">Open Pdf</button> -->
+    			<!-- <button ng-click="downloadPdf()">Download Pdf</button> -->
+            </div>
+            <!-- <a href="#" class="text-center new-account">Crear cuenta</a> -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

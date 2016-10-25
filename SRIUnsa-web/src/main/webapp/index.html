@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="investigacionApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Registro de Investigaciones</title>
+
+    <!-- ESTILOS CSS -->
+
+    <link rel="stylesheet" type="text/css" href="resources/css/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/styles.css">    
+    <link rel="stylesheet" type="text/css" href="resources/css/jquery.treegrid.css">
+
+    <!-- TREEGRID -->
+
+    <script type="text/javascript" src="resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.treegrid.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.treegrid.bootstrap3.js"></script>
+    <script type="text/javascript" src="resources/css/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    
+    <!-- ANGULARJS -->
+
+    <script type="text/javascript" src="resources/js/AngularJS/angular.min.js"></script>
+    <script type="text/javascript" src="resources/js/AngularJS/angular-route.js"></script>
+    <!--<script type="text/javascript" src="js/AngularJS/angular-animate.js"></script>-->
+    <script type="text/javascript" src="resources/js/AngularJS/ui-bootstrap-tpls-2.1.3.min.js"></script>
+    
+    <script type="text/javascript" src="resources/js/uploadFile/angular-file-upload.min.js"></script>
+
+    <script type="text/javascript" src="resources/js/main.js"></script>
+
+    <!-- CONTROLADORES -->
+
+    <script type="text/javascript" src="resources/js/Controller/headerController.js"></script>    
+    <script type="text/javascript" src="resources/js/Controller/homeController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/investigacionController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/loginController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/registrarActividadController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/estadoActividadesController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/actividadesRevisadasController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/actividadesPendientesController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/relacionDocentesController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/configuracionController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/generarDocenteController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/uploadFileController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/usuariosController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/archivosController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/TipoProduccionController.js"></script>
+
+    <!-- SERVICIOS -->
+    
+    <script type="text/javascript" src="resources/js/Services/HomeService.js"></script>
+    <script type="text/javascript" src="resources/js/Services/LoginService.js"></script>
+    <script type="text/javascript" src="resources/js/Services/UsuariosService.js"></script>
+    <script type="text/javascript" src="resources/js/Services/ArchivosService.js"></script>
+    <script type="text/javascript" src="resources/js/Services/TipoProduccionService.js"></script>
+    <script type="text/javascript" src="resources/js/Services/ActividadesRevisadasService.js"></script>
+    
+    <!-- DIRECTIVAS -->
+    <script type="text/javascript" src="resources/js/Directivas/uploadFileDirective.js"></script>
+
+    <script type="text/javascript" src="resources/js/Services/SharedService.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.tree').treegrid();
+            $('.tree-2').treegrid({
+                expanderExpandedClass: 'glyphicon glyphicon-minus',
+                expanderCollapsedClass: 'glyphicon glyphicon-plus'
+            });
+        });
+    </script>
+    
+    <style>
+        .my-drop-zone { border: dotted 3px lightgray; }
+        .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+        .another-file-over-class { border: dotted 3px green; }
+
+        html, body { height: 100%; }
+    </style>
+
+</head>
+
+<body>
+
+    <div ng-include="'resources/views/header.html'"></div>
+    <!-- Add your site or application content here -->
+    <div ng-view></div>
+
+</body>
+    
+    
+</html>
