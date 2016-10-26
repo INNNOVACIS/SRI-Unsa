@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.transaction.Transactional;
 
 
 
@@ -17,18 +18,21 @@ public class ProcesoFlujoDaoImp implements IProcesoFlujoDao {
     private EntityManager em;
 
     @Override
+    @Transactional
     public SRIProcesoFlujo  Insert(SRIProcesoFlujo entidad) {
          em.persist(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public SRIProcesoFlujo Update(SRIProcesoFlujo entidad) {
          em.merge(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public boolean Delete(SRIProcesoFlujo entidad) {
         entidad.setSEstado("I");
         em.merge(entidad);

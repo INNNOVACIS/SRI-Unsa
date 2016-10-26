@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "rol" )
+@Table(name = "Rol" )
 @NamedQueries({
     @NamedQuery(name="SRIRol.GetAll",query="SELECT p FROM SRIRol p"),
     @NamedQuery(name="SRIRol.GetById",query="SELECT p FROM SRIRol p WHERE p.NIdRol = :idEntidad")
@@ -31,7 +31,7 @@ public class SRIRol  extends SRIEntidad implements Serializable  {
     @Column(name = "idrol" )
     private int NIdRol;
     
-    @Column(name = "nombrerol")
+    @Column(name = "nombreRol")
     private String SNombreRol;
 
 

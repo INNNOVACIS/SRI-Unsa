@@ -8,7 +8,6 @@ package com.innnovacis.unsa.rest;
 import com.innnovacis.unsa.business.IRolBusiness;
 import com.innnovacis.unsa.model.SRIRol;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

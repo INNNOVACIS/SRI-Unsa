@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.transaction.Transactional;
 
 
 
@@ -17,18 +18,21 @@ public class TipoActividadInvestigacionDaoImp implements ITipoActividadInvestiga
     private EntityManager em;
 
     @Override
+    @Transactional
     public SRITipoActividadInvestigacion  Insert(SRITipoActividadInvestigacion entidad) {
          em.persist(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public SRITipoActividadInvestigacion Update(SRITipoActividadInvestigacion entidad) {
          em.merge(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public boolean Delete(SRITipoActividadInvestigacion entidad) {
         entidad.setSEstado("I");
         em.merge(entidad);

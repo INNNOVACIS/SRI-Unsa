@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.transaction.Transactional;
 
 
 
@@ -17,18 +18,21 @@ public class EstructuraAreaInvestigacionDaoImp implements IEstructuraAreaInvesti
     private EntityManager em;
 
     @Override
+    @Transactional
     public SRIEstructuraAreaInvestigacion  Insert(SRIEstructuraAreaInvestigacion entidad) {
          em.persist(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public SRIEstructuraAreaInvestigacion Update(SRIEstructuraAreaInvestigacion entidad) {
          em.merge(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public boolean Delete(SRIEstructuraAreaInvestigacion entidad) {
         entidad.setSEstado("I");
         em.merge(entidad);

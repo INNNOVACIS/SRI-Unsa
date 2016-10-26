@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.transaction.Transactional;
 
 
 
@@ -17,18 +18,21 @@ public class EstadoDaoImp implements IEstadoDao {
     private EntityManager em;
 
     @Override
+    @Transactional
     public SRIEstado  Insert(SRIEstado entidad) {
          em.persist(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public SRIEstado Update(SRIEstado entidad) {
          em.merge(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public boolean Delete(SRIEstado entidad) {
         entidad.setSEstado("I");
         em.merge(entidad);

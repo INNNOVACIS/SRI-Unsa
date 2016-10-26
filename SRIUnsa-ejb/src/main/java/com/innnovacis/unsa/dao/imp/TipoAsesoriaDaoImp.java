@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.transaction.Transactional;
 
 
 
@@ -17,18 +18,21 @@ public class TipoAsesoriaDaoImp implements ITipoAsesoriaDao {
     private EntityManager em;
 
     @Override
+    @Transactional
     public SRITipoAsesoria  Insert(SRITipoAsesoria entidad) {
          em.persist(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public SRITipoAsesoria Update(SRITipoAsesoria entidad) {
          em.merge(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public boolean Delete(SRITipoAsesoria entidad) {
         entidad.setSEstado("I");
         em.merge(entidad);

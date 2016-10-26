@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.transaction.Transactional;
 
 
 
@@ -17,18 +18,21 @@ public class TipoNivelDaoImp implements ITipoNivelDao {
     private EntityManager em;
 
     @Override
+    @Transactional
     public SRITipoNivel  Insert(SRITipoNivel entidad) {
          em.persist(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public SRITipoNivel Update(SRITipoNivel entidad) {
          em.merge(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public boolean Delete(SRITipoNivel entidad) {
         entidad.setSEstado("I");
         em.merge(entidad);

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.transaction.Transactional;
 
 
 
@@ -17,18 +18,21 @@ public class FondoConcursableDaoImp implements IFondoConcursableDao {
     private EntityManager em;
 
     @Override
+    @Transactional
     public SRIFondoConcursable  Insert(SRIFondoConcursable entidad) {
          em.persist(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public SRIFondoConcursable Update(SRIFondoConcursable entidad) {
          em.merge(entidad);
          return entidad;
     }
 
     @Override
+    @Transactional
     public boolean Delete(SRIFondoConcursable entidad) {
         entidad.setSEstado("I");
         em.merge(entidad);
