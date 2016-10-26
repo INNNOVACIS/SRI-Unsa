@@ -75,9 +75,11 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     };
 
     var registrarUsuarioSuccess = function(response){
+        
     	$log.debug("Registrar Usuario - Success");
     	console.log("success :: ", response);
-    	$scope.users.push(response);
+        
+    	$scope.users.push($scope.usuario);
     	$scope.usuario = {};
     };
 
