@@ -50,6 +50,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/Privilegio.html',
 		controller : 'PrivilegioController'
 	})
+        .when('/tipoinvestigacion',{
+		templateUrl : 'resources/views/TipoInvestigacion.html',
+		controller : 'TipoInvestigacionController'
+	})
         .when('/tipoproduccion',{
 		templateUrl : 'resources/views/TipoProduccion.html',
 		controller : 'TipoProduccionController'
