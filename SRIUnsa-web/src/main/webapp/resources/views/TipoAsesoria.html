@@ -1,0 +1,133 @@
+<div class="container-fluid">
+    <div class="panel panel-danger" >
+        <div class="panel-body">
+            <div class="col-xm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading" style="padding-bottom:19px;">
+                        Administración de Tipos de Asesoria
+                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoAsesoria">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Nuevo
+                        </button>	
+                    </div>
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="40%">Tipo de Asesoria</th>
+                                    <th>Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="asesoria in asesorias">
+                                    <td><strong>{{ asesoria.snombreTipoAsesoria }}</strong></td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-success btn-xs" ng-click="update(asesoria)" data-toggle="modal" data-target="#popUpdateAsesoria">
+                                            <span class="glyphicon glyphicon-pencil"></span> Update
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAsesoria(asesoria)">
+                                            <span class="glyphicon glyphicon-trash"></span> Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="disabled">
+                                    <a href="#" aria-label="Anterior">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li ng-class="pagina.activo ? 'active' : 'none'" ng-repeat="pagina in paginas">
+                                    <a ng-click="changePagina(pagina)">{{ pagina.numero }}</a>
+                                </li>
+                                <li>
+                                    <a aria-label="Siguiente">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nuevo Tipo de Asesoria -->
+<div id="popNuevoAsesoria" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Registrar Tipo de Asesoria</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" style="">Tipo de Asesoria</label>
+                                    <div class="col-md-10">
+                                            <input id="inpRol" ng-model="asesoria.snombreTipoAsesoria" type="text" class="form-control" placeholder="Nombre del tipo de Asesoria">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="registrarAsesoria()">
+                    <span class="glyphicon glyphicon-rol"></span>
+                    Registrar
+                </button>
+                <button type="button" class="btn-sm btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- UPDATE Asesoria -->
+<div id="popUpdateAsesoria" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Actualizar Tipo d Asesoria</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" style="">Tipo de Asesoria</label>
+                                    <div class="col-md-10">
+                                        <input id="inpRol" ng-model="asesoria.snombreTipoAsesoria" type="text" class="form-control" placeholder="Nombre del tipo de Asesoria">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="updateAsesoria()">
+                    <span class="glyphicon glyphicon-rol"></span>
+                    Actualizar
+                </button>
+                <button type="button" class="btn-sm btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

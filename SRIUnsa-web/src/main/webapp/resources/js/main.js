@@ -58,6 +58,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/TipoProduccion.html',
 		controller : 'TipoProduccionController'
 	})
+        .when('/tipoasesoria',{
+		templateUrl : 'resources/views/TipoAsesoria.html',
+		controller : 'TipoAsesoriaController'
+	})
         .when('/archivos',{
 		templateUrl : 'resources/views/archivos.html',
 		controller : 'archivosController'
