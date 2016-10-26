@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "flujoactor" )
+@Table(name = "flujoarista" )
 @NamedQueries({
     @NamedQuery(name="SRIFlujoArista.GetAll",query="SELECT p FROM SRIFlujoArista p"),
     @NamedQuery(name="SRIFlujoArista.GetById",query="SELECT p FROM SRIFlujoArista p WHERE p.NIdArista = :idEntidad")

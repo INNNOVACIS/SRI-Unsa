@@ -1,13 +1,13 @@
 investigacionApp.controller('TipoProduccionController', function($log, $scope, $location, $rootScope, $filter, 
     TipoProduccionService, SharedService) {
 
-	$scope.listaTipoProduccion = [];
-	$scope.TipoProducion = {};
+    $scope.tipoProducciones = [];
+    $scope.tipoProduccion = {};
 	
-	var getTipoProduccionServiceSuccess = function(response){
+    var getTipoProduccionServiceSuccess = function(response){
     	$log.debug("Get TipoProduccion - Success");
     	console.log("Success :: ", response);
-    	$scope.listaTipoProduccion = response;
+    	$scope.tipoProducciones = response;
     }
 
     var getTipoProduccionServiceError = function(response){
@@ -17,8 +17,8 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, $
     var registrarTipoProduccionSuccess = function(response){
     	$log.debug("Registrar TipoProduccion - Success");
     	console.log("success :: ", response);
-    	$scope.listaTipoProduccion.push(response);
-    	$scope.TipoProducion = {};
+    	$scope.tipoProducciones.push($scope.tipoProduccion);
+    	$scope.tipoProduccion = {};
     }
 
     var registrarTipoProduccionError = function(response){
@@ -28,7 +28,7 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, $
     var updateTipoProduccionSuccess = function(response){
     	$log.debug("Update User - Success");
     	console.log("success :: ", response);
-    	$scope.TipoProducion = response;
+    	$scope.tipoProduccion = response;
     }
 
     var updateTipoProduccionError = function(response){
@@ -38,7 +38,7 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, $
     var deleteTipoProduccionSuccess = function(response){
     	$log.debug("Delete User - Success");
     	console.log("success :: ", response);
-    	$scope.TipoProducion = response;
+    	$scope.tipoProduccion = response;
     }
 
     var deleteTipoProduccionError = function(response){
@@ -52,23 +52,22 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, $
     }
 
     $scope.registrarTipoProduccion = function(){
-    	console.log("TipoProduccion :: ", $scope.TipoProducion);
-		TipoProduccionService.registrarTipoProduccion($scope.TipoProducion).then(registrarTipoProduccionSuccess, registrarTipoProduccionError);
+    	console.log("TipoProduccion :: ", $scope.tipoProduccion);
+		TipoProduccionService.registrarTipoProduccion($scope.tipoProduccion).then(registrarTipoProduccionSuccess, registrarTipoProduccionError);
     }
 
     $scope.updateTipoProduccion = function(){
     	
-    	TipoProduccionService.updateTipoProduccion($scope.TipoProducion).then(updateTipoProduccionSuccess, updateTipoProduccionError);
+    	TipoProduccionService.updateTipoProduccion($scope.tipoProduccion).then(updateTipoProduccionSuccess, updateTipoProduccionError);
     }
 
-    $scope.deleteTipoProduccion = function(user){
-    	$scope.TipoProducion = user;
-    	$scope.TipoProducion.estado = "I";
-    	TipoProduccionService.deleteTipoProduccion($scope.TipoProducion).then(deleteTipoProduccionSuccess. deleteTipoProduccionError);
+    $scope.deleteTipoProduccion = function(tipoProduccion){
+    	$scope.tipoProduccion = tipoProduccion;
+    	TipoProduccionService.deleteTipoProduccion($scope.tipoProduccion).then(deleteTipoProduccionSuccess. deleteTipoProduccionError);
     }
 
-    $scope.update = function(tipoproduccion){
-    	$scope.TipoProducion = tipoproduccion;
+    $scope.update = function(tipoProduccion){
+    	$scope.tipoProduccion = tipoProduccion;
     }
 
     $scope.getListaTipoProduccion();

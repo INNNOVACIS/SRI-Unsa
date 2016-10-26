@@ -9,7 +9,7 @@ investigacionApp.service("TipoProduccionService", function(SRIUnsaConfig, $log, 
 		var deferred = $q.defer();
 		$http({
 			method : 'GET',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoproduccion/listaTipoProduccion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoProduccion/listarTipoProduccion',
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function(response) {			
@@ -24,7 +24,7 @@ investigacionApp.service("TipoProduccionService", function(SRIUnsaConfig, $log, 
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoproduccion/registrarTipoProduccion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoProduccion/registrarTipoProduccion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -40,7 +40,7 @@ investigacionApp.service("TipoProduccionService", function(SRIUnsaConfig, $log, 
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoproduccion/updateTipoProduccion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoProduccion/updateTipoProduccion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -56,7 +56,7 @@ investigacionApp.service("TipoProduccionService", function(SRIUnsaConfig, $log, 
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoproduccion/deleteTipoProduccion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoProduccion/deleteTipoProduccion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);

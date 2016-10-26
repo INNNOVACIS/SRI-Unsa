@@ -15,20 +15,18 @@
 						<table width="100%" class="table table-striped table-bordered table-hover">
 	                        <thead>
 	                            <tr>
-	                                <th width="40%">Nombre Tipo Produccion</th>
-	                                
+	                                <th width="60%">Nombre Tipo Produccion</th>
+	                                <th >Accion</th>
 	                            </tr>
 	                        </thead>
 	                        <tbody>
-	                            <tr ng-repeat="tipoproduccion in listaTipoProduccion">
-	                                <td><strong>{{ tipoproduccion.nombre }}</strong></td>
-	                                <td>{{ tipoproduccion.usuario }}</td>
-	                                <td>{{ tipoproduccion.clave }}</td>
+	                            <tr ng-repeat="tipoProduccion in tipoProducciones">
+	                                <td><strong>{{ tipoProduccion.snombreTipoProduccion }}</strong></td>
 	                                <td nowrap>
-	                                    <button type="button" class="btn btn-success btn-xs" ng-click="update(tipoproduccion)" data-toggle="modal" data-target="#popUpdateUsuario">
+	                                    <button type="button" class="btn btn-success btn-xs" ng-click="update(tipoProduccion)" data-toggle="modal" data-target="#popUpdateTipoProduccion">
 	                                        <span class="glyphicon glyphicon-pencil"></span> Update
 	                                    </button>
-	                                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteUsuario(tipoproduccion)">
+	                                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTipoProduccion(tipoProduccion)">
 	                                        <span class="glyphicon glyphicon-trash"></span> Delete
 	                                    </button>
 	                                </td>
@@ -51,42 +49,23 @@
 	          	<h4 class="modal-title">Registrar Tipo Produccion</h4>
 	        </div>
 	        <div class="modal-body">
-	        	<div class="container-fluid">
-			        <div class="row">
-			            <div class="col-md-12">
-			            	<form class="form-horizontal">
-								<div class="form-group">
-									<label class="control-label col-md-2" style="">Nombre</label>
-									<div class="col-md-10">
-										<input id="inpNombre" ng-model="tipoproduccion.nombre" type="text" class="form-control" placeholder="Nombre completo">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-2" style="">Usuario</label>
-									<div class="col-md-10">
-										<input id="inpUsuario" ng-model="tipoproduccion.usuario" type="text" class="form-control" placeholder="Nombre de Usuario">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-2" style="">Clave</label>
-									<div class="col-md-10">
-										<input id="inpClave" ng-model="tipoproduccion.clave" type="password" class="form-control" placeholder="Ingrese su clave de usuario">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-2" style="">Estado</label>
-									<div class="col-md-10">
-										<input id="inpClave" ng-model="tipoproduccion.estado" type="text" class="form-control" placeholder="Estado">
-									</div>
-								</div>
-				          	</form>
-			            </div>
-			        </div>
-			        
-			     </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                            <label class="control-label col-md-2" style="">Tipo Produccion</label>
+                                            <div class="col-md-10">
+                                                    <input id="inpNombre" ng-model="tipoProduccion.snombreTipoProduccion" type="text" class="form-control" placeholder="Nombre del tipo de Produccion">
+                                            </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 	        </div>
 	        <div class="modal-footer">
-	        	<button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="registrarUsuario()">
+	        	<button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="registrarTipoProduccion()">
 	        		<span class="glyphicon glyphicon-user"></span>
 	        		Registrar
 	        	</button>
@@ -109,41 +88,22 @@
 	        </div>
 	        <div class="modal-body">
 	        	<div class="container-fluid">
-			        <div class="row">
-			            <div class="col-md-12">
-			            	<form class="form-horizontal">
-								<div class="form-group">
-									<label class="control-label col-md-2" style="">Nombre</label>
-									<div class="col-md-10">
-										<input id="inpNombre" ng-model="tipoproduccion.nombre" type="text" class="form-control" placeholder="Nombre completo">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-2" style="">Usuario</label>
-									<div class="col-md-10">
-										<input id="txtNombreUsuario" ng-model="tipoproduccion.nombre" type="text" class="form-control" placeholder="Nombre de Usuario">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-2" style="">Clave</label>
-									<div class="col-md-10">
-										<input id="inpClave" ng-model="tipoproduccion.clave" type="password" class="form-control" placeholder="Ingrese su clave de usuario">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-2" style="">Estado</label>
-									<div class="col-md-10">
-										<input id="inpClave" ng-model="tipoproduccion.estado" type="text" class="form-control" placeholder="Estado">
-									</div>
-								</div>
-				          	</form>
-			            </div>
-			        </div>
-			        
-			     </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" style="">Tipo Produccion</label>
+                                            <div class="col-md-10">
+                                                    <input id="inpNombre" ng-model="tipoProduccion.snombreTipoProduccion" type="text" class="form-control" placeholder="Nombre del tipo de Produccion">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 	        </div>
 	        <div class="modal-footer">
-	        	<button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="updateUsuario()">
+	        	<button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="updateTipoProduccion()">
 	        		<span class="glyphicon glyphicon-user"></span>
 	        		Actualizar
 	        	</button>
