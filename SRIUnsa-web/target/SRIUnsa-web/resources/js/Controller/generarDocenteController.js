@@ -26,6 +26,6 @@ investigacionApp.controller('generarDocenteController', function($scope) {
 				$scope.panelVer = false;
 				$scope.panelEditar = true;
 			}
-		}
+		}  
 	}
 });

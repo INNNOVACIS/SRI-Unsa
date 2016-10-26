@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 
 @Dependent
 public class ArchivoDaoImp implements IArchivoDao {
-
+//archivo
     @Inject
     private EntityManager em;
 
