@@ -1,7 +1,7 @@
 /**
  * Actividades Revisadas Service
  */
-investigacionApp.service("ActividadesRevisadasService", function($log, $http, $q) {
+investigacionApp.service("ActividadesRevisadasService", function(SRIUnsaConfig, $log, $http, $q) {
 	
     this.getInvestigaciones = function() {
         $log.debug("Actividades Revisadas Service - getInvestigaciones");
@@ -9,7 +9,7 @@ investigacionApp.service("ActividadesRevisadasService", function($log, $http, $q
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : 'http://localhost:8080/SRIUnsa-web/rest/usuarios/listarUsuarios',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/listarUsuarios',
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			
@@ -26,7 +26,7 @@ investigacionApp.service("ActividadesRevisadasService", function($log, $http, $q
         var deferred = $q.defer();
         $http({
             method : 'POST',
-            url : 'http://localhost:8080/SRIUnsa-web/rest/actividades/filtrarRevisadas',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividades/filtrarRevisadas',
             data : JSON.stringify(request)
             //headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {

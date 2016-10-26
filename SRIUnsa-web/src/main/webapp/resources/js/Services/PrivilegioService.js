@@ -1,15 +1,15 @@
 /**
- * Rol  Service
+ * Privilegio  Service
  */
-investigacionApp.service("RolService", function(SRIUnsaConfig, $log, $http, $q) {
+investigacionApp.service("PrivilegioService", function(SRIUnsaConfig, $log, $http, $q) {
 	
-	this.getRoles = function() {
-		$log.debug("Rol Service - get Roles");
+	this.getPrivilegios = function() {
+		$log.debug("Privilegio Service - get Privilegios");
 		
 		var deferred = $q.defer();
 		$http({
 			method : 'GET',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/roles/listarRoles',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/privilegios/listarPrivilegios',
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function(response) {			
@@ -18,13 +18,13 @@ investigacionApp.service("RolService", function(SRIUnsaConfig, $log, $http, $q) 
 		return deferred.promise;
 	};
 
-	this.registrarRol = function(request) {
-		$log.debug("Rol Service - Registrar Rol");
+	this.registrarPrivilegio = function(request) {
+		$log.debug("Privilegio Service - Registrar Privilegio");
 		
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/roles/registrarRoles',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio +  '/privilegios/registrarPrivilegios',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -34,13 +34,13 @@ investigacionApp.service("RolService", function(SRIUnsaConfig, $log, $http, $q) 
 		return deferred.promise;
 	};
 
-	this.updateRol = function(request) {
-		$log.debug("Rol Service - Update Rol");
+	this.updatePrivilegio = function(request) {
+		$log.debug("Privilegio Service - Update Privilegio");
 		
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/roles/updateRoles',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/privilegios/updatePrivilegios',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -50,13 +50,13 @@ investigacionApp.service("RolService", function(SRIUnsaConfig, $log, $http, $q) 
 		return deferred.promise;
 	};
 
-	this.deleteRol = function(request) {
-		$log.debug("Rol Service - Delete Rol");
+	this.deletePrivilegio = function(request) {
+		$log.debug("Privilegio Service - Delete Privilegio");
 		
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/roles/deleteRoles',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/privilegios/deletePrivilegios',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);

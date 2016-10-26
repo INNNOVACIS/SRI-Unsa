@@ -1,7 +1,7 @@
 /**
  * Investigacion Service
  */
-investigacionApp.service("InvestigacionService", function($log, $http, $q) {
+investigacionApp.service("InvestigacionService", function(SRIUnsaConfig, $log, $http, $q) {
 
 	this.registrarInvestigacion = function(request) {
 		$log.debug("Investigacion Service - Registrar Investigacion");
@@ -9,7 +9,7 @@ investigacionApp.service("InvestigacionService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/investigacion/registrarInvestigacion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/investigacion/registrarInvestigacion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);

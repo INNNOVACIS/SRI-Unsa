@@ -1,7 +1,7 @@
 /**
  * Login Service
  */
-investigacionApp.service("LoginService", function($log, $http, $q) {
+investigacionApp.service("LoginService", function(SRIUnsaConfig, $log, $http, $q) {
 
 	this.sendCrendential = function(request) {
 		$log.debug("Login Service - Autentication");
@@ -9,7 +9,7 @@ investigacionApp.service("LoginService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/usuarios/autenticarUsuarios',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/autenticarUsuarios',
 			data : request
 		}).success(function(response) {
 			console.log("Response Success File:: ", response);

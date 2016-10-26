@@ -1,7 +1,7 @@
 /**
  * Archivo Service
  */
-investigacionApp.service("ArchivosService", function($log, $http, $q) {
+investigacionApp.service("ArchivosService", function(SRIUnsaConfig, $log, $http, $q) {
 	
 	this.getArchivos = function() {
 		$log.debug("Archivo Service - get Archivos");
@@ -9,7 +9,7 @@ investigacionApp.service("ArchivosService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'GET',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/files/listarArchivos',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/files/listarArchivos',
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function(response) {			
@@ -22,7 +22,7 @@ investigacionApp.service("ArchivosService", function($log, $http, $q) {
             var deferred = $q.defer();
 		$http({
                     method : 'GET',
-                    url : 'http://localhost:8080/SRIUnsa-web/rest/files/' + id,
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/files/' + id,
                     responseType: 'arraybuffer'
 		}).success(function(data, status, headers) {
                     headers = headers();
@@ -60,7 +60,7 @@ investigacionApp.service("ArchivosService", function($log, $http, $q) {
             var deferred = $q.defer();
             $http({
                 method : 'POST',
-                url : 'http://localhost:8080/SRIUnsa-web/rest/files/actualizarArchivos',
+                url : SRIUnsaConfig.SRIUnsaUrlServicio + '/files/actualizarArchivos',
                 data : request,
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}

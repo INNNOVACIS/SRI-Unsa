@@ -1,7 +1,7 @@
 /**
  * Home Service
  */
-investigacionApp.service("HomeService", function($log, $http, $q) {
+investigacionApp.service("HomeService", function(SRIUnsaConfig, $log, $http, $q) {
 
 	this.sendFile = function(request) {
 		$log.debug("Home Service - SendFile");
@@ -9,7 +9,7 @@ investigacionApp.service("HomeService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/files',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/files',
 			data : request,
 			transformRequest: angular.identity,
 			headers: {'Content-Type': undefined}
@@ -29,7 +29,7 @@ investigacionApp.service("HomeService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/investigacion/registrarInvestigacion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/investigacion/registrarInvestigacion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);

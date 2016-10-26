@@ -1,7 +1,7 @@
 /**
  * Tipo Produccion Service
  */
-investigacionApp.service("TipoProduccionService", function($log, $http, $q) {
+investigacionApp.service("TipoProduccionService", function(SRIUnsaConfig, $log, $http, $q) {
 	
 	this.getListaTipoProduccion = function() {
 		$log.debug("TipoProduccion Service - get Lista TipoProduccion");
@@ -9,7 +9,7 @@ investigacionApp.service("TipoProduccionService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'GET',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/tipoproduccion/listaTipoProduccion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoproduccion/listaTipoProduccion',
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function(response) {			
@@ -24,7 +24,7 @@ investigacionApp.service("TipoProduccionService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/tipoproduccion/registrarTipoProduccion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoproduccion/registrarTipoProduccion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -40,7 +40,7 @@ investigacionApp.service("TipoProduccionService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/tipoproduccion/updateTipoProduccion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoproduccion/updateTipoProduccion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -56,7 +56,7 @@ investigacionApp.service("TipoProduccionService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/tipoproduccion/deleteTipoProduccion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoproduccion/deleteTipoProduccion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);

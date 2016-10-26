@@ -1,7 +1,7 @@
 /**
  * Usuario Service
  */
-investigacionApp.service("UsuariosService", function($log, $http, $q) {
+investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http, $q) {
 	
 	this.getUsuarios = function() {
 		$log.debug("Usuario Service - get Usuarios");
@@ -9,7 +9,7 @@ investigacionApp.service("UsuariosService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'GET',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/usuarios/listarUsuarios',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/listarUsuarios',
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function(response) {			
@@ -24,7 +24,7 @@ investigacionApp.service("UsuariosService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/usuarios/registrarUsuarios',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/registrarUsuarios',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -40,7 +40,7 @@ investigacionApp.service("UsuariosService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/usuarios/updateUsuarios',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/updateUsuarios',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -56,7 +56,7 @@ investigacionApp.service("UsuariosService", function($log, $http, $q) {
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : 'http://localhost:8080/SRIUnsa-web/rest/usuarios/deleteUsuarios',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/deleteUsuarios',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
