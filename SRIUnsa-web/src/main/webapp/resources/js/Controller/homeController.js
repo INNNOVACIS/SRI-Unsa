@@ -1,6 +1,6 @@
     investigacionApp.controller('homeController', function($log, $scope, $location, $rootScope, $filter, 
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
-    EstructuraAreaInvestigacionService, SharedService, FileUploader) {
+    EstructuraAreaInvestigacionService, FondoConcursableService, SharedService, FileUploader) {
     
     /*
      * Parametros
@@ -21,8 +21,18 @@
     $scope.tipoLabor = {id : 0, nombre : ""};
     $scope.descripcion = "";
     $scope.colaborador = {id : 0, nombre : ""};
-       
+      
+        
     /*********** Servicios Get All ***********/   
+    
+    var getFondoServiceSuccess = function(response){
+    	$log.debug("Get Fondo - Success");
+    	$scope.fondos = response;
+    };
+
+    var getFondoServiceError = function(response){
+     	$log.debug("Get Fondo - Error"); 
+    };
     
     var getAreaInvestigacionServiceSuccess = function(response){
     	$log.debug("Get AreaInvestigacion - Success");
@@ -73,6 +83,9 @@
         console.log("Error TipoProduccion :: ", response);
     };
     
+    $scope.getFondos = function(){
+      	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
+    };
     $scope.getAreaInvestigaciones = function(){
       	EstructuraAreaInvestigacionService.getAreaInvestigaciones().then(getAreaInvestigacionServiceSuccess, getAreaInvestigacionServiceError);
     };
@@ -89,6 +102,7 @@
       	TipoInvestigacionService.getInvestigaciones().then(getInvestigacionServiceSuccess, getInvestigacionServiceError);
     };
     
+    $scope.getFondos();
     $scope.getAreaInvestigaciones();
     $scope.getTipoProducciones();
     $scope.getAsesorias();
@@ -166,95 +180,16 @@
         {id : 2, nombre : 'Industrias Alimentarias'},
         {id : 3, nombre : 'Ingeniería Mecánica'}
     ];
-//    $scope.semestres = [
-//        {id : 1, nombre : '2016-I Semestre I'},
-//        {id : 2, nombre : '2016-II Semestre II'},
-//        {id : 3, nombre : '2016-II Semestre III'}        
-//    ];
+
     $scope.tipoInvestigadores = [
         {id : 1, nombre : 'Principal'},
         {id : 2, nombre : 'Co-Investigador'}
     ];
-    $scope.fondos = [
-        {id : 1, nombre : 'CONCYTEC'},
-        {id : 2, nombre : 'FINCyT'}
-    ];
-//    $scope.tipoAsesorias = [
-//        {id : 1, nombre : 'Pre Grado'},
-//        {id : 2, nombre : 'Post Grado'}
-//    ];
-    $scope.tipoProducciones = [
-        {id : 1, nombre : 'Libro'},
-        {id : 2, nombre : 'Artículo'},
-        {id : 3, nombre : 'Ponencia Congreso Nacional'},
-        {id : 4, nombre : 'Ponencia Congreso Internacional'}
-    ];
+    
     $scope.tipoLabores = [
         {id : 1, nombre : 'Lectiva'},
         {id : 2, nombre : 'No Lectiva'}
     ];
-
-    var areaList = [
-        { "id": 1, "area": "Ciencias Agrícolas" },
-        { "id": 2, "area": "Ciencias Médicas y de Salud" },
-        { "id": 3, "area": "Ciencias Naturales" }
-    ];
-
-    var subArealist = [
-        {"Id":1, "subArea":"Agricultura, Silvicultura y Pesca", "areaId": 1},
-        {"Id":2, "subArea":"Ciencias Animales y lechería", "areaId": 1},
-        {"Id":3, "subArea":"Ciencias Veterinarias", "areaId": 1},
-        {"Id":4, "subArea":"Medicina Básica", "areaId": 2},
-        {"Id":5, "subArea":"Medicina Clínica", "areaId": 2},
-        {"Id":6, "subArea":"Ciencias de la Salud", "areaId": 2},
-        {"Id":7, "subArea":"Matemáticas", "areaId": 3},
-        {"Id":8, "subArea":"Computación y Ciencias de la Información  ", "areaId": 3},
-        {"Id":9, "subArea":"Ciencias Físicas", "areaId": 3}
-    ];
-
-    var disciplinalist = [
-        {"Id":1, "disciplina":"Agricultura", "subAreaId": 1},
-        {"Id":2, "disciplina":"Forestal", "subAreaId": 1},
-        {"Id":3, "disciplina":"Ciencias Animales y lechería", "subAreaId": 2},
-        {"Id":4, "disciplina":"Crías y mascotas", "subAreaId": 2},
-        {"Id":5, "disciplina":"Ciencias Veterinarias", "subAreaId": 3},
-        {"Id":6, "disciplina":"Anatomía y Morfología", "subAreaId": 4},
-        {"Id":7, "disciplina":"Genética humana", "subAreaId": 4},
-        {"Id":8, "disciplina":"Toxicología", "subAreaId": 4},
-        {"Id":9, "disciplina":"Obstetricia y Ginecología", "subAreaId": 5},
-        {"Id":10, "disciplina":"Pediatría", "subAreaId": 5},
-        {"Id":11, "disciplina":"Enfermería", "subAreaId": 6},
-        {"Id":12, "disciplina":"Nutrición y Dietas", "subAreaId": 6},
-        {"Id":13, "disciplina":"Matemáticas Puras", "subAreaId": 7},
-        {"Id":14, "disciplina":"Matemáticas Aplicadas", "subAreaId": 7},
-        {"Id":15, "disciplina":"Ciencias de la Computación", "subAreaId": 8},
-        {"Id":16, "disciplina":"Ciencias de la Información y Bioinformática", "subAreaId": 8},
-        {"Id":17, "disciplina":"Física Atómica, Molecular y Química", "subAreaId": 9},
-        {"Id":18, "disciplina":"Física de la Materia", "subAreaId": 9},
-        {"Id":19, "disciplina":"Física Nuclear", "subAreaId": 9},
-        {"Id":20, "disciplina":"Acústica", "subAreaId": 9}
-    ];
-
-    $scope.customer ={
-        Area:'', 
-        SubArea:'', 
-        Disciplina: ''
-    };
-	
-
-    $scope.getArea = function(){
-    	return areaList;
-    };
-
-    $scope.getSubArea = function(){
-    	$scope.subAreas = ($filter('filter')(subArealist, {areaId: $scope.customer.Area}));
-    	
-    };
-    $scope.getDisciplina = function(subAreaId){    	
-    	$scope.disciplinas = ($filter('filter')(disciplinalist, {subAreaId: $scope.customer.SubArea}));      	
-    };
-
-    $scope.areas = $scope.getArea();
 
     $scope.actividadChange = function(seleccionado){
     	$scope.Actividad = seleccionado;

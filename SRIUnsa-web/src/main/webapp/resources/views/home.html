@@ -62,14 +62,14 @@
                                                 <input class="form-control" type="number" style="margin:2px;" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación">
                                         </div>
                                         <div id="actividad3" ng-show="actividad3_show">
-                                                <label class="control-label col-md-2">Investigador</label>
-                                                <div class="col-md-4">
-                                                        <select class="form-control" style="margin:2px;" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
-                                                </div>
-                                                <label class="control-label col-md-2"> Fondo Concursable</label>
-                                                <div class="col-md-4">
-                                                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.nombre for opt in fondos" ng-init="fondo=''"></select>
-                                                </div>
+                                            <label class="control-label col-md-2">Investigador</label>
+                                            <div class="col-md-4">
+                                                    <select class="form-control" style="margin:2px;" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
+                                            </div>
+                                            <label class="control-label col-md-2"> Fondo Concursable</label>
+                                            <div class="col-md-4">
+                                                <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
+                                            </div>
                                         </div>
                                         <div id="actividad2" ng-show="actividad2_show">
                                                 <label class="control-label col-md-2"> Tipo de Asesoria</label>

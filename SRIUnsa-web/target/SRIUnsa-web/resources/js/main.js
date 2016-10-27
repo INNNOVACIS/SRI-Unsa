@@ -66,9 +66,13 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/Semestre.html',
 		controller : 'SemestreController'
 	})
-            .when('/areainvestigacion',{
+        .when('/areainvestigacion',{
 		templateUrl : 'resources/views/EstructuraAreaInvestigacion.html',
 		controller : 'EstructuraAreaInvestigacionController'
+	})
+        .when('/fondoconcursable',{
+		templateUrl : 'resources/views/FondoConcursable.html',
+		controller : 'FondoConcursableController'
 	})
         .when('/archivos',{
 		templateUrl : 'resources/views/archivos.html',
