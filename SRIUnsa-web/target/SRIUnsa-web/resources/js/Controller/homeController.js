@@ -1,5 +1,6 @@
-investigacionApp.controller('homeController', function($log, $scope, $location, $rootScope, $filter, 
-    HomeService, SharedService, FileUploader) {
+    investigacionApp.controller('homeController', function($log, $scope, $location, $rootScope, $filter, 
+    HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
+    EstructuraAreaInvestigacionService, SharedService, FileUploader) {
     
     /*
      * Parametros
@@ -20,8 +21,84 @@ investigacionApp.controller('homeController', function($log, $scope, $location, 
     $scope.tipoLabor = {id : 0, nombre : ""};
     $scope.descripcion = "";
     $scope.colaborador = {id : 0, nombre : ""};
-        
+       
+    /*********** Servicios Get All ***********/   
+    
+    var getAreaInvestigacionServiceSuccess = function(response){
+    	$log.debug("Get AreaInvestigacion - Success");
+    	$scope.areaInvestigaciones = response;
+    };
+
+    var getAreaInvestigacionServiceError = function(response){
+     	$log.debug("Get AreaInvestigacion - Error"); 
+    };
+    
+    var getInvestigacionServiceSuccess = function(response){
+    	$log.debug("Get Investigacion - Success");
+        console.log("Response Investigacion :: ", response);
+    	$scope.tipoInvestigaciones = response;
+    };
+    
+    var getInvestigacionServiceError = function(response){
+     	$log.debug("Get Investigacion - Error");
+        console.log("Error Response Investigacion :: ", response);
+    };
+    
+    var getSemestreServiceSuccess = function(response){
+    	$log.debug("Get Semestre - Success");        
+    	$scope.semestres = response;
+    };
+    
+    var getSemestreServiceError = function(response){
+     	$log.debug("Get Semestre - Error");
+        console.log("Error Response Semestre :: ", response);
+    };
+    
+    var getAsesoriaServiceSuccess = function(response){
+    	$log.debug("Get Asesoria - Success");
+    	$scope.tipoAsesorias = response;
+    };
+    
+    var getAsesoriaServiceError = function(response){
+     	$log.debug("Get Asesoria - Error"); 
+    };
+    
+    var getTipoProduccionServiceSuccess = function(response){
+    	$log.debug("Get TipoProduccion - Success");
+    	$scope.tipoProducciones = response;
+    };
+
+    var getTipoProduccionServiceError = function(response){
+     	$log.debug("Get TipoProduccion - Error");
+        console.log("Error TipoProduccion :: ", response);
+    };
+    
+    $scope.getAreaInvestigaciones = function(){
+      	EstructuraAreaInvestigacionService.getAreaInvestigaciones().then(getAreaInvestigacionServiceSuccess, getAreaInvestigacionServiceError);
+    };
+    $scope.getTipoProducciones = function(){
+      	TipoProduccionService.getListaTipoProduccion().then(getTipoProduccionServiceSuccess, getTipoProduccionServiceError);
+    };
+    $scope.getAsesorias = function(){
+      	TipoAsesoriaService.getAsesorias().then(getAsesoriaServiceSuccess, getAsesoriaServiceError);
+    };
+    $scope.getSemestres = function(){
+      	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
+    };
+    $scope.getInvestigaciones = function(){
+      	TipoInvestigacionService.getInvestigaciones().then(getInvestigacionServiceSuccess, getInvestigacionServiceError);
+    };
+    
+    $scope.getAreaInvestigaciones();
+    $scope.getTipoProducciones();
+    $scope.getAsesorias();
+    $scope.getSemestres();
+    $scope.getInvestigaciones();
+       
+       
+    
     /*********** Obj JSON ***********/
+    
     $scope.actividadInvestigacion = {};
     
     var registrarInvestigacionSuccess = function(response){
@@ -58,7 +135,7 @@ investigacionApp.controller('homeController', function($log, $scope, $location, 
     $scope.dt = new Date(2020, 5, 22);
 
     $scope.open = function($event) {
-    $scope.status.opened = true;
+        $scope.status.opened = true;
     };
 
     $scope.format = 'dd-MMMM-yyyy';
@@ -73,13 +150,6 @@ investigacionApp.controller('homeController', function($log, $scope, $location, 
     $scope.actividad2_show = false;
     $scope.actividad3_show = false;
     $scope.actividad4_show = false;
-
-    $scope.actividadesInvestigacion = [
-        {id : 1, nombre : 'Investigación Formativa'},
-        {id : 2, nombre : 'Asesoria de Tesis'},
-        {id : 3, nombre : 'Investigaciones Básicas y Aplicadas'},
-        {id : 3, nombre : 'Producción Intelectual'}
-    ];
 
     $scope.facultades = [
         {id : 1, nombre : 'Facultad de Producción y Servicios'},
@@ -96,11 +166,11 @@ investigacionApp.controller('homeController', function($log, $scope, $location, 
         {id : 2, nombre : 'Industrias Alimentarias'},
         {id : 3, nombre : 'Ingeniería Mecánica'}
     ];
-    $scope.semestres = [
-        {id : 1, nombre : '2016-I Semestre I'},
-        {id : 2, nombre : '2016-II Semestre II'},
-        {id : 3, nombre : '2016-II Semestre III'}        
-    ];
+//    $scope.semestres = [
+//        {id : 1, nombre : '2016-I Semestre I'},
+//        {id : 2, nombre : '2016-II Semestre II'},
+//        {id : 3, nombre : '2016-II Semestre III'}        
+//    ];
     $scope.tipoInvestigadores = [
         {id : 1, nombre : 'Principal'},
         {id : 2, nombre : 'Co-Investigador'}
@@ -109,10 +179,10 @@ investigacionApp.controller('homeController', function($log, $scope, $location, 
         {id : 1, nombre : 'CONCYTEC'},
         {id : 2, nombre : 'FINCyT'}
     ];
-    $scope.tipoAsesorias = [
-        {id : 1, nombre : 'Pre Grado'},
-        {id : 2, nombre : 'Post Grado'}
-    ];
+//    $scope.tipoAsesorias = [
+//        {id : 1, nombre : 'Pre Grado'},
+//        {id : 2, nombre : 'Post Grado'}
+//    ];
     $scope.tipoProducciones = [
         {id : 1, nombre : 'Libro'},
         {id : 2, nombre : 'Artículo'},
