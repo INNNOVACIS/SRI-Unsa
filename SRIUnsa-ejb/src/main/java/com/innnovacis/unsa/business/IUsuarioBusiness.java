@@ -16,6 +16,7 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public interface IUsuarioBusiness {
     
+    SRIUsuario Autenticar(SRIUsuario entidad);
     int Insertar(SRIUsuario entidad);
     boolean Update(SRIUsuario entidad);
     boolean Delete(SRIUsuario entidad);

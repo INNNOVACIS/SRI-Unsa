@@ -53,4 +53,15 @@ public class UsuarioDaoImp implements IUsuarioDao {
         return olistaRespuesta;
     }
 
+    @Override
+    public SRIUsuario Autenticar(SRIUsuario entidad) {
+        
+        SRIUsuario usuario = em.createNamedQuery("SRIUsuario.Autenticar", SRIUsuario.class)
+                .setParameter("usuario", entidad.getSUsuarioLogin())
+                .setParameter("password", entidad.getSUsuarioPassword())
+                .getSingleResult();
+        
+        return usuario;
+    }
+
 }

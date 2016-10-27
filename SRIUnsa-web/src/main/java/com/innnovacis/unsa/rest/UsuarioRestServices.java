@@ -60,7 +60,7 @@ public class UsuarioRestServices {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public SRIUsuario autenticarUsuario(SRIUsuario usuario) {        
-        usuarioBusiness.Insertar(usuario);
+        usuarioBusiness.Autenticar(usuario);
         return usuario;
     }
     

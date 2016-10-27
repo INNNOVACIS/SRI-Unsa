@@ -87,5 +87,16 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
          return respuesta;
     }
 
+    @Override
+    public SRIUsuario Autenticar(SRIUsuario entidad) {
+        SRIUsuario respuesta = new SRIUsuario();
+         try{
+            respuesta = usuarioDao.Autenticar(entidad);
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
     
 }

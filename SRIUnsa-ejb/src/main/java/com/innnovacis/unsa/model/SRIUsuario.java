@@ -22,7 +22,8 @@ import javax.persistence.Table;
 @Table(name = "Usuario" )
 @NamedQueries({
     @NamedQuery(name="SRIUsuario.GetAll",query="SELECT p FROM SRIUsuario p"),
-    @NamedQuery(name="SRIUsuario.GetById",query="SELECT p FROM SRIUsuario p WHERE p.NIdUsuario  = :idEntidad")
+    @NamedQuery(name="SRIUsuario.GetById",query="SELECT p FROM SRIUsuario p WHERE p.NIdUsuario  = :idEntidad"),
+    @NamedQuery(name="SRIUsuario.Autenticar",query="SELECT p FROM SRIUsuario p WHERE p.SUsuarioLogin = :usuario and p.SUsuarioPassword = :password")
 })
 public class SRIUsuario  extends SRIEntidad implements Serializable  {
     
