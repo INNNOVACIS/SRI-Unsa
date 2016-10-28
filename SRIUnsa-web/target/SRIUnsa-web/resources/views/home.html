@@ -41,17 +41,39 @@
                                         <div class="col-md-4">
                                                 <input ng-model="nombreInvestigacion" type="text" style="margin:2px;" class="form-control" placeholder="Nombre de la investigación">
                                         </div>
+                                        
                                         <label class="control-label col-md-2">Facultad</label>
                                         <div class="col-md-4">
-                                                <select class="form-control" style="margin:2px;" ng-model="facultad" ng-options="opt as opt.nombre for opt in facultades" ng-init="facultad=''"></select>
+                                            <select ng-model="facultad"                
+                                                ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
+                                                class="form-control"
+                                                ng-change="facultadChange()"
+                                                ng-required="true"
+                                                style="margin:2px;"
+                                                ng-init="facultad=''">
+                                            </select>
                                         </div>
+                                        
                                         <label class="control-label col-md-2">Departamento</label>
                                         <div class="col-md-4">
-                                                <select class="form-control" style="margin:2px;" ng-model="departamento" ng-options="opt as opt.nombre for opt in departamentos" ng-init="departamento=''"></select>
+                                            <select  ng-model="departamento"
+                                                ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
+                                                class="form-control"
+                                                ng-change="departamentoChange()"
+                                                ng-required="true"
+                                                style="margin:2px;"
+                                                ng-init="departamento=''">
+                                            </select> 
                                         </div>
                                         <label class="control-label col-md-2">Escuela</label>
                                         <div class="col-md-4">
-                                                <select class="form-control" style="margin:2px;" ng-model="escuela" ng-options="opt as opt.nombre for opt in escuelas" ng-init="escuela=''"></select>
+                                            <select  ng-model="escuela"
+                                                ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
+                                                class="form-control" 
+                                                ng-required="true"
+                                                style="margin:2px;"
+                                                ng-init="escuela=''">
+                                            </select> 
                                         </div>
                                         <label class="control-label col-md-2">Semestre</label>
                                         <div class="col-md-4">
