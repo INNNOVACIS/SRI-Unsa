@@ -48,8 +48,8 @@ investigacionApp.controller('archivosController', function($log, $scope, $locati
         ArchivosService.subirArchivo(formData).then(subirArchivoSuccess, subirArchivoError);
     }
     
-    $scope.descargarArchivo = function(file){
-        ArchivosService.descargarArchivo(file.idArchivo).then(descargarArchivoSuccess, descargarArchivoError);
+    $scope.descargarArchivo = function(archivo){
+        ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
     }
     
     $scope.copiarArchivo = function(file){

@@ -8,8 +8,8 @@ package com.innnovacis.unsa.rest;
 import com.innnovacis.unsa.borrar.ArchivoRepository;
 import com.innnovacis.unsa.business.IArchivoBusiness;
 import com.innnovacis.unsa.model.SRIArchivo;
-import com.innnovacis.unsa.modelborrar.ArchivoData;
 import com.innnovacis.unsa.util.Convert;
+import com.innnovacis.unsa.util.SRIArchivoUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileNotFoundException;
@@ -51,14 +51,14 @@ public class ArchivosRestServices {
     @Path("/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response descargarArchivo(@PathParam("id") int id) throws FileNotFoundException, IOException, SQLException {
-        return archivoRepository.descargarArchivo(id);
+        return archivoBusiness.descargarArchivo(id);
     }
     
     @GET
     @Path("/listarArchivos")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ArchivoData> getArchivos() {
-        return archivoRepository.getArchivos();
+    public List<SRIArchivoUtil> getArchivos() {
+        return archivoBusiness.GetAll();
     }
     
     @POST

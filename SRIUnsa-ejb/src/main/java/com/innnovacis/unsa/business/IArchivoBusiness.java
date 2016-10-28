@@ -6,9 +6,11 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIArchivo;
+import com.innnovacis.unsa.util.SRIArchivoUtil;
 
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -20,6 +22,6 @@ public interface IArchivoBusiness {
     boolean Update(SRIArchivo entidad);
     boolean Delete(SRIArchivo entidad);
     SRIArchivo Get(int idEntidad);
-    List<SRIArchivo> GetAll();
-
+    List<SRIArchivoUtil> GetAll();
+    Response descargarArchivo(int id);
 }

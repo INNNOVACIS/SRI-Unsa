@@ -5,11 +5,13 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IArchivoBusiness;
 import com.innnovacis.unsa.dao.IArchivoDao;
 import com.innnovacis.unsa.model.SRIArchivo;
+import com.innnovacis.unsa.util.SRIArchivoUtil;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
+import javax.ws.rs.core.Response;
 
 
 
@@ -75,14 +77,25 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
     }
 
     @Override
-    public List<SRIArchivo> GetAll() {
-         List<SRIArchivo> respuesta = null;
-         try{
+    public List<SRIArchivoUtil> GetAll() {
+         List<SRIArchivoUtil> respuesta = null;
+        try{
             respuesta = archivoDao.GetAll();
         }
         catch(Exception ex){
         }
-         return respuesta;
+        return respuesta;
+    }
+
+    @Override
+    public Response descargarArchivo(int id) {
+        Response respuesta = null;
+        try{
+            respuesta = archivoDao.descargarArchivo(id);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
     }
 
     
