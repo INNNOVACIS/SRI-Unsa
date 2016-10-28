@@ -3,10 +3,13 @@ package com.innnovacis.unsa.business.imp;
 
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
+import com.innnovacis.unsa.business.IFlujoAristaBusiness;
 import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
 import com.innnovacis.unsa.dao.IEstructuraAreaInvestigacionDao;
+import com.innnovacis.unsa.dao.IFlujoAristaDao;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
+import com.innnovacis.unsa.model.SRIFlujoArista;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -16,20 +19,20 @@ import javax.enterprise.context.Dependent;
 
 
 @Dependent
-public class FlujoAristaBusinessImp implements IActividadInvestigacionBusiness {
+public class FlujoAristaBusinessImp implements IFlujoAristaBusiness {
 
     @Inject
-    private IActividadInvestigacionDao actividadInvestigacionDao;
+    private IFlujoAristaDao flujoAristaDao;
     
     @Inject
     private Logger log;
 
     @Override
-    public int Insertar(SRIActividadInvestigacion entidad) {
+    public int Insertar(SRIFlujoArista entidad) {
         int id = -1;
         try{
-            entidad = actividadInvestigacionDao.Insert(entidad);
-            id = entidad.getNIdActividadInvestigacion();
+            entidad = flujoAristaDao.Insert(entidad);
+            id = entidad.getNIdArista();
                     
         }
         catch(Exception ex){
@@ -39,10 +42,10 @@ public class FlujoAristaBusinessImp implements IActividadInvestigacionBusiness {
     }
 
     @Override
-    public boolean Update(SRIActividadInvestigacion entidad) {
+    public boolean Update(SRIFlujoArista entidad) {
         boolean respuesta = false;
          try{
-            actividadInvestigacionDao.Update(entidad);
+            flujoAristaDao.Update(entidad);
             respuesta = true;
         }
         catch(Exception ex){
@@ -53,10 +56,10 @@ public class FlujoAristaBusinessImp implements IActividadInvestigacionBusiness {
     }
 
     @Override
-    public boolean Delete(SRIActividadInvestigacion entidad) {
+    public boolean Delete(SRIFlujoArista entidad) {
         boolean respuesta = false;
          try{
-            actividadInvestigacionDao.Delete(entidad);
+            flujoAristaDao.Delete(entidad);
             respuesta = true;
         }
         catch(Exception ex){
@@ -66,10 +69,10 @@ public class FlujoAristaBusinessImp implements IActividadInvestigacionBusiness {
     }
 
     @Override
-    public SRIActividadInvestigacion Get(int idEntidad) {
-        SRIActividadInvestigacion respuesta = null;
+    public SRIFlujoArista Get(int idEntidad) {
+        SRIFlujoArista respuesta = null;
          try{
-            respuesta = actividadInvestigacionDao.GetById(idEntidad);
+            respuesta = flujoAristaDao.GetById(idEntidad);
         }
         catch(Exception ex){
         }
@@ -77,10 +80,10 @@ public class FlujoAristaBusinessImp implements IActividadInvestigacionBusiness {
     }
 
     @Override
-    public List<SRIActividadInvestigacion> GetAll() {
-         List<SRIActividadInvestigacion> respuesta = null;
+    public List<SRIFlujoArista> GetAll() {
+         List<SRIFlujoArista> respuesta = null;
          try{
-            respuesta = actividadInvestigacionDao.GetAll();
+            respuesta = flujoAristaDao.GetAll();
         }
         catch(Exception ex){
         }
