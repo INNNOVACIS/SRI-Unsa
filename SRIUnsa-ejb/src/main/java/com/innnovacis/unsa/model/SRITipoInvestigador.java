@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Table(name = "tipoinvestigador" )
 @NamedQueries({
     @NamedQuery(name="SRITipoInvestigador.GetAll",query="SELECT p FROM SRITipoInvestigador p"),
-    @NamedQuery(name="SRITipoInvestigador.GetById",query="SELECT p FROM SRITipoInvestigador p WHERE p.getNIdTipoInvestigador = :idEntidad")
+    @NamedQuery(name="SRITipoInvestigador.GetById",query="SELECT p FROM SRITipoInvestigador p WHERE p.NIdTipoInvestigador = :idEntidad")
 })
 public class SRITipoInvestigador  extends SRIEntidad implements Serializable  {
     
@@ -35,7 +35,7 @@ public class SRITipoInvestigador  extends SRIEntidad implements Serializable  {
     
     
     @Column(name = "nombretipoinvestigador")
-    private int SNombreTipoInvestigador;
+    private String SNombreTipoInvestigador;
 
     
 
@@ -47,11 +47,11 @@ public class SRITipoInvestigador  extends SRIEntidad implements Serializable  {
         this.NIdTipoInvestigador = NIdTipoInvestigador;
     }
 
-    public int getSNombreTipoInvestigador() {
+    public String getSNombreTipoInvestigador() {
         return SNombreTipoInvestigador;
     }
 
-    public void setSNombreTipoInvestigador(int SNombreTipoInvestigador) {
+    public void setSNombreTipoInvestigador(String SNombreTipoInvestigador) {
         this.SNombreTipoInvestigador = SNombreTipoInvestigador;
     }
     

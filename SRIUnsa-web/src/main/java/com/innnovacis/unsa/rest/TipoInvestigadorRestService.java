@@ -40,23 +40,23 @@ public class TipoInvestigadorRestService {
     @Path("/registrarTipoInvestigador")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public int SaveTipoNivel(SRITipoInvestigador tipoNivel){
-        return tipoInvestigadorBusiness.Insertar(tipoNivel);
+    public int SaveTipoInvestigador(SRITipoInvestigador tipoInvestigador){
+        return tipoInvestigadorBusiness.Insertar(tipoInvestigador);
     }
     
     @PUT
     @Path("/updateTipoInvestigador")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean UpdateTipoNivel(SRITipoInvestigador tipoNivel){
-        return tipoInvestigadorBusiness.Update(tipoNivel);
+    public boolean UpdateTipoInvestigador(SRITipoInvestigador tipoInvestigador){
+        return tipoInvestigadorBusiness.Update(tipoInvestigador);
     }
     
     @PUT
     @Path("/deleteTipoInvestigador")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean DeleteTipoNivel(SRITipoInvestigador tipoNivel){
-        return tipoInvestigadorBusiness.Delete(tipoNivel);
+    public boolean DeleteTipoInvestigador(SRITipoInvestigador tipoInvestigador){
+        return tipoInvestigadorBusiness.Delete(tipoInvestigador);
     }
 }

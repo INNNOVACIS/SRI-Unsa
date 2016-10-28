@@ -52,7 +52,7 @@ investigacionApp.controller('TipoInvestigadorController', function($log, $scope,
     }
 
     $scope.registrarTipoInvestigador = function(){
-    	console.log("TipoInvestigador :: ", $scope.tipoInvestigador);
+    	console.log("TipoInvestigador Controller :: ", $scope.tipoInvestigador);
 		TipoInvestigadorService.registrarTipoInvestigador($scope.tipoInvestigador).then(registrarTipoInvestigadorSuccess, registrarTipoInvestigadorError);
     }
 
