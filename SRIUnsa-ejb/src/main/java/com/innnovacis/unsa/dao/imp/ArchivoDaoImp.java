@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 
 @Dependent
 public class ArchivoDaoImp implements IArchivoDao {
-//archivo
+
     @Inject
     private EntityManager em;
 
@@ -71,7 +71,6 @@ public class ArchivoDaoImp implements IArchivoDao {
         
         try {
             SRIArchivo entidad = em.createNamedQuery("SRIArchivo.GetById", SRIArchivo.class).setParameter("idEntidad", id).getSingleResult();
-            System.out.println("entidad   =====>  " + entidad);
             int blobLength;
             byte[] blobAsBytes;
             blobLength = (int) entidad.getBlobArchivo().length();
