@@ -1,27 +1,20 @@
-    investigacionApp.controller('homeController', function($log, $scope, $location, $rootScope, $filter, 
+    investigacionApp.controller('homeController', function($log, $scope, $location,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
-    EstructuraAreaInvestigacionService, FondoConcursableService, SharedService, FileUploader) {
+    EstructuraAreaInvestigacionService, FondoConcursableService, FileUploader) {
     
     /*
      * Parametros
      */
-    $scope.usuario = {id : 1, nombre : "ali David", usuario:"admin", clave : "abcde12345", };
-
     
-    $scope.tipoInvestigacion = {id : 0, nombre : ""};
-    $scope.nombreInvestigacion = "";
     $scope.facultad = {id : 0, nombre : ""};
     $scope.departamento = {id : 0, nombre : ""};
     $scope.escuela = {id : 0, nombre : ""};
-    $scope.duracionInvestigacion = 0;
     $scope.tipoInvestigador = {id : 0, nombre : ""};
-    $scope.fondo = {id : 0, nombre : ""};
-    $scope.asesoria = {id : 0, nombre : ""};
-    $scope.tipoProduccion = {id : 0, nombre : ""};
     $scope.tipoLabor = {id : 0, nombre : ""};
-    $scope.descripcion = "";
     $scope.colaborador = {id : 0, nombre : ""};
-      
+    $scope.descripcion = "";
+    $scope.nombreInvestigacion = "";
+    $scope.duracionInvestigacion = 0;
         
     /*********** Servicios Get All ***********/   
     
@@ -220,7 +213,7 @@
 		        break;
 		}
     	console.log($scope.Actividad);
-    }
+    };
     
     
 
