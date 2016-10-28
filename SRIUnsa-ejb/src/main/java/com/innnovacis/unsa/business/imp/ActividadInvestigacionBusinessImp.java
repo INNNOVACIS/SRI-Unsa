@@ -4,9 +4,7 @@ package com.innnovacis.unsa.business.imp;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
-import com.innnovacis.unsa.dao.IEstructuraAreaInvestigacionDao;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
 
 import javax.inject.Inject;
 import java.util.List;
