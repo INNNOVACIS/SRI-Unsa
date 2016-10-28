@@ -23,6 +23,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.sql.rowset.serial.SerialBlob;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 /**
@@ -56,6 +57,8 @@ public class ArchivoRepository {
         
     }
     
+    
+    @Transactional
     public void saveFile(InputStream inStream, String name) throws SQLException, IOException{
         
         Blob blob = null;
@@ -69,16 +72,15 @@ public class ArchivoRepository {
             Logger.getLogger(ArchivoRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        output.flush();
+        //output.flush();
         byte[] contents = output.toByteArray();
         blob = new SerialBlob(contents);
         
         Archivo archivo = new Archivo();
         archivo.setTitulo(name);
-//        archivo.setFile(blob);
+        archivo.setFile(blob);
         
-        em.merge(archivo);
-        archivoEventSrc.fire(archivo);
+        em.persist(archivo);
     }
 
     public Response descargarArchivo (int id) throws SQLException, FileNotFoundException, IOException{

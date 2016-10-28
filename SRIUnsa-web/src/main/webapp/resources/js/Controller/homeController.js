@@ -171,21 +171,23 @@
     };
     
     $scope.registrarInvestigacion = function(){
+        
         $scope.actividadInvestigacion = {
-            idTipoInvestigacion : $scope.tipoInvestigacion.id,
-            nombreInvestigacion : $scope.nombreInvestigacion,
-            idFacultad : $scope.facultad.id,
-            idDepartamento : $scope.departamento.id,
-            idEscuela : $scope.escuela.id,
-            duracionInvestigacion : $scope.duracionInvestigacion,
-            idTipoInvestigador : $scope.tipoInvestigador.id,
-            idFondo : $scope.fondo.id,
-            asesoria : $scope.asesoria.id,
-            idTipoProduccion : $scope.tipoProduccion.id,
-            idTipoLabor : $scope.tipoLabor.id,
-            //administracionAreas : $scope.customer,
-            descripcion : $scope.descripcion,
-            colaborador : $scope.usuario
+            nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
+            nhoras : $scope.duracionInvestigacion,
+            sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,
+            sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable,
+            stipoAsesoria : $scope.tipoAsesoria == undefined ? "" : $scope.tipoAsesoria.snombreTipoAsesoria,
+            ssemestre : $scope.semestre.snombreSemestre,
+            sfacultad : $scope.facultad.snombreEstructuraOrganizacion,
+            sescuela : $scope.escuela.snombreEstructuraOrganizacion,
+            sdepartamento : $scope.departamento.snombreEstructuraOrganizacion,
+            sareaInvestigacion: $scope.areaInvestigacion.sNombre,
+            ssubAreaInvestigacion : $scope.subareaInvestigacion.sNombre,
+            sdisciplina : $scope.disciplinaInvestigacion.sNombre,
+            stipoLabor : $scope.tipoLabor == undefined ? "" : $scope.tipoLabor.nombre,
+            snombreActividadInvestigacion : $scope.nombreInvestigacion,
+            sdescripcionActividad : $scope.descripcion
         };
         console.log("JSON :: ", $scope.actividadInvestigacion); 
         

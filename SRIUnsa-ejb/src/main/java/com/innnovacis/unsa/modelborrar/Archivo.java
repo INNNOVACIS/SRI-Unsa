@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @author innnovacis
  */
 @Entity
-@Table(name = "archivo")
+@Table(name = "archivonuevo")
 public class Archivo implements Serializable {
    
     @Id

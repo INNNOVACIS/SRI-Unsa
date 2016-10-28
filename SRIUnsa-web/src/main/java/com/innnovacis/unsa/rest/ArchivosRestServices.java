@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -35,10 +36,12 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
  * @author innnovacis
  */
 @Path("/files")
-@Stateless
+@RequestScoped
 public class ArchivosRestServices {
 
-     private static final String SERVER_UPLOAD_LOCATION_FOLDER = "/home/innnovacis/files/";
+//    @Inject
+//    private IArchivoBusiness 
+    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "/home/innnovacis/files/";
     
     @Inject
     private ArchivoRepository archivoRepository;
@@ -47,7 +50,6 @@ public class ArchivosRestServices {
     @Path("/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response descargarArchivo(@PathParam("id") int id) throws FileNotFoundException, IOException, SQLException {
-        System.out.println("id =======> " + id);
         return archivoRepository.descargarArchivo(id);
     }
     
@@ -122,7 +124,6 @@ public class ArchivosRestServices {
         String[] contentDispositionHeader = headers.getFirst("Content-Disposition").split(";");
 
         for (String name : contentDispositionHeader) {
-
             if ((name.trim().startsWith("filename"))) {
                 String[] tmp = name.split("=");
                 String fileName = tmp[1].trim().replaceAll("\"","");
@@ -135,8 +136,7 @@ public class ArchivosRestServices {
 
     // save uploaded file to a defined location on the server
     private void saveFile(InputStream uploadedInputStream,
-            String serverLocation) {
-        System.out.println("Body File ========> " + uploadedInputStream);
+            String serverLocation) {        
         try {
             OutputStream outpuStream = new FileOutputStream(new File(serverLocation));
             int read = 0;

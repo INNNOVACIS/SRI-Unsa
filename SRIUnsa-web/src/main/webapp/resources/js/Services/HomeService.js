@@ -29,7 +29,7 @@ investigacionApp.service("HomeService", function(SRIUnsaConfig, $log, $http, $q)
 		var deferred = $q.defer();
 		$http({
 			method : 'POST',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/investigacion/registrarInvestigacion',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/registrarActividadInvestigacion',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
