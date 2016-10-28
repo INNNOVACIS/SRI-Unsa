@@ -3,10 +3,10 @@ package com.innnovacis.unsa.business.imp;
 
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
-import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
-import com.innnovacis.unsa.dao.IEstructuraAreaInvestigacionDao;
+import com.innnovacis.unsa.business.IEstadoBusiness;
+import com.innnovacis.unsa.dao.IEstadoDao;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
+import com.innnovacis.unsa.model.SRIEstado;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -16,20 +16,20 @@ import javax.enterprise.context.Dependent;
 
 
 @Dependent
-public class EstadoBusinessImp implements IActividadInvestigacionBusiness {
+public class EstadoBusinessImp implements IEstadoBusiness {
 
     @Inject
-    private IActividadInvestigacionDao actividadInvestigacionDao;
+    private IEstadoDao estadoDao;
     
     @Inject
     private Logger log;
 
     @Override
-    public int Insertar(SRIActividadInvestigacion entidad) {
+    public int Insertar(SRIEstado entidad) {
         int id = -1;
         try{
-            entidad = actividadInvestigacionDao.Insert(entidad);
-            id = entidad.getNIdActividadInvestigacion();
+            entidad = estadoDao.Insert(entidad);
+            id = entidad.getNIdEstado();
                     
         }
         catch(Exception ex){
@@ -39,10 +39,10 @@ public class EstadoBusinessImp implements IActividadInvestigacionBusiness {
     }
 
     @Override
-    public boolean Update(SRIActividadInvestigacion entidad) {
+    public boolean Update(SRIEstado entidad) {
         boolean respuesta = false;
          try{
-            actividadInvestigacionDao.Update(entidad);
+            estadoDao.Update(entidad);
             respuesta = true;
         }
         catch(Exception ex){
@@ -53,10 +53,10 @@ public class EstadoBusinessImp implements IActividadInvestigacionBusiness {
     }
 
     @Override
-    public boolean Delete(SRIActividadInvestigacion entidad) {
+    public boolean Delete(SRIEstado entidad) {
         boolean respuesta = false;
          try{
-            actividadInvestigacionDao.Delete(entidad);
+            estadoDao.Delete(entidad);
             respuesta = true;
         }
         catch(Exception ex){
@@ -66,10 +66,10 @@ public class EstadoBusinessImp implements IActividadInvestigacionBusiness {
     }
 
     @Override
-    public SRIActividadInvestigacion Get(int idEntidad) {
-        SRIActividadInvestigacion respuesta = null;
+    public SRIEstado Get(int idEntidad) {
+        SRIEstado respuesta = null;
          try{
-            respuesta = actividadInvestigacionDao.GetById(idEntidad);
+            respuesta = estadoDao.GetById(idEntidad);
         }
         catch(Exception ex){
         }
@@ -77,10 +77,10 @@ public class EstadoBusinessImp implements IActividadInvestigacionBusiness {
     }
 
     @Override
-    public List<SRIActividadInvestigacion> GetAll() {
-         List<SRIActividadInvestigacion> respuesta = null;
+    public List<SRIEstado> GetAll() {
+         List<SRIEstado> respuesta = null;
          try{
-            respuesta = actividadInvestigacionDao.GetAll();
+            respuesta = estadoDao.GetAll();
         }
         catch(Exception ex){
         }
