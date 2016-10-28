@@ -6,17 +6,16 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.borrar.ArchivoRepository;
+import com.innnovacis.unsa.business.IArchivoBusiness;
+import com.innnovacis.unsa.model.SRIArchivo;
 import com.innnovacis.unsa.modelborrar.ArchivoData;
+import com.innnovacis.unsa.util.Convert;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -39,12 +38,14 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 @RequestScoped
 public class ArchivosRestServices {
 
-//    @Inject
-//    private IArchivoBusiness 
-    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "/home/innnovacis/files/";
-    
+    @Inject
+    private IArchivoBusiness archivoBusiness;
+   
     @Inject
     private ArchivoRepository archivoRepository;
+    
+    @Inject
+    private Convert convert;
     
     @GET
     @Path("/{id:[0-9][0-9]*}")
@@ -69,12 +70,11 @@ public class ArchivosRestServices {
 
         Map<String, List<InputPart>> formParts = input.getFormDataMap();
         List<InputPart> inPart = formParts.get("file");
-//        int idArchivo = formParts.get("idArchivo");
         
         for (InputPart inputPart : inPart) {
             try {                
                 MultivaluedMap<String, String> headers = inputPart.getHeaders();
-                fileName = parseFileName(headers);
+                fileName = convert.parseFileName(headers);
                 InputStream istream = inputPart.getBody(InputStream.class,null);
                 archivoRepository.actualizarArchivo(istream, fileName);
             } catch (IOException e) {
@@ -88,69 +88,30 @@ public class ArchivosRestServices {
     }
     
     @POST
+    @Path("/subirArchivos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(MultipartFormDataInput input) throws SQLException           
-    {
+    public Response SubirArchivo(MultipartFormDataInput input){
+        
+        SRIArchivo archivo = new SRIArchivo();
         String fileName = "";
-
         Map<String, List<InputPart>> formParts = input.getFormDataMap();
-
         List<InputPart> inPart = formParts.get("file");
-        System.out.println("lista de inputPart :: " + inPart.size());
         
         for (InputPart inputPart : inPart) {
-
             try {                
                 MultivaluedMap<String, String> headers = inputPart.getHeaders();
-                fileName = parseFileName(headers);
                 InputStream istream = inputPart.getBody(InputStream.class,null);
-//                fileName = SERVER_UPLOAD_LOCATION_FOLDER + fileName;
-                archivoRepository.saveFile(istream, fileName);
-//                saveFile(istream,fileName);
                 
+                archivo.setSNombreArchivo(convert.parseFileName(headers));
+                archivo.setBlobArchivo(convert.InputStreamToBlob(istream));
+                archivoBusiness.Insertar(archivo);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         
-        String output = "File saved to server location : " + fileName;        
-
+        String output = "File saved to server location : " + fileName; 
         return Response.status(200).entity(output).build();
     }
     
-    // Parse Content-Disposition header to get the original file name
-    private String parseFileName(MultivaluedMap<String, String> headers) {
-
-        String[] contentDispositionHeader = headers.getFirst("Content-Disposition").split(";");
-
-        for (String name : contentDispositionHeader) {
-            if ((name.trim().startsWith("filename"))) {
-                String[] tmp = name.split("=");
-                String fileName = tmp[1].trim().replaceAll("\"","");
-
-                return fileName;
-            }
-        }
-        return "randomName";
-    }
-
-    // save uploaded file to a defined location on the server
-    private void saveFile(InputStream uploadedInputStream,
-            String serverLocation) {        
-        try {
-            OutputStream outpuStream = new FileOutputStream(new File(serverLocation));
-            int read = 0;
-            byte[] bytes = new byte[1024];
-
-            outpuStream = new FileOutputStream(new File(serverLocation));
-            while ((read = uploadedInputStream.read(bytes)) != -1) {
-                    outpuStream.write(bytes, 0, read);
-            }
-            outpuStream.flush();
-            outpuStream.close();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
 }
