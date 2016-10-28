@@ -18,7 +18,7 @@ import javax.enterprise.context.Dependent;
 @Dependent
 public class EstadoBusinessImp implements IEstadoBusiness {
 
-    @Inject
+    @Inject  
     private IEstadoDao estadoDao;
     
     @Inject

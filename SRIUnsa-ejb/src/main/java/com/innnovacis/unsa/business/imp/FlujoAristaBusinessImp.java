@@ -54,7 +54,7 @@ public class FlujoAristaBusinessImp implements IFlujoAristaBusiness {
          return respuesta;
         
     }
-
+// pruebaa
     @Override
     public boolean Delete(SRIFlujoArista entidad) {
         boolean respuesta = false;
