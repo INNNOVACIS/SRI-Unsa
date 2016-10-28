@@ -5,7 +5,6 @@
  */
 package com.innnovacis.unsa.rest;
 
-import com.innnovacis.unsa.borrar.ArchivoRepository;
 import com.innnovacis.unsa.business.IArchivoBusiness;
 import com.innnovacis.unsa.model.SRIArchivo;
 import com.innnovacis.unsa.util.Convert;
@@ -40,9 +39,6 @@ public class ArchivosRestServices {
 
     @Inject
     private IArchivoBusiness archivoBusiness;
-   
-    @Inject
-    private ArchivoRepository archivoRepository;
     
     @Inject
     private Convert convert;
@@ -66,6 +62,7 @@ public class ArchivosRestServices {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response actualizarArchivo(MultipartFormDataInput input) throws SQLException           
     {
+        SRIArchivo entidad = new SRIArchivo();
         String fileName = "";
 
         Map<String, List<InputPart>> formParts = input.getFormDataMap();
@@ -76,7 +73,7 @@ public class ArchivosRestServices {
                 MultivaluedMap<String, String> headers = inputPart.getHeaders();
                 fileName = convert.parseFileName(headers);
                 InputStream istream = inputPart.getBody(InputStream.class,null);
-                archivoRepository.actualizarArchivo(istream, fileName);
+                archivoBusiness.Update(entidad);
             } catch (IOException e) {
                 e.printStackTrace();
             }
