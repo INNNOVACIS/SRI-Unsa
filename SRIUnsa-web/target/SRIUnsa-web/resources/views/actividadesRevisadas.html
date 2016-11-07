@@ -57,14 +57,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="actividad in actividades">
-                            <td>{{ actividad.id }}</td>
-                            <td><strong>{{ actividad.nombreInvestigacion }}</strong></td>
-                            <td>{{ actividad.docente.nombre }}</td>
-                            <td>{{ actividad.docente.dni }}</td>
-                            <td>{{ actividad.tipoInvestigacion.nombre }}</td>
-                            <td>{{ actividad.duracion }}</td>
-                            <td>{{ actividad.totalArchivos }}</td>
+                        <tr ng-repeat="actividadRevisada in actividadesRevisadas">
+                            <td>{{ actividadRevisada.id }}</td>
+                            <td><strong>{{ actividadRevisada.snombreActividadInvestigacion }}</strong></td>
+                            <td>{{ actividadRevisada.docente.nombre }}</td>
+                            <td>{{ actividadRevisada.docente.dni }}</td>
+                            <td>{{ actividadRevisada.nidTipoActividadInvestigacion }}</td>
+                            <td>{{ actividadRevisada.nhoras }}</td>
+                            <td>{{ actividadRevisada.totalArchivos }}</td>
                             <td nowrap>
                                 <button type="button" class="btn btn-info btn-xs" ng-click="panelChange(2)" >
                                     <span class="glyphicon glyphicon-pencil"></span> Ver

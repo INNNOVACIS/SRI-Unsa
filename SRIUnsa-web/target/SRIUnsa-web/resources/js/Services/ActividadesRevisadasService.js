@@ -9,7 +9,7 @@ investigacionApp.service("ActividadesRevisadasService", function(SRIUnsaConfig, 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/listarUsuarios',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/listarActividadInvestigacion',
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			

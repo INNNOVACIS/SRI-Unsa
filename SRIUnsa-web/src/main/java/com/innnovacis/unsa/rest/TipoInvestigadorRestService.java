@@ -17,6 +17,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.innnovacis.unsa.business.ITipoInvestigadorBusiness;
+import com.innnovacis.unsa.model.SRITipoActividadInvestigacion;
+import com.innnovacis.unsa.modelborrar.Member;
+import javax.ws.rs.PathParam;
 
 /**
  *
@@ -28,6 +31,14 @@ public class TipoInvestigadorRestService {
 
     @Inject
     private ITipoInvestigadorBusiness tipoInvestigadorBusiness;
+    
+    @GET
+    @Path("/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public SRITipoActividadInvestigacion GetById(@PathParam("id") long id) {
+        
+        return null;
+    }
     
     @GET
     @Path("/listarTipoInvestigador")
