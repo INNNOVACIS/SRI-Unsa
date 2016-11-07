@@ -7,7 +7,6 @@ package com.innnovacis.unsa.borrar;
 
 import com.innnovacis.unsa.model.SRIArchivo;
 import com.innnovacis.unsa.modelborrar.Archivo;
-import com.innnovacis.unsa.modelborrar.ArchivoData;
 import com.innnovacis.unsa.util.SRIArchivoUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
