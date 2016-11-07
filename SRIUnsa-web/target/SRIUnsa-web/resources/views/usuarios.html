@@ -39,9 +39,10 @@
 	                        </tbody>
 	                    </table>
                             <paginacion 
-                                page="5" 
-                                page-size="10" 
-                                total="100"
+                                current-page={{pageDirectiva.currentPage}}
+                                page-size={{pageDirectiva.pageSize}}
+                                total={{pageDirectiva.total}}
+                                data={{pageDirectiva.data}}
                                 >
                             </paginacion>
                             

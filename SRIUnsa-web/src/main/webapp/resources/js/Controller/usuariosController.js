@@ -139,4 +139,17 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     };
 
     $scope.getUsuarios();
+    
+    /** prueba paginacion **/
+    
+    $scope.pageDirectiva = {
+        currentPage : 1,
+        pageSize : 5,
+        total : 100,
+        data : [
+            {id : 1, nombre : "Alberto001"},
+            {id : 2, nombre : "Alberto002"},
+            {id : 3, nombre : "Alberto003"}
+        ]
+    };
 });

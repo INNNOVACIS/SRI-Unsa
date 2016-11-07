@@ -163,6 +163,8 @@
     $scope.actividadInvestigacion = {};
     
     var registrarInvestigacionSuccess = function(response){
+        console.log("cola :: ", uploader.queue);
+        uploader.uploadAll();
         $log.debug(response);
     };
     
@@ -197,14 +199,14 @@
     // START example DataPicker
     $scope.dt = new Date(2020, 5, 22);
 
-    $scope.open = function($event) {
+    $scope.open = function() {
         $scope.status.opened = true;
     };
 
     $scope.format = 'dd-MMMM-yyyy';
 
     $scope.status = {
-    opened: false
+        opened: false
     };
     // END example DataPicker
 
@@ -314,7 +316,7 @@
     $scope.uploadAll = function(){
         console.log("cola :: ", uploader.queue);
         uploader.uploadAll();
-    }
+    };
 
         // CALLBACKS
 

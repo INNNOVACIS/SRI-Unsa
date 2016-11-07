@@ -8,7 +8,7 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
                         +'            <span aria-hidden="true">&laquo;</span>'
                         +'        </a>'
                         +'    </li>'
-                        +'    <li ng-class="pagina.activo ?' + "'active'" + ": 'none'" + '" ng-repeat="pagina in paginas">'
+                        +'    <li class="{{pagina.active}}" ng-repeat="pagina in paginas">'
                         +'        <a ng-click="changePagina(pagina)">{{ pagina.numero }}</a>'
                         +'    </li>'
                         +'   <li>'
@@ -18,12 +18,38 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
                         +'    </li>'
                         +'</ul>'
                     +'</nav>',
+        scope: { 
+            method: '&' 
+        },
         link: function(scope, element, attrs) {
-            console.log("Current Page :: ", attrs.page);
+            
+            scope.paginas = [];
+            
+            console.log("Current Page :: ", attrs.currentPage);
             console.log("Page Size    :: ", attrs.pageSize);
             console.log("Total        :: ", attrs.total);
+            console.log("Total        :: ", attrs.data);
             console.log("paginas      :: ", scope.paginas);
-            scope.pages = [1,2,3,4,5,6,7,8,9];
+            
+            scope.changePagina = function(pagina){
+                console.log("click en pagina # :: ", pagina);
+                rangoPaginas(attrs.pageSize, attrs.total, attrs.currentPage);
+            };
+            
+            var rangoPaginas = function(rango, total, currentPage){
+                if(parseInt(rango) < parseInt(total)){
+                    var rangoReal = parseInt(rango);
+                } else {
+                    var rangoReal = parseInt(total);
+                }
+                for(var i = 0; i < rangoReal; i++) {
+                    var pagina = {};
+                    pagina.active = "";
+                    pagina.numero = parseInt(currentPage) + i;
+                    scope.paginas.push(pagina);
+                }
+            }
+            rangoPaginas(attrs.pageSize, attrs.total, attrs.currentPage);
         }
     };
 }]);
