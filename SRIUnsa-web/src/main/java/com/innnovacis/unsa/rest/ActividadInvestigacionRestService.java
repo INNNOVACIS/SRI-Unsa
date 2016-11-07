@@ -30,7 +30,7 @@ public class ActividadInvestigacionRestService {
     private IActividadInvestigacionBusiness investigacionBusiness;
     
     @GET
-    @Path("/listarAcividadInvestigacion")
+    @Path("/listarActividadInvestigacion")
     @Produces(MediaType.APPLICATION_JSON)
     public List<SRIActividadInvestigacion> GetAll(){
         return investigacionBusiness.GetAll();

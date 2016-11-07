@@ -7,7 +7,6 @@ package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.model.SRIArchivo;
-import com.innnovacis.unsa.util.SRIRegistrarInvestigacion;
 
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -24,7 +23,5 @@ public interface IActividadInvestigacionBusiness {
     boolean Delete(SRIActividadInvestigacion entidad);
     SRIActividadInvestigacion Get(int idEntidad);
     List<SRIActividadInvestigacion> GetAll();
-    
-    int RegistrarInvestigacion(SRIRegistrarInvestigacion entidad, SRIArchivo entidadArchivo);
 
 }
