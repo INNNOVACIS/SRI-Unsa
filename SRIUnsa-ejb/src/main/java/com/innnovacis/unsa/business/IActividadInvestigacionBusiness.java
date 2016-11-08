@@ -22,5 +22,7 @@ public interface IActividadInvestigacionBusiness {
     boolean Delete(SRIActividadInvestigacion entidad);
     SRIActividadInvestigacion Get(int idEntidad);
     List<SRIActividadInvestigacion> GetAll();
+    
+    int RegistrarActividad(SRIActividadInvestigacion entidad);
 
 }

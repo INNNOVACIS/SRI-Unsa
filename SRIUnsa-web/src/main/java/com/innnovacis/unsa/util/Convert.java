@@ -47,6 +47,26 @@ public class Convert {
         return blob;
     }
     
+    public int InputStreamToInt(InputStream input){
+                
+        String sIdActividad = "";
+       
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int read;
+        try {
+            while ((read = input.read(buffer)) != -1)
+                output.write(buffer, 0, read);
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        byte[] contents = output.toByteArray();
+        sIdActividad = new String(contents);
+
+        return Integer.parseInt(sIdActividad);
+    }
+    
     // Parse Content-Disposition header to get the original file name
     public String parseFileName(MultivaluedMap<String, String> headers) {
 

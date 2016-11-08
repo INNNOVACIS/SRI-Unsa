@@ -1,10 +1,13 @@
-    investigacionApp.controller('homeController', function($log, $scope, $location,
+    investigacionApp.controller('homeController', function($log, $scope,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, FileUploader) {
     
     /*
      * Parametros
      */
+    
+    $scope.mensajeSuccess = false;
+    $scope.mensajeError = false;
     
     $scope.facultad = {id : 0, nombre : ""};
     $scope.departamento = {id : 0, nombre : ""};
@@ -163,13 +166,20 @@
     $scope.actividadInvestigacion = {};
     
     var registrarInvestigacionSuccess = function(response){
-        console.log("cola :: ", uploader.queue);
+        addPlanificacion(response);
         uploader.uploadAll();
         $log.debug(response);
+        $scope.mensajeSuccess = true;
+        $scope.message = "id de Registro " + response;
+        scrollTop();
+        limpiarCampos();
     };
     
     var registrarInvestigacionError = function(response){
         $log.debug(response);
+        $scope.mensajeError = true;
+        $scope.message = response;
+        
     };
     
     $scope.registrarInvestigacion = function(){
@@ -179,7 +189,7 @@
             nhoras : $scope.duracionInvestigacion,
             sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,
             sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable,
-            stipoAsesoria : $scope.tipoAsesoria == undefined ? "" : $scope.tipoAsesoria.snombreTipoAsesoria,
+            stipoAsesoria : $scope.tipoAsesoria === undefined ? "" : $scope.tipoAsesoria.snombreTipoAsesoria,
             ssemestre : $scope.semestre.snombreSemestre,
             sfacultad : $scope.facultad.snombreEstructuraOrganizacion,
             sescuela : $scope.escuela.snombreEstructuraOrganizacion,
@@ -187,7 +197,7 @@
             sareaInvestigacion: $scope.areaInvestigacion.sNombre,
             ssubAreaInvestigacion : $scope.subareaInvestigacion.sNombre,
             sdisciplina : $scope.disciplinaInvestigacion.sNombre,
-            stipoLabor : $scope.tipoLabor == undefined ? "" : $scope.tipoLabor.nombre,
+            stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
             snombreActividadInvestigacion : $scope.nombreInvestigacion,
             sdescripcionActividad : $scope.descripcion
         };
@@ -245,35 +255,59 @@
     $scope.actividadChange = function(seleccionado){
     	$scope.Actividad = seleccionado;
     	switch ($scope.Actividad) {
-		    case 'Investigación Formativa':
-		        $scope.actividad1_show = true;
-			    $scope.actividad2_show = false;
-			    $scope.actividad3_show = false;
-			    $scope.actividad4_show = false;
-		        break;
-		    case 'Asesoria de Tesis':
-		        $scope.actividad1_show = false;
-			    $scope.actividad2_show = true;
-			    $scope.actividad3_show = false;
-			    $scope.actividad4_show = false;
-		        break;
-		    case 'Investigaciones Básicas y Aplicadas':
-		        $scope.actividad1_show = false;
-			    $scope.actividad2_show = false;
-			    $scope.actividad3_show = true;
-			    $scope.actividad4_show = false;
-		        break;
-		    case 'Producción Intelectual':
-		        $scope.actividad1_show = false;
-			    $scope.actividad2_show = false;
-			    $scope.actividad3_show = false;
-			    $scope.actividad4_show = true;
-		        break;
-		}
+            case 'Investigación Formativa':
+                $scope.actividad1_show = true;
+                    $scope.actividad2_show = false;
+                    $scope.actividad3_show = false;
+                    $scope.actividad4_show = false;
+                break;
+            case 'Asesoria de Tesis':
+                $scope.actividad1_show = false;
+                    $scope.actividad2_show = true;
+                    $scope.actividad3_show = false;
+                    $scope.actividad4_show = false;
+                break;
+            case 'Investigaciones Básicas y Aplicadas':
+                $scope.actividad1_show = false;
+                    $scope.actividad2_show = false;
+                    $scope.actividad3_show = true;
+                    $scope.actividad4_show = false;
+                break;
+            case 'Producción Intelectual':
+                $scope.actividad1_show = false;
+                    $scope.actividad2_show = false;
+                    $scope.actividad3_show = false;
+                    $scope.actividad4_show = true;
+                break;
+        }
     	console.log($scope.Actividad);
     };
     
+    /********** funciones utilitarias **********/
+    var scrollTop = function(){
+        $('html,body').animate({
+            scrollTop: $("#container").offset().top
+        }, 1000);
+    };
     
+    var limpiarCampos = function(){
+        $scope.tipoInvestigacion = {};
+        $scope.duracionInvestigacion = '';
+        $scope.tipoProduccion = {};
+        $scope.fondo = {};
+        $scope.tipoAsesoria = {};
+        $scope.semestre = {};
+        $scope.facultad = {};
+        $scope.escuela = {};
+        $scope.departamento = {};
+        $scope.areaInvestigacion = {};
+        $scope.subareaInvestigacion = {};
+        $scope.disciplinaInvestigacion = {};
+        $scope.tipoLabor = {};
+        $scope.nombreInvestigacion = "";
+        $scope.descripcion = "";
+        $scope.actividadInvestigacion = {};
+    };
 
     /********** FILE UPLOAD **********/  
 
@@ -292,67 +326,72 @@
         var file = $scope.archivo;
         var formData = new FormData();
         formData.append('file', file);
-        
-        console.log("archivo :: ", $scope.archivo);
-        console.log("FILE :: ", file);
-        console.log("FD :: ", formData);
 
         HomeService.sendFile(formData, true).then(homeServiceSuccess, homeServiceError);
     };
 
     var uploader = $scope.uploader = new FileUploader({
-            url: 'http://localhost:8080/SRIUnsa-web/rest/files/subirArchivos'
-        });
-
-        // FILTERS
+        url: 'http://localhost:8080/SRIUnsa-web/rest/files/subirArchivos'
+    });
+    
+    // FILTERS
 
     uploader.filters.push({
-            name: 'customFilter',
-            fn: function(item /*{File|FileLikeObject}*/, options) {
-                return this.queue.length < 10;
-            }
-        });
+        name: 'customFilter',
+        fn: function(item , options) {
+            return this.queue.length < 10;
+        }
+    });
 
     $scope.uploadAll = function(){
-        console.log("cola :: ", uploader.queue);
+        addPlanificacion();
         uploader.uploadAll();
     };
+    
+    var addPlanificacion = function(idPlanificacion){
+        angular.forEach(uploader.queue, function(value, key) {
+            console.log(value.file.name);
+            value.formData.push({
+                idPlanificacion: idPlanificacion
+            });
+        });
+    };
 
-        // CALLBACKS
+    // CALLBACKS
 
-        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-            console.info('onWhenAddingFileFailed', item, filter, options);
-        };
-        uploader.onAfterAddingFile = function(fileItem) {
-            console.info('onAfterAddingFile', fileItem);
-        };
-        uploader.onAfterAddingAll = function(addedFileItems) {
-            console.info('onAfterAddingAll', addedFileItems);
-        };
-        uploader.onBeforeUploadItem = function(item) {
-            console.info('onBeforeUploadItem', item);
-        };
-        uploader.onProgressItem = function(fileItem, progress) {
-            console.info('onProgressItem', fileItem, progress);
-        };
-        uploader.onProgressAll = function(progress) {
-            console.info('onProgressAll', progress);
-        };
-        uploader.onSuccessItem = function(fileItem, response, status, headers) {
-            console.info('onSuccessItem', fileItem, response, status, headers);
-        };
-        uploader.onErrorItem = function(fileItem, response, status, headers) {
-            console.info('onErrorItem', fileItem, response, status, headers);
-        };
-        uploader.onCancelItem = function(fileItem, response, status, headers) {
-            console.info('onCancelItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteItem = function(fileItem, response, status, headers) {
-            console.info('onCompleteItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteAll = function() {
-            console.info('onCompleteAll');
-        };
+    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        //console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+    uploader.onAfterAddingFile = function(fileItem) {
+        //console.info('onAfterAddingFile', fileItem);
+    };
+    uploader.onAfterAddingAll = function(addedFileItems) {
+        //console.info('onAfterAddingAll', addedFileItems);
+    };
+    uploader.onBeforeUploadItem = function(item) {
+        //console.info('onBeforeUploadItem', item);
+    };
+    uploader.onProgressItem = function(fileItem, progress) {
+        //console.info('onProgressItem', fileItem, progress);
+    };
+    uploader.onProgressAll = function(progress) {
+        //console.info('onProgressAll', progress);
+    };
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        //console.info('onSuccessItem', fileItem, response, status, headers);
+    };
+    uploader.onErrorItem = function(fileItem, response, status, headers) {
+        //console.info('onErrorItem', fileItem, response, status, headers);
+    };
+    uploader.onCancelItem = function(fileItem, response, status, headers) {
+        //console.info('onCancelItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        //console.info('onCompleteItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteAll = function() {
+        //console.info('onCompleteAll');
+    };
 
-        console.info('uploader', uploader);
+    //console.info('uploader', uploader);
 });

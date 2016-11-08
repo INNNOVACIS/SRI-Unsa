@@ -73,4 +73,13 @@ public class ActividadInvestigacionRestService {
         }
         return actividadInvestigacion;
     }
+    
+    @POST
+    @Path("/registrarActividadPlanificacion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public int RegistrarActividadInvestigacion(SRIActividadInvestigacion investigacion){
+        return investigacionBusiness.RegistrarActividad(investigacion);
+    }
+    
 }

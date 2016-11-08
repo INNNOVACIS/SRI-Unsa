@@ -24,7 +24,7 @@
         border-color: #4cae4c;
       }
 </style>
-<div class="container-fluid">
+<div id="container" class="container-fluid">
     <div class="panel panel-danger" >
         <div class="panel-body">
             <div class="col-xm-12">
@@ -233,6 +233,16 @@
         </div>
     </div>
 </div>
+
+<div ng-show="mensajeSuccess" class="alert alert-success fade in">
+    <a class="close" data-dismiss="alert">&times;</a>
+    <strong>Correcto! </strong> {{ message }}
+</div>
+<div ng-show="mensajeError" class="alert alert-error fade in">
+    <a class="close" data-dismiss="alert">&times;</a>
+    <strong>Error! </strong> {{ message }}
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">

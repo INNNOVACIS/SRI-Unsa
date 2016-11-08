@@ -5,7 +5,9 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
 import com.innnovacis.unsa.dao.IArchivoDao;
+import com.innnovacis.unsa.dao.IPlanificacionActividadDao;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import com.innnovacis.unsa.model.SRIPlanificacionActividad;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -19,6 +21,9 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
 
     @Inject
     private IActividadInvestigacionDao actividadInvestigacionDao;
+    
+    @Inject
+    private IPlanificacionActividadDao planificacionActividadDao;
     
     @Inject
     private IArchivoDao archivoDao;
@@ -87,6 +92,20 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         catch(Exception ex){
         }
          return respuesta;
+    }
+
+    @Override
+    public int RegistrarActividad(SRIActividadInvestigacion entidad) {
+        int id = -1;
+        SRIPlanificacionActividad entidadPlanificacion = new SRIPlanificacionActividad();
+        try{
+            entidad = actividadInvestigacionDao.Insert(entidad);
+            entidadPlanificacion.setNIdActividadInvestigacion(entidad.getNIdActividadInvestigacion());
+            id = planificacionActividadDao.Insert(entidadPlanificacion).getNIdPlanificacionActidad();
+        }
+        catch(Exception ex){
+        }
+        return id;
     }
 
 }

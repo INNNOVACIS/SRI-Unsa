@@ -91,8 +91,19 @@ public class ArchivosRestServices {
         
         SRIArchivo archivo = new SRIArchivo();
         String fileName = "";
+        int idPlanificacion = 0;
+        
         Map<String, List<InputPart>> formParts = input.getFormDataMap();
         List<InputPart> inPart = formParts.get("file");
+        List<InputPart> inId = formParts.get("idPlanificacion");
+        
+        for (InputPart inputPart : inId) {
+            try {                
+                InputStream istream = inputPart.getBody(InputStream.class,null);
+                archivo.setNIdPlanificacion(convert.InputStreamToInt(istream));
+            } catch (IOException e) {
+            }
+        }
         
         for (InputPart inputPart : inPart) {
             try {                
@@ -103,7 +114,6 @@ public class ArchivosRestServices {
                 archivo.setBlobArchivo(convert.InputStreamToBlob(istream));
                 archivoBusiness.Insertar(archivo);
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
         
