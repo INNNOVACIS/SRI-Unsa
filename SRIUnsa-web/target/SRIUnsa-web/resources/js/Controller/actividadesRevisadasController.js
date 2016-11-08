@@ -1,26 +1,29 @@
-investigacionApp.controller('actividadesRevisadasController', function($scope, ActividadesRevisadasService) {    
+investigacionApp.controller('actividadesRevisadasController', function($log, $scope, ActividadesRevisadasService, 
+    SemestreService, TipoInvestigacionService, FondoConcursableService) {    
     
     $scope.panelGenerados = true;
     $scope.panelVer = false;
     $scope.panelEditar = false;
-    $scope.actividad= "primer valor";
+    $scope.actividadRevisada= {};
 
-    $scope.panelChange = function(panel){
-            if(panel === 1){
-                    $scope.panelGenerados = true;
-                    $scope.panelVer = false;
-                    $scope.panelEditar = false;
+    $scope.panelChange = function(panel, actividadRevisada){
+        if(panel === 1){
+            $scope.panelGenerados = true;
+            $scope.panelVer = false;
+            $scope.panelEditar = false;
+        }else{
+            if(panel === 2){
+                $scope.panelGenerados = false;
+                $scope.panelVer = true;
+                $scope.panelEditar = false;
+                $scope.actividadRevisada = actividadRevisada;
+                $scope.getActividadById(actividadRevisada);
             }else{
-                    if(panel === 2){
-                            $scope.panelGenerados = false;
-                            $scope.panelVer = true;
-                            $scope.panelEditar = false;
-                    }else{
-                            $scope.panelGenerados = false;
-                            $scope.panelVer = false;
-                            $scope.panelEditar = true;
-                    }
+                $scope.panelGenerados = false;
+                $scope.panelVer = false;
+                $scope.panelEditar = true;
             }
+        }
     };
     
     var getFiltroSuccess = function(response){
@@ -30,9 +33,6 @@ investigacionApp.controller('actividadesRevisadasController', function($scope, A
        console.log("Error :: " , response);
     };
     
-    $scope.getInvestigaciones = function(){
-        //ActividadesRevisadasService.getActividadesRevisadas().then(getActividadServiceSuccess, getActividadServiceError);
-    };
     
     $scope.filtrar = function(){
         var filtro = {
@@ -46,18 +46,79 @@ investigacionApp.controller('actividadesRevisadasController', function($scope, A
         ActividadesRevisadasService.Filtrar(filtro).then(getFiltroSuccess, getFiltroError);
     };
     
-    var getInvestigacionSuccess = function(response){
+    /*********** Servicios Get All ***********/  
+    
+    var getFondoServiceSuccess = function(response){
+    	$log.debug("Get Fondo - Success");
+    	$scope.fondos = response;
+    };
+
+    var getFondoServiceError = function(response){
+     	$log.debug("Get Fondo - Error"); 
+    };
+    
+    var getActividadesRevisadasSuccess = function(response){
         $scope.actividadesRevisadas = response;
         console.log("succcess :: ", response);
     };
     
-    var getInvestigacionError = function(response){
+    var getActividadesRevisadasError = function(response){
         console.log("error :: ", response);
     };
     
-    $scope.getActividadesRevisadas = function(){
-        ActividadesRevisadasService.getInvestigaciones().then(getInvestigacionSuccess, getInvestigacionError);
+    var getTipoInvestigacionSuccess = function(response){
+    	$log.debug("Get Investigacion - Success");
+        console.log("Response Investigacion :: ", response);
+    	$scope.tipoInvestigaciones = response;
     };
     
+    var getTipoInvestigacionError = function(response){
+     	$log.debug("Get Investigacion - Error");
+        console.log("Error Response Investigacion :: ", response);
+    };
+    
+    var getSemestreServiceSuccess = function(response){
+    	$log.debug("Get Semestre - Success");        
+    	$scope.semestres = response;
+    };
+    
+    var getSemestreServiceError = function(response){
+     	$log.debug("Get Semestre - Error");
+        console.log("Error Response Semestre :: ", response);
+    };
+    
+    var getInvestigacionByIdSuccess = function(response){
+        console.log("getInvestigacionByIdSuccess :: ", response);
+        $scope.actividadRevisadaVista = response;
+    };
+    
+    var getInvestigacionByIdError = function(response){
+        console.log("getInvestigacionByIdError :: ", response);
+    };
+    
+    
+    $scope.getFondos = function(){
+      	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
+    };
+    
+    $scope.getSemestres = function(){
+      	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
+    };
+    
+    $scope.getActividadById = function(actividad){
+        TipoInvestigacionService.getInvestigacionesById(actividad.idactividadinvestigacion).then(getInvestigacionByIdSuccess, getInvestigacionByIdError);
+    };
+    
+    $scope.getTipoInvestigacion = function(){
+      	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
+    };
+    
+    $scope.getActividadesRevisadas = function(){
+        ActividadesRevisadasService.getInvestigaciones().then(getActividadesRevisadasSuccess, getActividadesRevisadasError);
+    };
+    
+    $scope.getFondos();
+    $scope.getSemestres();
+    $scope.getTipoInvestigacion();
     $scope.getActividadesRevisadas();
 });

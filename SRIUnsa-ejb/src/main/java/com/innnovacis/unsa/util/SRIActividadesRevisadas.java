@@ -28,11 +28,22 @@ public class SRIActividadesRevisadas implements Serializable {
     @Column(name = "nombreactividad" )
     private String nombreactividad;
     
+    @Column(name = "tipoactividad" )
+    private String tipoactividad;
+    
     @Column(name = "horas" )
     private int horas;
     
     @Column(name = "cantidad" )
     private int cantidad;
+
+    public String getTipoactividad() {
+        return tipoactividad;
+    }
+
+    public void setTipoactividad(String tipoactividad) {
+        this.tipoactividad = tipoactividad;
+    }
 
     public int getIdactividadinvestigacion() {
         return idactividadinvestigacion;
@@ -65,7 +76,5 @@ public class SRIActividadesRevisadas implements Serializable {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
-    
     
 }

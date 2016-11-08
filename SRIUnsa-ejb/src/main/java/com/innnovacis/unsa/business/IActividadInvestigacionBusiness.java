@@ -6,7 +6,6 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import com.innnovacis.unsa.model.SRIArchivo;
 
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;

@@ -9,7 +9,7 @@ investigacionApp.service("TipoInvestigacionService", function(SRIUnsaConfig, $lo
 		var deferred = $q.defer();
 		$http({
 			method : 'GET',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoInvestigacion/listarTipoInvestigacion/' + idEntidad,
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/getActividad/' + idEntidad,
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function(response) {			

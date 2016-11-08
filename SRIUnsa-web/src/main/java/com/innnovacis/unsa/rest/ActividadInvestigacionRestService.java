@@ -15,8 +15,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -58,5 +61,16 @@ public class ActividadInvestigacionRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public boolean DeleteActividadInvestigacion(SRIActividadInvestigacion investigacion){
         return investigacionBusiness.Delete(investigacion);
+    }
+    
+    @GET
+    @Path("getActividad/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public SRIActividadInvestigacion getActividadById(@PathParam("id") int id) {
+        SRIActividadInvestigacion actividadInvestigacion = investigacionBusiness.Get(id);
+        if (actividadInvestigacion == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return actividadInvestigacion;
     }
 }
