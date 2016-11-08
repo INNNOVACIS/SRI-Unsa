@@ -26,7 +26,7 @@ public class ActividadInvestigacionRevisadaBusinessImp implements IActividadInve
             respuesta = actividadRevisadaDao.GetAll();
         }
         catch(Exception ex){
-            System.out.println(ex);
+
         }
          return respuesta;
     }

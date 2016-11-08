@@ -9,13 +9,16 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import org.eclipse.persistence.annotations.ReadOnly;
+import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Subselect;
 
 /**
  *
  * @author will
  */
-
+@Entity
+@Immutable
+@Subselect("")
 public class SRIActividadesRevisadas implements Serializable {
     
     @Id
@@ -30,13 +33,6 @@ public class SRIActividadesRevisadas implements Serializable {
     
     @Column(name = "cantidad" )
     private int cantidad;
-    
-    public SRIActividadesRevisadas(){
-        this.idactividadinvestigacion = 0;
-        this.nombreactividad = "";
-        this.horas = 0;
-        this.cantidad = 0;
-    }
 
     public int getIdactividadinvestigacion() {
         return idactividadinvestigacion;
