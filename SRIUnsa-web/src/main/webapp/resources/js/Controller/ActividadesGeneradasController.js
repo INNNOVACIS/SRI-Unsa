@@ -21,6 +21,8 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
                 $scope.panelGenerados = false;
                 $scope.panelVer = false;
                 $scope.panelEditar = true;
+                $scope.actividadGenerada = actividadGenerada;
+                $scope.getActividadById(actividadGenerada);
             }
         }
     };

@@ -24,9 +24,9 @@
         border-color: #4cae4c;
       }
 </style>
-<div id="container" class="container-fluid">
-    <div class="panel panel-danger" >
-        <div class="panel-body">
+<div id="container" class="container">
+<!--    <div class="panel panel-danger" >
+        <div class="panel-body">-->
             <div class="col-xm-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">Actividad de Investigación: <strong>{{tipoInvestigacion.nombre}}</strong></div>
@@ -79,7 +79,7 @@
                                         <div class="col-md-4">
                                                 <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''"></select>
                                         </div>
-                                        <label class="control-label col-md-2"> Duracion de la Actividad</label>
+                                        <label class="control-label col-md-2"> Duración </label>
                                         <div class="col-md-4">
                                                 <input class="form-control" type="number" style="margin:2px;" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación">
                                         </div>
@@ -230,8 +230,8 @@
                     </div>
                 </div>	
             </div>
-        </div>
-    </div>
+<!--        </div>
+    </div>-->
 </div>
 
 <div ng-show="mensajeSuccess" class="alert alert-success fade in">

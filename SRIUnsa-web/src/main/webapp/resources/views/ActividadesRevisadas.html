@@ -1,16 +1,13 @@
 
-<div class="container-fluid">
-  <div class="panel panel-danger" >
-    <div class="panel-body">
+<div class="container">
+<!--  <div class="panel panel-danger" >
+    <div class="panel-body">-->
       <div class="col-xm-12" ng-show="panelGenerados">
         <div class="panel panel-info">
 
-
-        <div class="panel-heading">Actividades de Investigación Revisadas</div>
             <div class="panel-body">
-                <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="control-label col-md-2" style="">Tipo de Investigación</label>
+                <div class="col-md-10">
+                    <label class="control-label col-md-2" style="">Investigación</label>
                     <div class="col-md-4">
                         <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-init="tipoInvestigacion=''" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)></select>
                     </div>
@@ -54,20 +51,20 @@
                     <div class="col-md-4">
                         <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
                     </div>
-                    <div class="col-md-12" style="margin-top:10px;">
-                        <a class="col-md-offset-2 btn btn-primary" ng-click="filtrar()" >
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
-                        </a>
-                    </div>
-                  </div>
-                </form>
-              </div>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary" ng-click="filtrar()" >
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
+                    </a> 
+                </div>
             </div>
+        </div>
+            
             <div class="panel panel-danger">
                 <div class="panel-heading">Actividades de Investigación Generadas</div>
                 <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table">
+                    <div class="dataTable_wrapper">
+                        <table width="100%" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
                                   <th>#</th>
@@ -200,6 +197,6 @@
                     </div>
                 </div>  
             </div><!-- FIN PANEL VER -->
-        </div>
-    </div>
+<!--        </div>
+    </div>-->
 </div>
