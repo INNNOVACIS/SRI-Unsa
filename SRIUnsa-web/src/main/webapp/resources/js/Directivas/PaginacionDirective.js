@@ -48,7 +48,7 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
                     pagina.numero = parseInt(currentPage) + i;
                     scope.paginas.push(pagina);
                 }
-            }
+            };
             rangoPaginas(attrs.pageSize, attrs.total, attrs.currentPage);
         }
     };
