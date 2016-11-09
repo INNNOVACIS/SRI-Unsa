@@ -1,26 +1,26 @@
-investigacionApp.controller('actividadesPendientesController', function($log, $scope, FondoConcursableService, 
+investigacionApp.controller('ActividadesPendientesController', function($log, $scope, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesPendientesService) {
 	
     $scope.panelGenerados = true;
     $scope.panelVer = false;
     $scope.panelEditar = false;    
 
-    $scope.panelChange = function(panel){
-            if(panel === 1){
-                    $scope.panelGenerados = true;
-                    $scope.panelVer = false;
-                    $scope.panelEditar = false;
+    $scope.panelChange = function(panel, actividadGenerada){
+        if(panel === 1){
+            $scope.panelGenerados = true;
+            $scope.panelVer = false;
+            $scope.panelEditar = false;
+        }else{
+            if(panel === 2){
+                $scope.panelGenerados = false;
+                $scope.panelVer = true;
+                $scope.panelEditar = false;
             }else{
-                    if(panel === 2){
-                            $scope.panelGenerados = false;
-                            $scope.panelVer = true;
-                            $scope.panelEditar = false;
-                    }else{
-                            $scope.panelGenerados = false;
-                            $scope.panelVer = false;
-                            $scope.panelEditar = true;
-                    }
+                $scope.panelGenerados = false;
+                $scope.panelVer = false;
+                $scope.panelEditar = true;
             }
+        }
     };
     
     /******************* Servicios Callback *******************/

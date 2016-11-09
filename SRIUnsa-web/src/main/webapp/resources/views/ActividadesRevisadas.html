@@ -1,0 +1,205 @@
+
+<div class="container-fluid">
+  <div class="panel panel-danger" >
+    <div class="panel-body">
+      <div class="col-xm-12" ng-show="panelGenerados">
+        <div class="panel panel-info">
+
+
+        <div class="panel-heading">Actividades de Investigación Revisadas</div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-2" style="">Tipo de Investigación</label>
+                    <div class="col-md-4">
+                        <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-init="tipoInvestigacion=''" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)></select>
+                    </div>
+                    <label class="control-label col-md-2">Facultad</label>
+                    <div class="col-md-4">
+                        <select ng-model="facultad"                
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
+                            class="form-control"
+                            ng-change="facultadChange()"
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="facultad=''">
+                        </select>
+                    </div>
+                    <label class="control-label col-md-2">Departamento</label>
+                    <div class="col-md-4">
+                        <select  ng-model="departamento"
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
+                            class="form-control"
+                            ng-change="departamentoChange()"
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="departamento=''">
+                        </select> 
+                    </div>
+                    <label class="control-label col-md-2">Escuela</label>
+                    <div class="col-md-4">
+                        <select  ng-model="escuela"
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
+                            class="form-control" 
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="escuela=''">
+                        </select> 
+                    </div>
+                    <label class="control-label col-md-2">Semestre</label>
+                    <div class="col-md-4">
+                        <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''"></select>
+                    </div>
+                    <label class="control-label col-md-2"> Fondo Concursable</label>
+                    <div class="col-md-4">
+                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px;">
+                        <a class="col-md-offset-2 btn btn-primary" ng-click="filtrar()" >
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
+                        </a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="panel panel-danger">
+                <div class="panel-heading">Actividades de Investigación Generadas</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Nombre de la Actividad</th>
+                                  <th>Docente</th>
+                                  <th>N° DNI</th>
+                                  <th>Tipo de Actividad de Investigación</th>
+                                  <th>Duración</th>
+                                  <th>Archivos subidos</th>
+                                  <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="actividadRevisada in actividadesRevisadas">
+                                    <td>{{ actividadRevisada.idactividadinvestigacion }}</td>
+                                    <td><strong>{{ actividadRevisada.nombreactividad }}</strong></td>
+                                    <td>{{ actividadRevisada.docente.nombre }}</td>
+                                    <td>{{ actividadRevisada.docente.dni }}</td>
+                                    <td>{{ actividadRevisada.tipoactividad }}</td>
+                                    <td>{{ actividadRevisada.horas }}</td>
+                                    <td>{{ actividadRevisada.cantidad }}</td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-info btn-xs" ng-click="panelChange(2, actividadRevisada)" >
+                                            <span class="glyphicon glyphicon-pencil"></span> Ver
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- PANEL VER -->
+            <div class="col-xm-12" ng-show="panelVer">
+                <div class="panel panel-info">
+                    <div class="panel-heading">Revisar Actividad de Investigación <strong>{{selected}}</strong><button style="padding:3px 12px;" type="submit" class="btn btn-danger pull-right" ng-click="panelChange(1)">X</button></div>
+                    <div class="panel-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Tipo Actividad</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisada.tipoactividad" />
+                                </div>
+                                <label class="control-label col-md-2" >Nombre Actividad</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.snombreActividadInvestigacion">
+                                </div>
+                                <label class="control-label col-md-2" >Facultad</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.sfacultad">
+                                </div>
+                                <label class="control-label col-md-2">Departamento</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.sdepartamento">
+                                </div>
+                                <label class="control-label col-md-2">Escuela</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.sescuela">
+                                </div>
+                                <label class="control-label col-md-2">Semestre</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.ssemestre">
+                                </div>
+                                <label class="control-label col-md-2"> Duracion de la Actividad</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.nhoras">
+                                </div>
+                                <div id="actividad3" ng-show="actividad3_show">
+                                    <label class="control-label col-md-2">Investigador</label>
+                                    <div class="col-md-4">
+                                        <input readonly="readonly" class="form-control" style="margin:2px;" >
+                                    </div>
+                                    <label class="control-label col-md-2"> Fondo Concursable</label>
+                                    <div class="col-md-4">
+                                        <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.sfondoConcursable">
+                                    </div>
+                                </div>
+                                <div id="actividad2" ng-show="actividad2_show">
+                                    <label class="control-label col-md-2"> Tipo de Asesoria</label>
+                                    <div class="col-md-4">
+                                        <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.stipoAsesoria">
+                                    </div>
+                                </div>
+                                <div id="actividad4" ng-show="actividad4_show">
+                                    <label class="control-label col-md-2"> Tipo de Producción</label>
+                                    <div class="col-md-4">
+                                        <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.sritipoProduccion">
+                                    </div>
+                                </div>
+                                <div id="actividad1" ng-show="actividad1_show">
+                                    <label class="control-label col-md-2">Tipo de Labor</label>
+                                    <div class="col-md-4">
+                                        <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.stipoLabor">
+                                    </div>
+                                </div>
+                                <label class="control-label col-md-2"> Colaboradores</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;"  value="Eduardo Zapana">
+                                </div>
+                                <label class="control-label col-md-2"> Area Investigación</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.sareaInvestigacion">
+                                </div>
+                                <label class="control-label col-md-2"> Sub-Area Investigación</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.ssubAreaInvestigacion">
+                                </div>
+                                <label class="control-label col-md-2"> Disciplina</label>
+                                <div class="col-md-4">
+                                    <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadRevisadaVista.sdisciplina">
+                                </div>  
+                            </div>
+                        </form>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-2"> Descripción de la Actividad</label>
+                                <div class="col-md-10">
+                                  <textarea readonly="readonly" style="margin:2px;" class="form-control" rows="5" ng-model="actividadRevisadaVista.sdescripcionActividad"></textarea> 
+                                </div>
+                                <label class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
+                                <div class="col-md-10">
+                                    <input id="file-1" style="margin:2px;" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+                                </div>
+                            </div>
+                        </form>
+                        <button class="col-md-offset-2 btn-success btn-lg" type="button" data-dismiss="modal">Aprobado</button>
+                        <button type="button" class="btn-danger btn-lg" data-dismiss="modal" ng-click="panelChange(1)">Rechazado</button>
+                    </div>
+                </div>  
+            </div><!-- FIN PANEL VER -->
+        </div>
+    </div>
+</div>

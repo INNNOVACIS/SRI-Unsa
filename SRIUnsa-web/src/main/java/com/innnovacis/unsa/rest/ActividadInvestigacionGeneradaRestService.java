@@ -19,15 +19,15 @@ import javax.ws.rs.core.MediaType;
  *
  * @author innnovacis
  */
-@Path("/actividadInvestigacionRevisada")
+@Path("/actividadInvestigacionGenerada")
 @RequestScoped
-public class ActividadInvestigacionRevisadaRestService {
+public class ActividadInvestigacionGeneradaRestService {
 
     @Inject
     private IActividadInvestigacionRevisadaBusiness actividadRevisadaBusiness;
     
     @GET
-    @Path("/listarActividadInvestigacion")
+    @Path("/listarActividadGenerada")
     @Produces(MediaType.APPLICATION_JSON)
     public List<SRIActividadesRevisadas> GetAll(){
         return actividadRevisadaBusiness.GetAll();

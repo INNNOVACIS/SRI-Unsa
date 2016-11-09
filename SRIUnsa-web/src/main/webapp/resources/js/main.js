@@ -10,17 +10,17 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/home.html',
 		controller : 'homeController'
 	})
-	.when('/investigacion',{
-		templateUrl : 'resources/views/investigacion.html',
-		controller : 'investigacionController'
+	.when('/actividadesGeneradas',{
+		templateUrl : 'resources/views/ActividadesGeneradas.html',
+		controller : 'ActividadesGeneradasController'
 	})
 	.when('/actividadesRevisadas',{
-		templateUrl : 'resources/views/actividadesRevisadas.html',
-		controller : 'actividadesRevisadasController'
+		templateUrl : 'resources/views/ActividadesRevisadas.html',
+		controller : 'ActividadesRevisadasController'
 	})
 	.when('/actividadesPendientes',{
-		templateUrl : 'resources/views/actividadesPendientes.html',
-		controller : 'actividadesPendientesController'
+		templateUrl : 'resources/views/ActividadesPendientes.html',
+		controller : 'ActividadesPendientesController'
 	})
 	.when('/relacionDocentes',{
 		templateUrl : 'resources/views/relacionDocentes.html',

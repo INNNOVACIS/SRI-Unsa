@@ -1,12 +1,11 @@
-investigacionApp.controller('actividadesRevisadasController', function($log, $scope, ActividadesRevisadasService, 
-    SemestreService, TipoInvestigacionService, FondoConcursableService) {    
-    
+investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, FondoConcursableService, 
+    SemestreService, TipoInvestigacionService, ActividadesGeneradasService) {
+	
     $scope.panelGenerados = true;
     $scope.panelVer = false;
     $scope.panelEditar = false;
-    $scope.actividadRevisada= {};
 
-    $scope.panelChange = function(panel, actividadRevisada){
+    $scope.panelChange = function(panel, actividadGenerada){
         if(panel === 1){
             $scope.panelGenerados = true;
             $scope.panelVer = false;
@@ -16,8 +15,8 @@ investigacionApp.controller('actividadesRevisadasController', function($log, $sc
                 $scope.panelGenerados = false;
                 $scope.panelVer = true;
                 $scope.panelEditar = false;
-                $scope.actividadRevisada = actividadRevisada;
-                $scope.getActividadById(actividadRevisada);
+                $scope.actividadGenerada = actividadGenerada;
+                $scope.getActividadById(actividadGenerada);
             }else{
                 $scope.panelGenerados = false;
                 $scope.panelVer = false;
@@ -26,27 +25,7 @@ investigacionApp.controller('actividadesRevisadasController', function($log, $sc
         }
     };
     
-    var getFiltroSuccess = function(response){
-       console.log("success :: ", response);
-    };
-    var getFiltroError = function(response){
-       console.log("Error :: " , response);
-    };
-    
-    
-    $scope.filtrar = function(){
-        var filtro = {
-            tipoInvestigacion : $scope.actividad.nombre,
-            facultad : $scope.facultad.nombre,
-            escuela : $scope.escuela.nombre,
-            semestre : $scope.semestre.nombre,
-            fondo : $scope.fondo.nombre
-        };
-        console.log("filtrar :: ", filtro);
-        ActividadesRevisadasService.Filtrar(filtro).then(getFiltroSuccess, getFiltroError);
-    };
-    
-    /*********** Servicios Get All ***********/  
+    /******************* Servicios Callback *******************/
     
     var getFondoServiceSuccess = function(response){
     	$log.debug("Get Fondo - Success");
@@ -54,27 +33,7 @@ investigacionApp.controller('actividadesRevisadasController', function($log, $sc
     };
 
     var getFondoServiceError = function(response){
-     	$log.debug("Get Fondo - Error"); 
-    };
-    
-    var getActividadesRevisadasSuccess = function(response){
-        $scope.actividadesRevisadas = response;
-        console.log("succcess :: ", response);
-    };
-    
-    var getActividadesRevisadasError = function(response){
-        console.log("error :: ", response);
-    };
-    
-    var getTipoInvestigacionSuccess = function(response){
-    	$log.debug("Get Investigacion - Success");
-        console.log("Response Investigacion :: ", response);
-    	$scope.tipoInvestigaciones = response;
-    };
-    
-    var getTipoInvestigacionError = function(response){
-     	$log.debug("Get Investigacion - Error");
-        console.log("Error Response Investigacion :: ", response);
+     	$log.debug("Get Fondo - Error", response); 
     };
     
     var getSemestreServiceSuccess = function(response){
@@ -87,15 +46,36 @@ investigacionApp.controller('actividadesRevisadasController', function($log, $sc
         console.log("Error Response Semestre :: ", response);
     };
     
+    var getTipoInvestigacionSuccess = function(response){
+    	$log.debug("Get Investigacion - Success");
+        console.log("Respuesta Investigacion :: ", response);
+    	$scope.tipoInvestigaciones = response;
+    };
+    
+    var getTipoInvestigacionError = function(response){
+     	$log.debug("Get Investigacion - Error");
+        console.log("Error Response Investigacion :: ", response);
+    };
+    
     var getInvestigacionByIdSuccess = function(response){
         console.log("getInvestigacionByIdSuccess :: ", response);
-        $scope.actividadRevisadaVista = response;
+        $scope.actividadGeneradaVista = response;
     };
     
     var getInvestigacionByIdError = function(response){
         console.log("getInvestigacionByIdError :: ", response);
     };
     
+    var getAllActividadesGeneradasSuccess = function(response){
+        $scope.actividadesGeneradas = response;
+        console.log("succcess :: ", response);
+    };
+    
+    var getAllActividadesGeneradasError = function(response){
+        console.log("error :: ", response);
+    };
+    
+    /******************* Servicios *******************/
     
     $scope.getFondos = function(){
       	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
@@ -113,12 +93,12 @@ investigacionApp.controller('actividadesRevisadasController', function($log, $sc
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
     };
     
-    $scope.getActividadesRevisadas = function(){
-        ActividadesRevisadasService.getInvestigaciones().then(getActividadesRevisadasSuccess, getActividadesRevisadasError);
+    $scope.getAllActividadesGeneradas = function(){
+        ActividadesGeneradasService.getAllActividadesGeneradas().then(getAllActividadesGeneradasSuccess, getAllActividadesGeneradasError);
     };
     
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
-    $scope.getActividadesRevisadas();
+    $scope.getAllActividadesGeneradas();
 });

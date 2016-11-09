@@ -1,4 +1,4 @@
-investigacionApp.controller('actividadesRevisadasController', function($log, $scope, ActividadesRevisadasService, 
+investigacionApp.controller('ActividadesRevisadasController', function($log, $scope, ActividadesRevisadasService, 
     SemestreService, TipoInvestigacionService, FondoConcursableService) {    
     
     $scope.panelGenerados = true;
