@@ -1,8 +1,8 @@
 investigacionApp.controller('headerController', function($scope, $location, $rootScope, $filter, SharedService) {
 
-	$scope.sharedService = SharedService;
-	
-	$scope.menuTab = 1;    
+    $scope.sharedService = SharedService;
+
+    $scope.menuTab = 1;    
     $scope.message = 'José Herrera';
     /*Rol de Usuario*/
     $scope.rol_menu_1 = false; //registrar actividad
@@ -61,7 +61,7 @@ investigacionApp.controller('headerController', function($scope, $location, $roo
                 $scope.rol_menu_7 = true; ////configuracion
                 $scope.rol_menu_8 = false; //generar docente
                 $scope.setMenuTab(2);
-                $location.path("/investigacion");
+                $location.path("/actividadesGeneradas");
                 break;
             case 'Director de Unidad de Investigación':
                 $scope.rol_menu_1 = true; //registrar actividad

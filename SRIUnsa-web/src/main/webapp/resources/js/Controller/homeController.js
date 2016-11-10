@@ -394,4 +394,9 @@
     };
 
     //console.info('uploader', uploader);
+    
+    
+    $scope.click = function(test){
+        console.log("click :: ", test);
+    };
 });

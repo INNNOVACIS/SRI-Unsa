@@ -1,5 +1,5 @@
 investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, FondoConcursableService, 
-    SemestreService, TipoInvestigacionService, ActividadesGeneradasService) {
+    SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService) {
 	
     $scope.panelGenerados = true;
     $scope.panelVer = false;
@@ -62,6 +62,7 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     var getInvestigacionByIdSuccess = function(response){
         console.log("getInvestigacionByIdSuccess :: ", response);
         $scope.actividadGeneradaVista = response;
+        editarActividad(response);
     };
     
     var getInvestigacionByIdError = function(response){
@@ -78,6 +79,20 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     };
     
     /******************* Servicios *******************/
+    
+    var getAreaInvestigacionServiceSuccess = function(response){
+    	$log.debug("Get AreaInvestigacion - Success");
+    	$scope.areaInvestigaciones = response;
+    };
+
+    var getAreaInvestigacionServiceError = function(response){
+     	$log.debug("Get AreaInvestigacion - Error"); 
+    };
+    
+    
+    $scope.getAreaInvestigaciones = function(){
+      	EstructuraAreaInvestigacionService.getAreaInvestigaciones().then(getAreaInvestigacionServiceSuccess, getAreaInvestigacionServiceError);
+    };
     
     $scope.getFondos = function(){
       	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
@@ -103,4 +118,66 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
     $scope.getAllActividadesGeneradas();
+    $scope.getAreaInvestigaciones();
+    
+    /************ Editar Actividad Investigacion ***************/
+    
+    var editarActividad = function(actividad){
+        $scope.semestre = $scope.semestres[seleccionarSemestre(actividad.ssemestre)];
+        $scope.tipoInvestigacion = seleccionarTipoInvestigacion(actividad.nidTipoActividadInvestigacion);
+        $scope.areaInvestigacion = seleccionarArea(actividad.sareaInvestigacion);
+        $scope.subareaInvestigacion = seleccionarArea(actividad.ssubAreaInvestigacion);
+        $scope.disciplinaInvestigacion = seleccionarArea(actividad.sdisciplina);
+    };
+    
+    var seleccionarSemestre = function(nombre){
+        var respuesta = -1;
+        angular.forEach($scope.semestres, function(obj, key) {
+            if(obj.snombreSemestre === nombre){
+                respuesta = key;
+            }
+        });
+        return respuesta;
+    };
+    
+    var seleccionarTipoInvestigacion = function(idTipoActividad){
+        var respuesta = null;
+        angular.forEach($scope.tipoInvestigaciones, function(obj, key){
+            if(obj.nidTipoActividadInvestigacion === idTipoActividad){
+                respuesta = obj;
+            }
+        });
+        return respuesta;
+    };
+    
+    var seleccionarArea = function(nombre){
+        var respuesta = null;
+        angular.forEach($scope.areaInvestigaciones, function(obj, key){
+            if(obj.sNombre === nombre){
+                respuesta = obj;
+            }
+        });
+        return respuesta;
+    };
+    
+//    var seleccionarSubArea = function(nombre){
+//        var respuesta = null;
+//        angular.forEach($scope.areaInvestigaciones, function(obj, key){
+//            if(obj.sNombre === nombre){
+//                respuesta = obj;
+//            }
+//        });
+//        return respuesta;
+//    };
+//    
+//    var seleccionarDisciplina = function(nombre){
+//        var respuesta = null;
+//        angular.forEach($scope.areaInvestigaciones, function(obj, key){
+//            if(obj.sNombre === nombre){
+//                respuesta = obj;
+//            }
+//        });
+//        return respuesta;
+//    };
+    
 });

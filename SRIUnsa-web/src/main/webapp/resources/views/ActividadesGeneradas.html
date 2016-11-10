@@ -3,7 +3,7 @@
 <!--    <div class="panel panel-danger" >
         <div class="panel-body">-->
             <div class="col-xm-12" ng-show="panelGenerados">
-                <div class="panel panel-info">
+                <div class="panel panel-primary">
 
                     <div class="panel-body">
                         <div class="col-md-10">
@@ -131,7 +131,7 @@
                                 <div class="col-md-4">
                                     <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadGeneradaVista.ssemestre">
                                 </div>
-                                <label class="control-label col-md-2"> Duracion de la Actividad</label>
+                                <label class="control-label col-md-2"> Duracion </label>
                                 <div class="col-md-4">
                                     <input readonly="readonly" class="form-control" style="margin:2px;" ng-model="actividadGeneradaVista.nhoras">
                                 </div>
@@ -228,15 +228,11 @@
                                 <div class="col-md-4">
                                     <input class="form-control" style="margin:2px;" ng-model="actividadGeneradaVista.sescuela">
                                 </div>
-<!--                                <label class="control-label col-md-2">Semestre</label>
-                                <div class="col-md-4">
-                                    <input class="form-control" style="margin:2px;" ng-model="actividadGeneradaVista.ssemestre">
-                                </div>-->
                                 <label class="control-label col-md-2">Semestre</label>
                                 <div class="col-md-4">
-                                    <select class="form-control" style="margin:2px;" ng-init="semestre={ snombreSemestre: 'actividadGeneradaVista.ssemestre'}" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres"></select>
+                                    <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres"></select>
                                 </div>
-                                <label class="control-label col-md-2"> Duracion de la Actividad</label>
+                                <label class="control-label col-md-2"> Duracion </label>
                                 <div class="col-md-4">
                                     <input class="form-control" style="margin:2px;" ng-model="actividadGeneradaVista.nhoras">
                                 </div>
@@ -274,16 +270,16 @@
                                 </div>
                                 <label class="control-label col-md-2"> Area Investigación</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" style="margin:2px;" ng-model="actividadGeneradaVista.sareaInvestigacion">
+                                    <select ng-model="areaInvestigacion" ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: '0'}" class="form-control" style="margin:2px;"></select>
                                 </div>
                                 <label class="control-label col-md-2"> Sub-Area Investigación</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" style="margin:2px;" ng-model="actividadGeneradaVista.ssubAreaInvestigacion">
+                                    <select  ng-model="subareaInvestigacion" ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: areaInvestigacion.nidEstructura}" class="form-control" style="margin:2px;"></select> 
                                 </div>
                                 <label class="control-label col-md-2"> Disciplina</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" style="margin:2px;" ng-model="actividadGeneradaVista.sdisciplina">
-                                </div>  
+                                    <select ng-model="disciplinaInvestigacion" ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: subareaInvestigacion.nidEstructura}" class="form-control" style="margin:2px;"></select> 
+                                </div>
                             </div>
                         </form>
                         <form class="form-horizontal">
