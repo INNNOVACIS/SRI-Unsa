@@ -93,6 +93,13 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <paginacion 
+                            click-paginacion="getFilas(page)"
+                            current-page={{pageDirectiva.currentPage}}
+                            page-size={{pageDirectiva.rango}}
+                            total={{pageDirectiva.total}}
+                            data-contenido-paginacion={{pageDirectiva.data}} >
+                        </paginacion>
                     </div>
                 </div>
             </div>

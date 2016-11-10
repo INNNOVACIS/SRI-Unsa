@@ -1,5 +1,5 @@
 investigacionApp.controller('ActividadesRevisadasController', function($log, $scope, ActividadesRevisadasService, 
-    SemestreService, TipoInvestigacionService, FondoConcursableService) {    
+    SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService) {    
     
     $scope.panelGenerados = true;
     $scope.panelVer = false;
@@ -46,7 +46,43 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
         ActividadesRevisadasService.Filtrar(filtro).then(getFiltroSuccess, getFiltroError);
     };
     
-    /*********** Servicios Get All ***********/  
+    /*********** Servicios Callback ***********/  
+    
+    var getTipoNivelServiceSuccess = function(response){
+    	$log.debug("Get tipoNivel - Success");
+    	console.log("Success :: ", response);
+    	$scope.niveles = response;
+        $scope.getEstructuraOrganizaciones();
+    };
+
+    var getTipoNivelServiceError = function(response){
+     	$log.debug("Get TipoNivel - Error"); 
+    };
+
+    var getEstructuraOrganizacionServiceSuccess = function(response){
+    	$log.debug("Get EstructuraOrganizacion - Success");
+        
+        angular.forEach(response, function(superior, key) {
+            angular.forEach(response, function(value, key) {
+                if(superior.nidPadre === value.nidEstructuraOrganizacion){
+                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
+                }
+            });
+            angular.forEach($scope.niveles, function(nivel, key) {
+                if(superior.nidTipoNivel === nivel.nidTipoNivel){
+                    
+                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
+                }
+            });
+        });
+        
+    	$scope.estructuraOrganizaciones = response;
+        console.log("Estructura Organizacion :: ", $scope.estructuraOrganizaciones);
+    };
+
+    var getEstructuraOrganizacionServiceError = function(response){
+     	$log.debug("Get EstructuraOrganizacion - Error"); 
+    };
     
     var getFondoServiceSuccess = function(response){
     	$log.debug("Get Fondo - Success");
@@ -96,6 +132,15 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
         console.log("getInvestigacionByIdError :: ", response);
     };
     
+    /******************* Servicios *******************/
+    
+    $scope.getListaTipoNivel = function(){
+      	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
+    };
+
+    $scope.getEstructuraOrganizaciones = function(){
+      	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
+    };
     
     $scope.getFondos = function(){
       	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
@@ -117,8 +162,24 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
         ActividadesRevisadasService.getInvestigaciones().then(getActividadesRevisadasSuccess, getActividadesRevisadasError);
     };
     
+    $scope.getListaTipoNivel();
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
     $scope.getActividadesRevisadas();
+    
+    $scope.facultadChange = function(){
+        $scope.departamento = {};
+        $scope.escuela = {};
+    };
+    $scope.departamentoChange = function(){
+        $scope.escuela = {};
+    };
+     $scope.pageDirectiva = {
+        currentPage : 1,
+        rango : 5,
+        total : 12,
+        filtro : {},
+        data : []
+    };
 });

@@ -57,7 +57,6 @@
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
                             </a> 
                         </div>
-                        
                     </div>
                 </div>
                 
@@ -95,6 +94,13 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <paginacion 
+                                click-paginacion="getFilas(page)"
+                                current-page={{pageDirectiva.currentPage}}
+                                page-size={{pageDirectiva.rango}}
+                                total={{pageDirectiva.total}}
+                                data-contenido-paginacion={{pageDirectiva.data}} >
+                            </paginacion>
                         </div>
                     </div>
                 </div>

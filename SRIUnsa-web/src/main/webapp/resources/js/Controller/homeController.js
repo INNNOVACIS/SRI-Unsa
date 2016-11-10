@@ -226,21 +226,6 @@
     $scope.actividad3_show = false;
     $scope.actividad4_show = false;
 
-    $scope.facultades = [
-        {id : 1, nombre : 'Facultad de Producción y Servicios'},
-        {id : 2, nombre : 'Facultad de Procesos'},
-        {id : 3, nombre : 'Facultad de Ingenieria Civil'}
-    ];
-    $scope.departamentos = [
-        {id : 1, nombre : 'Departamento Académico FISICA'},
-        {id : 2, nombre : 'Departamento Académico QUÍMICA'},
-        {id : 3, nombre : 'Departamento Académico MATEMATICAS'}
-    ];
-    $scope.escuelas = [
-        {id : 1, nombre : 'Escuela Profesional de Ingeniería de Sistemas'},
-        {id : 2, nombre : 'Industrias Alimentarias'},
-        {id : 3, nombre : 'Ingeniería Mecánica'}
-    ];
 
     $scope.tipoInvestigadores = [
         {id : 1, nombre : 'Principal'},
@@ -284,6 +269,8 @@
         console.log("ng-change tipo :: ", $scope.tipo);
         console.log("ng-change tipo investigacion:: ", $scope.tipoInvestigacion);
     };
+    
+    
     
     /********** funciones utilitarias **********/
     var scrollTop = function(){

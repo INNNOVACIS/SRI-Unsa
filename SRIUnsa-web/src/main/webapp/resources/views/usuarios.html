@@ -4,13 +4,17 @@
 			<div class="col-xm-12">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						Administración de Usuarios
-						<button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoUsuario">
-							<span class="glyphicon glyphicon-plus"></span>
-							Nuevo
-						</button>	
+                                            Administración de Usuarios
+                                            
+                                            <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoUsuario">
+                                                <span class="glyphicon glyphicon-plus"></span> Nuevo
+                                            </button>	
 					</div>
 					<div class="panel-body">
+                                            <div class="form-group">
+                                                <input style="width:30%;" ng-model="buscar" class="form-control" placeholder="Buscar">
+                                            </div>
+                                            
 						<table width="100%" class="table table-striped table-bordered table-hover">
 	                        <thead>
 	                            <tr>
@@ -41,7 +45,7 @@
                             <paginacion 
                                 click-paginacion="getUsuarios(page)"
                                 current-page={{pageDirectiva.currentPage}}
-                                page-size={{pageDirectiva.pageSize}}
+                                page-size={{pageDirectiva.rango}}
                                 total={{pageDirectiva.total}}
                                 data-contenido-paginacion={{pageDirectiva.data}} >
                             </paginacion>

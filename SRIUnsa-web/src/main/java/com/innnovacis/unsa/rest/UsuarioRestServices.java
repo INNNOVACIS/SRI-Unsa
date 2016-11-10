@@ -7,6 +7,7 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -28,6 +29,15 @@ public class UsuarioRestServices {
 
     @Inject
     private IUsuarioBusiness usuarioBusiness;
+    
+    @POST
+    @Path("/paginacionUsuarios")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public SRIUsuariosPaginacion paginacionUsuario(SRIUsuariosPaginacion usuario) {
+        System.out.println("usuario =========> " + usuario);
+        return usuario;
+    }
     
     @GET
     @Path("/listarUsuarios")

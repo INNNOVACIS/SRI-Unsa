@@ -3,6 +3,22 @@
  */
 investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.paginacionUsuario = function(request) {
+		$log.debug("Usuario Service - PaginacionUsuario");
+		
+		var deferred = $q.defer();
+		$http({
+			method : 'POST',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/paginacionUsuarios',
+			data : request
+		}).success(function(response) {
+			deferred.resolve(response);
+		}).error(function(response) {			
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	};
+        
 	this.getUsuarios = function() {
 		$log.debug("Usuario Service - get Usuarios");
 		

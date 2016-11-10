@@ -1,5 +1,5 @@
 investigacionApp.controller('ActividadesPendientesController', function($log, $scope, FondoConcursableService, 
-    SemestreService, TipoInvestigacionService, ActividadesPendientesService) {
+    SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService) {
 	
     $scope.panelGenerados = true;
     $scope.panelVer = false;
@@ -24,6 +24,76 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     };
     
     /******************* Servicios Callback *******************/
+    
+    var getTipoNivelServiceSuccess = function(response){
+    	$log.debug("Get tipoNivel - Success");
+    	console.log("Success :: ", response);
+    	$scope.niveles = response;
+        $scope.getEstructuraOrganizaciones();
+    };
+
+    var getTipoNivelServiceError = function(response){
+     	$log.debug("Get TipoNivel - Error"); 
+    };
+
+    var getEstructuraOrganizacionServiceSuccess = function(response){
+    	$log.debug("Get EstructuraOrganizacion - Success");
+        
+        angular.forEach(response, function(superior, key) {
+            angular.forEach(response, function(value, key) {
+                if(superior.nidPadre === value.nidEstructuraOrganizacion){
+                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
+                }
+            });
+            angular.forEach($scope.niveles, function(nivel, key) {
+                if(superior.nidTipoNivel === nivel.nidTipoNivel){
+                    
+                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
+                }
+            });
+        });
+        
+    	$scope.estructuraOrganizaciones = response;
+        console.log("Estructura Organizacion :: ", $scope.estructuraOrganizaciones);
+    };
+
+    var getEstructuraOrganizacionServiceError = function(response){
+     	$log.debug("Get EstructuraOrganizacion - Error"); 
+    };
+    
+    var getTipoNivelServiceSuccess = function(response){
+    	$log.debug("Get tipoNivel - Success");    	
+    	$scope.niveles = response;
+        $scope.getEstructuraOrganizaciones();
+    };
+
+    var getTipoNivelServiceError = function(response){
+     	$log.debug("Get TipoNivel - Error"); 
+    };
+
+    var getEstructuraOrganizacionServiceSuccess = function(response){
+    	$log.debug("Get EstructuraOrganizacion - Success");
+        
+        angular.forEach(response, function(superior, key) {
+            angular.forEach(response, function(value, key) {
+                if(superior.nidPadre === value.nidEstructuraOrganizacion){
+                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
+                }
+            });
+            angular.forEach($scope.niveles, function(nivel, key) {
+                if(superior.nidTipoNivel === nivel.nidTipoNivel){
+                    
+                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
+                }
+            });
+        });
+        
+    	$scope.estructuraOrganizaciones = response;
+    };
+
+    var getEstructuraOrganizacionServiceError = function(response){
+     	$log.debug("Get EstructuraOrganizacion - Error"); 
+    };
     
     var getFondoServiceSuccess = function(response){
     	$log.debug("Get Fondo - Success");
@@ -76,6 +146,14 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     
     /******************* Servicios *******************/
     
+    $scope.getListaTipoNivel = function(){
+      	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
+    };
+
+    $scope.getEstructuraOrganizaciones = function(){
+      	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
+    };
+    
     $scope.getFondos = function(){
       	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
     };
@@ -96,9 +174,25 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
         ActividadesPendientesService.getAllActividadesPendientes().then(getAllActividadesPendientessSuccess, getAllActividadesPendientesError);
     };
     
+    $scope.getListaTipoNivel();
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
     $scope.getAllActividadesPendientes();
     
+    $scope.facultadChange = function(){
+        $scope.departamento = {};
+        $scope.escuela = {};
+    };
+    $scope.departamentoChange = function(){
+        $scope.escuela = {};
+    };
+    
+     $scope.pageDirectiva = {
+        currentPage : 1,
+        rango : 5,
+        total : 12,
+        filtro : {},
+        data : []
+    };
 });
