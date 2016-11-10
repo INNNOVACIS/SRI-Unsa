@@ -35,7 +35,9 @@
                                 <div class="form-group">
                                         <label class="control-label col-md-2" style="">Actividad Investigación</label>
                                         <div class="col-md-4">
-                                       <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-init="tipoInvestigacion=''" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)></select>
+                                            <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)>
+                                                <option value="">--Select a value--</option>
+                                            </select>
 <!--                                            <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)>
                                                 <option ng-click="click(tipo)" ng-repeat="tipo in tipoInvestigaciones" >{{tipo.snombreActividadInvestigacion}}</option>
                                                 <option>Crear Tipo Investigacion</option>

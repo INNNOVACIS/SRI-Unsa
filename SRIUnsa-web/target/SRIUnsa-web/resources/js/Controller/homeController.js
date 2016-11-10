@@ -280,7 +280,9 @@
                     $scope.actividad4_show = true;
                 break;
         }
-    	console.log($scope.Actividad);
+    	console.log("ng-change actividad ::", $scope.Actividad);
+        console.log("ng-change tipo :: ", $scope.tipo);
+        console.log("ng-change tipo investigacion:: ", $scope.tipoInvestigacion);
     };
     
     /********** funciones utilitarias **********/
@@ -398,5 +400,7 @@
     
     $scope.click = function(test){
         console.log("click :: ", test);
+        console.log("click :: ", $scope.tipo);
+        console.log("click :: ", $scope.tipoInvestigacion);
     };
 });

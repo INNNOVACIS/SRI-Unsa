@@ -39,11 +39,11 @@
 	                        </tbody>
 	                    </table>
                             <paginacion 
+                                click-paginacion="getUsuarios(page)"
                                 current-page={{pageDirectiva.currentPage}}
                                 page-size={{pageDirectiva.pageSize}}
                                 total={{pageDirectiva.total}}
-                                data={{pageDirectiva.data}}
-                                >
+                                data-contenido-paginacion={{pageDirectiva.data}} >
                             </paginacion>
                             
                                             

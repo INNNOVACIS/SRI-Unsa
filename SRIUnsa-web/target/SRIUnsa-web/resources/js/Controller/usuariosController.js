@@ -54,7 +54,7 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
             }
         }
         angular.forEach($scope.paginas, function(value, key){
-            if(value.numero == paginaActual.numero)
+            if(value.numero === paginaActual.numero)
                 value.activo = true;
             else
                 value.activo = false;
@@ -145,11 +145,14 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     $scope.pageDirectiva = {
         currentPage : 1,
         pageSize : 5,
-        total : 100,
+        total : 12,
         data : [
             {id : 1, nombre : "Alberto001"},
             {id : 2, nombre : "Alberto002"},
             {id : 3, nombre : "Alberto003"}
         ]
+    };
+        $scope.getUsuarios = function(tmp){
+        console.log("controlador::", tmp);
     };
 });
