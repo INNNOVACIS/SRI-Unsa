@@ -22,13 +22,9 @@ import org.hibernate.annotations.Subselect;
 public class SRIUsuariosPaginacion implements Serializable {
     
     private int currentPage;
-    
     private int rango;
-    
     private int total;
-    
     private SRIUsuario filtro;
-    
     private List<SRIUsuario> data;
 
     
