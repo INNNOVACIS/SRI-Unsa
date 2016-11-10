@@ -147,11 +147,11 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
         rango : 5,
         total : 12,
         filtro : {susuarioLogin : "Alberto001"},
-        data : [
-            {nidUsuario : 1, susuarioLogin : "Alberto001"},
-            {nidUsuario : 2, susuarioLogin : "Alberto002"},
-            {nidUsuario : 3, susuarioLogin : "Alberto003"}
-        ]
+//        data : [
+//            {nidUsuario : 1, susuarioLogin : "Alberto001"},
+//            {nidUsuario : 2, susuarioLogin : "Alberto002"},
+//            {nidUsuario : 3, susuarioLogin : "Alberto003"}
+//        ]
     };
     
     var paginacionUsuarioSuccess =function(response){
@@ -165,7 +165,7 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     $scope.getUsuarios = function(pagina){
         $scope.pageDirectiva.filtro.susuarioLogin = $scope.buscar;
         $scope.pageDirectiva.currentPage = pagina;
-        $scope.pageDirectiva.data = [];
+//        $scope.pageDirectiva.data = [];
 //        $scope.pageDirectiva.filtro = [];
         UsuariosService.paginacionUsuario($scope.pageDirectiva).then(paginacionUsuarioSuccess. paginacionUsuarioError);
         console.log("paginacion :: ", $scope.pageDirectiva);

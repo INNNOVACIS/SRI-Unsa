@@ -5,9 +5,8 @@
  */
 package com.innnovacis.unsa.util;
 
-import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,30 +18,21 @@ import org.hibernate.annotations.Subselect;
  * @author will
  */
 
-public class SRIUsuariosPaginacion implements Serializable {
+public class SRIPaginacion implements Serializable {
     
     private int currentPage;
     private int rango;
     private int total;
-    private SRIUsuario filtro;
-//    private List<SRIUsuario> data;
+    private SRIActividadInvestigacion filtro;
 
     
-    public SRIUsuario getFiltro() {
+    public SRIActividadInvestigacion getFiltro() {
         return filtro;
     }
 
-    public void setFiltro(SRIUsuario filtro) {
+    public void setFiltro(SRIActividadInvestigacion filtro) {
         this.filtro = filtro;
     }
-    
-//    public List<SRIUsuario> getData() {
-//        return data;
-//    }
-//
-//    public void setData(List<SRIUsuario> data) {
-//        this.data = data;
-//    }
     
     public int getCurrentPage() {
         return currentPage;

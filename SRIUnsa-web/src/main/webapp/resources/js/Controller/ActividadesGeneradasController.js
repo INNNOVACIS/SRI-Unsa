@@ -2,6 +2,13 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService,
     TipoNivelService, EstructuraOrganizacionService) {
 	
+    $scope.pageDirectiva = {
+        currentPage : 1,
+        rango : 5,
+        total : 12,
+        filtro : {}
+    };   
+     
     $scope.panelGenerados = true;
     $scope.panelVer = false;
     $scope.panelEditar = false;
@@ -213,12 +220,33 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         return respuesta;
     };
     
-    $scope.pageDirectiva = {
-        currentPage : 1,
-        rango : 5,
-        total : 12,
-        filtro : {},
-        data : []
+    var getFiltros = function(){
+        var filtro = {
+            nidTipoActividadInvestigacion : $scope.tipoInvestigacion === undefined ? "" : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
+            sfacultad : $scope.facultad === undefined ? "" : $scope.facultad.snombreEstructuraOrganizacion,
+            sdepartamento : $scope.departamento === undefined ? "" : $scope.departamento.snombreEstructuraOrganizacion,
+            sescuela : $scope.escuela === undefined ? "" : $scope.escuela.snombreEstructuraOrganizacion,
+            ssemestre : $scope.semestre === undefined ? "" : $scope.semestre.snombreSemestre,
+            sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable
+        };
+        return filtro;
+        
     };
+    
+    var paginacionActividadesSuccess = function(response){
+          console.log("success :: ", response);
+    };
+    var paginacionActividadesError = function(response){
+          console.log("error :: ", response);
+    };
+    
+    $scope.getFilas = function(pagina){
+        $scope.pageDirectiva.currentPage = pagina;
+        $scope.pageDirectiva.rango = 5;
+        $scope.pageDirectiva.filtro = getFiltros();
+        console.log("filtro :: ", $scope.pageDirectiva);
+        ActividadesGeneradasService.paginacionActividades($scope.pageDirectiva).then(paginacionActividadesSuccess, paginacionActividadesError);
+    };
+    
     
 });
