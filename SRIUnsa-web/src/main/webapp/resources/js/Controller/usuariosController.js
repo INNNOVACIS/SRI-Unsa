@@ -4,6 +4,7 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     $scope.users = [];
     $scope.usuario = {};
     $scope.paginas = [];
+//    $scope.buscar = "admin";
     
     $scope.paginacion = {
         total : 1000,
@@ -67,7 +68,7 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     	console.log("Success :: ", response);
     	$scope.users = response;
 //        $scope.users = $scope.paginacion.data;
-        $scope.paginas = getNumeroPaginas($scope.paginacion.total);
+        //$scope.paginas = getNumeroPaginas($scope.paginacion.total);
     };
 
     var getUsuarioServiceError = function(response){
@@ -137,14 +138,12 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     $scope.update = function(user){
     	$scope.usuario = user;
     };
-
-    $scope.getUsuarios();
     
     /** prueba paginacion **/
     
     $scope.pageDirectiva = {
         currentPage : 1,
-        rango : 5,
+        rango : 3,
         total : 12,
         filtro : {susuarioLogin : "Alberto001"},
 //        data : [
@@ -155,20 +154,25 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     };
     
     var paginacionUsuarioSuccess =function(response){
-        console.log("succcess :: ", response);
+        $log.debug("Get paginacionUsuario - Success");
+    	console.log("Success Paginacion :: ", response);
+    	$scope.users = response;
     };
     
     var paginacionUsuarioError = function(response){
         console.log("error :: ", response);
     };
     
-    $scope.getUsuarios = function(pagina){
+    $scope.getUsuariosByPagina = function(pagina){
         $scope.pageDirectiva.filtro.susuarioLogin = $scope.buscar;
         $scope.pageDirectiva.currentPage = pagina;
 //        $scope.pageDirectiva.data = [];
 //        $scope.pageDirectiva.filtro = [];
-        UsuariosService.paginacionUsuario($scope.pageDirectiva).then(paginacionUsuarioSuccess. paginacionUsuarioError);
+        UsuariosService.paginacionUsuario($scope.pageDirectiva).then(paginacionUsuarioSuccess, paginacionUsuarioError);
         console.log("paginacion :: ", $scope.pageDirectiva);
     };
+    
+    //    $scope.getUsuarios();
+    $scope.getUsuariosByPagina(1);
     
 });

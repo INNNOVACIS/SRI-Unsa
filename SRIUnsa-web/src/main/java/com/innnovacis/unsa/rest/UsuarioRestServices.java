@@ -34,9 +34,9 @@ public class UsuarioRestServices {
     @Path("/paginacionUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public SRIUsuariosPaginacion paginacionUsuario(SRIUsuariosPaginacion usuario) {
+    public List<SRIUsuario> paginacionUsuario(SRIUsuariosPaginacion usuario) {
         System.out.println("usuario =========> " + usuario);
-        return usuario;
+        return usuarioBusiness.GetPagina(usuario);
     }
     
     @GET

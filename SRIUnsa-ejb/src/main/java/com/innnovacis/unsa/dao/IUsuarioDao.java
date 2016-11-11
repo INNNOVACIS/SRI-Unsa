@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -22,5 +23,6 @@ public interface IUsuarioDao {
     boolean Delete(SRIUsuario entidad);
     SRIUsuario GetById(int idEntidad);
     List<SRIUsuario> GetAll();  
+    List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad);
     
 }

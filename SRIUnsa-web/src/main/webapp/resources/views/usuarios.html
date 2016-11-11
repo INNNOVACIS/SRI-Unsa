@@ -12,7 +12,7 @@
 					</div>
 					<div class="panel-body">
                                             <div class="form-group">
-                                                <input style="width:30%;" ng-model="buscar" class="form-control" placeholder="Buscar">
+                                                <input style="width:30%;" ng-model="buscar" class="form-control" placeholder="Buscar" >
                                             </div>
                                             
 						<table width="100%" class="table table-striped table-bordered table-hover">
@@ -43,7 +43,7 @@
 	                        </tbody>
 	                    </table>
                             <paginacion 
-                                click-paginacion="getUsuarios(page)"
+                                click-paginacion="getUsuariosByPagina(page)"
                                 current-page={{pageDirectiva.currentPage}}
                                 page-size={{pageDirectiva.rango}}
                                 total={{pageDirectiva.total}}

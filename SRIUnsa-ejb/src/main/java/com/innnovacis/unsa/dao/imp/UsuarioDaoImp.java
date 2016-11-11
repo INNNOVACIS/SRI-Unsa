@@ -3,11 +3,12 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
-import javax.enterprise.event.Event;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
@@ -62,6 +63,16 @@ public class UsuarioDaoImp implements IUsuarioDao {
                 .getSingleResult();
         
         return usuario;
+    }
+
+    @Override
+    public List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad) {
+        Query query = em.createNativeQuery("{call usuarioPaginacion(?1,?2,?3)}", SRIUsuario.class)
+                        .setParameter(1, entidad.getFiltro().getSUsuarioLogin())
+                        .setParameter(2, entidad.getRango())
+                        .setParameter(3, entidad.getCurrentPage());
+        List<SRIUsuario> listUsuarios = query.getResultList();
+        return listUsuarios;
     }
 
 }

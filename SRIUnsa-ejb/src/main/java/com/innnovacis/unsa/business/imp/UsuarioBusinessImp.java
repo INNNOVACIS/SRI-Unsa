@@ -6,6 +6,7 @@ import com.innnovacis.unsa.business.IUsuarioBusiness;
 
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -96,6 +97,18 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         catch(Exception ex){
         }
          return respuesta;
+    }
+
+    @Override
+    public List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad) {
+        List<SRIUsuario> respuesta = null;
+         try{
+            respuesta = usuarioDao.GetPagina(entidad);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
     }
 
     

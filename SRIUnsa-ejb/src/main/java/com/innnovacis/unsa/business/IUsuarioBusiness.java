@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -22,5 +23,6 @@ public interface IUsuarioBusiness {
     boolean Delete(SRIUsuario entidad);
     SRIUsuario Get(int idEntidad);
     List<SRIUsuario> GetAll();
+    List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad);
     
 }
