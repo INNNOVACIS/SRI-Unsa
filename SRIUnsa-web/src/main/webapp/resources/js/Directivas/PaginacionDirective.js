@@ -28,9 +28,22 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
         scope: { 
             contenidoPaginacion: '@contenidoPaginacion',
             clickPaginacion: '&',
-            method: '&' 
+            method: '&' ,
+            controlTotal: '='
         },
         link: function(scope, element, attrs) {
+            scope.pagina={
+                numero : 1,
+                active : "active"
+            };
+
+            scope.$watch('controlTotal', function(newTotal, oldTotal) {                
+                if(newTotal !== undefined){
+                    scope.paginas = getNumeroPaginas(scope.pagina.numero, parseInt(attrs.pageSize), newTotal);
+                    verificarPaginaActual(parseInt(attrs.pageSize), parseInt(newTotal), parseInt(scope.pagina.numero));
+                    setPaginaActual(scope.pagina.numero);
+                }
+            }, true);
             
             scope.paginas = [];
             scope.pagina = {
@@ -43,12 +56,14 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
             console.log("Current Page :: ", attrs.currentPage);
             console.log("Page Size    :: ", attrs.pageSize);
             console.log("Total        :: ", attrs.total);
-            console.log("Total        :: ", attrs.data);
             console.log("paginas      :: ", scope.paginas);
             
             scope.changeRango = function(rango) {
                 console.log("rango :: ", rango);
                 console.log("pagina :::::  ", scope.pagina);
+                $(element).on('click', function(e) {
+                    scope.clickPaginacion({page : scope.pagina.numero, rango: scope.rango});
+                });
             };
             
             scope.changePagina = function(pagina){
@@ -56,20 +71,17 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
                 $(element).on('click', function(e) {
                     scope.clickPaginacion({page : pagina.numero, rango: scope.rango});
                 });
-                console.log("click en pagina # :: ", pagina);
-                
                 verificarPaginaActual(parseInt(attrs.pageSize), parseInt(attrs.total), parseInt(pagina.numero));
                 setPaginaActual(pagina.numero);
-                //rangoPaginas(attrs.pageSize, attrs.total, attrs.currentPage);
             };
             
             var verificarPaginaActual = function(rango, total, paginaActual){
-                if((scope.paginas[rango-1].numero - paginaActual) < 1 ){
+                if((scope.paginas[Math.ceil(total/rango)-1].numero - paginaActual) < 1 && (scope.paginas[Math.ceil(total/rango)-1].numero - paginaActual) !== 0 ){
                     scope.paginas = [];
                     if(paginaActual + rango > total ){ // (total / rango)
                         paginaActual = (total - rango);
                     }
-                    scope.paginas = getNumeroPaginas(paginaActual, rango);
+                    scope.paginas = getNumeroPaginas(paginaActual, rango, total);
                 } else {
                     if((paginaActual - scope.paginas[0].numero) < 1 ){
                         scope.paginas = [];
@@ -78,14 +90,14 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
                         } else {
                             paginaActual = paginaActual - rango + 1;
                         }
-                        scope.paginas = getNumeroPaginas(paginaActual, rango);
+                        scope.paginas = getNumeroPaginas(paginaActual, rango, total);
                     }
                 }
             };
             
-            var getNumeroPaginas = function(paginaActual, rango){
+            var getNumeroPaginas = function(paginaActual, rango, total){
                 var paginas = [];
-                for(var i = paginaActual; i < (paginaActual + rango); i++) {
+                for(var i = paginaActual; i <= Math.ceil(total/rango); i++) {
                     var pagina = {};
                     pagina.active = "";
                     pagina.numero = i;
@@ -103,9 +115,9 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
                 });
             };
             
-            scope.paginas = getNumeroPaginas(parseInt(attrs.currentPage), parseInt(attrs.pageSize));
-            verificarPaginaActual(parseInt(attrs.pageSize), parseInt(attrs.total), parseInt(attrs.currentPage));
-            setPaginaActual(parseInt(attrs.currentPage));
+//            scope.paginas = getNumeroPaginas(parseInt(attrs.currentPage), parseInt(attrs.pageSize), 5);
+//            verificarPaginaActual(parseInt(attrs.pageSize), parseInt(attrs.total), parseInt(attrs.currentPage));
+//            setPaginaActual(parseInt(attrs.currentPage));
         }
     };
 }]);

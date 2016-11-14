@@ -6,20 +6,6 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     $scope.paginas = [];
 //    $scope.buscar = "admin";
     
-    $scope.paginacion = {
-        total : 1000,
-        paginaActual : 1,
-        rango : 6,
-        rangoPaginas: 10,
-        data: [
-            {id : 1, nombre : "Ali David", usuario : "Alicito", clave : "12345"},
-            {id : 2, nombre : "Miluska A", usuario : "Alicito", clave : "12345"},
-            {id : 3, nombre : "David Mal", usuario : "Alicito", clave : "12345"},
-            {id : 4, nombre : "Monica Hu", usuario : "Alicito", clave : "12345"},
-            {id : 5, nombre : "Nolberto ", usuario : "Alicito", clave : "12345"},
-            {id : 6, nombre : "Andres Ca", usuario : "Alicito", clave : "12345"}
-        ]
-    };
     
     var getNumeroPaginas = function(total) {
         
@@ -66,7 +52,8 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
     var getUsuarioServiceSuccess = function(response){
     	$log.debug("Get Usuario - Success");
     	console.log("Success :: ", response);
-    	$scope.users = response;
+    	$scope.users = response.lista;
+        $scope.paginacion.total = response.total;
 //        $scope.users = $scope.paginacion.data;
         //$scope.paginas = getNumeroPaginas($scope.paginacion.total);
     };
@@ -145,18 +132,14 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
         currentPage : 1,
         rango : 3,
         total : 12,
-        filtro : {susuarioLogin : "Alberto001"},
-//        data : [
-//            {nidUsuario : 1, susuarioLogin : "Alberto001"},
-//            {nidUsuario : 2, susuarioLogin : "Alberto002"},
-//            {nidUsuario : 3, susuarioLogin : "Alberto003"}
-//        ]
+        filtro : {},
     };
     
-    var paginacionUsuarioSuccess =function(response){
+    var paginacionUsuarioSuccess = function(response){
         $log.debug("Get paginacionUsuario - Success");
     	console.log("Success Paginacion :: ", response);
-    	$scope.users = response;
+    	$scope.users = response.lista;
+        $scope.controladorTotal = response.total; 
     };
     
     var paginacionUsuarioError = function(response){
@@ -168,10 +151,9 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
         $scope.pageDirectiva.currentPage = pagina;
         $scope.pageDirectiva.rango = rango;
         UsuariosService.paginacionUsuario($scope.pageDirectiva).then(paginacionUsuarioSuccess, paginacionUsuarioError);
-        console.log("paginacion :: ", $scope.pageDirectiva);
     };
     
-    //    $scope.getUsuarios();
+    
     $scope.getUsuariosByPagina(1, 5);
     
 });

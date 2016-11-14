@@ -190,8 +190,8 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     };
     
     var paginacionActividadesSuccess = function(response){
-        $scope.actividadesRevisadas = response;
-        console.log("success :: ", response);
+        $scope.actividadesRevisadas = response.lista;
+        $scope.controladorTotal = response.total;
     };
     var paginacionActividadesError = function(response){
         console.log("error :: ", response);
@@ -206,7 +206,7 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     };
     
     $scope.filtrar = function() {
-        $scope.getFilas(1);
+        $scope.getFilas(1, 5);
     };
         
     $scope.getListaTipoNivel();

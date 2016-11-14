@@ -8,7 +8,9 @@ package com.innnovacis.unsa.rest;
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -18,6 +20,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -34,9 +37,17 @@ public class UsuarioRestServices {
     @Path("/paginacionUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<SRIUsuario> paginacionUsuario(SRIUsuariosPaginacion usuario) {
-        System.out.println("usuario =========> " + usuario);
-        return usuarioBusiness.GetPagina(usuario);
+    public Response paginacionUsuario(SRIUsuariosPaginacion usuario) {
+        
+        List<SRIUsuario> lista = usuarioBusiness.GetPagina(usuario);
+
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> responseObj = new HashMap<>();
+        responseObj.put("total", 11);
+        responseObj.put("lista", lista);
+        builder = Response.status(Response.Status.OK).entity(responseObj);
+        
+        return builder.build();
     }
     
     @GET
@@ -80,6 +91,22 @@ public class UsuarioRestServices {
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean deleteUsuario(SRIUsuario usuario) {
         return usuarioBusiness.Delete(usuario);
+    }
+    
+    @GET
+    @Path("/listarPrueba")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response autenticarUsuario() {   
+        List<SRIUsuario> lista = usuarioBusiness.GetAll();
+        
+        Response.ResponseBuilder builder = null;
+        
+        Map<String, Object> responseObj = new HashMap<>();
+        responseObj.put("Total", 11);
+        responseObj.put("lista", lista);
+        builder = Response.status(Response.Status.OK).entity(responseObj);
+        
+        return builder.build();
     }
     
 }

@@ -90,7 +90,7 @@ public class MemberResourceRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createMember(Member member) {
 
-        Response.ResponseBuilder builder = null;
+            Response.ResponseBuilder builder = null;
 
         try {
             // Validates member using bean validation
@@ -100,6 +100,7 @@ public class MemberResourceRESTService {
 
             // Create an "ok" response
             builder = Response.ok();
+            
         } catch (ConstraintViolationException ce) {
             // Handle bean validation issues
             builder = createViolationResponse(ce.getConstraintViolations());

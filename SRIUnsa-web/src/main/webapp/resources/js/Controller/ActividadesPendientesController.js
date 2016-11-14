@@ -202,8 +202,8 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     };
     
     var paginacionActividadesSuccess = function(response){
-        $scope.actividadesPendientes = response;
-        console.log("success :: ", response);
+        $scope.actividadesPendientes = response.lista;
+        $scope.controladorTotal = response.total;
     };
     var paginacionActividadesError = function(response){
         console.log("error :: ", response);
@@ -218,7 +218,7 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     };
     
     $scope.filtrar = function() {
-        $scope.getFilas(1);
+        $scope.getFilas(1,5);
     };
     
     $scope.getListaTipoNivel();
