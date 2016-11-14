@@ -40,9 +40,9 @@ public class ActividadInvestigacionGeneradaRestService {
     @Path("/actividadesPaginacion")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public SRIPaginacion paginacionUsuario(SRIPaginacion paginacion) {
-        System.out.println("paginacion =========> " + paginacion);
-        return paginacion;
+    public List<SRIActividadesRevisadas> paginacionUsuario(SRIPaginacion entidad) {
+        System.out.println("paginacion =========> " + entidad);
+        return actividadRevisadaBusiness.GetPaginacion(entidad);
     }
     
 }

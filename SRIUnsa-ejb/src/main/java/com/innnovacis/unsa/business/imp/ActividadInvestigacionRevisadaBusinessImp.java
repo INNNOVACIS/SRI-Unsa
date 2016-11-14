@@ -5,6 +5,7 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IActividadInvestigacionRevisadaBusiness;
 import com.innnovacis.unsa.dao.IActividadInvestigacionRevisadaDao;
 import com.innnovacis.unsa.util.SRIActividadesRevisadas;
+import com.innnovacis.unsa.util.SRIPaginacion;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -29,6 +30,19 @@ public class ActividadInvestigacionRevisadaBusinessImp implements IActividadInve
 
         }
          return respuesta;
+    }
+
+    @Override
+    public List<SRIActividadesRevisadas> GetPaginacion(SRIPaginacion entidad) {
+        
+        List<SRIActividadesRevisadas> respuesta = null;
+         try{
+            respuesta = actividadRevisadaDao.GetPagina(entidad);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
     }
 
 }

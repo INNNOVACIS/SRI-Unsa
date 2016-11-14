@@ -163,16 +163,15 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
         console.log("error :: ", response);
     };
     
-    $scope.getUsuariosByPagina = function(pagina){
+    $scope.getUsuariosByPagina = function(pagina, rango){
         $scope.pageDirectiva.filtro.susuarioLogin = $scope.buscar;
         $scope.pageDirectiva.currentPage = pagina;
-//        $scope.pageDirectiva.data = [];
-//        $scope.pageDirectiva.filtro = [];
+        $scope.pageDirectiva.rango = rango;
         UsuariosService.paginacionUsuario($scope.pageDirectiva).then(paginacionUsuarioSuccess, paginacionUsuarioError);
         console.log("paginacion :: ", $scope.pageDirectiva);
     };
     
     //    $scope.getUsuarios();
-    $scope.getUsuariosByPagina(1);
+    $scope.getUsuariosByPagina(1, 5);
     
 });

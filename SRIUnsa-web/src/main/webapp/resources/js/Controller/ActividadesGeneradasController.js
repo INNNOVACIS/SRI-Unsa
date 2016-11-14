@@ -164,14 +164,6 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         ActividadesGeneradasService.getAllActividadesGeneradas().then(getAllActividadesGeneradasSuccess, getAllActividadesGeneradasError);
     };
     
-    $scope.getListaTipoNivel();
-    $scope.getEstructuraOrganizaciones();
-    $scope.getFondos();
-    $scope.getSemestres();
-    $scope.getTipoInvestigacion();
-    $scope.getAllActividadesGeneradas();
-    $scope.getAreaInvestigaciones();
-    
     $scope.facultadChange = function(){
         $scope.departamento = {};
         $scope.escuela = {};
@@ -230,23 +222,36 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
             sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable
         };
         return filtro;
-        
     };
     
     var paginacionActividadesSuccess = function(response){
-          console.log("success :: ", response);
+        $scope.actividadesGeneradas = response;
+        console.log("success :: ", response);
     };
     var paginacionActividadesError = function(response){
-          console.log("error :: ", response);
+        console.log("error :: ", response);
     };
     
-    $scope.getFilas = function(pagina){
+    $scope.getFilas = function(pagina, rango){
         $scope.pageDirectiva.currentPage = pagina;
-        $scope.pageDirectiva.rango = 5;
+        $scope.pageDirectiva.rango = rango;
         $scope.pageDirectiva.filtro = getFiltros();
         console.log("filtro :: ", $scope.pageDirectiva);
         ActividadesGeneradasService.paginacionActividades($scope.pageDirectiva).then(paginacionActividadesSuccess, paginacionActividadesError);
     };
     
+    $scope.filtrar = function() {
+        $scope.getFilas(1);
+    };
     
+        
+    $scope.getListaTipoNivel();
+    $scope.getEstructuraOrganizaciones();
+    $scope.getFondos();
+    $scope.getSemestres();
+    $scope.getTipoInvestigacion();
+    $scope.getFilas(1, 5);
+    //$scope.getAllActividadesGeneradas();
+    $scope.getAreaInvestigaciones();
+ 
 });

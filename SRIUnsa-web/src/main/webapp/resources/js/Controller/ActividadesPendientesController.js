@@ -1,6 +1,13 @@
 investigacionApp.controller('ActividadesPendientesController', function($log, $scope, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService) {
 	
+    $scope.pageDirectiva = {
+        currentPage : 1,
+        rango : 5,
+        total : 12,
+        filtro : {}
+    };   
+        
     $scope.panelGenerados = true;
     $scope.panelVer = false;
     $scope.panelEditar = false;    
@@ -174,12 +181,6 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
         ActividadesPendientesService.getAllActividadesPendientes().then(getAllActividadesPendientessSuccess, getAllActividadesPendientesError);
     };
     
-    $scope.getListaTipoNivel();
-    $scope.getFondos();
-    $scope.getSemestres();
-    $scope.getTipoInvestigacion();
-    $scope.getAllActividadesPendientes();
-    
     $scope.facultadChange = function(){
         $scope.departamento = {};
         $scope.escuela = {};
@@ -188,11 +189,42 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
         $scope.escuela = {};
     };
     
-     $scope.pageDirectiva = {
-        currentPage : 1,
-        rango : 5,
-        total : 12,
-        filtro : {},
-        data : []
+    var getFiltros = function(){
+        var filtro = {
+            nidTipoActividadInvestigacion : $scope.tipoInvestigacion === undefined ? "" : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
+            sfacultad : $scope.facultad === undefined ? "" : $scope.facultad.snombreEstructuraOrganizacion,
+            sdepartamento : $scope.departamento === undefined ? "" : $scope.departamento.snombreEstructuraOrganizacion,
+            sescuela : $scope.escuela === undefined ? "" : $scope.escuela.snombreEstructuraOrganizacion,
+            ssemestre : $scope.semestre === undefined ? "" : $scope.semestre.snombreSemestre,
+            sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable
+        };
+        return filtro;    
     };
+    
+    var paginacionActividadesSuccess = function(response){
+        $scope.actividadesPendientes = response;
+        console.log("success :: ", response);
+    };
+    var paginacionActividadesError = function(response){
+        console.log("error :: ", response);
+    };
+    
+    $scope.getFilas = function(pagina, rango){
+        $scope.pageDirectiva.currentPage = pagina;
+        $scope.pageDirectiva.rango = rango;
+        $scope.pageDirectiva.filtro = getFiltros();
+        console.log("filtro :: ", $scope.pageDirectiva);
+        ActividadesPendientesService.paginacionActividades($scope.pageDirectiva).then(paginacionActividadesSuccess, paginacionActividadesError);
+    };
+    
+    $scope.filtrar = function() {
+        $scope.getFilas(1);
+    };
+    
+    $scope.getListaTipoNivel();
+    $scope.getFondos();
+    $scope.getSemestres();
+    $scope.getTipoInvestigacion();
+    $scope.getFilas(1, 5);
+    //$scope.getAllActividadesPendientes();
 });

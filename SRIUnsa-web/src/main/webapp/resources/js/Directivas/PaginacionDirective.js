@@ -2,21 +2,28 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
      return {
         restrict: 'AE',
         template: '<nav aria-label="Page navigation">'
+                        +'<div class="col-md-1 col-sm-2 col-xs-2" style="margin-top:20px;">'
+                        +'    <select class="form-control" ng-model="rango" ng-options="opt as opt for opt in lstRango" ng-init="rango=lstRango[0]" ng-change=changeRango(rango)>'
+                       
+                        +'    </select>'
+                        +'</div>'
+                        +'<div class="col-md-6">'
                         +'<ul class="pagination">'
                         +'    <li class="disabled">'
                         +'        <a href="#" aria-label="Anterior">'
                         +'            <span aria-hidden="true">&laquo;</span>'
                         +'        </a>'
                         +'    </li>'
-                        +'    <li class="{{pagina.active}}" ng-repeat="pagina in paginas">'
+                        +'    <li class="{{pagina.active}}" ng-model="pagina" ng-repeat="pagina in paginas">'
                         +'        <a ng-click="changePagina(pagina)">{{ pagina.numero }}</a>'
                         +'    </li>'
                         +'   <li>'
                         +'        <a aria-label="Siguiente">'
                         +'          <span aria-hidden="true">&raquo;</span>'
                         +'        </a>'
-                        +'    </li>'
+                        +'    </li>'                   
                         +'</ul>'
+                        +'</div>'
                     +'</nav>',
         scope: { 
             contenidoPaginacion: '@contenidoPaginacion',
@@ -26,6 +33,12 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
         link: function(scope, element, attrs) {
             
             scope.paginas = [];
+            scope.pagina = {
+                active:"active",
+                numero:1
+            };
+            scope.lstRango = [5, 10, 50, 100, 500];
+            scope.rango = scope.lstRango[0];
             
             console.log("Current Page :: ", attrs.currentPage);
             console.log("Page Size    :: ", attrs.pageSize);
@@ -33,10 +46,15 @@ investigacionApp.directive('paginacion', ['$parse', function ($parse) {
             console.log("Total        :: ", attrs.data);
             console.log("paginas      :: ", scope.paginas);
             
+            scope.changeRango = function(rango) {
+                console.log("rango :: ", rango);
+                console.log("pagina :::::  ", scope.pagina);
+            };
+            
             scope.changePagina = function(pagina){
+                scope.pagina.numero = pagina.numero;
                 $(element).on('click', function(e) {
-                    console.log("directiva :: ", pagina);
-                    scope.clickPaginacion({page : pagina.numero});
+                    scope.clickPaginacion({page : pagina.numero, rango: scope.rango});
                 });
                 console.log("click en pagina # :: ", pagina);
                 

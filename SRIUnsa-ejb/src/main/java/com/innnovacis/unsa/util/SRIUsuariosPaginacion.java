@@ -7,12 +7,6 @@ package com.innnovacis.unsa.util;
 
 import com.innnovacis.unsa.model.SRIUsuario;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import org.hibernate.annotations.Immutable;
-import org.hibernate.annotations.Subselect;
 
 /**
  *
@@ -25,7 +19,6 @@ public class SRIUsuariosPaginacion implements Serializable {
     private int rango;
     private int total;
     private SRIUsuario filtro;
-//    private List<SRIUsuario> data;
 
     
     public SRIUsuario getFiltro() {
@@ -35,14 +28,6 @@ public class SRIUsuariosPaginacion implements Serializable {
     public void setFiltro(SRIUsuario filtro) {
         this.filtro = filtro;
     }
-    
-//    public List<SRIUsuario> getData() {
-//        return data;
-//    }
-//
-//    public void setData(List<SRIUsuario> data) {
-//        this.data = data;
-//    }
     
     public int getCurrentPage() {
         return currentPage;

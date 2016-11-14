@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.util.SRIActividadesRevisadas;
+import com.innnovacis.unsa.util.SRIPaginacion;
 
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -18,5 +19,6 @@ import javax.enterprise.context.ApplicationScoped;
 public interface IActividadInvestigacionRevisadaBusiness {
     
     List<SRIActividadesRevisadas> GetAll();
+    List<SRIActividadesRevisadas> GetPaginacion(SRIPaginacion entidad);
 
 }
