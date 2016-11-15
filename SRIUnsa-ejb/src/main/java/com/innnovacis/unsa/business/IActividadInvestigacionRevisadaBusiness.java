@@ -20,5 +20,5 @@ public interface IActividadInvestigacionRevisadaBusiness {
     
     List<SRIActividadesRevisadas> GetAll();
     List<SRIActividadesRevisadas> GetPaginacion(SRIPaginacion entidad);
-
+    int GetTotalPaginacion(SRIPaginacion entidad);
 }

@@ -42,14 +42,26 @@
 	                            </tr>
 	                        </tbody>
 	                    </table>
-                            <paginacion 
+<!--                            <paginacion
+                                num-paginas="numPages()" 
+                                pagina-Actual="currentPage"
+                                max-size="maxSize"
+                                
                                 control-total="controladorTotal"
                                 click-paginacion="getUsuariosByPagina(page,rango)"
                                 current-page={{pageDirectiva.currentPage}}
                                 page-size={{pageDirectiva.rango}}
                                 total={{pageDirectiva.total}}
                                 data-contenido-paginacion={{pageDirectiva.data}} >
-                            </paginacion>  
+                            </paginacion>-->
+                                            
+                            <pagination
+                                rango-paginas="rangoPaginas"
+                                current-rango="currentRango"
+                                num-pages="numPages()" 
+                                current-page="currentPage"
+                                max-size="maxSize" >    
+                            </pagination>
                                             
 					</div>
 				</div>

@@ -39,13 +39,13 @@ public class UsuarioRestServices {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response paginacionUsuario(SRIUsuariosPaginacion usuario) {
         
+        int total = usuarioBusiness.GetTotalPaginacion(usuario);
         List<SRIUsuario> lista = usuarioBusiness.GetPagina(usuario);
 
-        Response.ResponseBuilder builder = null;
         Map<String, Object> responseObj = new HashMap<>();
-        responseObj.put("total", 11);
+        responseObj.put("total", total);
         responseObj.put("lista", lista);
-        builder = Response.status(Response.Status.OK).entity(responseObj);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
         
         return builder.build();
     }
@@ -96,7 +96,9 @@ public class UsuarioRestServices {
     @GET
     @Path("/listarPrueba")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response autenticarUsuario() {   
+    public Response autenticarUsuario() {
+        
+        
         List<SRIUsuario> lista = usuarioBusiness.GetAll();
         
         Response.ResponseBuilder builder = null;

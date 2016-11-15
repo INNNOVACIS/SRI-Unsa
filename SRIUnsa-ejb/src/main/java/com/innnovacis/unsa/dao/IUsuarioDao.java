@@ -22,7 +22,9 @@ public interface IUsuarioDao {
     SRIUsuario Update(SRIUsuario entidad);
     boolean Delete(SRIUsuario entidad);
     SRIUsuario GetById(int idEntidad);
-    List<SRIUsuario> GetAll();  
+    List<SRIUsuario> GetAll();
+    
+    int GetTotalPaginacion(SRIUsuariosPaginacion entidad);
     List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad);
     
 }

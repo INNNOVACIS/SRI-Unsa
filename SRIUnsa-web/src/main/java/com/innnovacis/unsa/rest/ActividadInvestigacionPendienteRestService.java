@@ -46,9 +46,10 @@ public class ActividadInvestigacionPendienteRestService {
     public Response paginacionUsuario(SRIPaginacion entidad) {
        
         List<SRIActividadesRevisadas> lista = actividadRevisadaBusiness.GetPaginacion(entidad);
-
+        int total = actividadRevisadaBusiness.GetTotalPaginacion(entidad);
+        
         Map<String, Object> responseObj = new HashMap<>();
-        responseObj.put("total", 11);
+        responseObj.put("total", total);
         responseObj.put("lista", lista);
         Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
         

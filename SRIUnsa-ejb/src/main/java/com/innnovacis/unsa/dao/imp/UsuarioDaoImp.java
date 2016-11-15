@@ -4,6 +4,7 @@ package com.innnovacis.unsa.dao.imp;
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
+import java.math.BigInteger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -73,6 +74,14 @@ public class UsuarioDaoImp implements IUsuarioDao {
                         .setParameter(3, entidad.getCurrentPage());
         List<SRIUsuario> listUsuarios = query.getResultList();
         return listUsuarios;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIUsuariosPaginacion entidad) {
+        Query query = em.createNativeQuery("{call total_usuarios(?1)}")
+                        .setParameter(1, entidad.getFiltro().getSUsuarioLogin());
+        BigInteger total = (BigInteger) query.getSingleResult();
+        return total.intValue();
     }
 
 }

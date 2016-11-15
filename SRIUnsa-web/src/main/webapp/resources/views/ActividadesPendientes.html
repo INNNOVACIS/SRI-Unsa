@@ -9,7 +9,9 @@
                 <div class="col-md-10">
                     <label class="control-label col-md-2" style="">Investigación</label>
                     <div class="col-md-4">
-                        <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-init="tipoInvestigacion=''" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)></select>
+                        <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-init="tipoInvestigacion=''" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)>
+                            <option></option>
+                        </select>
                     </div>
                     <label class="control-label col-md-2">Facultad</label>
                     <div class="col-md-4">
@@ -20,6 +22,7 @@
                             ng-required="true"
                             style="margin:2px;"
                             ng-init="facultad=''">
+                            <option></option>
                         </select>
                     </div>
                     <label class="control-label col-md-2">Departamento</label>
@@ -31,6 +34,7 @@
                             ng-required="true"
                             style="margin:2px;"
                             ng-init="departamento=''">
+                            <option></option>
                         </select> 
                     </div>
                     <label class="control-label col-md-2">Escuela</label>
@@ -41,15 +45,20 @@
                             ng-required="true"
                             style="margin:2px;"
                             ng-init="escuela=''">
+                            <option></option>
                         </select> 
                     </div>
                     <label class="control-label col-md-2">Semestre</label>
                     <div class="col-md-4">
-                        <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''"></select>
+                        <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
+                            <option></option>
+                        </select>
                     </div>
                     <label class="control-label col-md-2"> Fondo Concursable</label>
                     <div class="col-md-4">
-                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
+                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
+                            <option></option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -93,14 +102,14 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <paginacion 
-                            control-total="controladorTotal"
-                            click-paginacion="getFilas(page,rango)"
-                            current-page={{pageDirectiva.currentPage}}
-                            page-size={{pageDirectiva.rango}}
-                            total={{pageDirectiva.total}}
-                            data-contenido-paginacion={{pageDirectiva.data}} >
-                        </paginacion>
+                        
+                        <pagination
+                            rango-paginas="rangoPaginas"
+                            current-rango="currentRango"
+                            num-pages="numPages()" 
+                            current-page="currentPage"
+                            max-size="maxSize" >    
+                        </pagination>
                     </div>
                 </div>
             </div>
@@ -145,7 +154,7 @@
                         <option>Semestre III</option>
                     </select>
                   </div>
-                  <label class="control-label col-md-2"> Duracion de la Actividad</label>
+                  <label class="control-label col-md-2"> Duracion</label>
                   <div class="col-md-4">
                     <input readonly="readonly" type="number" style="margin:2px;" id="inpHoras" class="form-control" placeholder="Número de horas que durara la investigación" value="90">
                   </div>

@@ -23,6 +23,8 @@ public interface IUsuarioBusiness {
     boolean Delete(SRIUsuario entidad);
     SRIUsuario Get(int idEntidad);
     List<SRIUsuario> GetAll();
+    
+    int GetTotalPaginacion(SRIUsuariosPaginacion entidad);
     List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad);
     
 }

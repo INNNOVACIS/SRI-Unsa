@@ -19,4 +19,5 @@ public interface IActividadInvestigacionRevisadaDao {
     
     List<SRIActividadesRevisadas> GetAll();
     List<SRIActividadesRevisadas> GetPagina(SRIPaginacion entidad);
+    int GetTotalPaginacion(SRIPaginacion entidad);
 }

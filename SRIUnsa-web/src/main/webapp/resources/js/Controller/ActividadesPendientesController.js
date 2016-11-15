@@ -1,12 +1,5 @@
 investigacionApp.controller('ActividadesPendientesController', function($log, $scope, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService) {
-	
-    $scope.pageDirectiva = {
-        currentPage : 1,
-        rango : 5,
-        total : 12,
-        filtro : {}
-    };   
         
     $scope.panelGenerados = true;
     $scope.panelVer = false;
@@ -189,42 +182,57 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
         $scope.escuela = {};
     };
     
+    /**************** PAGINACION *****************/
+    
+    $scope.rangoPaginas = [5,10,20,100];
+    $scope.currentPage = 1;
+    $scope.currentRango = $scope.rangoPaginas[0];
+    $scope.maxSize = 5;
+    $scope.total = 0;
+    
+    $scope.numPages = function () {
+      return Math.ceil($scope.total / $scope.currentRango);
+    };
+
+    $scope.$watch('currentPage + currentRango', function() {
+        $scope.getActividades();
+    });
+    
+    /*********************************************/
+    
     var getFiltros = function(){
         var filtro = {
-            nidTipoActividadInvestigacion : $scope.tipoInvestigacion === undefined ? "" : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
-            sfacultad : $scope.facultad === undefined ? "" : $scope.facultad.snombreEstructuraOrganizacion,
-            sdepartamento : $scope.departamento === undefined ? "" : $scope.departamento.snombreEstructuraOrganizacion,
-            sescuela : $scope.escuela === undefined ? "" : $scope.escuela.snombreEstructuraOrganizacion,
-            ssemestre : $scope.semestre === undefined ? "" : $scope.semestre.snombreSemestre,
-            sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable
+            nidTipoActividadInvestigacion : ($scope.tipoInvestigacion === null || $scope.tipoInvestigacion === undefined) ? "" : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
+            sfacultad : ( $scope.facultad === null || $scope.facultad === undefined) ? "" : $scope.facultad.snombreEstructuraOrganizacion,
+            sdepartamento : ($scope.departamento === null || $scope.departamento === undefined) ? "" : $scope.departamento.snombreEstructuraOrganizacion,
+            sescuela : ($scope.escuela === null || $scope.escuela === undefined) ? "" : $scope.escuela.snombreEstructuraOrganizacion,
+            ssemestre : ($scope.semestre === null || $scope.semestre === undefined) ? "" : $scope.semestre.snombreSemestre,
+            sfondoConcursable : ($scope.fondo === null || $scope.fondo === undefined) ? "" : $scope.fondo.snombreFondoConcursable
         };
         return filtro;    
     };
     
     var paginacionActividadesSuccess = function(response){
         $scope.actividadesPendientes = response.lista;
-        $scope.controladorTotal = response.total;
+        $scope.total = response.total;
     };
     var paginacionActividadesError = function(response){
         console.log("error :: ", response);
     };
     
-    $scope.getFilas = function(pagina, rango){
-        $scope.pageDirectiva.currentPage = pagina;
-        $scope.pageDirectiva.rango = rango;
-        $scope.pageDirectiva.filtro = getFiltros();
-        console.log("filtro :: ", $scope.pageDirectiva);
-        ActividadesPendientesService.paginacionActividades($scope.pageDirectiva).then(paginacionActividadesSuccess, paginacionActividadesError);
+    $scope.getActividades = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : getFiltros()};
+        ActividadesPendientesService.paginacionActividades(objPagina).then(paginacionActividadesSuccess, paginacionActividadesError);
     };
     
     $scope.filtrar = function() {
-        $scope.getFilas(1,5);
+        $scope.getActividades();
     };
     
     $scope.getListaTipoNivel();
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
-    $scope.getFilas(1, 5);
-    //$scope.getAllActividadesPendientes();
+    
+    $scope.getActividades();
 });

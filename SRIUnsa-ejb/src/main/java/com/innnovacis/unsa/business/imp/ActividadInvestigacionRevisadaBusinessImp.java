@@ -45,4 +45,16 @@ public class ActividadInvestigacionRevisadaBusinessImp implements IActividadInve
         return respuesta;
     }
 
+    @Override
+    public int GetTotalPaginacion(SRIPaginacion entidad) {
+        int respuesta = -1;
+        try{
+            respuesta = actividadRevisadaDao.GetTotalPaginacion(entidad);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
+    }
+
 }
