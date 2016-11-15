@@ -1,0 +1,251 @@
+.fondo_login{
+    background: #EFEFE7;
+}
+.form-signin
+{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading, .form-signin .checkbox
+{
+    margin-bottom: 10px;
+}
+.form-signin .checkbox
+{
+    font-weight: normal;
+}
+.form-signin .form-control
+{
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus
+{
+    z-index: 2;
+}
+.form-signin input[type="text"]
+{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"]
+{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.account-wall
+{
+    margin-top: 20px;
+    padding: 40px 0px 20px 0px;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.login-title
+{
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+    display: block;
+}
+.profile-img
+{
+    width: 96px;
+    height: 110px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.logotipo{
+    width: 120px;
+    height: 35px;
+    margin-top: -8px;
+    display: block;
+
+}
+.usuario{
+    width: 35px;
+    height: 35px;
+}
+.need-help
+{
+    margin-top: 10px;
+}
+.new-account
+{
+    display: block;
+    margin-top: 10px;
+}
+
+.SRI-button {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.SRI-button:hover {
+    color: #fff;
+    font-weight: bold;
+    background-color: #449d44;
+    border-color: #398439;
+}
+
+/********** Loading **********/
+.SRI-loader {
+opacity: 1;
+z-index: 999;
+  margin:20% auto;
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid #3498db;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 1.5s linear infinite;
+}
+.SRI-loader-open{
+    visibility:visible;
+    opacity: 1;
+    z-index: 999;
+    top:0;
+    left:0;
+    right:0;
+    bottom:-200px;
+    margin:0;
+    position: absolute;
+    background-color: rgba(0,0,0,0.4);
+    overflow-y:hidden !important;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Modal de Confirmacion */
+.SRI-modal {
+    font: 14px/22px 'Open Sans', Arial, sans-serif;
+    width:50%;
+    padding: 25px 35px;
+    color: #2b2e38;
+    background: #fff;
+    border-radius: 3px;
+    position: relative;
+    margin:7% auto;
+}
+
+.SRI-modal-open {
+    visibility:visible;
+    opacity: 1;
+    z-index: 999;
+    top:0;
+    left:0;
+    right:0;
+    bottom: -200px;
+    margin:0;
+    position: absolute;
+    background-color: rgba(0,0,0,0.4);
+    
+    -webkit-transition:all 1s;
+    -moz-transition:all 1s;
+    transition:all 1s;
+}
+.SRI-modal-close {
+    visibility: hidden;
+    opacity: 0;
+    margin-top: -300px;
+}
+.SRIModal-cerrar {
+    font: inherit;
+    color: #555;
+    font-size: 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    position: absolute;
+    display: block;
+    top: 8px;
+    right: 10px;
+}
+
+
+/* Estilos de botones */
+.SRIModal-button {
+    display: inline-block;
+    
+    min-width: 100px;
+    margin: 0;
+    padding: 12px 0;
+    cursor: pointer; /* cmbiar el icono del cursor*/
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    color: #FFF;
+    font-family: inherit;
+    font-size: 15px;
+    border: 0;
+    outline: 0;
+
+}
+
+.SRI-confirmar {
+    background-color: #81C784; /*#8DC63F*/
+}
+.SRI-nuevo {
+    background-color: #0099CC; /*#8DC63F*/
+}
+.SRI-cancelar {
+    background-color: #E57373; /*#BB0114*/
+}
+
+.SRI-confirmar:hover,
+.SRI-confirmar:focus {
+  background-color: #66BB6A;
+  font-weight: bold;
+}
+.SRI-nuevo:hover,
+.SRI-nuevo:focus {
+    background-color: #0088CC;
+  font-weight: bold;
+}
+.SRI-cancelar:hover,
+.SRI-cancelar:focus {
+  background-color: #D45656;
+  font-weight: bold;
+}
+.SRIModal-cerrar:hover,
+.SRIModal-cerrar:focus {
+    color: #222;
+    font-weight: bold;
+}

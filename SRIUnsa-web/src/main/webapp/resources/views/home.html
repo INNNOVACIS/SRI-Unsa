@@ -1,29 +1,6 @@
-<style>
-    .button {
-        display: inline-block;
-        padding: 6px 12px;
-        margin-bottom: 0;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 1.42857143;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: middle;
-        -ms-touch-action: manipulation;
-        touch-action: manipulation;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        background-image: none;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        color: #fff;
-        background-color: #5cb85c;
-        border-color: #4cae4c;
-      }
-</style>
+<div ng-show="loader" class="SRI-loader-open">
+    <div class="SRI-loader"></div>
+</div>
 <div id="container" class="container">
     <div class="col-xm-12">
         <div class="panel panel-info">
@@ -176,7 +153,7 @@
                             <div class="col-md-10">
                                 <div class="panel panel-default" >
                                     <div class="panel-body">
-                                        <label for="fileUpload" class="button"> Seleccionar Archivos </label>
+                                        <label for="fileUpload" class="SRI-button"> Seleccionar Archivos </label>
                                         <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
                                         <p>Número de Archivos: {{ uploader.queue.length }}</p>
                                         <table class="table">
@@ -244,6 +221,23 @@
 <div ng-show="mensajeError" class="alert alert-error fade in">
     <a class="close" data-dismiss="alert">&times;</a>
     <strong>Error! </strong> {{ message }}
+</div>
+
+<div ng-class="{'SRI-modal-open': modal.open, 'SRI-modal-close': modal.close}" >
+    <div class="SRI-modal">
+        <a ng-click="openCloseModal(false, true)" class="SRIModal-cerrar" >Cerrar</a>
+        <div>
+            <h2>Registro Correcto!</h2>
+            <ul>
+                <li><p>Ir a actividades generadas clic en :<strong> Continuar</strong></p></li>
+                <li><p>Registrar nueva actividad clic en :<strong> Nuevo</strong></p></li>
+                <li><p>Otro :<strong> Cancelar</strong></p></li>
+            </ul>
+        </div>
+        <button ng-click="revisarActividad" class="SRIModal-button SRI-cancelar">Cancelar</button>
+        <button ng-click="registrarNuevaActividad()" class="SRIModal-button SRI-cancelar">Nuevo</button>
+        <button ng-click="irActividadesGeneradas()" class="SRIModal-button SRI-confirmar">Continuar</button>
+    </div>
 </div>
 
 <!-- Modal -->

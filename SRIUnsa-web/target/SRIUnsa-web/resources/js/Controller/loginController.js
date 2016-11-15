@@ -13,14 +13,14 @@ investigacionApp.controller('loginController', function($scope, $rootScope, $loc
         
         $scope.sharedService.userAutenticado = sessvars.autenticado;
         $location.path("/home");
-    }
+    };
 
     var loginServiceError = function(response){
         console.log("error");
         alert("Usuario no registrado");
-    }
+    };
 
     $scope.login = function(){
         LoginService.Autenticar($scope.usuario).then(loginServiceSuccess, loginServiceError); ;
-    }
+    };
 });

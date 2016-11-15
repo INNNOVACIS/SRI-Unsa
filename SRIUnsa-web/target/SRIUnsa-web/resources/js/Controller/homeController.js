@@ -1,11 +1,12 @@
-    investigacionApp.controller('homeController', function($log, $scope,
+    investigacionApp.controller('homeController', function($log, $scope, $location,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, FileUploader) {
     
     /*
      * Parametros
      */
-    
+    $scope.loader = false;
+    $scope.modal = { open: false, close: true };
     $scope.mensajeSuccess = false;
     $scope.mensajeError = false;
     
@@ -168,22 +169,25 @@
     var registrarInvestigacionSuccess = function(response){
         addPlanificacion(response);
         uploader.uploadAll();
+        $scope.loader = false;
         $log.debug(response);
-        $scope.mensajeSuccess = true;
-        $scope.message = "id de Registro " + response;
-        scrollTop();
-        limpiarCampos();
+//        $scope.mensajeSuccess = true;
+//        $scope.message = "id de Registro " + response;
+        
+        $scope.openCloseModal(true,false);
+        
     };
     
     var registrarInvestigacionError = function(response){
         $log.debug(response);
         $scope.mensajeError = true;
         $scope.message = response;
-        
+        $scope.loader = false;
     };
     
     $scope.registrarInvestigacion = function(){
-        
+        $scope.loader = true;
+        scrollTop();
         $scope.actividadInvestigacion = {
             nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
             nhoras : $scope.duracionInvestigacion,
@@ -203,7 +207,18 @@
         };
         console.log("JSON :: ", $scope.actividadInvestigacion); 
         
-        HomeService.registrarInvestigacion($scope.actividadInvestigacion).then(registrarInvestigacionSuccess, registrarInvestigacionError);        
+        HomeService.registrarInvestigacion($scope.actividadInvestigacion).then(registrarInvestigacionSuccess, registrarInvestigacionError);
+    };
+
+    $scope.revisarActividad = function(){
+        
+    };
+    $scope.registrarNuevaActividad = function(){
+        limpiarCampos();
+    };
+    $scope.irActividadesGeneradas = function(){
+        $scope.loader = true;
+        $location.path("/actividadesGeneradas");
     };
 
     // START example DataPicker
@@ -273,10 +288,15 @@
     
     
     /********** funciones utilitarias **********/
+    
+    $scope.openCloseModal = function(open, close) {
+        $scope.modal = { open: open, close: close };
+    };
+    
     var scrollTop = function(){
         $('html,body').animate({
-            scrollTop: $("#container").offset().top
-        }, 1000);
+            scrollTop: $("#container").offset().top - 100
+        }, 800);
     };
     
     var limpiarCampos = function(){
