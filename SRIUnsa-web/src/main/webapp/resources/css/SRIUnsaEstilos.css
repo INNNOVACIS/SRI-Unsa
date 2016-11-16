@@ -103,7 +103,6 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
     border: 1px solid transparent;
     border-radius: 4px;
     color: #fff;
@@ -112,7 +111,6 @@
 }
 .SRI-button:hover {
     color: #fff;
-    font-weight: bold;
     background-color: #449d44;
     border-color: #398439;
 }

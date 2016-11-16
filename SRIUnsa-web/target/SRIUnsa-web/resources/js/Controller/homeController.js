@@ -340,7 +340,7 @@
     };
 
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://localhost:8080/SRIUnsa-web/rest/files/subirArchivos'
+        url: 'http://192.168.1.30:8080/SRIUnsa-web/rest/files/subirArchivos'
     });
     
     // FILTERS
