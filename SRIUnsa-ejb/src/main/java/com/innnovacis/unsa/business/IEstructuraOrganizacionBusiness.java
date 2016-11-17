@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIEstructuraOrganizacion;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -21,5 +22,7 @@ public interface IEstructuraOrganizacionBusiness {
     boolean Delete(SRIEstructuraOrganizacion entidad);
     SRIEstructuraOrganizacion Get(int idEntidad);
     List<SRIEstructuraOrganizacion> GetAll();
+    int GetTotalPaginacion (SRIPaginacionObject object);
+    List<SRIEstructuraOrganizacion> GetPagina (SRIPaginacionObject object);
 
 }

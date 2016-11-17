@@ -2,7 +2,23 @@
  * EstructuraOrganizacion  Service
  */
 investigacionApp.service("EstructuraOrganizacionService", function(SRIUnsaConfig, $log, $http, $q) {
-	
+        
+        this.getEstructuraOrganizacionByPagina = function(request) {
+            $log.debug("Estructura Organizacion Service - getEstructuraOrganizacionByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/estructuraOrganizacion/paginacionEstructuraOrganizacion',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
 	this.getEstructuraOrganizaciones = function() {
 		$log.debug("EstructuraOrganizacion Service - get EstructuraOrganizaciones");
 		

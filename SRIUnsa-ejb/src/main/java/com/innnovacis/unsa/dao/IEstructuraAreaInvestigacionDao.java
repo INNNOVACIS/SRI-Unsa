@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -21,5 +22,7 @@ public interface IEstructuraAreaInvestigacionDao {
     boolean Delete(SRIEstructuraAreaInvestigacion entidad);
     SRIEstructuraAreaInvestigacion GetById(int idEntidad);
     List<SRIEstructuraAreaInvestigacion> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRIEstructuraAreaInvestigacion> GetPagina(SRIPaginacionObject object);
     
 }

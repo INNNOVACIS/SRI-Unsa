@@ -6,6 +6,7 @@ import com.innnovacis.unsa.business.IEstructuraOrganizacionBusiness;
 import com.innnovacis.unsa.dao.IEstructuraOrganizacionDao;
 
 import com.innnovacis.unsa.model.SRIEstructuraOrganizacion;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -81,6 +82,28 @@ public class EstructuraOrganizacionBusinessImp implements IEstructuraOrganizacio
          List<SRIEstructuraOrganizacion> respuesta = null;
          try{
             respuesta = estructuraOrganizacionDao.GetAll();
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+         try{
+            respuesta = estructuraOrganizacionDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public List<SRIEstructuraOrganizacion> GetPagina(SRIPaginacionObject object) {
+        List<SRIEstructuraOrganizacion> respuesta = null;
+         try{
+            respuesta = estructuraOrganizacionDao.GetPagina(object);
         }
         catch(Exception ex){
         }

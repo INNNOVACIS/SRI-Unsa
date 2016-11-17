@@ -3,19 +3,20 @@
  */
 investigacionApp.service("EstructuraAreaInvestigacionService", function(SRIUnsaConfig, $log, $http, $q) {
 	
-	this.getAreaInvestigaciones = function() {
-		$log.debug("AreaInvestigacion Service - get AreaInvestigaciones");
-		
-		var deferred = $q.defer();
-		$http({
-			method : 'GET',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/areaInvestigacion/listarAreaInvestigaciones',
-		}).success(function(response) {
-			deferred.resolve(response);
-		}).error(function(response) {			
-			deferred.reject(response);
-		});
-		return deferred.promise;
+	this.getAreaInvestigacionByPagina = function(request) {
+            $log.debug("Area Investigacion Service - getAreaInvestigacionByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/areaInvestigacion/paginacionAreaInvestigacion',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
 	};
 
 	this.registrarAreaInvestigacion = function(request) {

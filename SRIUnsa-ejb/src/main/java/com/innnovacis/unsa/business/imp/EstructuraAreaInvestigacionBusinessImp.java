@@ -5,6 +5,7 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IEstructuraAreaInvestigacionBusiness;
 import com.innnovacis.unsa.dao.IEstructuraAreaInvestigacionDao;
 import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -79,6 +80,28 @@ public class EstructuraAreaInvestigacionBusinessImp implements IEstructuraAreaIn
          List<SRIEstructuraAreaInvestigacion> respuesta = null;
          try{
             respuesta = estructuraAreaInvestigacionDao.GetAll();
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+         try{
+            respuesta = estructuraAreaInvestigacionDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public List<SRIEstructuraAreaInvestigacion> GetPagina(SRIPaginacionObject object) {
+        List<SRIEstructuraAreaInvestigacion> respuesta = null;
+         try{
+            respuesta = estructuraAreaInvestigacionDao.GetPagina(object);
         }
         catch(Exception ex){
         }

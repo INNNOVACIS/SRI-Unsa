@@ -3,71 +3,12 @@ investigacionApp.controller('EstructuraAreaInvestigacionController', function($l
 
     $scope.areaInvestigaciones = [];
     $scope.areaInvestigacion = {};
-    $scope.paginas = [];
-    
-    $scope.paginacion = {
-        total : 1000,
-        paginaActual : 1,
-        rango : 6,
-        rangoPaginas: 10,
-        data: [
-            {id : 1, nombre : "Ali David", usuario : "Alicito", clave : "12345"},
-            {id : 2, nombre : "Miluska A", usuario : "Alicito", clave : "12345"},
-            {id : 3, nombre : "David Mal", usuario : "Alicito", clave : "12345"},
-            {id : 4, nombre : "Monica Hu", usuario : "Alicito", clave : "12345"},
-            {id : 5, nombre : "Nolberto ", usuario : "Alicito", clave : "12345"},
-            {id : 6, nombre : "Andres Ca", usuario : "Alicito", clave : "12345"}
-        ]
-    };
-    
-    var getNumeroPaginas = function(total) {
-        
-        var paginas = [];
-        
-        for(var i = 0; i < $scope.paginacion.rangoPaginas; i++) {
-            var pagina = {};
-            pagina.activo = false;
-            pagina.numero = $scope.paginacion.paginaActual + i;
-            paginas.push(pagina);
-        }
-        return paginas;
-    };
-    
-    $scope.changePagina = function (paginaActual) {
-        if(($scope.paginas[$scope.paginas.length - 1].numero - paginaActual.numero) < 1 ){
-            $scope.paginas = [];
-            if(paginaActual.numero + $scope.paginacion.rangoPaginas > $scope.paginacion.total / $scope.paginacion.rangoPaginas){
-                $scope.paginacion.paginaActual = ($scope.paginacion.total / $scope.paginacion.rangoPaginas) - $scope.paginacion.rangoPaginas;
-            } else {
-                $scope.paginacion.paginaActual = paginaActual.numero;
-            }
-            $scope.paginas = getNumeroPaginas($scope.paginacion.total);
-        } else {
-            if((paginaActual.numero - $scope.paginas[0].numero) < 1 ){
-                $scope.paginas = [];
-                if(paginaActual.numero - $scope.paginacion.rangoPaginas <= 0){
-                    $scope.paginacion.paginaActual = 1;
-                } else {
-                    $scope.paginacion.paginaActual = paginaActual.numero - $scope.paginacion.rangoPaginas;
-                }
-                $scope.paginas = getNumeroPaginas($scope.paginacion.total);
-            }
-        }
-        angular.forEach($scope.paginas, function(value, key){
-            if(value.numero == paginaActual.numero)
-                value.activo = true;
-            else
-                value.activo = false;
-        });
-        console.log("mandamos la pagina actual :: ", paginaActual);
-    };
 	
     /********** Servicios Callback **********/
         
     var getAreaInvestigacionServiceSuccess = function(response){
     	$log.debug("Get AreaInvestigacion - Success");
     	$scope.areaInvestigaciones = response;
-        $scope.paginas = getNumeroPaginas($scope.paginacion.total);
     };
 
     var getAreaInvestigacionServiceError = function(response){
@@ -129,5 +70,42 @@ investigacionApp.controller('EstructuraAreaInvestigacionController', function($l
     	$scope.areaInvestigacion = areaInvestigacion;
     };
 
-    $scope.getAreaInvestigaciones();
+     /**************** PAGINACION *****************/
+    
+    $scope.rangoPaginas = [5,10,20,100];
+    $scope.currentPage = 1;
+    $scope.currentRango = $scope.rangoPaginas[0];
+    $scope.maxSize = 5;
+    $scope.total = 0;
+
+    $scope.numPages = function () {
+      return Math.ceil($scope.total / $scope.currentRango);
+    };
+
+    $scope.$watch('currentPage + currentRango', function() {
+        $scope.getAreaInvestigacionByPagina();
+    });
+    
+    /*********************************************/
+    
+    var getAreaInvestigacionByPaginaSuccess = function(response){
+        $log.debug("Get paginacionUsuario - Success");
+        $scope.areaInvestigaciones = response.lista;
+        $scope.total = response.total;
+    };
+    
+    var getAreaInvestigacionByPaginaError = function(response){
+        console.log("error :: ", response);
+    };
+    
+    $scope.getAreaInvestigacionByPagina = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        EstructuraAreaInvestigacionService.getAreaInvestigacionByPagina(objPagina).then(getAreaInvestigacionByPaginaSuccess, getAreaInvestigacionByPaginaError);
+    };
+    
+    $scope.clickBuscar = function(){
+        $scope.getAreaInvestigacionByPagina();
+    };
+    
+    $scope.getAreaInvestigacionByPagina();
 });
