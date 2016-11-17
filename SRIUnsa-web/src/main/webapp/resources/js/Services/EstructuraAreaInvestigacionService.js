@@ -20,11 +20,11 @@ investigacionApp.service("EstructuraAreaInvestigacionService", function(SRIUnsaC
 	};
         
         this.getAreaInvestigaciones = function(request) {
-            $log.debug("Area Investigacion Service - getAreaInvestigacionByPagina");
+            $log.debug("Area Investigacion Service - getAreaInvestigaciones");
 
             var deferred = $q.defer();
             $http({
-                    method : 'POST',
+                    method : 'GET',
                     url : SRIUnsaConfig.SRIUnsaUrlServicio + '/areaInvestigacion/listarAreaInvestigaciones',
                     data : request
             }).success(function(response) {

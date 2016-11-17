@@ -1,44 +1,8 @@
 investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, $location, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService,
-    TipoNivelService, EstructuraOrganizacionService, ArchivosService) {
+    TipoNivelService, EstructuraOrganizacionService) {
     
     $scope.loader = false;
-    $scope.modal = { open: false, close: true };
-    $scope.mensaje = {titulo: "", contenido: ""};
-    $scope.panelGenerados = true;
-    $scope.panelVer = false;
-    $scope.panelEditar = false;
-
-    $scope.verActividadById = function(actividadGenerada){
-        $scope.loader = true;
-        $location.path("/actividadGenerada/" + actividadGenerada.idactividadinvestigacion);
-        //        $scope.getActividadById(actividadGenerada);
-    };
-
-    $scope.panelChange = function(panel, actividadGenerada){
-        $scope.loader = true;
-        if(panel === 1){
-            $scope.panelGenerados = true;
-            $scope.panelVer = false;
-            $scope.panelEditar = false;
-            $scope.loader = false;
-            $scope.openCloseModal(false, true);
-        }else{
-            if(panel === 2){
-                $scope.panelGenerados = false;
-                $scope.panelVer = true;
-                $scope.panelEditar = false;
-                $scope.actividadGenerada = actividadGenerada;
-                $scope.getActividadById(actividadGenerada);
-            }else{
-                $scope.panelGenerados = false;
-                $scope.panelVer = false;
-                $scope.panelEditar = true;
-                $scope.actividadGenerada = actividadGenerada;
-                $scope.getActividadById(actividadGenerada);
-            }
-        }
-    };
     
     /******************* Servicios Callback *******************/
     
@@ -106,33 +70,6 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         console.log("Error Response Investigacion :: ", response);
     };
     
-    var getInvestigacionByIdSuccess = function(response){
-        console.log("getInvestigacionByIdSuccess :: ", response);
-        $scope.actividadGeneradaVista = response;
-        editarActividad(response);
-        $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
-    };
-    
-    var getInvestigacionByIdError = function(response){
-        console.log("getInvestigacionByIdError :: ", response);
-        $scope.loader = false;  
-    };
-    
-    var getArchivoByIdActividadSuccess = function(response){
-        console.log("getArchivoByIdActividadSuccess :: ", response);
-        $scope.archivos = response;
-        setTimeout(function(){
-            $scope.$apply(function(){
-                $scope.loader = false;
-            });
-        }, 1000);
-    };
-    
-    var getArchivoByIdActividadError = function(response){
-        console.log("getArchivoByIdActividadError :: ", response);
-        $scope.loader = false;  
-    };
-    
     var getAllActividadesGeneradasSuccess = function(response){
         $scope.actividadesGeneradas = response;
         console.log("succcess :: ", response);
@@ -150,15 +87,7 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     var getAreaInvestigacionServiceError = function(response){
      	$log.debug("Get AreaInvestigacion - Error"); 
     };
-    
-    var descargarArchivoSuccess = function(response){
-        $log.debug("Descargar Archivo - Success");
-    };
-    
-    var descargarArchivoError = function(response){
-        $log.debug("Descargar Archivo - Error");
-        console.log("Descargar Archivo :: ", response);
-    };
+
     
     /******************* Servicios *******************/
     
@@ -182,14 +111,6 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
     
-    $scope.getActividadById = function(actividad){
-        TipoInvestigacionService.getInvestigacionesById(actividad.idactividadinvestigacion).then(getInvestigacionByIdSuccess, getInvestigacionByIdError);
-    };
-    
-    $scope.getArchivosByIdActividad = function(idActividad){
-      	ArchivosService.getArchivosByIdActividad(idActividad).then(getArchivoByIdActividadSuccess, getArchivoByIdActividadError);
-    };
-    
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
     };
@@ -198,56 +119,12 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         ActividadesGeneradasService.getAllActividadesGeneradas().then(getAllActividadesGeneradasSuccess, getAllActividadesGeneradasError);
     };
     
-    $scope.descargarArchivo = function(archivo){
-        ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
-    };
-    
     $scope.facultadChange = function(){
         $scope.departamento = {};
         $scope.escuela = {};
     };
     $scope.departamentoChange = function(){
         $scope.escuela = {};
-    };
-    
-    /************ Editar Actividad Investigacion ***************/
-    
-    var editarActividad = function(actividad){
-        $scope.actividadGeneradaVista.semestre = $scope.semestres[seleccionarSemestre(actividad.ssemestre)];
-        $scope.actividadGeneradaVista.tipoInvestigacion = seleccionarTipoInvestigacion(actividad.nidTipoActividadInvestigacion);
-        $scope.actividadGeneradaVista.areaInvestigacion = seleccionarArea(actividad.sareaInvestigacion);
-        $scope.actividadGeneradaVista.subareaInvestigacion = seleccionarArea(actividad.ssubAreaInvestigacion);
-        $scope.actividadGeneradaVista.disciplinaInvestigacion = seleccionarArea(actividad.sdisciplina);
-    };
-    
-    var seleccionarSemestre = function(nombre){
-        var respuesta = -1;
-        angular.forEach($scope.semestres, function(obj, key) {
-            if(obj.snombreSemestre === nombre){
-                respuesta = key;
-            }
-        });
-        return respuesta;
-    };
-    
-    var seleccionarTipoInvestigacion = function(idTipoActividad){
-        var respuesta = null;
-        angular.forEach($scope.tipoInvestigaciones, function(obj, key){
-            if(obj.nidTipoActividadInvestigacion === idTipoActividad){
-                respuesta = obj;
-            }
-        });
-        return respuesta;
-    };
-    
-    var seleccionarArea = function(nombre){
-        var respuesta = null;
-        angular.forEach($scope.areaInvestigaciones, function(obj, key){
-            if(obj.sNombre === nombre){
-                respuesta = obj;
-            }
-        });
-        return respuesta;
     };
     
     /**************** PAGINACION *****************/
@@ -308,38 +185,13 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
  
     $scope.getActividades();
     
-    $scope.actualizarActividad = function() {
+    $scope.verActividadById = function(actividadGenerada){
         $scope.loader = true;
-        scrollTop();
-        setTimeout(function(){
-            $scope.$apply(function(){
-                $scope.loader = false;
-                $scope.mensaje = {titulo: "Actualización Exitosa!", contenido: "La Actividad de Investigación se actualizo correctamente."};
-                $scope.openCloseModal(true,false);
-            });
-        }, 1000);
+        $location.path("/actividadInvestigacion/generado/" + actividadGenerada.idactividadinvestigacion);
     };
-    
-    $scope.aprobarActividad = function(){
+    $scope.updateActividadById = function(actividadGenerada){
         $scope.loader = true;
-        scrollTop();
-        setTimeout(function(){
-            $scope.$apply(function(){
-                $scope.loader = false;
-                $scope.mensaje = {titulo: "Aprobación Exitosa!", contenido: "La Actividad de Investigación se aprobó correctamente."};
-                $scope.openCloseModal(true,false);
-            });
-        }, 1000);
+        $location.path("/updateActividadGenerada/" + actividadGenerada.idactividadinvestigacion);
     };
     
-    /************ Funciones Utilitarias ************/
-    $scope.openCloseModal = function(open, close) {
-        $scope.modal = { open: open, close: close };
-    };
-    
-    var scrollTop = function(){
-        $('html,body').animate({
-            scrollTop: $("#container").offset().top - 100
-        }, 800);
-    };
 });

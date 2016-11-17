@@ -1,57 +1,9 @@
-investigacionApp.controller('ActividadesRevisadasController', function($log, $scope, ActividadesRevisadasService, 
-    SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService,
-    ArchivosService) {    
+investigacionApp.controller('ActividadesRevisadasController', function($log, $scope, $location, ActividadesRevisadasService, 
+    SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService
+    ) {    
     
     $scope.loader = false;
-    $scope.modal = { open: false, close: true };
-    $scope.mensaje = {titulo: "", contenido: ""};
-    $scope.panelGenerados = true;
-    $scope.panelVer = false;
-    $scope.panelEditar = false;
-    $scope.actividadRevisada= {};
 
-    $scope.panelChange = function(panel, actividadRevisada){
-        $scope.loader = true;
-        if(panel === 1){
-            $scope.panelGenerados = true;
-            $scope.panelVer = false;
-            $scope.panelEditar = false;
-            $scope.loader = false;
-            $scope.openCloseModal(false, true);
-        }else{
-            if(panel === 2){
-                $scope.panelGenerados = false;
-                $scope.panelVer = true;
-                $scope.panelEditar = false;
-                $scope.actividadRevisada = actividadRevisada;
-                $scope.getActividadById(actividadRevisada);
-            }else{
-                $scope.panelGenerados = false;
-                $scope.panelVer = false;
-                $scope.panelEditar = true;
-            }
-        }
-    };
-    
-    var getFiltroSuccess = function(response){
-       console.log("success :: ", response);
-    };
-    var getFiltroError = function(response){
-       console.log("Error :: " , response);
-    };
-    
-    
-    $scope.filtrar = function(){
-        var filtro = {
-            tipoInvestigacion : $scope.actividad.nombre,
-            facultad : $scope.facultad.nombre,
-            escuela : $scope.escuela.nombre,
-            semestre : $scope.semestre.nombre,
-            fondo : $scope.fondo.nombre
-        };
-        console.log("filtrar :: ", filtro);
-        ActividadesRevisadasService.Filtrar(filtro).then(getFiltroSuccess, getFiltroError);
-    };
     
     /*********** Servicios Callback ***********/  
     
@@ -130,49 +82,7 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
         console.log("Error Response Semestre :: ", response);
     };
     
-    var getInvestigacionByIdSuccess = function(response){
-        console.log("getInvestigacionByIdSuccess :: ", response);
-        $scope.actividadRevisadaVista = response;
-        $scope.getArchivosByIdActividad($scope.actividadRevisadaVista.nidActividadInvestigacion);
-    };
-    
-    var getInvestigacionByIdError = function(response){
-        console.log("getInvestigacionByIdError :: ", response);
-    };
-    
-    var getArchivoByIdActividadSuccess = function(response){
-        console.log("getArchivoByIdActividadSuccess :: ", response);
-        $scope.archivos = response;
-        setTimeout(function(){
-            $scope.$apply(function(){
-                $scope.loader = false;
-            });
-        }, 1000);
-    };
-    
-    var getArchivoByIdActividadError = function(response){
-        console.log("getArchivoByIdActividadError :: ", response);
-        $scope.loader = false;  
-    };
-    
-    var descargarArchivoSuccess = function(response){
-        $log.debug("Descargar Archivo - Success");
-    };
-    
-    var descargarArchivoError = function(response){
-        $log.debug("Descargar Archivo - Error");
-        console.log("Descargar Archivo :: ", response);
-    };
-    
     /******************* Servicios *******************/
-    
-    $scope.getArchivosByIdActividad = function(idActividad){
-      	ArchivosService.getArchivosByIdActividad(idActividad).then(getArchivoByIdActividadSuccess, getArchivoByIdActividadError);
-    };
-    
-    $scope.descargarArchivo = function(archivo){
-        ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
-    };
     
     $scope.getListaTipoNivel = function(){
       	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
@@ -188,10 +98,6 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     
     $scope.getSemestres = function(){
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
-    };
-    
-    $scope.getActividadById = function(actividad){
-        TipoInvestigacionService.getInvestigacionesById(actividad.idactividadinvestigacion).then(getInvestigacionByIdSuccess, getInvestigacionByIdError);
     };
     
     $scope.getTipoInvestigacion = function(){
@@ -264,26 +170,9 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     
     $scope.getActividades();
     
-     $scope.aprobarActividad = function(){
+    $scope.verActividadById = function(actividadRevisada){
         $scope.loader = true;
-        scrollTop();
-        setTimeout(function(){
-            $scope.$apply(function(){
-                $scope.loader = false;
-                $scope.mensaje = {titulo: "Aprobación Exitosa!", contenido: "La Actividad de Investigación se aprobó correctamente."};
-                $scope.openCloseModal(true,false);
-            });
-        }, 1000);
+        $location.path("/actividadInvestigacion/revisado/"+ actividadRevisada.idactividadinvestigacion);
     };
     
-    /************ Funciones Utilitarias ************/
-    $scope.openCloseModal = function(open, close) {
-        $scope.modal = { open: open, close: close };
-    };
-    
-    var scrollTop = function(){
-        $('html,body').animate({
-            scrollTop: $("#container").offset().top - 100
-        }, 800);
-    };
 });

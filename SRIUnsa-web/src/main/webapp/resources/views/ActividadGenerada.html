@@ -118,10 +118,16 @@
                         </div>
                     </div>
                 </form>
-                <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="aprobarActividad()">
-                    <span class="glyphicon glyphicon-ok"></span> Aprobar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="panelChange(1)">
-                    <span class="glyphicon glyphicon-trash"></span> Rechazar</button>
+                <div ng-show="generado || pendiente">
+                    <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="aprobarActividad()">
+                        <span class="glyphicon glyphicon-ok"></span> Aprobar</button>
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span> Rechazar</button>
+                </div>
+                <div ng-show="revisado">
+                    <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="irBandejaRevisados()">
+                        <span class="glyphicon glyphicon-arrow-right"></span> Ir a Bandeja</button>
+                </div>
             </div>
         </div>  
     </div><!-- FIN PANEL VER -->            
@@ -135,7 +141,8 @@
             </div>
             <hr/>
 <!--        <button ng-click="registrarNuevaActividad()" class="SRIModal-button SRI-nuevo"></button>-->
-            <button ng-click="irBandeja()" class="SRIModal-button SRI-confirmar">Ir a Bandeja</button>
+            <button ng-show="generado" ng-click="irBandejaGenerados()" class="SRIModal-button SRI-confirmar">Ir a Bandeja</button>
+            <button ng-show="pendiente" ng-click="irBandejaPendientes()" class="SRIModal-button SRI-confirmar">Ir a Bandeja</button>
         </div>
     </div>
 </div>

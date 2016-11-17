@@ -5,6 +5,21 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     $scope.modal = { open: false, close: true };
     $scope.mensaje = {titulo: "", contenido: ""};
     $scope.idActividad = $routeParams.ID;
+    $scope.revisado = false;
+    $scope.generado = false;
+    $scope.pendiente = false;
+    
+    var estado = $routeParams.ESTADO;
+    
+    if(estado === "revisado" ){
+        $scope.revisado = true;
+    }
+    if(estado === "generado"){
+        $scope.generado = true;
+    }
+    if(estado === "pendiente"){
+        $scope.pendiente = true;
+    }
     
     /******************* Servicios Callback *******************/
     
@@ -79,7 +94,18 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     };
     
     /************ Funciones Utilitarias ************/
-    $scope.irBandeja = function(){
+    $scope.irBandejaRevisados = function(){
+        $scope.loader = true;
+        $location.path("/actividadesRevisadas");
+    };
+    
+    $scope.irBandejaPendientes = function(){
+        $scope.openCloseModal(false,true);
+        $scope.loader = true;
+        $location.path("/actividadesPendientes");
+    };
+    
+    $scope.irBandejaGenerados = function(){
         $scope.openCloseModal(false,true);
         $scope.loader = true;
         $location.path("/actividadesGeneradas");
