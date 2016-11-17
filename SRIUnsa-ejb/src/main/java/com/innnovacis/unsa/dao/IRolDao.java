@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIRol;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +21,8 @@ public interface IRolDao {
     boolean Delete(SRIRol entidad);
     SRIRol GetById(int idEntidad);
     List<SRIRol> GetAll();
+    
+    List<SRIRol> GetPagina(SRIPaginacionObject object);
+    int GetTotalPaginacion(SRIPaginacionObject object);
     
 }

@@ -5,6 +5,7 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IPrivilegioBusiness;
 import com.innnovacis.unsa.dao.IPrivilegioDao;
 import com.innnovacis.unsa.model.SRIPrivilegio;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 
 import javax.inject.Inject;
@@ -84,6 +85,30 @@ public class PrivilegioBusinessImp implements IPrivilegioBusiness {
         catch(Exception ex){
         }
          return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+         try{
+            respuesta = privilegioDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIPrivilegio> GetPagina(SRIPaginacionObject object) {
+        List<SRIPrivilegio> respuesta = null;
+         try{
+            respuesta = privilegioDao.GetPagina(object);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
     }
 
     

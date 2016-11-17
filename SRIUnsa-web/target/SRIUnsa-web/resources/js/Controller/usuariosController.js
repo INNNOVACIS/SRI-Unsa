@@ -104,6 +104,10 @@ investigacionApp.controller('usuariosController', function($log, $scope, $locati
         UsuariosService.paginacionUsuario(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     
+    $scope.clickBuscar = function(){
+        $scope.getUsuariosByPagina();
+    };
+    
     $scope.getUsuariosByPagina();
  
 });

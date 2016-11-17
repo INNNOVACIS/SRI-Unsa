@@ -2,11 +2,15 @@
 package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.ISemestreDao;
+import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.model.SRISemestre;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import java.math.BigInteger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
@@ -49,6 +53,24 @@ public class SemestreDaoImp implements ISemestreDao {
     public List<SRISemestre> GetAll() {
         List<SRISemestre> olistaRespuesta = em.createNamedQuery("SRISemestre.GetAll",SRISemestre.class).getResultList();
         return olistaRespuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        Query query = em.createNativeQuery("{call semestreTotalPaginacion(?1)}")
+                        .setParameter(1, object.getFiltro());
+        BigInteger total = (BigInteger) query.getSingleResult();
+        return total.intValue();
+    }
+
+    @Override
+    public List<SRISemestre> GetPagina(SRIPaginacionObject object) {
+        Query query = em.createNativeQuery("{call semestrePaginacion(?1,?2,?3)}", SRISemestre.class)
+                        .setParameter(1, object.getFiltro())
+                        .setParameter(2, object.getRango())
+                        .setParameter(3, object.getCurrentPage());
+        List<SRISemestre> listSemestre = query.getResultList();
+        return listSemestre;
     }
 
 }

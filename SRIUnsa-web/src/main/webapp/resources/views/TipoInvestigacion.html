@@ -1,9 +1,9 @@
-<div class="container-fluid">
-    <div class="panel panel-danger" >
-        <div class="panel-body">
+<div class="container">
+<!--    <div class="panel panel-danger" >
+        <div class="panel-body">-->
             <div class="col-xm-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading" style="padding-bottom:19px;">
+                    <div class="panel-heading">
                         Administración de tipos de Investigacion
                         <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoInvestigacion">
                             <span class="glyphicon glyphicon-plus"></span>
@@ -11,6 +11,17 @@
                         </button>	
                     </div>
                     <div class="panel-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <input ng-model="buscar" class="form-control" placeholder="Buscar" >
+                                </div>
+                                <div class="col-sm-2">
+                                    <button ng-click="clickBuscar()" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span> Buscar</button>
+                                </div>
+                            </div>
+                        </div>
                         <table width="100%" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -32,29 +43,19 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                <li class="disabled">
-                                    <a href="#" aria-label="Anterior">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li ng-class="pagina.activo ? 'active' : 'none'" ng-repeat="pagina in paginas">
-                                    <a ng-click="changePagina(pagina)">{{ pagina.numero }}</a>
-                                </li>
-                                <li>
-                                    <a aria-label="Siguiente">
-                                      <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <pagination
+                            rango-paginas="rangoPaginas"
+                            current-rango="currentRango"
+                            num-pages="numPages()" 
+                            current-page="currentPage"
+                            max-size="maxSize" >    
+                        </pagination>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+<!--    </div>
+</div>-->
 
 <!-- Nueva Investigacion -->
 <div id="popNuevoInvestigacion" class="modal fade" role="dialog">

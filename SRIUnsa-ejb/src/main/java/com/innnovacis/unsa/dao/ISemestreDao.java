@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRISemestre;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +21,7 @@ public interface ISemestreDao {
     boolean Delete(SRISemestre entidad);
     SRISemestre GetById(int idEntidad);
     List<SRISemestre> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRISemestre> GetPagina(SRIPaginacionObject object);
     
 }

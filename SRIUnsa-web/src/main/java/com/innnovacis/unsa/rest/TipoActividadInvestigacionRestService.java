@@ -6,8 +6,12 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.ITipoActividadInvestigacionBusiness;
+import com.innnovacis.unsa.model.SRIRol;
 import com.innnovacis.unsa.model.SRITipoActividadInvestigacion;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -17,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -28,6 +33,22 @@ public class TipoActividadInvestigacionRestService {
 
     @Inject
     private ITipoActividadInvestigacionBusiness tipoInvestigacionBusiness;
+    
+    @POST
+    @Path("/paginacionTipoInvestigacion")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response paginacionTipoInvestigacion(SRIPaginacionObject object) {
+        int total = tipoInvestigacionBusiness.GetTotalPaginacion(object);
+        List<SRITipoActividadInvestigacion> lista = tipoInvestigacionBusiness.GetPagina(object);
+
+        Map<String, Object> responseObj = new HashMap<>();
+        responseObj.put("total", total);
+        responseObj.put("lista", lista);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
+        
+        return builder.build();
+    }
     
     @GET
     @Path("/listarTipoInvestigacion")

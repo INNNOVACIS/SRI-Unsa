@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRITipoAsesoria;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +21,7 @@ public interface ITipoAsesoriaBusiness {
     boolean Delete(SRITipoAsesoria entidad);
     SRITipoAsesoria Get(int idEntidad);
     List<SRITipoAsesoria> GetAll();
+    int GetTotalPaginacion (SRIPaginacionObject object);
+    List<SRITipoAsesoria> GetPagina (SRIPaginacionObject object);
 
 }

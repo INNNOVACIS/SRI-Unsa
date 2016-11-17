@@ -3,6 +3,22 @@
  */
 investigacionApp.service("RolService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getRolesByPagina = function(request) {
+            $log.debug("Usuario Service - PaginacionUsuario");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/roles/paginacionRoles',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
 	this.getRoles = function() {
 		$log.debug("Rol Service - get Roles");
 		

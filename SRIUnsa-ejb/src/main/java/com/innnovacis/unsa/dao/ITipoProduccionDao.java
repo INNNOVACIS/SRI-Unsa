@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRITipoProduccion;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,4 +21,6 @@ public interface ITipoProduccionDao {
     boolean Delete(SRITipoProduccion entidad);
     SRITipoProduccion GetById(int idEntidad);
     List<SRITipoProduccion> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRITipoProduccion> GetPagina(SRIPaginacionObject object);
 }

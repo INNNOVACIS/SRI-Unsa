@@ -3,6 +3,22 @@
  */
 investigacionApp.service("ArchivosService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getArchivosByPagina = function(request) {
+            $log.debug("Archivo Service - getArchivosByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/files/paginacionArchivos',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
 	this.getArchivos = function() {
 		$log.debug("Archivo Service - get Archivos");
 		
@@ -10,6 +26,21 @@ investigacionApp.service("ArchivosService", function(SRIUnsaConfig, $log, $http,
 		$http({
 			method : 'GET',
 			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/files/listarArchivos',
+		}).success(function(response) {
+			deferred.resolve(response);
+		}).error(function(response) {			
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	};
+        
+        this.getArchivosByIdActividad = function(id) {
+		$log.debug("Archivo Service - getArchivosByIdActividad");
+		
+		var deferred = $q.defer();
+		$http({
+			method : 'GET',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/files/listar/' + id,
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function(response) {			
@@ -52,7 +83,7 @@ investigacionApp.service("ArchivosService", function(SRIUnsaConfig, $log, $http,
                     deferred.reject(response);
 		});
             return deferred.promise;
-        }
+        };
 
 	this.subirArchivo = function(request) {
             $log.debug("Home Service - SendFile");
@@ -70,5 +101,5 @@ investigacionApp.service("ArchivosService", function(SRIUnsaConfig, $log, $http,
                 deferred.reject(response);
             });
             return deferred.promise;
-        }
+        };
 });

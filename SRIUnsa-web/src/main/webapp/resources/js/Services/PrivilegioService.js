@@ -3,6 +3,22 @@
  */
 investigacionApp.service("PrivilegioService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getPrivilegiosByPagina = function(request) {
+            $log.debug("Privilegio Service - getPrivilegiosByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/privilegios/paginacionPrivilegios',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
 	this.getPrivilegios = function() {
 		$log.debug("Privilegio Service - get Privilegios");
 		

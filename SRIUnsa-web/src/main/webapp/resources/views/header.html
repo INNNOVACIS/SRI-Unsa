@@ -37,7 +37,32 @@
                         </li>
                         <li ng-class="{'active' : menuTab == 8}" ng-show="rol_menu_8"><a href="#generarDocente" ng-click="setMenuTab(8)">Relación Docentes</a>
                         </li>
-                        <li ng-class="{'active' : menuTab == 7}" ng-show="rol_menu_7"><a href="#configuracion" ng-click="setMenuTab(7)">Configuración</a>
+                        <li class="dropdown" ng-show="rol_menu_7">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuración <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li ng-class="{'active' : menuTab == 9}" ><a href="#usuarios" ng-click="setMenuTab(2)">Gestionar Usuarios</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 10}" ><a href="#privilegios" ng-click="setMenuTab(3)">Gestionar Privilegios</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 11}" ><a href="#roles" ng-click="setMenuTab(5)">Gestionar Roles</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 12}" ><a href="#archivos" ng-click="setMenuTab(2)">Gestionar Archivos</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 13}" ><a href="#tipoinvestigacion" ng-click="setMenuTab(3)">Gestionar Tipo de Investigacion</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 14}" ><a href="#tiponivel" ng-click="setMenuTab(5)">Gestionar Tipo de nivel</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 15}" ><a href="#tipoinvestigador" ng-click="setMenuTab(5)">Gestionar Tipo de Investigador</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 16}" ><a href="#tipoproduccion" ng-click="setMenuTab(2)">Gestionar Tipo de Produccion</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 17}" ><a href="#tipoasesoria" ng-click="setMenuTab(3)">Gestionar Tipo de Asesoria</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 18}" ><a href="#tipoproduccion" ng-click="setMenuTab(5)">Gestionar Tipo de Produccion</a>
+                                </li>
+                                <li ng-class="{'active' : menuTab == 19}" ><a href="#semestre" ng-click="setMenuTab(5)">Gestionar Tipo de Semestre</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
 

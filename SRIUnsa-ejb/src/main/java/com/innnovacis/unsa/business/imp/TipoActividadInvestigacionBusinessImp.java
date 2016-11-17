@@ -5,6 +5,7 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.ITipoActividadInvestigacionBusiness;
 import com.innnovacis.unsa.dao.ITipoActividadInvestigacionDao;
 import com.innnovacis.unsa.model.SRITipoActividadInvestigacion;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -80,6 +81,28 @@ public class TipoActividadInvestigacionBusinessImp implements ITipoActividadInve
          List<SRITipoActividadInvestigacion> respuesta = null;
          try{
             respuesta = tipoActividadInvestigacionDao.GetAll();
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+        try{
+            respuesta = tipoActividadInvestigacionDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public List<SRITipoActividadInvestigacion> GetPagina(SRIPaginacionObject object) {
+        List<SRITipoActividadInvestigacion> respuesta = null;
+        try{
+            respuesta = tipoActividadInvestigacionDao.GetPagina(object);
         }
         catch(Exception ex){
         }

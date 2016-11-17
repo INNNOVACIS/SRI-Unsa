@@ -3,6 +3,22 @@
  */
 investigacionApp.service("SemestreService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getSemestresByPagina = function(request) {
+            $log.debug("Semestre Service - getSemstresByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/semestre/paginacionSemestre',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
 	this.getSemestres = function() {
 		$log.debug("Semestre Service - get Semestres");
 		

@@ -3,6 +3,22 @@
  */
 investigacionApp.service("TipoInvestigacionService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getTipoInvestigacionByPagina = function(request) {
+            $log.debug("Usuario Service - getTipoInvestigacionByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoInvestigacion/paginacionTipoInvestigacion',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
         this.getInvestigacionesById = function(idEntidad) {
 		$log.debug("Investigacion Service - get Investigaciones");
 		

@@ -70,5 +70,42 @@ investigacionApp.controller('TipoNivelController', function($log, $scope, $locat
     	$scope.tipoNivel = tipoNivel;
     }
 
-    $scope.getListaTipoNivel();
+    /**************** PAGINACION *****************/
+    
+    $scope.rangoPaginas = [5,10,20,100];
+    $scope.currentPage = 1;
+    $scope.currentRango = $scope.rangoPaginas[0];
+    $scope.maxSize = 5;
+    $scope.total = 0;
+
+    $scope.numPages = function () {
+      return Math.ceil($scope.total / $scope.currentRango);
+    };
+
+    $scope.$watch('currentPage + currentRango', function() {
+        $scope.getTipoNivelByPagina();
+    });
+    
+    /*********************************************/
+    
+    var getTipoNivelByPaginaSuccess = function(response){
+        $log.debug("Get paginacionUsuario - Success");
+        $scope.listarTipoNivel = response.lista;
+        $scope.total = response.total;
+    };
+    
+    var getTipoNivelByPaginaError = function(response){
+        console.log("error :: ", response);
+    };
+    
+    $scope.getTipoNivelByPagina = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        TipoNivelService.getTipoNivelByPagina(objPagina).then(getTipoNivelByPaginaSuccess, getTipoNivelByPaginaError);
+    };
+    
+    $scope.clickBuscar = function(){
+        $scope.getTipoNivelByPagina();
+    };
+    
+    $scope.getTipoNivelByPagina();
 });

@@ -5,6 +5,7 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.ITipoAsesoriaBusiness;
 import com.innnovacis.unsa.dao.ITipoAsesoriaDao;
 import com.innnovacis.unsa.model.SRITipoAsesoria;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
@@ -78,6 +79,28 @@ public class TipoAsesoriaBusinessImp implements ITipoAsesoriaBusiness {
          List<SRITipoAsesoria> respuesta = null;
          try{
             respuesta = tipoAsesoriaDao.GetAll();
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+         try{
+            respuesta = tipoAsesoriaDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public List<SRITipoAsesoria> GetPagina(SRIPaginacionObject object) {
+         List<SRITipoAsesoria> respuesta = null;
+         try{
+            respuesta = tipoAsesoriaDao.GetPagina(object);
         }
         catch(Exception ex){
         }

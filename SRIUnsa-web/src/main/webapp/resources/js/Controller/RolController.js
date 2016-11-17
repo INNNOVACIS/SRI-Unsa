@@ -137,6 +137,43 @@ investigacionApp.controller('RolController', function($log, $scope, $location, $
     $scope.update = function(rol){
     	$scope.rol = rol;
     };
+    
+    /**************** PAGINACION *****************/
+    
+    $scope.rangoPaginas = [5,10,20,100];
+    $scope.currentPage = 1;
+    $scope.currentRango = $scope.rangoPaginas[0];
+    $scope.maxSize = 5;
+    $scope.total = 0;
 
-    $scope.getRoles();
+    $scope.numPages = function () {
+      return Math.ceil($scope.total / $scope.currentRango);
+    };
+
+    $scope.$watch('currentPage + currentRango', function() {
+        $scope.getRolesByPagina();
+    });
+    
+    /*********************************************/
+    
+    var getRolesByPaginaSuccess = function(response){
+        $log.debug("Get paginacionUsuario - Success");
+        $scope.roles = response.lista;
+        $scope.total = response.total;
+    };
+    
+    var getRolesByPaginaError = function(response){
+        console.log("error :: ", response);
+    };
+    
+    $scope.getRolesByPagina = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        RolService.getRolesByPagina(objPagina).then(getRolesByPaginaSuccess, getRolesByPaginaError);
+    };
+    
+    $scope.clickBuscar = function(){
+        $scope.getRolesByPagina();
+    };
+    
+    $scope.getRolesByPagina();
 });

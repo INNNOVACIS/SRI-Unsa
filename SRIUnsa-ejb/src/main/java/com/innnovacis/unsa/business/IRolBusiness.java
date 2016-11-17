@@ -6,7 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIRol;
-import com.innnovacis.unsa.model.SRISemestre;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -21,5 +21,8 @@ public interface IRolBusiness {
     boolean Delete(SRIRol entidad);
     SRIRol Get(int idEntidad);
     List<SRIRol> GetAll();
+    
+    List<SRIRol> GetPagina(SRIPaginacionObject object);
+    int GetTotalPaginacion(SRIPaginacionObject object);
 
 }

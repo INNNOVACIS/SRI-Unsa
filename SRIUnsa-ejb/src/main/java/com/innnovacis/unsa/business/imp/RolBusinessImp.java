@@ -4,8 +4,8 @@ package com.innnovacis.unsa.business.imp;
 
 import com.innnovacis.unsa.business.IRolBusiness;
 import com.innnovacis.unsa.dao.IRolDao;
-import com.innnovacis.unsa.model.SRIProcesoFlujo;
 import com.innnovacis.unsa.model.SRIRol;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 
 import javax.inject.Inject;
@@ -85,6 +85,30 @@ public class RolBusinessImp implements IRolBusiness {
         catch(Exception ex){
         }
          return respuesta;
+    }
+
+    @Override
+    public List<SRIRol> GetPagina(SRIPaginacionObject object) {
+        List<SRIRol> respuesta = null;
+         try{
+            respuesta = rolDao.GetPagina(object);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+         try{
+            respuesta = rolDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
     }
 
     

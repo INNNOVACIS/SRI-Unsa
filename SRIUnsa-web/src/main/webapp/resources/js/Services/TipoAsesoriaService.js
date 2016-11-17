@@ -3,6 +3,22 @@
  */
 investigacionApp.service("TipoAsesoriaService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getTipoAsesoriaByPagina = function(request) {
+            $log.debug("Tipo Asesoria Service - getTipoAsesoriaByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoAsesoria/paginacionTipoAsesoria',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
 	this.getAsesorias = function() {
 		$log.debug("Tipo Asesoria Service - get Asesorias");
 		

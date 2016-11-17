@@ -7,12 +7,15 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IArchivoBusiness;
 import com.innnovacis.unsa.model.SRIArchivo;
+import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.util.Convert;
 import com.innnovacis.unsa.util.SRIArchivoUtil;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.RequestScoped;
@@ -43,6 +46,22 @@ public class ArchivosRestServices {
     @Inject
     private Convert convert;
     
+    @POST
+    @Path("/paginacionArchivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response paginacionPrivilegios(SRIPaginacionObject object) {
+        int total = archivoBusiness.GetTotalPaginacion(object);
+        List<SRIArchivoUtil> lista = archivoBusiness.GetPagina(object);
+
+        Map<String, Object> responseObj = new HashMap<>();
+        responseObj.put("total", total);
+        responseObj.put("lista", lista);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
+        
+        return builder.build();
+    }
+    
     @GET
     @Path("/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -55,6 +74,13 @@ public class ArchivosRestServices {
     @Produces(MediaType.APPLICATION_JSON)
     public List<SRIArchivoUtil> getArchivos() {
         return archivoBusiness.GetAll();
+    }
+    
+    @GET
+    @Path("/listar/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<SRIArchivoUtil> getArchivosById(@PathParam("id") int id) {
+        return archivoBusiness.GetArchivosById(id);
     }
     
     @POST

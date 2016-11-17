@@ -3,6 +3,22 @@
  */
 investigacionApp.service("TipoProduccionService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getTipoProduccionByPagina = function(request) {
+            $log.debug("Tipo Produccion Service - getTipoProduccionByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoProduccion/paginacionTipoProduccion',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
 	this.getListaTipoProduccion = function() {
 		$log.debug("TipoProduccion Service - get Lista TipoProduccion");
 		

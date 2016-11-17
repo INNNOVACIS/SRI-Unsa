@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRISemestre;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +21,7 @@ public interface ISemestreBusiness {
     boolean Delete(SRISemestre entidad);
     SRISemestre Get(int idEntidad);
     List<SRISemestre> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRISemestre> GetPagina(SRIPaginacionObject object);
 
 }

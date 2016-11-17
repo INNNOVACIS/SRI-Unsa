@@ -2,11 +2,15 @@
 package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.ITipoAsesoriaDao;
+import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.model.SRITipoAsesoria;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import java.math.BigInteger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
@@ -49,6 +53,24 @@ public class TipoAsesoriaDaoImp implements ITipoAsesoriaDao {
     public List<SRITipoAsesoria> GetAll() {
         List<SRITipoAsesoria> olistaRespuesta = em.createNamedQuery("SRITipoAsesoria.GetAll",SRITipoAsesoria.class).getResultList();
         return olistaRespuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+         Query query = em.createNativeQuery("{call tipoAsesoriaTotalPaginacion(?1)}")
+                        .setParameter(1, object.getFiltro());
+        BigInteger total = (BigInteger) query.getSingleResult();
+        return total.intValue();
+    }
+
+    @Override
+    public List<SRITipoAsesoria> GetPagina(SRIPaginacionObject object) {
+        Query query = em.createNativeQuery("{call tipoAsesoriaPaginacion(?1,?2,?3)}", SRITipoAsesoria.class)
+                        .setParameter(1, object.getFiltro())
+                        .setParameter(2, object.getRango())
+                        .setParameter(3, object.getCurrentPage());
+        List<SRITipoAsesoria> listTipoAsesoria = query.getResultList();
+        return listTipoAsesoria;
     }
 
 }

@@ -5,7 +5,9 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IArchivoBusiness;
 import com.innnovacis.unsa.dao.IArchivoDao;
 import com.innnovacis.unsa.model.SRIArchivo;
+import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.util.SRIArchivoUtil;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -94,6 +96,41 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
             respuesta = archivoDao.descargarArchivo(id);
         }
         catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIArchivoUtil> GetArchivosById(int id) {
+        List<SRIArchivoUtil> respuesta = null;
+        try{
+            respuesta = archivoDao.GetArchivosById(id);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+         try{
+            respuesta = archivoDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIArchivoUtil> GetPagina(SRIPaginacionObject object) {
+        List<SRIArchivoUtil> respuesta = null;
+         try{
+            respuesta = archivoDao.GetPagina(object);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
         }
         return respuesta;
     }

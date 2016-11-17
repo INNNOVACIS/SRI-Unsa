@@ -5,6 +5,7 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.ITipoNivelBusiness;
 import com.innnovacis.unsa.dao.ITipoNivelDao;
 import com.innnovacis.unsa.model.SRITipoNivel;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -83,6 +84,28 @@ public class TipoNivelBusinessImp implements ITipoNivelBusiness {
         catch(Exception ex){
         }
          return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+        try{
+            respuesta = tipoNivelDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRITipoNivel> GetPagina(SRIPaginacionObject object) {
+        List<SRITipoNivel> respuesta = null;
+        try{
+            respuesta = tipoNivelDao.GetPagina(object);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
     }
 
     

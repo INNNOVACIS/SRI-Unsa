@@ -3,10 +3,9 @@ package com.innnovacis.unsa.business.imp;
 
 
 import com.innnovacis.unsa.business.ISemestreBusiness;
-import com.innnovacis.unsa.business.ITipoNivelBusiness;
 import com.innnovacis.unsa.dao.ISemestreDao;
-import com.innnovacis.unsa.dao.ITipoNivelDao;
 import com.innnovacis.unsa.model.SRISemestre;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -82,6 +81,28 @@ public class SemestreBusinessImp implements ISemestreBusiness {
          List<SRISemestre> respuesta = null;
          try{
             respuesta = semestreDao.GetAll();
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+        try{
+            respuesta = semestreDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public List<SRISemestre> GetPagina(SRIPaginacionObject object) {
+        List<SRISemestre> respuesta = null;
+        try{
+            respuesta = semestreDao.GetPagina(object);
         }
         catch(Exception ex){
         }

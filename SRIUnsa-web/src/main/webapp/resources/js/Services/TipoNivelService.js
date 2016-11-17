@@ -3,6 +3,22 @@
  */
 investigacionApp.service("TipoNivelService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getTipoNivelByPagina = function(request) {
+            $log.debug("Tipo Nivel Service - getTipoNivelByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/tipoNivel/paginacionTipoNivel',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
 	this.getListaTipoNivel = function() {
 		$log.debug("TipoNivel Service - get Lista TipoNivel");
 		

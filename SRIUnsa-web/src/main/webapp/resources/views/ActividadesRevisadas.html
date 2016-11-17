@@ -1,5 +1,7 @@
-
-<div class="container">
+<div ng-show="loader" class="SRI-loader-open">
+    <div class="SRI-loader"></div>
+</div>
+<div id="container" class="container">
 <!--  <div class="panel panel-danger" >
     <div class="panel-body">-->
       <div class="col-xm-12" ng-show="panelGenerados">
@@ -69,7 +71,7 @@
             </div>
         </div>
             
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">Actividades de Investigación Generadas</div>
                 <div class="panel-body">
                     <div class="dataTable_wrapper">
@@ -96,8 +98,8 @@
                                     <td>{{ actividadRevisada.horas }}</td>
                                     <td>{{ actividadRevisada.cantidad }}</td>
                                     <td nowrap>
-                                        <button type="button" class="btn btn-info btn-xs" ng-click="panelChange(2, actividadRevisada)" >
-                                            <span class="glyphicon glyphicon-pencil"></span> Ver
+                                        <button type="button" class="btn btn-primary btn-xs" ng-click="panelChange(2, actividadRevisada)" >
+                                            <span class="glyphicon glyphicon-ok"></span>  Ver
                                         </button>
                                     </td>
                                 </tr>
@@ -118,7 +120,7 @@
 
             <!-- PANEL VER -->
             <div class="col-xm-12" ng-show="panelVer">
-                <div class="panel panel-info">
+                <div class="panel panel-primary">
                     <div class="panel-heading">Revisar Actividad de Investigación <strong>{{selected}}</strong><button style="padding:3px 12px;" type="submit" class="btn btn-danger pull-right" ng-click="panelChange(1)">X</button></div>
                     <div class="panel-body">
                         <form class="form-horizontal">
@@ -203,17 +205,55 @@
                                 <div class="col-md-10">
                                   <textarea readonly="readonly" style="margin:2px;" class="form-control" rows="5" ng-model="actividadRevisadaVista.sdescripcionActividad"></textarea> 
                                 </div>
-                                <label class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
+                                <label for="inpFile" class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
                                 <div class="col-md-10">
-                                    <input id="file-1" style="margin:2px;" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+                                    <div class="panel panel-default" >
+                                        <div class="panel-body">
+                                            <table width="100%" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="40%">Nombre Archivo</th>
+                                                        <th>Tipo</th>
+                                                        <th>Acción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="archivo in archivos">
+                                                        <td><strong>{{ archivo.nombre }}</strong></td>
+                                                        <td>{{ archivo.tipo }}</td>
+                                                        <td nowrap>
+                                                            <button type="button" class="btn btn-danger btn-xs" ng-click="descargarArchivo(archivo)">
+                                                                <span class="glyphicon glyphicon-down"></span> Descargar
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
-                        <button class="col-md-offset-2 btn-success btn-lg" type="button" data-dismiss="modal">Aprobado</button>
-                        <button type="button" class="btn-danger btn-lg" data-dismiss="modal" ng-click="panelChange(1)">Rechazado</button>
+<!--                        <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="aprobarActividad()">
+                            <span class="glyphicon glyphicon-ok"></span> Aprobar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="panelChange(1)">
+                            <span class="glyphicon glyphicon-trash"></span> Rechazar</button>-->
                     </div>
                 </div>  
             </div><!-- FIN PANEL VER -->
+            
+             <div ng-class="{'SRI-modal-open': modal.open, 'SRI-modal-close': modal.close}" >
+                <div class="SRI-modal">
+                    <a ng-click="openCloseModal(false, true)" class="SRIModal-cerrar" >Cerrar</a>
+                    <div>
+                        <h3>{{mensaje.titulo}}</h3>
+                        <p>{{mensaje.contenido}}</p>
+                    </div>
+                    <hr/>
+<!--                    <button ng-click="registrarNuevaActividad()" class="SRIModal-button SRI-nuevo"></button>-->
+                    <button ng-click="panelChange(1)" class="SRIModal-button SRI-confirmar">Ir a Bandeja</button>
+                </div>
+            </div>
 <!--        </div>
     </div>-->
 </div>

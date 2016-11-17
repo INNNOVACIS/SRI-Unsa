@@ -56,5 +56,42 @@ investigacionApp.controller('archivosController', function($log, $scope, $locati
     	$scope.file = file;
     };
 
-    $scope.getArchivos();
+    /**************** PAGINACION *****************/
+    
+    $scope.rangoPaginas = [5,10,20,100];
+    $scope.currentPage = 1;
+    $scope.currentRango = $scope.rangoPaginas[0];
+    $scope.maxSize = 5;
+    $scope.total = 0;
+
+    $scope.numPages = function () {
+      return Math.ceil($scope.total / $scope.currentRango);
+    };
+
+    $scope.$watch('currentPage + currentRango', function() {
+        $scope.getArchivosByPagina();
+    });
+    
+    /*********************************************/
+    
+    var getArchivosByPaginaSuccess = function(response){
+        $log.debug("getArchivosByPagina - Success");
+        $scope.files = response.lista;
+        $scope.total = response.total;
+    };
+    
+    var getArchivosByPaginaError = function(response){
+        console.log("getArchivosByPaginaError :: ", response);
+    };
+    
+    $scope.getArchivosByPagina = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        ArchivosService.getArchivosByPagina(objPagina).then(getArchivosByPaginaSuccess, getArchivosByPaginaError);
+    };
+    
+    $scope.clickBuscar = function(){
+        $scope.getArchivosByPagina();
+    };
+    
+    $scope.getArchivosByPagina();
 });

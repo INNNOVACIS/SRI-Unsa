@@ -3,7 +3,10 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IArchivoDao;
 import com.innnovacis.unsa.model.SRIArchivo;
+import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.util.SRIArchivoUtil;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -12,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -84,6 +88,50 @@ public class ArchivoDaoImp implements IArchivoDao {
             Logger.getLogger(ArchivoDaoImp.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+
+    @Override
+    public List<SRIArchivoUtil> GetArchivosById(int id) {
+        
+        List<SRIArchivoUtil> lstArchivoUtil = new ArrayList<SRIArchivoUtil>();
+        Query query = em.createNativeQuery("{call getArchivosByIdActividad(?1)}", SRIArchivo.class)
+                        .setParameter(1, id);
+        List<SRIArchivo> olistaRespuesta = query.getResultList();
+        
+        for(SRIArchivo sriArchivo : olistaRespuesta){
+            SRIArchivoUtil objArchivoUtil = new SRIArchivoUtil();
+            objArchivoUtil.setId(sriArchivo.getNIdArchivo());
+            objArchivoUtil.setNombre(sriArchivo.getSNombreArchivo());
+            lstArchivoUtil.add(objArchivoUtil);
+        }
+        return lstArchivoUtil;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        Query query = em.createNativeQuery("{call archivoTotalPaginacion(?1)}")
+                        .setParameter(1, object.getFiltro());
+        BigInteger total = (BigInteger) query.getSingleResult();
+        return total.intValue();
+    }
+
+    @Override
+    public List<SRIArchivoUtil> GetPagina(SRIPaginacionObject object) {
+        Query query = em.createNativeQuery("{call archivoPaginacion(?1,?2,?3)}", SRIArchivo.class)
+                        .setParameter(1, object.getFiltro())
+                        .setParameter(2, object.getRango())
+                        .setParameter(3, object.getCurrentPage());
+        List<SRIArchivo> olistaRespuesta = query.getResultList();
+        List<SRIArchivoUtil> lstArchivoUtil = new ArrayList<SRIArchivoUtil>();
+        
+        for(SRIArchivo sriArchivo : olistaRespuesta){
+            SRIArchivoUtil objArchivoUtil = new SRIArchivoUtil();
+            objArchivoUtil.setId(sriArchivo.getNIdArchivo());
+            objArchivoUtil.setNombre(sriArchivo.getSNombreArchivo());
+            lstArchivoUtil.add(objArchivoUtil);
+        }
+        
+        return lstArchivoUtil;
     }
 
 }

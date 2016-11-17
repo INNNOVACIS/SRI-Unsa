@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRITipoNivel;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +21,7 @@ public interface ITipoNivelBusiness {
     boolean Delete(SRITipoNivel entidad);
     SRITipoNivel Get(int idEntidad);
     List<SRITipoNivel> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRITipoNivel> GetPagina(SRIPaginacionObject object);
 
 }

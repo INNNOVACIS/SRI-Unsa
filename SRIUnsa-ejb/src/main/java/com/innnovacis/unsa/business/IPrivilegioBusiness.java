@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIPrivilegio;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +21,6 @@ public interface IPrivilegioBusiness {
     boolean Delete(SRIPrivilegio entidad);
     SRIPrivilegio Get(int idEntidad);
     List<SRIPrivilegio> GetAll();
-
+    int GetTotalPaginacion (SRIPaginacionObject object);
+    List<SRIPrivilegio> GetPagina(SRIPaginacionObject object);
 }

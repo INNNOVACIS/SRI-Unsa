@@ -5,6 +5,7 @@ import com.innnovacis.unsa.business.ITipoProduccionBusiness;
 
 import com.innnovacis.unsa.dao.ITipoProduccionDao;
 import com.innnovacis.unsa.model.SRITipoProduccion;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -77,13 +78,35 @@ public class TipoProduccionBusinessImp implements ITipoProduccionBusiness {
     @Override
     public List<SRITipoProduccion> GetAll() {
         log.info("PRUEBAAAA LOGGGG");
-         List<SRITipoProduccion> respuesta = null;
-         try{
+        List<SRITipoProduccion> respuesta = null;
+        try{
             respuesta = tipoProduccionDao.GetAll();
         }
         catch(Exception ex){
         }
-         return respuesta;
+        return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+        try{
+            respuesta = tipoProduccionDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRITipoProduccion> GetPagina(SRIPaginacionObject object) {
+        List<SRITipoProduccion> respuesta = null;
+        try{
+            respuesta = tipoProduccionDao.GetPagina(object);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
     }
 
     

@@ -1,24 +1,35 @@
 investigacionApp.controller('ActividadesPendientesController', function($log, $scope, FondoConcursableService, 
-    SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService) {
-        
+    SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService,
+    ArchivosService) {
+    
+    $scope.loader = false;
+    $scope.modal = { open: false, close: true };
+    $scope.mensaje = {titulo: "", contenido: ""};
     $scope.panelGenerados = true;
     $scope.panelVer = false;
     $scope.panelEditar = false;    
 
-    $scope.panelChange = function(panel, actividadGenerada){
+    $scope.panelChange = function(panel, actividadPendiente){
+        $scope.loader = true;
         if(panel === 1){
             $scope.panelGenerados = true;
             $scope.panelVer = false;
             $scope.panelEditar = false;
+            $scope.loader = false;
+            $scope.openCloseModal(false, true);
         }else{
             if(panel === 2){
                 $scope.panelGenerados = false;
                 $scope.panelVer = true;
                 $scope.panelEditar = false;
+                $scope.actividadPendiente = actividadPendiente;
+                $scope.getActividadById(actividadPendiente);
             }else{
                 $scope.panelGenerados = false;
                 $scope.panelVer = false;
                 $scope.panelEditar = true;
+                $scope.actividadPendiente = actividadPendiente;
+                $scope.getActividadById(actividadPendiente);
             }
         }
     };
@@ -117,10 +128,28 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     var getInvestigacionByIdSuccess = function(response){
         console.log("getInvestigacionByIdSuccess :: ", response);
         $scope.actividadPendienteVista = response;
+        $scope.getArchivosByIdActividad($scope.actividadPendienteVista.nidActividadInvestigacion);
     };
     
     var getInvestigacionByIdError = function(response){
         console.log("getInvestigacionByIdError :: ", response);
+        $scope.loader = false;  
+    };
+
+    
+    var getArchivoByIdActividadSuccess = function(response){
+        console.log("getArchivoByIdActividadSuccess :: ", response);
+        $scope.archivos = response;
+        setTimeout(function(){
+            $scope.$apply(function(){
+                $scope.loader = false;
+            });
+        }, 1000);
+    };
+    
+    var getArchivoByIdActividadError = function(response){
+        console.log("getArchivoByIdActividadError :: ", response);
+        $scope.loader = false;  
     };
     
     var getAllActividadesPendientessSuccess = function(response){
@@ -141,6 +170,15 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     var getTipoInvestigacionError = function(response){
      	$log.debug("Get Investigacion - Error");
         console.log("Error Response Investigacion :: ", response);
+    };
+    
+    var descargarArchivoSuccess = function(response){
+        $log.debug("Descargar Archivo - Success");
+    };
+    
+    var descargarArchivoError = function(response){
+        $log.debug("Descargar Archivo - Error");
+        console.log("Descargar Archivo :: ", response);
     };
     
     
@@ -164,6 +202,14 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     
     $scope.getActividadById = function(actividad){
         TipoInvestigacionService.getInvestigacionesById(actividad.idactividadinvestigacion).then(getInvestigacionByIdSuccess, getInvestigacionByIdError);
+    };
+    
+    $scope.getArchivosByIdActividad = function(idActividad){
+      	ArchivosService.getArchivosByIdActividad(idActividad).then(getArchivoByIdActividadSuccess, getArchivoByIdActividadError);
+    };
+    
+    $scope.descargarArchivo = function(archivo){
+        ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
     };
     
     $scope.getTipoInvestigacion = function(){
@@ -235,4 +281,27 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     $scope.getTipoInvestigacion();
     
     $scope.getActividades();
+    
+    $scope.aprobarActividad = function(){
+        $scope.loader = true;
+        scrollTop();
+        setTimeout(function(){
+            $scope.$apply(function(){
+                $scope.loader = false;
+                $scope.mensaje = {titulo: "Aprobación Exitosa!", contenido: "La Actividad de Investigación se aprobó correctamente."};
+                $scope.openCloseModal(true,false);
+            });
+        }, 1000);
+    };
+    
+    /************ Funciones Utilitarias ************/
+    $scope.openCloseModal = function(open, close) {
+        $scope.modal = { open: open, close: close };
+    };
+    
+    var scrollTop = function(){
+        $('html,body').animate({
+            scrollTop: $("#container").offset().top - 100
+        }, 800);
+    };
 });
