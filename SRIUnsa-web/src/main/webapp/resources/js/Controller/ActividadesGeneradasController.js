@@ -1,4 +1,4 @@
-investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, FondoConcursableService, 
+investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, $location, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService,
     TipoNivelService, EstructuraOrganizacionService, ArchivosService) {
     
@@ -8,6 +8,12 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     $scope.panelGenerados = true;
     $scope.panelVer = false;
     $scope.panelEditar = false;
+
+    $scope.verActividadById = function(actividadGenerada){
+        $scope.loader = true;
+        $location.path("/actividadGenerada/" + actividadGenerada.idactividadinvestigacion);
+        //        $scope.getActividadById(actividadGenerada);
+    };
 
     $scope.panelChange = function(panel, actividadGenerada){
         $scope.loader = true;

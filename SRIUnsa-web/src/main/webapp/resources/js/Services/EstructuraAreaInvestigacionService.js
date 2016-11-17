@@ -18,6 +18,22 @@ investigacionApp.service("EstructuraAreaInvestigacionService", function(SRIUnsaC
             });
             return deferred.promise;
 	};
+        
+        this.getAreaInvestigaciones = function(request) {
+            $log.debug("Area Investigacion Service - getAreaInvestigacionByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/areaInvestigacion/listarAreaInvestigaciones',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
 
 	this.registrarAreaInvestigacion = function(request) {
 		$log.debug("AreaInvestigacion Service - Registrar AreaInvestigacion");

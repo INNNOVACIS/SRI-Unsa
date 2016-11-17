@@ -10,6 +10,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/home.html',
 		controller : 'homeController'
 	})
+        .when('/actividadGenerada/:ID',{
+		templateUrl : 'resources/views/ActividadGenerada.html',
+		controller : 'ActividadGeneradaController'
+	})
 	.when('/actividadesGeneradas',{
 		templateUrl : 'resources/views/ActividadesGeneradas.html',
 		controller : 'ActividadesGeneradasController'
