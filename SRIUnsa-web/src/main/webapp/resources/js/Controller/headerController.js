@@ -1,4 +1,4 @@
-investigacionApp.controller('headerController', function($scope, $location, $rootScope, $filter, SharedService) {
+investigacionApp.controller('headerController', function($scope, $location, SharedService) {
 
     $scope.sharedService = SharedService;
 
@@ -136,4 +136,4 @@ investigacionApp.controller('headerController', function($scope, $location, $roo
         }
     };
     $scope.rolChange("Docente");
-})
+});

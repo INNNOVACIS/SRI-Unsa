@@ -6,6 +6,8 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIUsuarioRol;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +22,7 @@ public interface IUsuarioRolBusiness {
     boolean Delete(SRIUsuarioRol entidad);
     SRIUsuarioRol Get(int idEntidad);
     List<SRIUsuarioRol> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRIUsuarioRolUtil> GetPagina(SRIPaginacionObject object);
 
 }

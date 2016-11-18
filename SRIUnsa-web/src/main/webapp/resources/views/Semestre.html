@@ -34,10 +34,10 @@
                                     <td><strong>{{ semestre.snombreSemestre }}</strong></td>
                                     <td nowrap>
                                         <button type="button" class="btn btn-success btn-xs" ng-click="update(semestre)" data-toggle="modal" data-target="#popUpdateSemestre">
-                                            <span class="glyphicon glyphicon-pencil"></span> Update
+                                            <span class="glyphicon glyphicon-pencil"></span> Actualizar
                                         </button>
                                         <button type="button" class="btn btn-danger btn-xs" ng-click="deleteSemestre(semestre)">
-                                            <span class="glyphicon glyphicon-trash"></span> Delete
+                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
                                         </button>
                                     </td>
                                 </tr>
@@ -82,11 +82,11 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="registrarSemestre()">
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarSemestre()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Registrar
                 </button>
-                <button type="button" class="btn-sm btn-danger" data-dismiss="modal">
+                <button type="button" class="btn btn-deafult" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>
@@ -120,11 +120,11 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="updateSemestre()">
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateSemestre()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Actualizar
                 </button>
-                <button type="button" class="btn-sm btn-danger" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>

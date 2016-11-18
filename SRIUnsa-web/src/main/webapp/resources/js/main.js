@@ -98,6 +98,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/EstructuraOrganizacion.html',
 		controller : 'EstructuraOrganizacionController'
 	})
+        .when('/usuariorol',{
+		templateUrl : 'resources/views/UsuarioRol.html',
+		controller : 'UsuarioRolController'
+	})
 	.when('/',{
 		templateUrl : 'resources/views/login.html',
 		controller : 'loginController'
