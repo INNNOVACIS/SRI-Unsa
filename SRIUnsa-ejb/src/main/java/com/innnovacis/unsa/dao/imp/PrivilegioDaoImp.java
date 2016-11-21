@@ -74,7 +74,7 @@ public class PrivilegioDaoImp implements IPrivilegioDao {
 
     @Override
     public List<SRIPrivilegio> GetPrivilegiosByIdRol(int id) {
-        Query query = em.createNativeQuery("{call rolPrivilegios(?1)}", SRIPrivilegio.class)
+        Query query = em.createNativeQuery("{call getRolesByIdUsuario(?1)}", SRIPrivilegio.class)
                         .setParameter(1, id);
         List<SRIPrivilegio> listPrivilegios = query.getResultList();
         return listPrivilegios;
