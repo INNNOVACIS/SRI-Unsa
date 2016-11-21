@@ -6,28 +6,30 @@ investigacionApp.controller('loginController', function($scope, $location, $log,
     
     var loginServiceSuccess = function(response){
         console.log("autenticación success :: ", response);
-        $scope.getPrivilegios(response.idRol);
-                
-        sessvars.nombreUsuario = response.nombreUsuario;
-        sessvars.nombreRol = response.nombreRol;
-        sessvars.idUsuario = response.idUsuario;
-        sessvars.idRol = response.idRol;
-        sessvars.autenticado = true;
-        
-        $scope.sharedService.userAutenticado = sessvars.autenticado;
-
+        if(response !== "") {
+            $scope.getPrivilegios(response.idRol);                
+            sessvars.nombreUsuario = response.nombreUsuario;
+            sessvars.nombreRol = response.nombreRol;
+            sessvars.idUsuario = response.idUsuario;
+            sessvars.idRol = response.idRol;
+            sessvars.autenticado = true;
+            $scope.sharedService.userAutenticado = sessvars.autenticado;
+        } else {
+            alert("Usuario no registrado");
+            $scope.loader = false;
+        }
     };
 
     var loginServiceError = function(response){
         console.log("error");
         alert("Usuario no registrado");
+        $scope.loader = false;
     };
     
     var getPrivilegiosByIdRolSuccess = function(response){
         $log.debug("getPrivilegiosByIdRolSuccess");        
         sessvars.privilegios = response;
         $scope.sharedService.privilegios = sessvars.privilegios;
-//        $sce.trustAsHtml($scope.sharedService.pruebaMenu);
         sessvars.stringMenu = buildMenu($scope.sharedService.privilegios);
         sessvars.htmlMenu = $sce.trustAsHtml(sessvars.stringMenu);
         
@@ -37,7 +39,7 @@ investigacionApp.controller('loginController', function($scope, $location, $log,
         $location.path("/home");
     };
     var getPrivilegiosByIdRolError = function(response){
-        
+        $scope.loader = false;
     };
 
     $scope.login = function(){
@@ -65,7 +67,7 @@ investigacionApp.controller('loginController', function($scope, $location, $log,
         var menu = "";
         angular.forEach(privilegios, function(privilegio, key) {
             if(privilegio.nidPadre === 0 && privilegio.dropdown === undefined){
-                var inicio = '<li ><a href="' + privilegio.surlPrivilegio + '" ng-click="setMenuTab(1)">';
+                var inicio = '<li ng-class="{active: isActivo == '+ "'" + privilegio.sNombrePrivilegio + "'" + '}"><a href="' + privilegio.surlPrivilegio + '" ng-click="setMenuTab($event)">';
                 var fin = privilegio.sNombrePrivilegio + '</a></li>';
                 menu = menu + inicio + fin;
             }
@@ -82,7 +84,7 @@ investigacionApp.controller('loginController', function($scope, $location, $log,
         var menuDropDown = "";
         angular.forEach(privilegios, function(valor, key){
             if(valor.nidPadre === padre){
-                var contenido = '<li ><a href="' + valor.surlPrivilegio + '" ng-click="ir()">' + valor.sNombrePrivilegio + '</a></li>';
+                var contenido = '<li ng-class="{active: isActivo == ' + "'" + valor.sNombrePrivilegio + "'" + '}"><a href="' + valor.surlPrivilegio + '" ng-click="setMenuTab($event)">' + valor.sNombrePrivilegio + '</a></li>';
                 menuDropDown = menuDropDown + contenido;
             }
         });

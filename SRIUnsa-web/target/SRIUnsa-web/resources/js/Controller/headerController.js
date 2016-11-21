@@ -1,6 +1,7 @@
 investigacionApp.controller('headerController', function($scope, $sce, $location, SharedService) {
 
     $scope.sharedService = SharedService;
+    $scope.isActivo = "Actividades de Investigacion";
     $scope.sharedService.htmlMenu = $sce.trustAsHtml($scope.sharedService.stringMenu);
 
     $scope.message = $scope.sharedService.nombreUsuario;
@@ -14,8 +15,12 @@ investigacionApp.controller('headerController', function($scope, $sce, $location
         sessvars.idUsuario = 0;
         sessvars.privilegios = [];
         sessvars.htmlMenu = null;
-        sessvars.stringMenu = ""
+        sessvars.stringMenu = "";
     	$location.path("/");
+    };
+    
+    $scope.setMenuTab = function (event) {
+        $scope.isActivo = event.target.innerText;
     };
 
 });
