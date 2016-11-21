@@ -205,7 +205,7 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     
     $scope.verActividadById = function(actividadPendiente){
         $scope.loader = true;
-        $location.path("/actividadInvestigacion/pendiente/"+ actividadPendiente.idactividadinvestigacion);
+        $location.path("/actividad/Pendientes/"+ actividadPendiente.idactividadinvestigacion);
     };
     
 });

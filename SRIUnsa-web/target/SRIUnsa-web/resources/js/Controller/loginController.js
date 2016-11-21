@@ -7,13 +7,18 @@ investigacionApp.controller('loginController', function($scope, $location, $log,
     var loginServiceSuccess = function(response){
         console.log("autenticación success :: ", response);
         if(response !== "") {
-            $scope.getPrivilegios(response.idRol);                
             sessvars.nombreUsuario = response.nombreUsuario;
             sessvars.nombreRol = response.nombreRol;
             sessvars.idUsuario = response.idUsuario;
             sessvars.idRol = response.idRol;
             sessvars.autenticado = true;
+            
+            $scope.sharedService.nombreUsuario = response.nombreUsuario;
+            $scope.sharedService.nombreRol = response.nombreRol;
+            $scope.sharedService.idUsuario = response.idUsuario;
+            $scope.sharedService.idRol = response.idRol;
             $scope.sharedService.userAutenticado = sessvars.autenticado;
+            $scope.getPrivilegios(response.idRol);                
         } else {
             alert("Usuario no registrado");
             $scope.loader = false;

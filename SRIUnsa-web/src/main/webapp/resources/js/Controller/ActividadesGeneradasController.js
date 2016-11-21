@@ -189,11 +189,11 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     
     $scope.verActividadById = function(actividadGenerada){
         $scope.loader = true;
-        $location.path("/actividadInvestigacion/generado/" + actividadGenerada.idactividadinvestigacion);
+        $location.path("/actividad/Generadas/" + actividadGenerada.idactividadinvestigacion);
     };
     $scope.updateActividadById = function(actividadGenerada){
         $scope.loader = true;
-        $location.path("/updateActividadGenerada/" + actividadGenerada.idactividadinvestigacion);
+        $location.path("/actividad/Generadas/update/" + actividadGenerada.idactividadinvestigacion);
     };
     
 });

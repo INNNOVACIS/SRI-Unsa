@@ -172,7 +172,7 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     
     $scope.verActividadById = function(actividadRevisada){
         $scope.loader = true;
-        $location.path("/actividadInvestigacion/revisado/"+ actividadRevisada.idactividadinvestigacion);
+        $location.path("/actividad/Revisadas/"+ actividadRevisada.idactividadinvestigacion);
     };
     
 });

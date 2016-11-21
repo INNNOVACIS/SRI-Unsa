@@ -8,10 +8,15 @@ investigacionApp.controller('headerController', function($scope, $sce, $location
 
     $scope.logout = function(){
     	$scope.sharedService.userAutenticado = false;
+        $scope.sharedService.nombreUsuario = "";
+        $scope.sharedService.nombreRol = "";
+        $scope.sharedService.idUsuario = 0;
+        $scope.sharedService.idRol = 0;
+        
         sessvars.autenticado = false;
         sessvars.nombreRol = "";
         sessvars.nombreUsuario = "";
-        sessvars.idRol = "";
+        sessvars.idRol = 0;
         sessvars.idUsuario = 0;
         sessvars.privilegios = [];
         sessvars.htmlMenu = null;

@@ -230,7 +230,7 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
     $scope.irBandeja = function(){
         $scope.openCloseModal(false,true);
         $scope.loader = true;
-        $location.path("/actividadesGeneradas");
+        $location.path("/actividad/Generadas");
     };
     
     $scope.openCloseModal = function(open, close) {

@@ -11,13 +11,13 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     
     var estado = $routeParams.ESTADO;
     
-    if(estado === "revisado" ){
+    if(estado === "Revisadas" ){
         $scope.revisado = true;
     }
-    if(estado === "generado"){
+    if(estado === "Generadas"){
         $scope.generado = true;
     }
-    if(estado === "pendiente"){
+    if(estado === "Pendientes"){
         $scope.pendiente = true;
     }
     
@@ -96,19 +96,19 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     /************ Funciones Utilitarias ************/
     $scope.irBandejaRevisados = function(){
         $scope.loader = true;
-        $location.path("/actividadesRevisadas");
+        $location.path("/actividad/Revisadas");
     };
     
     $scope.irBandejaPendientes = function(){
         $scope.openCloseModal(false,true);
         $scope.loader = true;
-        $location.path("/actividadesPendientes");
+        $location.path("/actividad/Pendientes");
     };
     
     $scope.irBandejaGenerados = function(){
         $scope.openCloseModal(false,true);
         $scope.loader = true;
-        $location.path("/actividadesGeneradas");
+        $location.path("/actividad/Generadas");
     };
     
     $scope.openCloseModal = function(open, close) {

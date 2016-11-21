@@ -11,23 +11,23 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/home.html',
 		controller : 'homeController'
 	})
-        .when('/actividadInvestigacion/:ESTADO/:ID',{
+        .when('/actividad/:ESTADO/:ID',{
 		templateUrl : 'resources/views/ActividadGenerada.html',
 		controller : 'ActividadGeneradaController'
 	})
-        .when('/updateActividadGenerada/:ID',{
+        .when('/actividad/Generadas/update/:ID',{//updateActividadGenerada
 		templateUrl : 'resources/views/UpdateActividadGenerada.html',
 		controller : 'UpdateActividadGeneradaController'
 	})
-	.when('/actividadesGeneradas',{
+	.when('/actividad/Generadas',{
 		templateUrl : 'resources/views/ActividadesGeneradas.html',
 		controller : 'ActividadesGeneradasController'
 	})
-	.when('/actividadesRevisadas',{
+	.when('/actividad/Revisadas',{
 		templateUrl : 'resources/views/ActividadesRevisadas.html',
 		controller : 'ActividadesRevisadasController'
 	})
-	.when('/actividadesPendientes',{
+	.when('/actividad/Pendientes',{
 		templateUrl : 'resources/views/ActividadesPendientes.html',
 		controller : 'ActividadesPendientesController'
 	})
@@ -111,3 +111,22 @@ investigacionApp.config(function($routeProvider){
             redirectTo: '/home'
         });
 });
+
+investigacionApp.run(['$rootScope', '$location', 'SharedService', function ($rootScope, $location, SharedService) {
+    $rootScope.$on('$routeChangeStart', function (event) {
+
+        if (!SharedService.isAutenticado()) {
+            console.log('DENEGADO');
+            event.preventDefault();
+            $location.path('/');
+        }
+        else {
+            console.log("location ", $location.path());
+            var cadena = $location.path();
+            if(!SharedService.isPermitido(cadena)){
+                alert("no tiene permisos para esta pagina");
+                $location.path('/home');
+            }
+        }
+    });
+}]);
