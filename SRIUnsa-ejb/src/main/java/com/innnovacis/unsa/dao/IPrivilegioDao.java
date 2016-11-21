@@ -23,4 +23,5 @@ public interface IPrivilegioDao {
     List<SRIPrivilegio> GetAll();
     int GetTotalPaginacion(SRIPaginacionObject object);
     List<SRIPrivilegio> GetPagina(SRIPaginacionObject object);
+    List<SRIPrivilegio> GetPrivilegiosByIdRol(int id);
 }

@@ -25,7 +25,6 @@ import javax.persistence.Table;
 })
 public class SRIPrivilegio  extends SRIEntidad implements Serializable  {
     
-
     @Id
     @GeneratedValue
     @Column(name = "idprivilegio" )
@@ -34,7 +33,35 @@ public class SRIPrivilegio  extends SRIEntidad implements Serializable  {
     @Column(name = "nombreprivilegio")
     private String SNombrePrivilegio;
 
-  
+    @Column(name = "urlprivilegio")
+    private String SUrlPrivilegio;
+    
+    @Column(name = "idpadre")
+    private int NIdPadre;
+
+    public int getNIdPadre() {
+        return NIdPadre;
+    }
+
+    public void setNIdPadre(int NIdPadre) {
+        this.NIdPadre = NIdPadre;
+    }
+
+    public String getSNombrePrivilegio() {
+        return SNombrePrivilegio;
+    }
+
+    public void setSNombrePrivilegio(String SNombrePrivilegio) {
+        this.SNombrePrivilegio = SNombrePrivilegio;
+    }
+
+    public String getSUrlPrivilegio() {
+        return SUrlPrivilegio;
+    }
+
+    public void setSUrlPrivilegio(String SUrlPrivilegio) {
+        this.SUrlPrivilegio = SUrlPrivilegio;
+    }
     
     public int getNIdPrivilegio() {
         return NIdPrivilegio;
@@ -51,13 +78,6 @@ public class SRIPrivilegio  extends SRIEntidad implements Serializable  {
     public void setsNombrePrivilegio(String sNombrePrivilegio) {
         this.SNombrePrivilegio = sNombrePrivilegio;
     }
-
-
-
-    
-
-    
-    
 
 }
 

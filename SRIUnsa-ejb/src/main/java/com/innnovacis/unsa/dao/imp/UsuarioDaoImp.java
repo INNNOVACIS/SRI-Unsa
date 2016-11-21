@@ -3,6 +3,7 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.math.BigInteger;
 import javax.inject.Inject;
@@ -65,7 +66,7 @@ public class UsuarioDaoImp implements IUsuarioDao {
         
         return usuario;
     }
-
+    
     @Override
     public List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad) {
         Query query = em.createNativeQuery("{call usuarioPaginacion(?1,?2,?3)}", SRIUsuario.class)
@@ -82,6 +83,15 @@ public class UsuarioDaoImp implements IUsuarioDao {
                         .setParameter(1, entidad.getFiltro().getSUsuarioLogin());
         BigInteger total = (BigInteger) query.getSingleResult();
         return total.intValue();
+    }
+
+    @Override
+    public SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad) {
+        Query query = em.createNativeQuery("{call AutenticarUsuario(?1,?2)}", SRIUsuarioRolUtil.class)
+                        .setParameter(1, entidad.getSUsuarioLogin())
+                        .setParameter(2, entidad.getSUsuarioPassword());
+        SRIUsuarioRolUtil objUsuarioRol = (SRIUsuarioRolUtil)query.getSingleResult();
+        return objUsuarioRol;
     }
 
 }

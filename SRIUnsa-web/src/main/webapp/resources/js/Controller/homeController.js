@@ -1,10 +1,11 @@
-    investigacionApp.controller('homeController', function($log, $scope, $location,
+    investigacionApp.controller('homeController', function($log, $scope, $location, SharedService,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, FileUploader) {
     
     /*
      * Parametros
      */
+    $scope.sharedService = SharedService;
     $scope.loader = false;
     $scope.modal = { open: false, close: true };
     $scope.mensajeSuccess = false;

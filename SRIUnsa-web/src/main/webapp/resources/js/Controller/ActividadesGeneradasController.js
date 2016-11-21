@@ -1,7 +1,9 @@
-investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, $location, FondoConcursableService, 
+investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, $location, SharedService, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService,
     TipoNivelService, EstructuraOrganizacionService) {
     
+    $scope.sharedService = SharedService;
+    console.log("sessvars :: ", sessvars);
     $scope.loader = false;
     
     /******************* Servicios Callback *******************/

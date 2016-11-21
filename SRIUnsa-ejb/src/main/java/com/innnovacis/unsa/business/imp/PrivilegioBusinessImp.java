@@ -111,5 +111,17 @@ public class PrivilegioBusinessImp implements IPrivilegioBusiness {
         return respuesta;
     }
 
+    @Override
+    public List<SRIPrivilegio> GetPrivilegiosByIdRol(int id) {
+        List<SRIPrivilegio> respuesta = null;
+        try{
+            respuesta = privilegioDao.GetPrivilegiosByIdRol(id);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
+    }
+
     
 }

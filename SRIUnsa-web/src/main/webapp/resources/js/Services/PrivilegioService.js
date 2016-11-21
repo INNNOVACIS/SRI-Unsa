@@ -19,6 +19,21 @@ investigacionApp.service("PrivilegioService", function(SRIUnsaConfig, $log, $htt
             return deferred.promise;
 	};
         
+        this.getPrivilegiosByIdRol = function(id) {
+		$log.debug("Privilegio Service - get rolPrivilegios");
+		
+		var deferred = $q.defer();
+		$http({
+			method : 'GET',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/privilegios/listarRolPrivilegios/' + id,
+		}).success(function(response) {
+			deferred.resolve(response);
+		}).error(function(response) {			
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	};
+        
 	this.getPrivilegios = function() {
 		$log.debug("Privilegio Service - get Privilegios");
 		

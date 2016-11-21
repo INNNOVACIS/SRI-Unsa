@@ -1,5 +1,6 @@
 var investigacionApp = angular.module('investigacionApp', [
-	'ngRoute',  
+	'ngRoute',
+        'ngSanitize',
 	'ui.bootstrap',
 	'angularFileUpload'
 ]);
@@ -105,5 +106,8 @@ investigacionApp.config(function($routeProvider){
 	.when('/',{
 		templateUrl : 'resources/views/login.html',
 		controller : 'loginController'
-	});
+	})
+        .otherwise({
+            redirectTo: '/home'
+        });
 });

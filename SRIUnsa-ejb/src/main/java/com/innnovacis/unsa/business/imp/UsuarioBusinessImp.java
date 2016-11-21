@@ -6,6 +6,7 @@ import com.innnovacis.unsa.business.IUsuarioBusiness;
 
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 
 import javax.inject.Inject;
@@ -116,6 +117,18 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         int respuesta = -1;
         try{
             respuesta = usuarioDao.GetTotalPaginacion(entidad);
+        }
+        catch(Exception ex){
+            System.out.println("Error =========> " + ex.getMessage());
+        }
+        return respuesta;
+    }
+
+    @Override
+    public SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad) {
+        SRIUsuarioRolUtil respuesta = null;
+         try{
+            respuesta = usuarioDao.AutenticarUsuario(entidad);
         }
         catch(Exception ex){
             System.out.println("Error =========> " + ex.getMessage());

@@ -7,6 +7,7 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.util.HashMap;
 import java.util.List;
@@ -80,9 +81,9 @@ public class UsuarioRestServices {
     @Path("/autenticarUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public SRIUsuario autenticarUsuario(SRIUsuario usuario) {        
-        usuarioBusiness.Autenticar(usuario);
-        return usuario;
+    public SRIUsuarioRolUtil autenticarUsuario(SRIUsuario usuario) {        
+//        usuarioBusiness.Autenticar(usuario);
+        return usuarioBusiness.AutenticarUsuario(usuario);
     }
     
     @PUT
