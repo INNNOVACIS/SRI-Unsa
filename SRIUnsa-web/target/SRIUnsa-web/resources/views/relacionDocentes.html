@@ -20,69 +20,78 @@
   animation: 0.5s myChange;
 }
 </style>
-<div class="container-fluid">
-  <div class="panel panel-danger" >
-    <div class="panel-body">
+<div class="container">
+<!--  <div class="panel panel-danger" >
+    <div class="panel-body">-->
       <div class="col-xm-12 changePanel" ng-hide="panelGenerados">
-        <div class="panel panel-info">
-
-
-              <div class="panel-heading">Actividades de Investigación</div>
+        <div class="panel panel-primary">
+<!--              <div class="panel-heading">Actividades de Investigación</div>-->
               <div class="panel-body">
-                  <form class="form-horizontal">
-                  <div class="form-group">
-                    <label for="inpFacultad" class="control-label col-md-2">Tipo de Investigación</label>
-                    <div class="col-md-10">
-                      <select class="form-control" style="margin:2px;" ng-model="selected" ng-options="opt as opt for opt in actividadesInvestigacion" ng-init="selected=''" ng-change=actividadChange(selected)></select>
-                    </div>
-                    <label for="inpFacultad" class="control-label col-md-2">Facultad</label>
+                  <div class="col-md-10">
+                    <label class="control-label col-md-2" style="">Investigación</label>
                     <div class="col-md-4">
-                      <select class="form-control" style="margin:2px;" id="inpFacultad">
-                          <option></option>
-                          <option>Facultad de Producción y Servicios</option>
-                          <option>Facultad de Procesos</option>
-                      </select>
+                        <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-init="tipoInvestigacion=''" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)>
+                            <option></option>
+                        </select>
                     </div>
-                    <label for="inpEscuela" class="control-label col-md-2">Escuela</label>
+                    <label class="control-label col-md-2">Facultad</label>
                     <div class="col-md-4">
-                      <select class="form-control" style="margin:2px;" id="inpEscuela">
-                          <option></option>
-                          <option>Escuela Profesional de Ingeniería de Sistemas</option>
-                          <option>Industrias Alimentarias</option>
-                          <option>Ingeniería Mecánica</option>
-                      </select>
+                        <select ng-model="facultad"                
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
+                            class="form-control"
+                            ng-change="facultadChange()"
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="facultad=''">
+                            <option></option>
+                        </select>
                     </div>
-                    <label for="inpSemestre" class="control-label col-md-2"> Semestre</label>
+                    <label class="control-label col-md-2">Departamento</label>
                     <div class="col-md-4">
-                      <select class="form-control" style="margin:2px;" id="inpSemestre">
-                          <option></option>
-                          <option>2016-I Semestre I</option>
-                          <option>2016-II Semestre II</option>
-                          <option>2016-II Semestre III</option>
-                      </select>
+                        <select  ng-model="departamento"
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
+                            class="form-control"
+                            ng-change="departamentoChange()"
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="departamento=''">
+                            <option></option>
+                        </select> 
                     </div>
-                    <label for="inpFondo" class="control-label col-md-2"> Docentes </label>
+                    <label class="control-label col-md-2">Escuela</label>
                     <div class="col-md-4">
-                      <select class="form-control" style="margin:2px;" id="inpFondo">
-                          <option></option>
-                          <option>Sin Actividad</option>
-                          <option>Con Actividad</option>
-                      </select>
+                        <select  ng-model="escuela"
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
+                            class="form-control" 
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="escuela=''">
+                            <option></option>
+                        </select> 
                     </div>
-                    <div class="col-md-12" style="margin-top:10px;">
-                      <a type="submit" class="col-md-offset-2 btn btn-primary" >
+                    <label class="control-label col-md-2">Semestre</label>
+                    <div class="col-md-4">
+                        <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
+                            <option></option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-2"> Fondo Concursable</label>
+                    <div class="col-md-4">
+                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary" ng-click="filtrar()" >
                         <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
-                      </a>
-                    </div>
-                  </div>
-                </form>
+                    </a> 
+                </div>
               </div>
             </div>
-            <div class="panel panel-danger">
+            <div class="panel panel-primary">
               <div class="panel-heading">Relación de Docentes</div>
               <div class="panel-body">
-
-              
               <table class="table tree-2 table-bordered table-striped table-condensed">
                     <tr class="treegrid-0">
                         <td>Nombre del Docente</td><td>N° DNI</td><td>Total Duración</td><td>Con Actividad</td>
@@ -265,5 +274,5 @@
         <!-- FIN PANEL VER -->
 
       </div>
-    </div>
-	</div>
+<!--    </div>
+	</div>-->
