@@ -93,4 +93,16 @@
             <!-- /.container-fluid -->
         </nav>
     </header>
+    <div ng-class="{'SRI-modal-open': sharedService.popUp.open, 'SRI-modal-close': sharedService.popUp.close}" >
+        <div class="SRI-modal">
+            <a ng-click="sharedService.popUp.clearPopUp()" class="SRIModal-cerrar" >Cerrar</a>
+            <div>
+                <h3>{{sharedService.popUp.titulo}}</h3>
+                <p>{{sharedService.popUp.mensaje}}</p>
+            </div>
+            <hr/>
+            <button ng-show="sharedService.popUp.op1.open" ng-click="sharedService.popUp.op1.fun(sharedService.popUp.url)" class="SRIModal-button SRI-confirmar">
+                {{ sharedService.popUp.op1.txt }}</button>
+        </div>
+    </div>
 </div>

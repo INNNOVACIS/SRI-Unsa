@@ -1,10 +1,8 @@
 investigacionApp.controller('UpdateActividadGeneradaController', function($log, $scope, $location, $routeParams, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService,
-    TipoNivelService, EstructuraOrganizacionService, ArchivosService) {
+    TipoNivelService, EstructuraOrganizacionService, ArchivosService, SharedService) {
     
     $scope.loader = false;
-    $scope.modal = { open: false, close: true };
-    $scope.mensaje = {titulo: "", contenido: ""};
     $scope.idActividad = $routeParams.ID;
 
     /******************* Servicios Callback *******************/
@@ -218,25 +216,23 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
         $scope.loader = true;
         scrollTop();
         setTimeout(function(){
-            $scope.$apply(function(){
+            $scope.$apply(function(){ 
+                var popUp = SharedService.popUp;
+                var titulo = "Actualización Exitosa!";
+                var mensaje = "La Actividad de Investigación se actualizo correctamente.";
+                var url = "/actividad/Generadas";
+                var op1 = {open:true, txt:'Ir a Bandeja', fun:function(){
+                    popUp.irPopUp();
+                }};
+                popUp.showPopUp(titulo, mensaje, url, op1);
                 $scope.loader = false;
-                $scope.mensaje = {titulo: "Actualización Exitosa!", contenido: "La Actividad de Investigación se actualizo correctamente."};
-                $scope.openCloseModal(true,false);
             });
         }, 1000);
+        
     };
     
     /************ Funciones Utilitarias ************/
-    $scope.irBandeja = function(){
-        $scope.openCloseModal(false,true);
-        $scope.loader = true;
-        $location.path("/actividad/Generadas");
-    };
-    
-    $scope.openCloseModal = function(open, close) {
-        $scope.modal = { open: open, close: close };
-    };
-    
+
     var scrollTop = function(){
         $('html,body').animate({
             scrollTop: $("#container").offset().top - 100

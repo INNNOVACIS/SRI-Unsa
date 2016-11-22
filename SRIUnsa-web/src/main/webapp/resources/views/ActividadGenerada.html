@@ -132,18 +132,5 @@
         </div>  
     </div><!-- FIN PANEL VER -->            
             
-    <div ng-class="{'SRI-modal-open': modal.open, 'SRI-modal-close': modal.close}" >
-        <div class="SRI-modal">
-            <a ng-click="openCloseModal(false, true)" class="SRIModal-cerrar" >Cerrar</a>
-            <div>
-                <h3>{{mensaje.titulo}}</h3>
-                <p>{{mensaje.contenido}}</p>
-            </div>
-            <hr/>
-<!--        <button ng-click="registrarNuevaActividad()" class="SRIModal-button SRI-nuevo"></button>-->
-            <button ng-show="generado" ng-click="irBandejaGenerados()" class="SRIModal-button SRI-confirmar">Ir a Bandeja</button>
-            <button ng-show="pendiente" ng-click="irBandejaPendientes()" class="SRIModal-button SRI-confirmar">Ir a Bandeja</button>
-        </div>
-    </div>
 </div>
 

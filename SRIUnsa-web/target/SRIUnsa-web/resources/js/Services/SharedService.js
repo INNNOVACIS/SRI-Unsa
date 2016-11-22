@@ -9,6 +9,36 @@ investigacionApp.factory('SharedService', function($location) {
         privilegios : sessvars.privilegios,
         htmlMenu : sessvars.htmlMenu,
         stringMenu : sessvars.stringMenu,
+        popUp : {
+            open:false,
+            close:true,
+            titulo:'',
+            mensaje:'',
+            url:'',
+            op1:{open:false, txt:'', fun:function(){}},
+            clearPopUp : function(){
+                    this.open = false;
+                    this.close = true;
+                    this.titulo = '';
+                    this.mensaje='';
+                    this.op1.open= false;                  
+                    this.op1.txt = '';
+            },
+            irPopUp : function(){
+                this.clearPopUp();
+                $location.path(this.url);
+            },
+            showPopUp : function(_titulo, _mensaje, _url, _op1){
+                    this.open = true;
+                    this.close = false;     
+                    this.titulo = _titulo;
+                    this.mensaje = _mensaje;
+                    this.url = _url;
+                    if(_op1){     
+                        this.op1 = _op1;
+                    }
+            }
+        },
         isAutenticado : function(){
             return this.nombreUsuario === "" || this.nombreUsuario === undefined ? false : true;
         },

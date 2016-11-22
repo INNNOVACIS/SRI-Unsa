@@ -1,9 +1,7 @@
 investigacionApp.controller('ActividadGeneradaController', function($log, $scope, $routeParams, $location, TipoInvestigacionService, 
-    ArchivosService) {
+    ArchivosService, SharedService) {
     
     $scope.loader = false;
-    $scope.modal = { open: false, close: true };
-    $scope.mensaje = {titulo: "", contenido: ""};
     $scope.idActividad = $routeParams.ID;
     $scope.revisado = false;
     $scope.generado = false;
@@ -79,16 +77,24 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
         ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
     };
     
-    
-    
     $scope.aprobarActividad = function(){
         $scope.loader = true;
         scrollTop();
         setTimeout(function(){
-            $scope.$apply(function(){
+            $scope.$apply(function(){ 
+                var popUp = SharedService.popUp;
+                var titulo = "Aprobación Exitosa!";
+                var mensaje = "La Actividad de Investigación se aprobó correctamente.";
+                var url = "";
+                if($scope.revisado) { url = "/actividad/Revisadas"; }
+                if($scope.generado) { url = "/actividad/Generadas"; }
+                if($scope.pendiente){ url = "/actividad/Pendientes"; }
+                
+                var op1 = {open:true, txt:'Ir a Bandeja', fun:function(){
+                    popUp.irPopUp();
+                }};
+                popUp.showPopUp(titulo, mensaje, url, op1);
                 $scope.loader = false;
-                $scope.mensaje = {titulo: "Aprobación Exitosa!", contenido: "La Actividad de Investigación se aprobó correctamente."};
-                $scope.openCloseModal(true,false);
             });
         }, 1000);
     };
@@ -97,22 +103,6 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     $scope.irBandejaRevisados = function(){
         $scope.loader = true;
         $location.path("/actividad/Revisadas");
-    };
-    
-    $scope.irBandejaPendientes = function(){
-        $scope.openCloseModal(false,true);
-        $scope.loader = true;
-        $location.path("/actividad/Pendientes");
-    };
-    
-    $scope.irBandejaGenerados = function(){
-        $scope.openCloseModal(false,true);
-        $scope.loader = true;
-        $location.path("/actividad/Generadas");
-    };
-    
-    $scope.openCloseModal = function(open, close) {
-        $scope.modal = { open: open, close: close };
     };
     
     var scrollTop = function(){
