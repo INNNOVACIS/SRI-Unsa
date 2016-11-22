@@ -1,14 +1,10 @@
 
 package com.innnovacis.unsa.business.imp;
 
-
-import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.business.IFlujoActorBusiness;
 import com.innnovacis.unsa.dao.IFlujoActorDao;
-import com.innnovacis.unsa.dao.IEstructuraAreaInvestigacionDao;
-import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
 import com.innnovacis.unsa.model.SRIFlujoActor;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -87,6 +83,28 @@ public class FlujoActorBusinessImp implements IFlujoActorBusiness {
         catch(Exception ex){
         }
          return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+        try{
+            respuesta = flujoActorDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIFlujoActor> GetPagina(SRIPaginacionObject object) {
+        List<SRIFlujoActor> respuesta = null;
+        try{
+            respuesta = flujoActorDao.GetPagina(object);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
     }
 
     

@@ -36,8 +36,17 @@ public class SRIFlujoActor  extends SRIEntidad implements Serializable  {
 
     @Column(name = "flujo")
     private String SFlujo;
+    
+    @Column(name = "codigo")
+    private String SCodigo;
 
+    public String getSCodigo() {
+        return SCodigo;
+    }
 
+    public void setSCodigo(String SCodigo) {
+        this.SCodigo = SCodigo;
+    }
 
     public int getNIdFlujoActor() {
         return NIdFlujoActor;

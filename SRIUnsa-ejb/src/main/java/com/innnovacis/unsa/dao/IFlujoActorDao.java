@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIFlujoActor;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -19,5 +20,7 @@ public interface IFlujoActorDao {
     SRIFlujoActor Update(SRIFlujoActor entidad);
     boolean Delete(SRIFlujoActor entidad);
     SRIFlujoActor GetById(int idEntidad);
-    List<SRIFlujoActor> GetAll();  
+    List<SRIFlujoActor> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRIFlujoActor> GetPagina(SRIPaginacionObject object);
 }

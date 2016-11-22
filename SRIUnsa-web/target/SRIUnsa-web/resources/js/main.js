@@ -8,14 +8,14 @@ var investigacionApp = angular.module('investigacionApp', [
 investigacionApp.config(function($routeProvider){
 	$routeProvider
 	.when('/home', {
-		templateUrl : 'resources/views/home.html',
+		templateUrl : 'resources/views/Home.html',
 		controller : 'homeController'
 	})
         .when('/actividad/:ESTADO/:ID',{
 		templateUrl : 'resources/views/ActividadGenerada.html',
 		controller : 'ActividadGeneradaController'
 	})
-        .when('/actividad/Generadas/update/:ID',{//updateActividadGenerada
+        .when('/actividad/Generadas/update/:ID',{
 		templateUrl : 'resources/views/UpdateActividadGenerada.html',
 		controller : 'UpdateActividadGeneradaController'
 	})
@@ -32,23 +32,23 @@ investigacionApp.config(function($routeProvider){
 		controller : 'ActividadesPendientesController'
 	})
 	.when('/relacionDocentes',{
-		templateUrl : 'resources/views/relacionDocentes.html',
+		templateUrl : 'resources/views/RelacionDocentes.html',
 		controller : 'relacionDocentesController'
 	})
 	.when('/configuracion',{
-		templateUrl : 'resources/views/configuracion.html',
+		templateUrl : 'resources/views/Configuracion.html',
 		controller : 'configuracionController'
 	})
 	.when('/generarDocente',{
-		templateUrl : 'resources/views/generarDocente.html',
+		templateUrl : 'resources/views/GenerarDocente.html',
 		controller : 'generarDocenteController'
 	})
 	.when('/uploadFile',{
-		templateUrl : 'resources/views/uploadFile.html',
+		templateUrl : 'resources/views/UploadFile.html',
 		controller : 'uploadFileController'
 	})
 	.when('/usuarios',{
-		templateUrl : 'resources/views/usuarios.html',
+		templateUrl : 'resources/views/Usuarios.html',
 		controller : 'usuariosController'
 	})
         .when('/roles',{
@@ -92,7 +92,7 @@ investigacionApp.config(function($routeProvider){
 		controller : 'FondoConcursableController'
 	})
         .when('/archivos',{
-		templateUrl : 'resources/views/archivos.html',
+		templateUrl : 'resources/views/Archivos.html',
 		controller : 'archivosController'
 	})
         .when('/estructuraorganizacion',{
@@ -103,8 +103,16 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/UsuarioRol.html',
 		controller : 'UsuarioRolController'
 	})
+        .when('/flujoactor',{
+		templateUrl : 'resources/views/FlujoActor.html',
+		controller : 'FlujoActorController'
+	})
+        .when('/usuarioactor',{
+		templateUrl : 'resources/views/UsuarioActor.html',
+		controller : 'UsuarioActorController'
+	})
 	.when('/',{
-		templateUrl : 'resources/views/login.html',
+		templateUrl : 'resources/views/Login.html',
 		controller : 'loginController'
 	})
         .otherwise({
