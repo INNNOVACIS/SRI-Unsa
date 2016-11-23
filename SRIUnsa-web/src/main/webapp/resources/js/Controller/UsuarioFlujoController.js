@@ -1,5 +1,5 @@
 investigacionApp.controller('UsuarioFlujoController', function($log, $scope, UsuarioFlujoService, FlujoActorService,
-    UsuariosService, RolService) {
+    UsuariosService, RolService, UsuarioRolService) {
 
     $scope.usuarioActores = [];
     $scope.usuarioActor = {};
@@ -7,6 +7,8 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     $scope.actores = [];
     $scope.actoresById = [];
     $scope.actorById = {};
+    $scope.rolesById = [];
+    $scope.rolById = {};
 
     var registrarUsuarioActorSuccess = function(response){
     	$log.debug("Registrar Usuario Actor - Success");
@@ -70,6 +72,18 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
         console.log("Response :: ", response);
     };
     
+    var getUsuarioRolByIdUsuarioSuccess = function(response) {
+        $log.debug("getUsuarioRolByIdUsuario - Success");
+        console.log("Response :: ", response);
+        $scope.rolesById = [];
+        $scope.rolesById = response;
+    };
+    
+    var getUsuarioRolByIdUsuarioError = function(response) {
+        $log.debug("getUsuarioRolByIdUsuario - Error");
+        console.log("Response :: ", response);
+    };
+    
     var deleteUsuarioFlujoSuccess = function(response){
         $log.debug("deleteUsuarioFlujoSuccess - Success");
         if(response === true){
@@ -79,6 +93,26 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     
     var deleteUsuarioFlujoError = function(response){
         $log.debug("deleteUsuarioFlujoError - Error");
+        console.log("Response :: ", response);
+    };
+    
+    var getRolServiceSuccess = function(response){
+        console.log("GetRol Success :: ", response);
+        $scope.roles = response;
+    };
+    
+    var getRolServiceError = function(response){
+        console.log("GetRol - Error :: ", response);
+    };
+    
+    var registrarUsuarioRolSuccess = function(response){
+        $log.debug("RegistrarUsuarioRol - Success");
+        console.log("Response :: ", response);
+    };
+    
+    var registrarUsuarioRolError = function(response){
+        $log.debug("RegistrarUsuarioRol - Error");
+        console.log("Response :: ", response);
     };
 
     /********** CRUD ROLES ***********/
@@ -97,6 +131,13 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
             nidUsuario : $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario,
             sestado : 'A'
         };
+        
+        var usuarioRol = {
+            nidRol : $scope.rol.nidRol,
+            nidUsuario : $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario,
+            sestado : 'A'
+        };
+        UsuarioRolService.registrarUsuarioRol(usuarioRol).then(registrarUsuarioRolSuccess, registrarUsuarioRolError);
 	UsuarioFlujoService.registrarUsuarioActor(usuarioFlujo).then(registrarUsuarioActorSuccess, registrarUsuarioActorError);
     };
 
@@ -115,13 +156,18 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
         var usuarioflujo = {nidUsuarioFlujo : actorById.nidUsuarioFlujo, nidFlujoActor: actorById.nidFlujoActor, nidUsuario : $scope.usuarioActor.nidUsuario}
         UsuarioFlujoService.deleteUsuarioFlujo(usuarioflujo).then(deleteUsuarioFlujoSuccess, deleteUsuarioFlujoError);  
     };
+    
+    $scope.deleteUsuarioRol = function(rolById) {
+        console.log(rolById);
+    };
 
-//    $scope.getRoles = function(){
-//      	RolService.getRoles().then(getRolServiceSuccess, getRolServiceError);
-//    };
+    $scope.getRoles = function(){
+      	RolService.getRoles().then(getRolServiceSuccess, getRolServiceError);
+    };
 
     $scope.update = function(usuarioActor){
     	$scope.usuarioActor = usuarioActor;
+        UsuarioRolService.getUsuarioRolByIdUsuario(usuarioActor.nidUsuario).then(getUsuarioRolByIdUsuarioSuccess, getUsuarioRolByIdUsuarioError);
         UsuarioFlujoService.getUsuarioFlujoByIdUsuario(usuarioActor.nidUsuario).then(getUsuarioFlujoByIdUsuarioSuccess, getUsuarioFlujoByIdUsuarioError);
     };
     
@@ -167,7 +213,7 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
         $scope.getUsuarioFlujoByPagina();
     };
     
-//    $scope.getRoles();
+    $scope.getRoles();
     $scope.getUsuarioActores();
     $scope.getUsuarios();
     $scope.getUsuarioFlujoByPagina();

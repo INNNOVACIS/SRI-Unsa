@@ -1,4 +1,4 @@
-    investigacionApp.controller('homeController', function($log, $scope, $location, SharedService,
+    investigacionApp.controller('homeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, FileUploader) {
     
@@ -341,7 +341,7 @@
     };
 
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://192.168.1.30:8080/SRIUnsa-web/rest/files/subirArchivos'
+        url: SRIUnsaConfig.SRIUnsaUrlServicio + '/files/subirArchivos'
     });
     
     // FILTERS

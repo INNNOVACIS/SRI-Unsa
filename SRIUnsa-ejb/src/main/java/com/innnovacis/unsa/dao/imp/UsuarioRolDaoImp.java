@@ -5,6 +5,7 @@ import com.innnovacis.unsa.dao.IUsuarioRolDao;
 import com.innnovacis.unsa.model.SRIUsuarioRol;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
+import com.innnovacis.unsa.util.SRIUsuarioRolesUtil;
 import java.math.BigInteger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -70,6 +71,14 @@ public class UsuarioRolDaoImp implements IUsuarioRolDao {
                         .setParameter(2, object.getRango())
                         .setParameter(3, object.getCurrentPage());
         List<SRIUsuarioRolUtil> listUsuarioRol = query.getResultList();
+        return listUsuarioRol;
+    }
+
+    @Override
+    public List<SRIUsuarioRolesUtil> getUsuarioRolByIdUsuario(int id) {
+        Query query = em.createNativeQuery("{call getUsuarioRolByidUsuario(?1)}", SRIUsuarioRolesUtil.class)
+                        .setParameter(1, id);
+        List<SRIUsuarioRolesUtil> listUsuarioRol = query.getResultList();
         return listUsuarioRol;
     }
 

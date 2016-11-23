@@ -73,12 +73,12 @@
                                         <input type="text" ng-model="usuario" uib-typeahead="opt as opt.susuarioLogin for opt in usuarios | filter:$viewValue | limitTo:8" class="form-control">
                                     </div>
                                 </div>
-<!--                                <div class="form-group">
+                                <div class="form-group">
                                     <label class="control-label col-md-2">Roles</label>
                                     <div class="col-md-10">
                                         <select class="form-control" ng-model="rol" ng-options="opt as opt.snombreRol for opt in roles"></select>
                                     </div>
-                                </div>-->
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Actor</label>
                                     <div class="col-md-10">
@@ -106,7 +106,7 @@
 
 <!-- Actualizar Actor -->
 <div id="popUpdateUsuarioActor" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" ng-click="updatePaginacion()">&times;</button>
@@ -135,24 +135,47 @@
                                     </div>
                                 </div>
                             </form>
-                            <table width="100%" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th width="60%">Actores Asignados</th>
-                                        <th>Acci&oacute;n</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="actorById in actoresById track by $index">                   
-                                        <td>{{ actorById.snombreActor }}</td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioFlujo(actorById)">
-                                                <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="col-md-6">
+                                <table width="100%" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="70%">Actores Asignados</th>
+                                            <th>Acci&oacute;n</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="actorById in actoresById track by $index">                   
+                                            <td>{{ actorById.snombreActor }}</td>
+                                            <td nowrap>
+                                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioFlujo(actorById)">
+                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table width="100%" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="70%">Roles Asignados</th>
+                                            <th>Acci&oacute;n</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="rolById in rolesById track by $index">                   
+                                            <td>{{ rolById.snombreRol }}</td>
+                                            <td nowrap>
+                                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioRol(rolById)">
+                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
                         </div>   
                     </div>
                 </div>

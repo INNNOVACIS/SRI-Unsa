@@ -8,6 +8,7 @@ package com.innnovacis.unsa.dao;
 import com.innnovacis.unsa.model.SRIUsuarioRol;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
+import com.innnovacis.unsa.util.SRIUsuarioRolesUtil;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -24,4 +25,5 @@ public interface IUsuarioRolDao {
     List<SRIUsuarioRol> GetAll();
     int GetTotalPaginacion(SRIPaginacionObject object);
     List<SRIUsuarioRolUtil> GetPagina(SRIPaginacionObject object);
+    List<SRIUsuarioRolesUtil> getUsuarioRolByIdUsuario(int id);
 }

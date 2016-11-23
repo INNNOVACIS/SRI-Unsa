@@ -9,6 +9,7 @@ import com.innnovacis.unsa.business.IUsuarioRolBusiness;
 import com.innnovacis.unsa.model.SRIUsuarioRol;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
+import com.innnovacis.unsa.util.SRIUsuarioRolesUtil;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -48,6 +50,13 @@ public class UsuarioRolRestService {
         Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
         
         return builder.build();
+    }
+    
+    @GET
+    @Path("/listarUsuarioRoles/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<SRIUsuarioRolesUtil> getUsuarioRolByIdUsuario(@PathParam("id") int id) {
+        return usuarioRolBusiness.getUsuarioRolByIdUsuario(id);
     }
     
     @GET

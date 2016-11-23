@@ -7,6 +7,7 @@ import com.innnovacis.unsa.dao.IUsuarioRolDao;
 import com.innnovacis.unsa.model.SRIUsuarioRol;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
+import com.innnovacis.unsa.util.SRIUsuarioRolesUtil;
 
 
 import javax.inject.Inject;
@@ -109,6 +110,17 @@ public class UsuarioRolBusinessImp implements IUsuarioRolBusiness {
             System.out.println("Error ========> " + ex.getMessage());
         }
          return respuesta;
+    }
+
+    @Override
+    public List<SRIUsuarioRolesUtil> getUsuarioRolByIdUsuario(int id) {
+        List<SRIUsuarioRolesUtil> respuesta = null;
+        try{
+            respuesta = usuarioRolDao.getUsuarioRolByIdUsuario(id);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
     }
 
     

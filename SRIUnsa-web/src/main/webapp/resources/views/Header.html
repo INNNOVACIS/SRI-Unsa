@@ -18,70 +18,10 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav" ng-bind-html="sharedService.htmlMenu" compila-plantilla>
-                        
-<!--                        <li ng-repeat="privilegio in sharedService.privilegios">
-                            <a href="{{privilegio.surlPrivilegio}}" ng-click="setMenuTab(1)">{{privilegio.sNombrePrivilegio}}</a>
-                        </li>-->
-<!--                        <div ng-bind-html="insertHtml"></div>-->
-<!--                        <li class="dropdown" ng-show="">
-                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Actividades <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li ng-class="{'active' : menuTab == 2}"><a href="#actividadesGeneradas" ng-click="setMenuTab(2)">Actividades Generadas</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 3}"><a href="#actividadesRevisadas" ng-click="setMenuTab(3)">Actividades Revisadas</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 5}"><a href="#actividadesPendientes" ng-click="setMenuTab(5)">Actividades Pendientes</a>
-                                </li>
-                            </ul>
-                        </li>-->
-<!-- 
-                        <li ng-class="{'active' : menuTab == 6}" ng-show="rol_menu_6"><a href="#relacionDocentes" ng-click="setMenuTab(6)">Relación Docentes</a>
-                        </li>
-                        <li ng-class="{'active' : menuTab == 8}" ng-show="rol_menu_8"><a href="#generarDocente" ng-click="setMenuTab(8)">Relación Docentes</a>
-                        </li>-->
-<!--                        <li class="dropdown" ng-show="rol_menu_7">
-                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuración <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li ng-class="{'active' : menuTab == 9}" ><a href="#usuarios" ng-click="setMenuTab(2)">Gestionar Usuarios</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 10}" ><a href="#privilegios" ng-click="setMenuTab(3)">Gestionar Privilegios</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 11}" ><a href="#roles" ng-click="setMenuTab(5)">Gestionar Roles</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 12}" ><a href="#archivos" ng-click="setMenuTab(2)">Gestionar Archivos</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 13}" ><a href="#tipoinvestigacion" ng-click="setMenuTab(3)">Gestionar Tipo de Investigacion</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 14}" ><a href="#tiponivel" ng-click="setMenuTab(5)">Gestionar Tipo de nivel</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 15}" ><a href="#tipoinvestigador" ng-click="setMenuTab(5)">Gestionar Tipo de Investigador</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 16}" ><a href="#tipoproduccion" ng-click="setMenuTab(2)">Gestionar Tipo de Produccion</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 17}" ><a href="#tipoasesoria" ng-click="setMenuTab(3)">Gestionar Tipo de Asesoria</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 18}" ><a href="#tipoproduccion" ng-click="setMenuTab(5)">Gestionar Tipo de Produccion</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 19}" ><a href="#semestre" ng-click="setMenuTab(5)">Gestionar Tipo de Semestre</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 20}"><a href="#estructuraorganizacion" ng-click="setMenuTab(5)">Estructura de la Organizacion</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 21}"><a href="#areainvestigacion" ng-click="setMenuTab(5)">Área de Investigación</a>
-                                </li>
-                                <li ng-class="{'active' : menuTab == 22}"><a href="#usuariorol" ng-click="setMenuTab(5)">Gestionar Rol de Usuario</a>
-                                </li>
-                            </ul>
-                        </li>-->
+
                     </ul>
 
-<!--                    <form class="navbar-form navbar-left">
-                        <div class="form-group">
-                            <label class="control-label col-md-2" style="margin-top: 8px;">Rol</label>
-                            <div class="col-md-8">
-                                <select class="form-control" style="margin:2px;" ng-model="usuario.rolDefault" ng-options="rol as rol for rol in usuario.roles" ng-init="selected=''" ng-change=rolChange(usuario.rolDefault)></select>
-                            </div>
-                        </div>
-                    </form>-->
+
                     <ul class="nav navbar-nav navbar-right" >
                         <img class="usuario" src="resources/images/default-user.png">
                         <p class="navbar-text">{{message}}</p>
@@ -106,30 +46,11 @@
         </div>
     </div>   
 </div>
-<script>
-    $(function () {
-    $('.navbar-toggle').click(function () {
-        $('.navbar-nav').toggleClass('slide-in');
-        $('.side-body').toggleClass('body-slide-in');
-        $('#search').removeClass('in').addClass('collapse').slideUp(200);
-    });
-   
-   // Remove menu for searching
-   $('#search-trigger').click(function () {
-        $('.navbar-nav').removeClass('slide-in');
-        $('.side-body').removeClass('body-slide-in');
-
-        /// uncomment code for absolute positioning tweek see top comment in css
-        //$('.absolute-wrapper').removeClass('slide-in');
-
-    });
-});
-</script>
 
 <!-- Menu vertical -->
 
 <div class="row" ng-controller="headerController">
-    <div class="side-menu">
+    <div class="side-menu" ng-show="sharedService.userAutenticado">
         <nav class="navbar navbar-default" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
