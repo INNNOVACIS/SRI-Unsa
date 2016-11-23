@@ -31,17 +31,19 @@ public class SRIUsuarioFlujo  extends SRIEntidad implements Serializable  {
     @Column(name = "idusuarioflujo" )
     private int NIdUsuarioFlujo;
     
+    @Column(name = "idflujoactor")
+    private int NIdFlujoActor;
 
-    @Column(name = "idarista")
-    private int NIdArista;
-
-    
     @Column(name = "idusuario")
     private int NIdUsuario;
 
-    
+    public int getNIdFlujoActor() {
+        return NIdFlujoActor;
+    }
 
-
+    public void setNIdFlujoActor(int NIdFlujoActor) {
+        this.NIdFlujoActor = NIdFlujoActor;
+    }
 
     public int getNIdUsuarioFlujo() {
         return NIdUsuarioFlujo;
@@ -51,30 +53,12 @@ public class SRIUsuarioFlujo  extends SRIEntidad implements Serializable  {
         this.NIdUsuarioFlujo = NIdUsuarioFlujo;
     }
 
-    public int getNIdArista() {
-        return NIdArista;
-    }
-
-    public void setNIdArista(int NIdArista) {
-        this.NIdArista = NIdArista;
-    }
-
     public int getNIdUsuario() {
         return NIdUsuario;
     }
 
     public void setNIdUsuario(int NIdUsuario) {
         this.NIdUsuario = NIdUsuario;
-    }
-
-
-
-
-
-    
-
-    
-    
-
+    }   
 }
 

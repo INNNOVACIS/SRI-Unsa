@@ -2,8 +2,8 @@
     <div class="col-xm-12">
         <div class="panel panel-info">
             <div class="panel-heading">
-                Administración de Actor
-                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoactor">
+                Administración de Usuario Actor
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoUsuarioActor">
                     <span class="glyphicon glyphicon-plus"></span> Nuevo
                 </button>	
             </div>
@@ -22,25 +22,20 @@
                 <table width="100%" class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th width="40%">Nombre del Actor</th>
-                            <th>Flujo</th>
-                            <th>C&oacute;digo</th>
-<!--                            <th>Estado</th>-->
+                            <th width="20%">Nombre de Usuario</th>
+                            <th width="30%">Nombre del Usuario</th>
+                            <th>Actores Asignados</th>
                             <th>Acci&oacute;n</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="actor in actores">                   
-                            <td><strong>{{ actor.snombreActor }}</strong></td>
-                            <td>{{ actor.sflujo }}</td>
-                            <td>{{ actor.scodigo }}</td>
-<!--                            <td>{{ actor.sEstado }}</td>-->
+                        <tr ng-repeat="usuarioActor in usuarioActores">                   
+                            <td><strong>{{ usuarioActor.susuarioLogin }}</strong></td>
+                            <td>{{ usuarioActor.snombreUsuario }}</td>
+                            <td>{{ usuarioActor.nactores }}</td>
                             <td nowrap>
-                                <button type="button" class="btn btn-success btn-xs" ng-click="update(actor)" data-toggle="modal" data-target="#popUpdateActor">
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="update(usuarioActor)" data-toggle="modal" data-target="#popUpdateUsuarioActor">
                                     <span class="glyphicon glyphicon-pencil"></span> Actualizar
-                                </button>
-                                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteUsuario(actor)">
-                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
                                 </button>
                             </td>
                         </tr>
@@ -60,12 +55,12 @@
 
 
 <!-- Nuevo Flujo Actor -->
-<div id="popNuevoactor" class="modal fade" role="dialog">
+<div id="popNuevoUsuarioActor" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Registrar Nuevo Actor</h4>
+                <h4 class="modal-title">Asignar Actor </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -73,36 +68,24 @@
                         <div class="col-md-12">
                             <form class="form-horizontal">
                                 <div class="form-group">
+                                    <label class="control-label col-md-2">Usuario</label>
+                                    <div class="col-md-10">
+                                        <input type="text" ng-model="usuario" uib-typeahead="opt as opt.susuarioLogin for opt in usuarios | filter:$viewValue | limitTo:8" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-2">Actor</label>
                                     <div class="col-md-10">
-                                        <input ng-model="actor.snombreActor" type="text" class="form-control" placeholder="Nombre del Actor">
+                                        <select class="form-control" ng-model="actor" ng-options="opt as opt.snombreActor for opt in actores"></select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Flujo</label>
-                                    <div class="col-md-10">
-                                        <input ng-model="actor.sflujo" class="form-control" value="SRI">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">C&oacute;digo</label>
-                                    <div class="col-md-10">
-                                        <input ng-model="actor.scodigo" class="form-control" >
-                                    </div>
-                                </div>
-<!--                                <div class="form-group">
-                                    <label class="control-label col-md-2">Estado</label>
-                                    <div class="col-md-10">
-                                        <input ng-model="actor.sEstado" class="form-control">
-                                    </div>
-                                </div>-->
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarActor()">
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarUsuarioActor()">
                     <span class="glyphicon glyphicon-user"></span>
                     Registrar
                 </button>
@@ -116,12 +99,12 @@
 </div>
 
 <!-- Actualizar Actor -->
-<div id="popUpdateActor" class="modal fade" role="dialog">
+<div id="popUpdateUsuarioActor" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Actualizar Actor</h4>
+                <h4 class="modal-title">Actualizar Usuario Actor</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -129,39 +112,46 @@
                         <div class="col-md-12">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Actor</label>
+                                    <label class="control-label col-md-2" style="">Usuario</label>
                                     <div class="col-md-10">
-                                        <input id="inpUsuario" ng-model="actor.snombreActor" type="text" class="form-control" placeholder="Nombre de Usuario">
+                                        <input readonly="readonly" ng-model="usuarioActor.susuarioLogin" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Flujo</label>
-                                    <div class="col-md-10">
-                                        <input readonly="readonly" ng-model="actor.sflujo" class="form-control" >
+                                    <label class="control-label col-md-2">Actores</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" ng-model="actor" ng-options="opt as opt.snombreActor for opt in actores"></select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-primary" ng-click="registrarUsuarioActor()">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">C&oacute;digo</label>
-                                    <div class="col-md-10">
-                                        <input ng-model="actor.scodigo" class="form-control" >
-                                    </div>
-                                </div>
-<!--                                <div class="form-group">
-                                    <label class="control-label col-md-2">Estado</label>
-                                    <div class="col-md-10">
-                                        <input ng-model="actor.sEstado" class="form-control">
-                                    </div>
-                                </div>-->
                             </form>
+                            <table width="100%" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="60%">Actores Asignados</th>
+                                    <th>Acci&oacute;n</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="actorById in actoresById">                   
+                                    <td>{{ actorById.snombreActor }}</td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioActor(actorById)">
+                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                         </div>   
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateActor()">
-                    <span class="glyphicon glyphicon-user"></span>
-                    Actualizar
-                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar

@@ -5,7 +5,10 @@
  */
 package com.innnovacis.unsa.business;
 
+import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioFlujoUtil;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +23,8 @@ public interface IUsuarioFlujoBusiness {
     boolean Delete(SRIUsuarioFlujo entidad);
     SRIUsuarioFlujo Get(int idEntidad);
     List<SRIUsuarioFlujo> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRIUsuarioFlujoUtil> GetPagina(SRIPaginacionObject object);
+    List<SRIFlujoActor> getUsuarioFlujoByIdUsuario(int id);
 
 }

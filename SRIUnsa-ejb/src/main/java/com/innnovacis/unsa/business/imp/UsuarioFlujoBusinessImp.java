@@ -4,7 +4,10 @@ package com.innnovacis.unsa.business.imp;
 
 import com.innnovacis.unsa.business.IUsuarioFlujoBusiness;
 import com.innnovacis.unsa.dao.IUsuarioFlujoDao;
+import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioFlujoUtil;
 
 
 import javax.inject.Inject;
@@ -77,13 +80,46 @@ public class UsuarioFlujoBusinessImp implements IUsuarioFlujoBusiness {
 
     @Override
     public List<SRIUsuarioFlujo> GetAll() {
-         List<SRIUsuarioFlujo> respuesta = null;
-         try{
+        List<SRIUsuarioFlujo> respuesta = null;
+        try{
             respuesta = usuarioFlujoDao.GetAll();
         }
         catch(Exception ex){
         }
-         return respuesta;
+        return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+        try{
+            respuesta = usuarioFlujoDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIUsuarioFlujoUtil> GetPagina(SRIPaginacionObject object) {
+        List<SRIUsuarioFlujoUtil> respuesta = null;
+        try{
+            respuesta = usuarioFlujoDao.GetPagina(object);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIFlujoActor> getUsuarioFlujoByIdUsuario(int id) {
+        List<SRIFlujoActor> respuesta = null;
+        try{
+            respuesta = usuarioFlujoDao.getUsuarioFlujoByIdUsuario(id);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
     }
 
     

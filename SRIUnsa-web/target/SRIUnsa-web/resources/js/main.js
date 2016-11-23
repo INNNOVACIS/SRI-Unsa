@@ -1,5 +1,6 @@
 var investigacionApp = angular.module('investigacionApp', [
 	'ngRoute',
+        'ngAnimate',
         'ngSanitize',
 	'ui.bootstrap',
 	'angularFileUpload'
@@ -107,9 +108,9 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/FlujoActor.html',
 		controller : 'FlujoActorController'
 	})
-        .when('/usuarioactor',{
-		templateUrl : 'resources/views/UsuarioActor.html',
-		controller : 'UsuarioActorController'
+        .when('/usuarioflujo',{
+		templateUrl : 'resources/views/UsuarioFlujo.html',
+		controller : 'UsuarioFlujoController'
 	})
 	.when('/',{
 		templateUrl : 'resources/views/Login.html',
