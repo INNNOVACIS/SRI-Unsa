@@ -6,10 +6,8 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IUsuarioFlujoBusiness;
-import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import com.innnovacis.unsa.model.SRIFlujoActor;
-import com.innnovacis.unsa.model.SRIRol;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
+import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioFlujoUtil;
 import java.util.HashMap;
@@ -24,7 +22,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -58,8 +55,17 @@ public class UsuarioFlujoRestServices {
     @GET
     @Path("/listarUsuarios/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SRIFlujoActor> getUsuarioFlujoByIdUsuario(@PathParam("id") int id) {
+    public List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(@PathParam("id") int id) {
         return usuarioFlujoBusiness.getUsuarioFlujoByIdUsuario(id);
+    }
+    
+    @GET
+    @Path("/deleteUsuarioFlujoById/{idUsuario:[0-9][0-9]*}/{idFlujoActor:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean deleteUsuarioFlujoById(@PathParam("idUsuario") int idUsuario, @PathParam("idFlujoActor") int idFlujoActor) {
+//        return usuarioFlujoBusiness.getUsuarioFlujoByIdUsuario(id);
+        System.out.println("idUsuario = " + idUsuario + " :: idFlujoActor = " + idFlujoActor);
+        return true;
     }
     
     @GET

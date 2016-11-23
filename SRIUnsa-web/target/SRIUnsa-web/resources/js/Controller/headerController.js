@@ -27,5 +27,37 @@ investigacionApp.controller('headerController', function($scope, $sce, $location
     $scope.setMenuTab = function (event) {
         $scope.isActivo = event.target.innerText;
     };
+    
+    /*
+     * Menu Vertical
+     *  
+     * */
+    
+    $scope.openReportes = false;
+    $scope.openPermisos = false;
+    $scope.openConfiguracion = false;
+    
+    $scope.openDropdownReportes = function(){
+        if($scope.openReportes === false) {
+            $scope.openReportes = true;
+        } else {
+            $scope.openReportes = false;
+        }   
+    };
+    $scope.openDropdownConfiguracion = function(){
+        if($scope.openConfiguracion === false) {
+            $scope.openConfiguracion = true;
+        } else {
+            $scope.openConfiguracion = false;
+        }   
+    };
+    $scope.openDropdownPermisos = function(){
+        if($scope.openPermisos === false) {
+            $scope.openPermisos = true;
+        } else {
+            $scope.openPermisos = false;
+        }   
+    };
+    
 
 });

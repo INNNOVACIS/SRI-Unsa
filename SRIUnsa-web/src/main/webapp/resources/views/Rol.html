@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="col-xm-12">
+    <div class="col-lg-offset-2 col-md-10">
         <div class="panel panel-info">
             <div class="panel-heading">
                 Administración de Roles
@@ -31,7 +31,7 @@
                         <tr ng-repeat="rol in roles">
                             <td><strong>{{ rol.snombreRol }}</strong></td>
                             <td nowrap>
-                                <button type="button" class="btn btn-success btn-xs" ng-click="update(rol)" data-toggle="modal" data-target="#popUpdateRol">
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="update(rol)" data-toggle="modal" data-target="#popUpdateRol">
                                     <span class="glyphicon glyphicon-pencil"></span> Actualizar
                                 </button>
                                 <button type="button" class="btn btn-default btn-xs" ng-click="deleteRol(rol)">
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarRol()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarRol()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Registrar
                 </button>
@@ -118,7 +118,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="updateRol()">
+                <button type="button" class="btn-sm btn-primary" data-dismiss="modal" ng-click="updateRol()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Actualizar
                 </button>

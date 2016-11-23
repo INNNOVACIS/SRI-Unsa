@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="col-xm-12">
+    <div class="col-lg-offset-2 col-md-10">
         <div class="panel panel-info">
             <div class="panel-heading">
                 Administracion de Roles de Usuario
@@ -32,10 +32,10 @@
                             <td><strong>{{ usuarioRol.nombreUsuario }}</strong></td>
                             <td>{{ usuarioRol.nombreRol }}</td>
                             <td nowrap>
-                                <button type="button" class="btn btn-success btn-xs" ng-click="update(usuarioRol)" data-toggle="modal" data-target="#actualizarUsuarioRol">
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="update(usuarioRol)" data-toggle="modal" data-target="#actualizarUsuarioRol">
                                     <span class="glyphicon glyphicon-pencil"></span> Actualizar
                                 </button>
-                                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteUsuario(usuarioRol)">
+                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuario(usuarioRol)">
                                     <span class="glyphicon glyphicon-trash"></span> Eliminar
                                 </button>
                             </td>
@@ -69,13 +69,13 @@
                         <div class="col-md-12">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Usuario</label>
+                                    <label class="control-label col-md-2" >Usuario</label>
                                     <div class="col-md-10">
                                         <input ng-model="usuarioRol.susuarioLogin" type="text" class="form-control" placeholder="Nombre de Usuario">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Roles</label>
+                                    <label class="control-label col-md-2" >Roles</label>
                                     <div class="col-md-10">
                                         <input ng-model="usuarioRol.snombreRol" type="password" class="form-control">
                                     </div>
@@ -86,8 +86,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarUsuarioRol()">
-                    <span class="glyphicon glyphicon-user"></span>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarUsuarioRol()">
+                    <span class="glyphicon glyphicon-save"></span>
                     Registrar
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -129,8 +129,8 @@
                     </div>
 	        </div>
 	        <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="actualizarUsuarioRol()">
-                        <span class="glyphicon glyphicon-user"></span>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="actualizarUsuarioRol()">
+                        <span class="glyphicon glyphicon-refresh"></span>
                         Actualizar
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">

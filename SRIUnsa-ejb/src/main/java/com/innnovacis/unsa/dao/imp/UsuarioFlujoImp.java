@@ -4,9 +4,9 @@ package com.innnovacis.unsa.dao.imp;
 import com.innnovacis.unsa.dao.IUsuarioFlujoDao;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
+import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioFlujoUtil;
-import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.math.BigInteger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -76,10 +76,10 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
     }
 
     @Override
-    public List<SRIFlujoActor> getUsuarioFlujoByIdUsuario(int id) {
-        Query query = em.createNativeQuery("{call getUsuarioActorByidUsuario(?1)}", SRIFlujoActor.class)
+    public List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(int id) {
+        Query query = em.createNativeQuery("{call getUsuarioActorByidUsuario(?1)}", SRIFlujoActorUtil.class)
                         .setParameter(1, id);
-        List<SRIFlujoActor> listFlujoActor = query.getResultList();
+        List<SRIFlujoActorUtil> listFlujoActor = query.getResultList();
         return listFlujoActor;
     }
 

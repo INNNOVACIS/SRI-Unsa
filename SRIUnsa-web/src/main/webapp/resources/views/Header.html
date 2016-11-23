@@ -104,5 +104,108 @@
             <button ng-show="sharedService.popUp.op1.open" ng-click="sharedService.popUp.op1.fun(sharedService.popUp.url)" class="SRIModal-button SRI-confirmar">
                 {{ sharedService.popUp.op1.txt }}</button>
         </div>
+    </div>   
+</div>
+<script>
+    $(function () {
+    $('.navbar-toggle').click(function () {
+        $('.navbar-nav').toggleClass('slide-in');
+        $('.side-body').toggleClass('body-slide-in');
+        $('#search').removeClass('in').addClass('collapse').slideUp(200);
+    });
+   
+   // Remove menu for searching
+   $('#search-trigger').click(function () {
+        $('.navbar-nav').removeClass('slide-in');
+        $('.side-body').removeClass('body-slide-in');
+
+        /// uncomment code for absolute positioning tweek see top comment in css
+        //$('.absolute-wrapper').removeClass('slide-in');
+
+    });
+});
+</script>
+
+<!-- Menu vertical -->
+
+<div class="row" ng-controller="headerController">
+    <div class="side-menu">
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <div class="brand-wrapper">
+                    <!-- Hamburger -->
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <!-- Brand -->
+                    <div class="brand-name-wrapper">
+                        <center>
+                            <a class="navbar-brand" href="#home">
+                                <button type="submit" class="btn btn-primary"> Crear Actividad</button>
+                            </a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <!-- Main Menu -->
+            <div class="side-menu-container">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/actividad/Generadas"> Actividades Generadas</a></li>
+                    <li><a href="#/actividad/Revisadas"> Actividades Revisadas</a></li>
+                    <li><a href="#/actividad/Pendientes"> Actividades Pendientes</a></li>
+<!--                    <li class="active"><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>-->
+                    <!-- Dropdown-->
+                    <li class="panel panel-default" id="dropdown">
+                        <a id="openReporte" data-toggle="collapse" style="cursor: pointer;" ng-click="openDropdownReportes()">
+                            <span class="glyphicon glyphicon-list-alt"></span> Reportes <span class="caret"></span>
+                        </a>
+                        <div class="panel-collapse collapse" ng-class="{'in' : openReportes}">
+                            <div class="panel-body">
+                                <ul class="nav navbar-nav">
+                                    <li><a>Relacion de Docentes</a></li>
+                                    <li><a>Actividades por Docente </a></li>
+                                    <li><a>Reporte Principal</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                         <a data-toggle="collapse" style="cursor: pointer;" ng-click="openDropdownConfiguracion()">
+                            <span class="glyphicon glyphicon-cog"></span> Configuracion <span class="caret"></span>
+                        </a>
+                        <div class="panel-collapse collapse" ng-class="{'in' : openConfiguracion}">
+                            <div class="panel-body">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="#tipoinvestigacion">Tipo Investigacion</a></li>
+                                    <li><a href="#tiponivel">TipoNivel </a></li>
+                                    <li><a href="#tipoasesoria">Tipo Asesoria</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <a data-toggle="collapse" style="cursor: pointer;" ng-click="openDropdownPermisos()">
+                            <span class="glyphicon glyphicon-user"></span> Permisos <span class="caret"></span>
+                        </a>
+                        <div class="panel-collapse collapse" ng-class="{'in' : openPermisos}">
+                            <div class="panel-body">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="#usuarios">Usuarios</a></li>
+                                    <li><a href="#roles">Roles </a></li>
+                                    <li><a href="#usuariorol">Rol de Usuario</a></li>
+                                    <li><a href="#flujoactor">Flujo Actor</a></li>
+                                    <li><a href="#usuarioflujo">Usuario Actores</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
     </div>
 </div>
+
+

@@ -1,7 +1,7 @@
 <div class="container">
 <!--    <div class="panel panel-danger" >
         <div class="panel-body">-->
-            <div class="col-xm-12">
+            <div class="col-lg-offset-2 col-md-10">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         Administración de Archivos
@@ -35,11 +35,11 @@
                                     <td><strong>{{ file.nombre }}</strong></td>
                                     <td>{{ file.tipo }}</td>
                                     <td nowrap>
-                                            <button type="button" class="btn btn-danger btn-xs" ng-click="descargarArchivo(file)">
-                                            <span class="glyphicon glyphicon-down"></span> Descargar
+                                            <button type="button" class="btn btn-primary btn-xs" ng-click="descargarArchivo(file)">
+                                            <span class="glyphicon glyphicon-save-file"></span> Descargar
                                         </button>
-                                        <button type="button" class="btn btn-success btn-xs" ng-click="copiarArchivo(file)" data-toggle="modal" data-target="#popUpdateArchivo">
-                                            <span class="glyphicon glyphicon-pencil"></span> Actualizar
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="copiarArchivo(file)" data-toggle="modal" data-target="#popUpdateArchivo">
+                                            <span class="glyphicon glyphicon-refresh"></span> Actualizar
                                         </button>
                                         <button type="button" class="btn btn-danger btn-xs" ng-click="deleteArchivo(file)">
                                             <span class="glyphicon glyphicon-trash"></span> Eliminar
@@ -92,8 +92,8 @@
                      </div>
 	        </div>
 	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarUsuario()">
-	        		<span class="glyphicon glyphicon-user"></span>
+	        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarUsuario()">
+	        		<span class="glyphicon glyphicon-open-file"></span>
 	        		Subir
 	        	</button>
 	          	<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -135,8 +135,8 @@
                      </div>
 	        </div>
 	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateArchivo()">
-	        		<span class="glyphicon glyphicon-user"></span>
+	        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateArchivo()">
+	        		<span class="glyphicon glyphicon-refresh"></span>
 	        		Actualizar
 	        	</button>
 	          	<button type="button" class="btn btn-default" data-dismiss="modal">

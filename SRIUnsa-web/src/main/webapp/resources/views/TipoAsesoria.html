@@ -1,7 +1,7 @@
 <div class="container">
 <!--    <div class="panel panel-danger" >
         <div class="panel-body">-->
-            <div class="col-xm-12">
+            <div class="col-lg-offset-2 col-md-10">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         Administración de Tipos de Asesoria
@@ -33,10 +33,10 @@
                                 <tr ng-repeat="asesoria in asesorias">
                                     <td><strong>{{ asesoria.snombreTipoAsesoria }}</strong></td>
                                     <td nowrap>
-                                        <button type="button" class="btn btn-success btn-xs" ng-click="update(asesoria)" data-toggle="modal" data-target="#popUpdateAsesoria">
+                                        <button type="button" class="btn btn-primary btn-xs" ng-click="update(asesoria)" data-toggle="modal" data-target="#popUpdateAsesoria">
                                             <span class="glyphicon glyphicon-pencil"></span> Actualizar
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAsesoria(asesoria)">
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="deleteAsesoria(asesoria)">
                                             <span class="glyphicon glyphicon-trash"></span> Eliminar
                                         </button>
                                     </td>
@@ -82,7 +82,7 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarAsesoria()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarAsesoria()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Registrar
                 </button>
@@ -120,7 +120,7 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateAsesoria()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateAsesoria()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Actualizar
                 </button>

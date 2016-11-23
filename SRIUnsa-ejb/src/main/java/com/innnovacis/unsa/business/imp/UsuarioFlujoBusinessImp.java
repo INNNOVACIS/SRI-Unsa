@@ -6,6 +6,7 @@ import com.innnovacis.unsa.business.IUsuarioFlujoBusiness;
 import com.innnovacis.unsa.dao.IUsuarioFlujoDao;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
+import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioFlujoUtil;
 
@@ -112,8 +113,8 @@ public class UsuarioFlujoBusinessImp implements IUsuarioFlujoBusiness {
     }
 
     @Override
-    public List<SRIFlujoActor> getUsuarioFlujoByIdUsuario(int id) {
-        List<SRIFlujoActor> respuesta = null;
+    public List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(int id) {
+        List<SRIFlujoActorUtil> respuesta = null;
         try{
             respuesta = usuarioFlujoDao.getUsuarioFlujoByIdUsuario(id);
         }

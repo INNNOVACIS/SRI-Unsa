@@ -7,6 +7,7 @@ package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
+import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioFlujoUtil;
 import java.util.List;
@@ -25,5 +26,5 @@ public interface IUsuarioFlujoDao {
     List<SRIUsuarioFlujo> GetAll();
     int GetTotalPaginacion(SRIPaginacionObject object);
     List<SRIUsuarioFlujoUtil> GetPagina(SRIPaginacionObject object);
-    List<SRIFlujoActor> getUsuarioFlujoByIdUsuario(int id);
+    List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(int id);
 }

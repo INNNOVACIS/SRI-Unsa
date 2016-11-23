@@ -1,7 +1,7 @@
 <div class="container">
 <!--    <div class="panel panel-danger" >
         <div class="panel-body">-->
-            <div class="col-xm-12">
+            <div class="col-lg-offset-2 col-md-10">
                 <div class="panel panel-info">
                     <div class="panel-heading" style="padding-bottom:19px;">
                         Administración de las Estructuras de Organización
@@ -42,10 +42,10 @@
                                     <!-- <td>{{ estructuraOrganizacion.snivel }}</td>
                                     <td>{{ estructuraOrganizacion.nidTipoNivel }}</td> -->
                                     <td nowrap>
-                                        <button type="button" class="btn btn-success btn-xs" ng-click="update(estructuraOrganizacion)" data-toggle="modal" data-target="#popUpdateEstructuraOrganizacion">
-                                            <span class="glyphicon glyphicon-pencil"></span> Actualizar
+                                        <button type="button" class="btn btn-primary btn-xs" ng-click="update(estructuraOrganizacion)" data-toggle="modal" data-target="#popUpdateEstructuraOrganizacion">
+                                            <span class="glyphicon glyphicon-refresh"></span> Actualizar
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEstructuraOrganizacion(estructuraOrganizacion)">
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="deleteEstructuraOrganizacion(estructuraOrganizacion)">
                                             <span class="glyphicon glyphicon-trash"></span> Eliminar
                                         </button>
                                     </td>
@@ -103,11 +103,11 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarEstructuraOrganizacion()">
-                    <span class="glyphicon glyphicon-rol"></span>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarEstructuraOrganizacion()">
+                    <span class="glyphicon glyphicon-save"></span>
                     Registrar
                 </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>
@@ -149,11 +149,11 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-sm btn-success" data-dismiss="modal" ng-click="updateEstructuraOrganizacion()">
-                    <span class="glyphicon glyphicon-rol"></span>
+                <button type="button" class="btn-sm btn-primary" data-dismiss="modal" ng-click="updateEstructuraOrganizacion()">
+                    <span class="glyphicon glyphicon-refresh"></span>
                     Actualizar
                 </button>
-                <button type="button" class="btn-sm btn-danger" data-dismiss="modal">
+                <button type="button" class="btn-sm btn-default" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>

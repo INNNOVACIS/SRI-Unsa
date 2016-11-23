@@ -133,8 +133,8 @@ investigacionApp.run(['$rootScope', '$location', 'SharedService', function ($roo
             console.log("location ", $location.path());
             var cadena = $location.path();
             if(!SharedService.isPermitido(cadena)){
-                alert("no tiene permisos para esta pagina");
-                $location.path('/home');
+//                alert("no tiene permisos para esta pagina");
+//                $location.path('/home');
             }
         }
     });
