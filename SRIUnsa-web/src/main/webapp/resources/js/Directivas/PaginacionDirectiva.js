@@ -3,7 +3,7 @@ investigacionApp.directive('pagination', ['$parse', function ($parse) {
         restrict: 'EA',
         template: '<nav aria-label="Page navigation">'
                         +'<div class="col-md-1 col-sm-2 col-xs-2" style="margin-top:20px;">'
-                        +'    <select class="form-control" ng-model="rango" ng-options="opt as opt for opt in rangoPaginas" ng-init="rango=rangoPaginas[0]" ng-change=changeRango(rango)>'
+                        +'    <select style="width: 120%; padding: 6px 3px;" class="form-control" ng-model="rango" ng-options="opt as opt for opt in rangoPaginas" ng-init="rango=rangoPaginas[0]" ng-change=changeRango(rango)>'
                         +'    </select>'
                         +'</div>'
                         +'<div class="col-md-6">'

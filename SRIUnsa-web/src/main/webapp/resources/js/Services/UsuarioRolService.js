@@ -81,19 +81,19 @@ investigacionApp.service("UsuarioRolService", function(SRIUnsaConfig, $log, $htt
 		return deferred.promise;
 	};
 
-	this.deleteUsuario = function(request) {
-//		$log.debug("Usuario Service - Delete Usuario");
-//		
-//		var deferred = $q.defer();
-//		$http({
-//			method : 'PUT',
-//			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/deleteUsuarios',
-//			data : request
-//		}).success(function(response) {
-//			deferred.resolve(response);
-//		}).error(function(response) {			
-//			deferred.reject(response);
-//		});
-//		return deferred.promise;
+	this.deleteUsuarioRol = function(request) {
+		$log.debug("Usuario Service - Delete Usuario");
+		
+		var deferred = $q.defer();
+		$http({
+			method : 'PUT',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarioRoles/deleteUsuarioRol',
+			data : request
+		}).success(function(response) {
+			deferred.resolve(response);
+		}).error(function(response) {			
+			deferred.reject(response);
+		});
+		return deferred.promise;
 	};
 });

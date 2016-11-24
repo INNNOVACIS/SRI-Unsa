@@ -114,6 +114,18 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
         $log.debug("RegistrarUsuarioRol - Error");
         console.log("Response :: ", response);
     };
+    
+    var deleteUsuarioRolSuccess = function(response){
+        $log.debug("deleteUsuarioRol - Success");
+        if(response === true){
+            UsuarioRolService.getUsuarioRolByIdUsuario($scope.usuarioActor.nidUsuario).then(getUsuarioRolByIdUsuarioSuccess, getUsuarioRolByIdUsuarioError);
+        }
+    };
+    
+    var deleteUsuarioRolError = function(response){
+        $log.debug("deleteUsuarioRol - Error");
+        console.log("Response :: ", response);
+    };
 
     /********** CRUD ROLES ***********/
     
@@ -153,12 +165,14 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     $scope.deleteUsuarioFlujo = function(actorById) {
         console.log($scope.usuarioActor);
         console.log(actorById);
-        var usuarioflujo = {nidUsuarioFlujo : actorById.nidUsuarioFlujo, nidFlujoActor: actorById.nidFlujoActor, nidUsuario : $scope.usuarioActor.nidUsuario}
+        var usuarioflujo = {nidUsuarioFlujo : actorById.nidUsuarioFlujo, nidFlujoActor: actorById.nidFlujoActor, nidUsuario : $scope.usuarioActor.nidUsuario};
         UsuarioFlujoService.deleteUsuarioFlujo(usuarioflujo).then(deleteUsuarioFlujoSuccess, deleteUsuarioFlujoError);  
     };
     
     $scope.deleteUsuarioRol = function(rolById) {
         console.log(rolById);
+        var usuarioRol = {nidUsuarioRol : rolById.nidUsuarioRol};
+        UsuarioRolService.deleteUsuarioRol(usuarioRol).then(deleteUsuarioRolSuccess, deleteUsuarioRolError);
     };
 
     $scope.getRoles = function(){
