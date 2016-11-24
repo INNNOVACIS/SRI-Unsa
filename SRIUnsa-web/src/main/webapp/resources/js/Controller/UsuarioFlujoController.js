@@ -12,8 +12,8 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
 
     var registrarUsuarioActorSuccess = function(response){
     	$log.debug("Registrar Usuario Actor - Success");
-    	$scope.usuarioActores.push($scope.usuarioActor);
-        UsuarioFlujoService.getUsuarioFlujoByIdUsuario($scope.usuarioActor.nidUsuario).then(getUsuarioFlujoByIdUsuarioSuccess, getUsuarioFlujoByIdUsuarioError);
+//    	$scope.usuarioActores.push($scope.usuarioActor);
+         $scope.getUsuarioFlujoByPagina();
     };
 
     var registrarUsuarioActorError = function(response){

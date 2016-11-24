@@ -20,8 +20,6 @@
                     <ul class="nav navbar-nav" ng-bind-html="sharedService.htmlMenu" compila-plantilla>
 
                     </ul>
-
-
                     <ul class="nav navbar-nav navbar-right" >
                         <img class="usuario" src="resources/images/default-user.png">
                         <p class="navbar-text">{{message}}</p>
@@ -82,7 +80,7 @@
 <!--                    <li class="active"><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>-->
                     <!-- Dropdown-->
                     <li class="panel panel-default" id="dropdown">
-                        <a id="openReporte" data-toggle="collapse" style="cursor: pointer;" ng-click="openDropdownReportes()">
+                        <a data-toggle="collapse" style="cursor: pointer;" ng-click="openDropdownReportes()">
                             <span class="glyphicon glyphicon-list-alt"></span> Reportes <span class="caret"></span>
                         </a>
                         <div class="panel-collapse collapse" ng-class="{'in' : openReportes}">

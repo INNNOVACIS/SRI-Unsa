@@ -2,14 +2,11 @@
 package com.innnovacis.unsa.business.imp;
 
 
-import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.business.IFlujoAristaBusiness;
-import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
-import com.innnovacis.unsa.dao.IEstructuraAreaInvestigacionDao;
 import com.innnovacis.unsa.dao.IFlujoAristaDao;
-import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
 import com.innnovacis.unsa.model.SRIFlujoArista;
+import com.innnovacis.unsa.util.SRIFlujoAristaActorUtil;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -84,6 +81,28 @@ public class FlujoAristaBusinessImp implements IFlujoAristaBusiness {
          List<SRIFlujoArista> respuesta = null;
          try{
             respuesta = flujoAristaDao.GetAll();
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        int respuesta = -1;
+         try{
+            respuesta = flujoAristaDao.GetTotalPaginacion(object);
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public List<SRIFlujoAristaActorUtil> GetPagina(SRIPaginacionObject object) {
+        List<SRIFlujoAristaActorUtil> respuesta = null;
+         try{
+            respuesta = flujoAristaDao.GetPagina(object);
         }
         catch(Exception ex){
         }

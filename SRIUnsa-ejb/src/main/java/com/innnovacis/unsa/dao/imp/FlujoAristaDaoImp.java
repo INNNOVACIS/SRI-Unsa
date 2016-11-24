@@ -3,10 +3,14 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IFlujoAristaDao;
 import com.innnovacis.unsa.model.SRIFlujoArista;
+import com.innnovacis.unsa.util.SRIFlujoAristaActorUtil;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import java.math.BigInteger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
@@ -49,6 +53,24 @@ public class FlujoAristaDaoImp implements IFlujoAristaDao {
     public List<SRIFlujoArista> GetAll() {
         List<SRIFlujoArista> olistaRespuesta = em.createNamedQuery("SRIFlujoArista.GetAll",SRIFlujoArista.class).getResultList();
         return olistaRespuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject object) {
+        Query query = em.createNativeQuery("{call getFlujoAristaTotalPaginacion(?1)}")
+                        .setParameter(1, object.getFiltro());
+        BigInteger total = (BigInteger) query.getSingleResult();
+        return total.intValue();
+    }
+
+    @Override
+    public List<SRIFlujoAristaActorUtil> GetPagina(SRIPaginacionObject object) {
+        Query query = em.createNativeQuery("{call getFlujoAristaPaginacion(?1,?2,?3)}", SRIFlujoAristaActorUtil.class)
+                        .setParameter(1, object.getFiltro())
+                        .setParameter(2, object.getRango())
+                        .setParameter(3, object.getCurrentPage());
+        List<SRIFlujoAristaActorUtil> listFlujoActorArista = query.getResultList();
+        return listFlujoActorArista;
     }
 
 }

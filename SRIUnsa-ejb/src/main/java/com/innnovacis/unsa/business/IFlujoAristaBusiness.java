@@ -7,6 +7,8 @@ package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIFlujoArista;
 import com.innnovacis.unsa.model.SRISemestre;
+import com.innnovacis.unsa.util.SRIFlujoAristaActorUtil;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -21,5 +23,6 @@ public interface IFlujoAristaBusiness {
     boolean Delete(SRIFlujoArista entidad);
     SRIFlujoArista Get(int idEntidad);
     List<SRIFlujoArista> GetAll();
-
+    int GetTotalPaginacion(SRIPaginacionObject object);
+    List<SRIFlujoAristaActorUtil> GetPagina(SRIPaginacionObject object);
 }
