@@ -36,6 +36,12 @@ public class SRIFlujoAristaActorUtil implements Serializable{
     @Column(name = "idActorOrigen")
     private int NIdActorOrigen;
     
+    @Column(name = "idEstado")
+    private int NIdEstado;
+    
+    @Column(name = "nombreestado" )
+    private String SNombreEstado;
+    
     @Column(name = "nombrearista" )
     private String SNombreArista;
 
@@ -47,6 +53,22 @@ public class SRIFlujoAristaActorUtil implements Serializable{
 
     public int getNIdArista() {
         return NIdArista;
+    }
+
+    public int getNIdEstado() {
+        return NIdEstado;
+    }
+
+    public void setNIdEstado(int NIdEstado) {
+        this.NIdEstado = NIdEstado;
+    }
+
+    public String getSNombreEstado() {
+        return SNombreEstado;
+    }
+
+    public void setSNombreEstado(String SNombreEstado) {
+        this.SNombreEstado = SNombreEstado;
     }
 
     public void setNIdArista(int NIdArista) {

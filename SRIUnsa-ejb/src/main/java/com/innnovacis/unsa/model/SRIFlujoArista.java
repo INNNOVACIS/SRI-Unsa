@@ -43,8 +43,16 @@ public class SRIFlujoArista  extends SRIEntidad implements Serializable  {
     @Column(name = "flujo")
     private String SFlujo;
 
+    @Column(name = "idestado" )
+    private int NIdEstado;
 
-    
+    public int getNIdEstado() {
+        return NIdEstado;
+    }
+
+    public void setNIdEstado(int NIdEstado) {
+        this.NIdEstado = NIdEstado;
+    }
     
     public int getNIdArista() {
         return NIdArista;

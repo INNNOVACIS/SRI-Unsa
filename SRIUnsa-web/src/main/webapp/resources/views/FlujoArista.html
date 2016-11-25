@@ -19,33 +19,37 @@
                         </div>
                     </div>
                 </div>
-                <table width="100%" class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th width="25%">Nombre del Flujo</th>
-                            <th width="25%">Actor Origen</th>
-                            <th width="25%">Actor Destino</th>
-<!--                            <th>Estado</th>-->
-                            <th>Acci&oacute;n</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="flujoArista in flujoAristas">                   
-                            <td>{{ flujoArista.snombreArista }}</td>
-                            <td>{{ flujoArista.sactorOrigen }}</td>
-                            <td>{{ flujoArista.sactorDestino }}</td>
-<!--                            <td>{{ flujoArista.sEstado }}</td>-->
-                            <td nowrap>
-                                <button type="button" class="btn btn-primary btn-xs" ng-click="actualizar(flujoArista)" data-toggle="modal" data-target="#modalActualizar">
-                                    <span class="glyphicon glyphicon-refresh"></span> Actualizar
-                                </button>
-                                <button type="button" class="btn btn-default btn-xs" ng-click="EliminarFlujoArista(flujoArista)" >
-                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table width="100%" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="25%">Nombre del Flujo</th>
+                                    <th width="25%">Actor Origen</th>
+                                    <th width="25%">Actor Destino</th>
+                                    <th>Estado</th>
+                                    <th>Acci&oacute;n</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="flujoArista in flujoAristas">                   
+                                    <td>{{ flujoArista.snombreArista }}</td>
+                                    <td>{{ flujoArista.sactorOrigen }}</td>
+                                    <td>{{ flujoArista.sactorDestino }}</td>
+                                    <td>{{ flujoArista.snombreEstado }}</td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-primary btn-xs" ng-click="actualizar(flujoArista)" data-toggle="modal" data-target="#modalActualizar">
+                                            <span class="glyphicon glyphicon-refresh"></span> Actualizar
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="EliminarFlujoArista(flujoArista)" >
+                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <pagination
                     rango-paginas="rangoPaginas"
                     current-rango="currentRango"
@@ -90,12 +94,12 @@
                                         <select class="form-control" ng-model="flujoActorDestino" ng-options="opt as opt.snombreActor for opt in flujoActores"></select>
                                     </div>
                                 </div>
-<!--                                <div class="form-group">
+                                <div class="form-group">
                                     <label class="control-label col-md-2">Estado</label>
                                     <div class="col-md-10">
                                         <select class="form-control" ng-model="estado" ng-options="opt as opt.snombreEstado for opt in estados"></select>
                                     </div>
-                                </div>-->
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -145,19 +149,19 @@
                                     <select class="form-control" ng-model="flujoActorDestino" ng-options="opt as opt.snombreActor for opt in flujoActores"></select>
                                 </div>
                             </div>
-<!--                            <div class="form-group">
+                            <div class="form-group">
                                 <label class="control-label col-md-2">Estado</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" ng-model="estado" ng-options="opt as opt.snombreEstado for opt in estados"></select>
+                                    <select class="form-control" ng-model="estadoFlujo" ng-options="opt as opt.snombreEstado for opt in estados"></select>
                                 </div>
-                            </div>-->
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="ActualizarFlujoArista()">
-                    <span class="glyphicon glyphicon-remove"></span>
+                    <span class="glyphicon glyphicon-refresh"></span>
                     Actualizar
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" >

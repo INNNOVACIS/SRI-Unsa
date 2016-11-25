@@ -116,6 +116,34 @@
 
 }
 
+.SRI-button-unsa {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #951f1f;
+    border-color: #951f1f;
+}
+.SRI-button-unsa:hover {
+    color: #fff;
+    background-color: #c73535;
+    border-color: #c73535;
+
+}
+
 /********** Loading **********/
 .SRI-loader {
 opacity: 1;
@@ -320,6 +348,12 @@ z-index: 999;
 .side-menu #dropdown .panel-body .navbar-nav {
   width: 100%;
 }
+
+.side-menu #dropdown .panel-body .navbar-nav:hover > li{
+  max-height:500px;
+  transition: max-height 0.25s ease-in;
+}
+
 .side-menu #dropdown .panel-body .navbar-nav li {
   padding-left: 15px;
   border-bottom: 1px solid #e7e7e7;

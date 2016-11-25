@@ -29,7 +29,7 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
     var RegistrarFlujoAristaSuccess = function(response){
         $log.debug("RegistrarFlujoArista - Success");
         console.log("Respuesta :: ", response);
-        if(response === true){
+        if(response !== -1){
             $scope.getFlujoAristaByPagina(); /*actualizacion la paginacion*/
         }
     };
@@ -80,6 +80,7 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
             sidFlujoActorDestino : $scope.flujoActorDestino.nidFlujoActor,
             sidFlujoActorOrigen : $scope.flujoActorOrigen.nidFlujoActor,
             snombreArista : $scope.flujoAristaNombre,
+            nidEstado : $scope.estado.nidEstado, 
             sflujo : 'SRI',
             sestado: 'A'
         };
@@ -92,6 +93,7 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
             sidFlujoActorDestino : $scope.flujoActorDestino.nidFlujoActor,
             sidFlujoActorOrigen : $scope.flujoActorOrigen.nidFlujoActor,
             snombreArista : $scope.flujoAristaActor.snombreArista,
+            nidEstado : $scope.estadoFlujo.nidEstado, 
             sflujo : 'SRI',
             sestado: 'A'
         };
@@ -116,12 +118,23 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
     	$scope.flujoAristaActor = flujoAristaActor;
         $scope.flujoActorOrigen = seleccionarActor(flujoAristaActor.nidActorOrigen);
         $scope.flujoActorDestino = seleccionarActor(flujoAristaActor.nidActorDestino);
+        $scope.estadoFlujo = seleccionarEstado(flujoAristaActor.nidEstado);
     };
     
     var seleccionarActor = function(idActor){
         var respuesta = null;
         angular.forEach($scope.flujoActores, function(obj, key){
             if(obj.nidFlujoActor === idActor){
+                respuesta = obj;
+            }
+        });
+        return respuesta;
+    };
+    
+    var seleccionarEstado = function(idEstado){
+        var respuesta = null;
+        angular.forEach($scope.estados, function(obj, key){
+            if(obj.nidEstado === idEstado){
                 respuesta = obj;
             }
         });
