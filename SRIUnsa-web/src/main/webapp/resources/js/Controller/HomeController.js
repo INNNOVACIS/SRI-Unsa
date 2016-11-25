@@ -1,4 +1,4 @@
-    investigacionApp.controller('homeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
+    investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, FileUploader) {
     

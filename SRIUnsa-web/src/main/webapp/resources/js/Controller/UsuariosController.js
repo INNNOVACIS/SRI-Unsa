@@ -1,4 +1,4 @@
-investigacionApp.controller('usuariosController', function($log, $scope, $location,
+investigacionApp.controller('UsuariosController', function($log, $scope, $location,
     UsuariosService) {
 
     $scope.users = [];

@@ -10,7 +10,7 @@ investigacionApp.config(function($routeProvider){
 	$routeProvider
 	.when('/home', {
 		templateUrl : 'resources/views/Home.html',
-		controller : 'homeController'
+		controller : 'HomeController'
 	})
         .when('/actividad/:ESTADO/:ID',{
 		templateUrl : 'resources/views/ActividadGenerada.html',
@@ -34,15 +34,11 @@ investigacionApp.config(function($routeProvider){
 	})
 	.when('/relacionDocentes',{
 		templateUrl : 'resources/views/RelacionDocentes.html',
-		controller : 'relacionDocentesController'
-	})
-	.when('/configuracion',{
-		templateUrl : 'resources/views/Configuracion.html',
-		controller : 'configuracionController'
+		controller : 'RelacionDocentesController'
 	})
 	.when('/generarDocente',{
 		templateUrl : 'resources/views/GenerarDocente.html',
-		controller : 'generarDocenteController'
+		controller : 'GenerarDocenteController'
 	})
 	.when('/uploadFile',{
 		templateUrl : 'resources/views/UploadFile.html',
@@ -50,7 +46,7 @@ investigacionApp.config(function($routeProvider){
 	})
 	.when('/usuarios',{
 		templateUrl : 'resources/views/Usuarios.html',
-		controller : 'usuariosController'
+		controller : 'UsuariosController'
 	})
         .when('/roles',{
 		templateUrl : 'resources/views/Rol.html',
@@ -118,7 +114,7 @@ investigacionApp.config(function($routeProvider){
 	})
 	.when('/',{
 		templateUrl : 'resources/views/Login.html',
-		controller : 'loginController'
+		controller : 'LoginController'
 	})
         .otherwise({
             redirectTo: '/home'

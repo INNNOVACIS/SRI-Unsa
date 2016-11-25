@@ -1,4 +1,4 @@
-investigacionApp.controller('relacionDocentesController', function($scope) {
+investigacionApp.controller('RelacionDocentesController', function($scope) {
 	
 	$scope.actividadesInvestigacion = [
 		'Investigación Formativa',
