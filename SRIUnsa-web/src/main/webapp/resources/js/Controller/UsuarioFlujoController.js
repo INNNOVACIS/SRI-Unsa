@@ -12,8 +12,8 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
 
     var registrarUsuarioActorSuccess = function(response){
     	$log.debug("Registrar Usuario Actor - Success");
-//    	$scope.usuarioActores.push($scope.usuarioActor);
-         $scope.getUsuarioFlujoByPagina();
+        consolelog("Respuesta :: ", response);
+        $scope.getUsuarioFlujoByPagina();
     };
 
     var registrarUsuarioActorError = function(response){
@@ -60,15 +60,15 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
         console.log("Response :: ", response);
     };
     
-    var getUsuarioFlujoByIdUsuarioSuccess = function(response){
-        $log.debug("getUsuarioFlujoByIdUsuario - Success");
+    var getUsuarioFlujoActorByIdUsuarioSuccess = function(response){
+        $log.debug("getUsuarioFlujoActorByIdUsuario - Success");
         console.log("Response :: ", response);
         $scope.actoresById = [];
         $scope.actoresById = response;
     };
     
-    var getUsuarioFlujoByIdUsuarioError = function(response){
-        $log.debug("getUsuarioFlujoByIdUsuario - Error");
+    var getUsuarioFlujoActorByIdUsuarioError = function(response){
+        $log.debug("getUsuarioFlujoActorByIdUsuario - Error");
         console.log("Response :: ", response);
     };
     
@@ -87,7 +87,7 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     var deleteUsuarioFlujoSuccess = function(response){
         $log.debug("deleteUsuarioFlujoSuccess - Success");
         if(response === true){
-            UsuarioFlujoService.getUsuarioFlujoByIdUsuario($scope.usuarioActor.nidUsuario).then(getUsuarioFlujoByIdUsuarioSuccess, getUsuarioFlujoByIdUsuarioError);
+            UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario($scope.usuarioActor.nidUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
         }
     };
     
@@ -182,7 +182,7 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     $scope.update = function(usuarioActor){
     	$scope.usuarioActor = usuarioActor;
         UsuarioRolService.getUsuarioRolByIdUsuario(usuarioActor.nidUsuario).then(getUsuarioRolByIdUsuarioSuccess, getUsuarioRolByIdUsuarioError);
-        UsuarioFlujoService.getUsuarioFlujoByIdUsuario(usuarioActor.nidUsuario).then(getUsuarioFlujoByIdUsuarioSuccess, getUsuarioFlujoByIdUsuarioError);
+        UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario(usuarioActor.nidUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
     };
     
     $scope.updatePaginacion = function() {

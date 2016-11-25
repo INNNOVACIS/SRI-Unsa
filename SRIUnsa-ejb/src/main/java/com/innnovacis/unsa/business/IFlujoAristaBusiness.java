@@ -25,4 +25,5 @@ public interface IFlujoAristaBusiness {
     List<SRIFlujoArista> GetAll();
     int GetTotalPaginacion(SRIPaginacionObject object);
     List<SRIFlujoAristaActorUtil> GetPagina(SRIPaginacionObject object);
+    SRIFlujoArista GetFlujoAristaByIdOrigenIdEstado(int idOrigen, int idEstado);
 }

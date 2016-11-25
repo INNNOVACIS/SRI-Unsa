@@ -55,7 +55,14 @@ public class UsuarioFlujoRestServices {
     @GET
     @Path("/listarUsuarios/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(@PathParam("id") int id) {
+    public List<SRIFlujoActorUtil> getUsuarioFlujoActorByIdUsuario(@PathParam("id") int id) {
+        return usuarioFlujoBusiness.getUsuarioFlujoActorByIdUsuario(id);
+    }
+    
+    @GET
+    @Path("/listarUsuarioFlujo/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<SRIUsuarioFlujo> getUsuarioFlujoById(@PathParam("id") int id) {
         return usuarioFlujoBusiness.getUsuarioFlujoByIdUsuario(id);
     }
     

@@ -21,5 +21,5 @@ public interface IEstadoBusiness {
     boolean Delete(SRIEstado entidad);
     SRIEstado Get(int idEntidad);
     List<SRIEstado> GetAll();
-
+    SRIEstado GetById(int id);
 }

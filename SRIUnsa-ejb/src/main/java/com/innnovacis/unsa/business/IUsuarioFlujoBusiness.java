@@ -5,7 +5,6 @@
  */
 package com.innnovacis.unsa.business;
 
-import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
 import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
@@ -26,6 +25,6 @@ public interface IUsuarioFlujoBusiness {
     List<SRIUsuarioFlujo> GetAll();
     int GetTotalPaginacion(SRIPaginacionObject object);
     List<SRIUsuarioFlujoUtil> GetPagina(SRIPaginacionObject object);
-    List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(int id);
-
+    List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id);
+    List<SRIFlujoActorUtil> getUsuarioFlujoActorByIdUsuario(int id);
 }

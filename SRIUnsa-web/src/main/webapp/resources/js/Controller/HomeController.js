@@ -1,6 +1,7 @@
-    investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
-    HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, 
-    EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, FileUploader) {
+    investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig, EstadoService,
+    HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, ProcesoFlujoService,
+    EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, FlujoAristaService,
+    UsuarioFlujoService, FileUploader) {
     
     /*
      * Parametros
@@ -11,32 +12,27 @@
     $scope.mensajeSuccess = false;
     $scope.mensajeError = false;
     
-    $scope.facultad = {id : 0, nombre : ""};
-    $scope.departamento = {id : 0, nombre : ""};
-    $scope.escuela = {id : 0, nombre : ""};
-    $scope.tipoInvestigador = {id : 0, nombre : ""};
-    $scope.tipoLabor = {id : 0, nombre : ""};
-    $scope.colaborador = {id : 0, nombre : ""};
     $scope.descripcion = "";
     $scope.nombreInvestigacion = "";
     $scope.duracionInvestigacion = 0;
         
-    /*********** Servicios Get All ***********/   
+    /********************* Callback *********************/
     
     var getTipoNivelServiceSuccess = function(response){
     	$log.debug("Get tipoNivel - Success");
-    	console.log("Success :: ", response);
+    	console.log("Respuesta :: ", response);
     	$scope.niveles = response;
         $scope.getEstructuraOrganizaciones();
     };
 
     var getTipoNivelServiceError = function(response){
      	$log.debug("Get TipoNivel - Error"); 
+        console.log("Respuesta :: ", response);
     };
 
     var getEstructuraOrganizacionServiceSuccess = function(response){
     	$log.debug("Get EstructuraOrganizacion - Success");
-        
+        console.log("Respuesta :: ", response);
         angular.forEach(response, function(superior, key) {
             angular.forEach(response, function(value, key) {
                 if(superior.nidPadre === value.nidEstructuraOrganizacion){
@@ -45,20 +41,18 @@
             });
             angular.forEach($scope.niveles, function(nivel, key) {
                 if(superior.nidTipoNivel === nivel.nidTipoNivel){
-                    
                     superior.nombreTipoNivel = nivel.snombreTipoNivel;
                 }
             });
         });
         
-    	$scope.estructuraOrganizaciones = response;
-        console.log("Estructura Organizacion :: ", $scope.estructuraOrganizaciones);
+    	$scope.estructuraOrganizaciones = response;        
     };
 
     var getEstructuraOrganizacionServiceError = function(response){
-     	$log.debug("Get EstructuraOrganizacion - Error"); 
+     	$log.debug("Get EstructuraOrganizacion - Error");
+        console.log("Respuesta :: ", response);
     };
-    
     
     var getFondoServiceSuccess = function(response){
     	$log.debug("Get Fondo - Success");
@@ -118,7 +112,82 @@
         console.log("Error TipoProduccion :: ", response);
     };
     
+    var registrarInvestigacionSuccess = function(response){
+        addPlanificacion(response);
+        uploader.uploadAll();
+        $scope.loader = false;
+        $log.debug(response);
+        $scope.openCloseModal(true,false);
+    };
     
+    var registrarInvestigacionError = function(response){
+        $log.debug(response);
+        $scope.mensajeError = true;
+        $scope.message = response;
+        $scope.loader = false;
+    };
+    
+    var GetUsuarioFlujoByIdUsuarioSuccess = function(response){
+        $log.debug("GetUsuarioFlujoByIdUsuario - Success");
+        console.log("Respuesta :: ", response);
+        $scope.usuarioFlujo = response;
+    };
+    
+    var GetUsuarioFlujoByIdUsuarioError = function(response){
+        $log.debug("GetUsuarioFlujoByIdUsuario - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var getEstadoByIdSuccess = function(response){
+        $log.debug("GetEstadoById - Success");
+        console.log("Respuesta :: ", response);
+        $scope.estado = response;
+    };
+    
+    var getEstadoByIdError = function(response){
+        $log.debug("GetEstadoById - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var RegistrarProcesoFlujoSuccess = function(response){
+        $log.debug("RegistrarProcesoFlujo - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var RegistrarProcesoFlujoError = function(response){
+        $log.debug("RegistrarProcesoFlujo - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var GetFlujoAristaByIdOrigenIdEstadoSuccess = function(response){
+        $log.debug("GetFlujoAristaByIdOrigenIdEstado - Success");
+        console.log("Respuesta :: ", response);
+        if(response !== ""){
+            $scope.flujoArista = response;
+            var procesoflujo = {
+                nidUsuarioFlujo : getUsuarioFlujoCorrecto($scope.flujoArista.sidFlujoActorOrigen),
+                nidArista : $scope.flujoArista.nidArista
+//                nidEstado : $scope.flujoArista.nidEstado
+            };
+            ProcesoFlujoService.RegistrarProcesoFlujo(procesoflujo).then(RegistrarProcesoFlujoSuccess, RegistrarProcesoFlujoError);
+        }
+    };
+    var getUsuarioFlujoCorrecto = function(sidFlujoActorOrigen){
+        var id = -1;
+        angular.forEach($scope.usuarioFlujo, function(valor, key){
+            if(valor.nidFlujoActor === sidFlujoActorOrigen){
+                id = valor.nidUsuarioFlujo;
+            }
+        });
+        return id;
+    };
+    
+    var GetFlujoAristaByIdOrigenIdEstadoError = function(response){
+        $log.debug("GetFlujoAristaByIdOrigenIdEstado - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    /********************* Servicios *********************/
     
     $scope.getListaTipoNivel = function(){
       	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
@@ -146,6 +215,13 @@
     $scope.getInvestigaciones = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getInvestigacionServiceSuccess, getInvestigacionServiceError);
     };
+    $scope.getEstadoById = function(){
+        EstadoService.getEstadoById(1).then(getEstadoByIdSuccess, getEstadoByIdError); //ESTADO 1 CREADO; 2 REVISADO
+    };
+    $scope.getUsuarioFlujoActor = function(){
+        UsuarioFlujoService.GetUsuarioFlujoByIdUsuario($scope.sharedService.idUsuario).then(GetUsuarioFlujoByIdUsuarioSuccess, GetUsuarioFlujoByIdUsuarioError);
+    };
+    
     
     $scope.getListaTipoNivel();
     $scope.getFondos();
@@ -154,6 +230,8 @@
     $scope.getAsesorias();
     $scope.getSemestres();
     $scope.getInvestigaciones();
+    $scope.getEstadoById();
+    $scope.getUsuarioFlujoActor();
        
     $scope.facultadChange = function(){
         $scope.departamento = {};
@@ -163,28 +241,8 @@
         $scope.escuela = {};
     };
     
-    /*********** Obj JSON ***********/
     
     $scope.actividadInvestigacion = {};
-    
-    var registrarInvestigacionSuccess = function(response){
-        addPlanificacion(response);
-        uploader.uploadAll();
-        $scope.loader = false;
-        $log.debug(response);
-//        $scope.mensajeSuccess = true;
-//        $scope.message = "id de Registro " + response;
-        
-        $scope.openCloseModal(true,false);
-        
-    };
-    
-    var registrarInvestigacionError = function(response){
-        $log.debug(response);
-        $scope.mensajeError = true;
-        $scope.message = response;
-        $scope.loader = false;
-    };
     
     $scope.registrarInvestigacion = function(){
         $scope.loader = true;
@@ -205,15 +263,21 @@
             stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
             snombreActividadInvestigacion : $scope.nombreInvestigacion,
             sdescripcionActividad : $scope.descripcion
-        };
-        console.log("JSON :: ", $scope.actividadInvestigacion); 
-        
+        };          
+        $scope.registrarProcesoFlujo();
         HomeService.registrarInvestigacion($scope.actividadInvestigacion).then(registrarInvestigacionSuccess, registrarInvestigacionError);
+    };
+    
+    $scope.registrarProcesoFlujo = function(){
+        angular.forEach($scope.usuarioFlujo, function(valor, key){
+            FlujoAristaService.GetFlujoAristaByIdOrigenIdEstado(valor.nidFlujoActor, $scope.estado.nidEstado).then(GetFlujoAristaByIdOrigenIdEstadoSuccess, GetFlujoAristaByIdOrigenIdEstadoError);
+        });
     };
 
     $scope.revisarActividad = function(){
         
     };
+    
     $scope.registrarNuevaActividad = function(){
         limpiarCampos();
     };
@@ -221,20 +285,6 @@
         $scope.loader = true;
         $location.path("/actividadesGeneradas");
     };
-
-    // START example DataPicker
-    $scope.dt = new Date(2020, 5, 22);
-
-    $scope.open = function() {
-        $scope.status.opened = true;
-    };
-
-    $scope.format = 'dd-MMMM-yyyy';
-
-    $scope.status = {
-        opened: false
-    };
-    // END example DataPicker
 
     $scope.Actividad = '';
     $scope.actividad1_show = false;
@@ -281,9 +331,7 @@
                     $scope.actividad4_show = true;
                 break;
         }
-    	console.log("ng-change actividad ::", $scope.Actividad);
-        console.log("ng-change tipo :: ", $scope.tipo);
-        console.log("ng-change tipo investigacion:: ", $scope.tipoInvestigacion);
+
     };
     
     
@@ -319,6 +367,8 @@
         $scope.actividadInvestigacion = {};
     };
 
+
+
     /********** FILE UPLOAD **********/  
 
     $scope.files = [];
@@ -332,11 +382,9 @@
     };
 
     $scope.uploadFile = function(){
-
         var file = $scope.archivo;
         var formData = new FormData();
         formData.append('file', file);
-
         HomeService.sendFile(formData, true).then(homeServiceSuccess, homeServiceError);
     };
 
@@ -403,12 +451,4 @@
         //console.info('onCompleteAll');
     };
 
-    //console.info('uploader', uploader);
-    
-    
-    $scope.click = function(test){
-        console.log("click :: ", test);
-        console.log("click :: ", $scope.tipo);
-        console.log("click :: ", $scope.tipoInvestigacion);
-    };
 });

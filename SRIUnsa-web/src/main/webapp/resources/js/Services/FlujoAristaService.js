@@ -4,7 +4,7 @@
 investigacionApp.service("FlujoAristaService", function(SRIUnsaConfig, $log, $http, $q) {
 	
     this.getFlujoAristaByPagina = function(request) {
-        $log.debug("Flujo Arista Service - getFlujoAristaByPagina");
+        $log.debug("FlujoArista Service - getFlujoAristaByPagina");
 
         var deferred = $q.defer();
         $http({
@@ -19,23 +19,23 @@ investigacionApp.service("FlujoAristaService", function(SRIUnsaConfig, $log, $ht
         return deferred.promise;
     };
 
-    this.getFlujoAristas = function() {
-//        $log.debug("Flujo Actor Service - get Roles");
-//
-//        var deferred = $q.defer();
-//        $http({
-//            method : 'GET',
-//            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/flujoactor/listarActores',
-//        }).success(function(response) {
-//            deferred.resolve(response);
-//        }).error(function(response) {			
-//            deferred.reject(response);
-//        });
-//        return deferred.promise;
+    this.GetFlujoAristaByIdOrigenIdEstado = function(idOrigen, idEstado) {
+        $log.debug("FlujoArista Service - GetFlujoAristaByIdOrigenIdEstado");
+
+        var deferred = $q.defer();
+        $http({
+            method : 'GET',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/flujoarista/listarFlujoArista/' + idOrigen + '/' + idEstado
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {			
+            deferred.reject(response);
+        });
+        return deferred.promise;
     };
 
     this.RegistrarFlujoArista = function(request) {
-        $log.debug("Flujo Arista Service - Registrar FlujoArista");
+        $log.debug("FlujoArista Service - Registrar FlujoArista");
 
         var deferred = $q.defer();
         $http({
@@ -51,7 +51,7 @@ investigacionApp.service("FlujoAristaService", function(SRIUnsaConfig, $log, $ht
     };
 
     this.ActualizarFlujoArista = function(request) {
-        $log.debug("Flujo Arista Service - Actualizar FlujoArista");
+        $log.debug("FlujoArista Service - Actualizar FlujoArista");
 
         var deferred = $q.defer();
         $http({
@@ -67,7 +67,7 @@ investigacionApp.service("FlujoAristaService", function(SRIUnsaConfig, $log, $ht
     };
 
     this.EliminarFlujoArista = function(request) {
-        $log.debug("Flujo Arista Service - Eliminar FlujoArista");
+        $log.debug("FlujoArista Service - Eliminar FlujoArista");
 
         var deferred = $q.defer();
         $http({

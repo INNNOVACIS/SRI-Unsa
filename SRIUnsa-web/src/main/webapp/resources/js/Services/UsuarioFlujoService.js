@@ -19,13 +19,28 @@ investigacionApp.service("UsuarioFlujoService", function(SRIUnsaConfig, $log, $h
 		return deferred.promise;
         };
         
-        this.getUsuarioFlujoByIdUsuario = function(id) {
-		$log.debug("UsuarioFlujo Service - getUsuarioFlujoByIdUsuario");
+        this.getUsuarioFlujoActorByIdUsuario = function(id) {
+		$log.debug("UsuarioFlujo Service - getUsuarioFlujoActorByIdUsuario");
 		
 		var deferred = $q.defer();
 		$http({
 			method : 'GET',
 			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarioflujo/listarUsuarios/' + id,
+		}).success(function(response) {
+			deferred.resolve(response);
+		}).error(function(response) {			
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	};
+        
+        this.GetUsuarioFlujoByIdUsuario = function(id) {
+		$log.debug("UsuarioFlujo Service - getUsuarioFlujoByIdUsuario");
+		
+		var deferred = $q.defer();
+		$http({
+			method : 'GET',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarioflujo/listarUsuarioFlujo/' + id,
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function(response) {			

@@ -113,10 +113,21 @@ public class UsuarioFlujoBusinessImp implements IUsuarioFlujoBusiness {
     }
 
     @Override
-    public List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(int id) {
-        List<SRIFlujoActorUtil> respuesta = null;
+    public List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id) {
+        List<SRIUsuarioFlujo> respuesta = null;
         try{
             respuesta = usuarioFlujoDao.getUsuarioFlujoByIdUsuario(id);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIFlujoActorUtil> getUsuarioFlujoActorByIdUsuario(int id) {
+        List<SRIFlujoActorUtil> respuesta = null;
+        try{
+            respuesta = usuarioFlujoDao.getUsuarioFlujoActorByIdUsuario(id);
         }
         catch(Exception ex){
         }

@@ -19,5 +19,5 @@ public interface IEstadoDao {
     SRIEstado Update(SRIEstado entidad);
     boolean Delete(SRIEstado entidad);
     SRIEstado GetById(int idEntidad);
-    List<SRIEstado> GetAll();  
+    List<SRIEstado> GetAll();
 }

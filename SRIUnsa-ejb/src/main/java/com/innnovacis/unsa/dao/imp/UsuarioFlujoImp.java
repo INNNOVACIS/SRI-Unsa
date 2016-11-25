@@ -76,11 +76,16 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
     }
 
     @Override
-    public List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(int id) {
+    public List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id) {
+        List<SRIUsuarioFlujo> entidad = em.createNamedQuery("SRIUsuarioFlujo.GetByIdUsuario", SRIUsuarioFlujo.class).setParameter("idEntidad", id).getResultList();
+        return entidad;
+    }
+    
+    @Override
+    public List<SRIFlujoActorUtil> getUsuarioFlujoActorByIdUsuario(int id) {
         Query query = em.createNativeQuery("{call getUsuarioActorByidUsuario(?1)}", SRIFlujoActorUtil.class)
                         .setParameter(1, id);
         List<SRIFlujoActorUtil> listFlujoActor = query.getResultList();
         return listFlujoActor;
     }
-
 }

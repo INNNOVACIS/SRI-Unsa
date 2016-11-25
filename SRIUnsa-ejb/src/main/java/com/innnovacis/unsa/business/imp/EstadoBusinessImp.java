@@ -2,10 +2,8 @@
 package com.innnovacis.unsa.business.imp;
 
 
-import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.business.IEstadoBusiness;
 import com.innnovacis.unsa.dao.IEstadoDao;
-import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.model.SRIEstado;
 
 import javax.inject.Inject;
@@ -85,6 +83,17 @@ public class EstadoBusinessImp implements IEstadoBusiness {
         catch(Exception ex){
         }
          return respuesta;
+    }
+
+    @Override
+    public SRIEstado GetById(int id) {
+        SRIEstado respuesta = null;
+        try{
+            respuesta = estadoDao.GetById(id);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
     }
 
     

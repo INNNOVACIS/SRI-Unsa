@@ -109,5 +109,16 @@ public class FlujoAristaBusinessImp implements IFlujoAristaBusiness {
          return respuesta;
     }
 
+    @Override
+    public SRIFlujoArista GetFlujoAristaByIdOrigenIdEstado(int idOrigen, int idEstado) {
+        SRIFlujoArista respuesta = null;
+         try{
+            respuesta = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(idOrigen, idEstado);
+        }
+        catch(Exception ex){
+        }
+        return respuesta;
+    }
+
     
 }

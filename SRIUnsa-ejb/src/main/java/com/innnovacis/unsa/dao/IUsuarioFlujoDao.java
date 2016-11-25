@@ -26,5 +26,6 @@ public interface IUsuarioFlujoDao {
     List<SRIUsuarioFlujo> GetAll();
     int GetTotalPaginacion(SRIPaginacionObject object);
     List<SRIUsuarioFlujoUtil> GetPagina(SRIPaginacionObject object);
-    List<SRIFlujoActorUtil> getUsuarioFlujoByIdUsuario(int id);
+    List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id);
+    List<SRIFlujoActorUtil> getUsuarioFlujoActorByIdUsuario(int id);
 }
