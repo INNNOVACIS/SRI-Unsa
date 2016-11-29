@@ -1,6 +1,7 @@
 investigacionApp.controller('UsuarioFlujoController', function($log, $scope, UsuarioFlujoService, FlujoActorService,
-    UsuariosService, RolService, UsuarioRolService) {
+    UsuariosService, RolService, UsuarioRolService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.usuarioActores = [];
     $scope.usuarioActor = {};
     $scope.usuarios = [];    
@@ -12,61 +13,62 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
 
     var registrarUsuarioActorSuccess = function(response){
     	$log.debug("Registrar Usuario Actor - Success");
-        consolelog("Respuesta :: ", response);
+        console.log("Respuesta :: ", response);
         $scope.getUsuarioFlujoByPagina();
     };
-
     var registrarUsuarioActorError = function(response){
-        $log.debug("Registrar Usuario Actor - Error :: ", response);
+        $log.debug("Registrar Usuario Actor - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var updateUsuarioActorSuccess = function(response){
     	$log.debug("Update Usuario Actor - Success");
+        console.log("Respuesta :: ", response);
     	$scope.usuarioActor = response;
+    	$scope.getUsuarioFlujoByPagina();
     };
-
     var updateUsuarioActorError = function(response){
-        $log.debug("Update Usuario Actor - Error :: ", response);
+        $log.debug("Update Usuario Actor - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var deleteUsuarioActorSuccess = function(response){
     	$log.debug("Delete Usuario Actor - Success");
     	$scope.usuarioActor = response;
+        $scope.getUsuarioFlujoByPagina();
     };
-
     var deleteUsuarioActorError = function(response){
-        $log.debug("Delete Usuario Actor - Error :: ", response);
+        $log.debug("Delete Usuario Actor - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getUsuariosServiceSuccess = function(response){
-        $log.debug("GetUsuarios -Success");
-        console.log("Response :: ", response);
+        $log.debug("GetUsuarios - Success");
+        console.log("Respuesta :: ", response);
         $scope.usuarios = response;
     };
     
     var getUsuariosServiceError = function(response){
-        $log.debug("GetUsuarios -Error");
-        console.log("Response :: ", response);
+        $log.debug("GetUsuarios - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getFlujoActoresSuccess = function(response){
-        $log.debug("GetUsuariosActores -Success");
-        console.log("Response :: ", response);
+        $log.debug("GetUsuariosActores - Success");
+        console.log("Respuesta :: ", response);
         $scope.actores = response;
     };
-    
     var getFlujoActoresError = function(response){
-        $log.debug("GetUsuariosActores -Error");
-        console.log("Response :: ", response);
+        $log.debug("GetUsuariosActores - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getUsuarioFlujoActorByIdUsuarioSuccess = function(response){
         $log.debug("getUsuarioFlujoActorByIdUsuario - Success");
-        console.log("Response :: ", response);
+        console.log("Respuesta :: ", response);
         $scope.actoresById = [];
         $scope.actoresById = response;
     };
-    
     var getUsuarioFlujoActorByIdUsuarioError = function(response){
         $log.debug("getUsuarioFlujoActorByIdUsuario - Error");
         console.log("Response :: ", response);
@@ -74,57 +76,57 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     
     var getUsuarioRolByIdUsuarioSuccess = function(response) {
         $log.debug("getUsuarioRolByIdUsuario - Success");
-        console.log("Response :: ", response);
+        console.log("Respuesta :: ", response);
         $scope.rolesById = [];
         $scope.rolesById = response;
     };
-    
     var getUsuarioRolByIdUsuarioError = function(response) {
         $log.debug("getUsuarioRolByIdUsuario - Error");
-        console.log("Response :: ", response);
+        console.log("Respuesta :: ", response);
     };
     
     var deleteUsuarioFlujoSuccess = function(response){
-        $log.debug("deleteUsuarioFlujoSuccess - Success");
+        $log.debug("deleteUsuarioFlujo - Success");
+        console.log("Respuesta :: ", response);
         if(response === true){
             UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario($scope.usuarioActor.nidUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
         }
     };
-    
     var deleteUsuarioFlujoError = function(response){
-        $log.debug("deleteUsuarioFlujoError - Error");
-        console.log("Response :: ", response);
+        $log.debug("deleteUsuarioFlujo - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getRolServiceSuccess = function(response){
         console.log("GetRol Success :: ", response);
+        console.log("Respuesta :: ", response);
         $scope.roles = response;
     };
-    
     var getRolServiceError = function(response){
-        console.log("GetRol - Error :: ", response);
+        $log.debug("GetRol - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var registrarUsuarioRolSuccess = function(response){
         $log.debug("RegistrarUsuarioRol - Success");
-        console.log("Response :: ", response);
+        console.log("Respuesta :: ", response);
     };
     
     var registrarUsuarioRolError = function(response){
         $log.debug("RegistrarUsuarioRol - Error");
-        console.log("Response :: ", response);
+        console.log("Respuesta :: ", response);
     };
     
     var deleteUsuarioRolSuccess = function(response){
         $log.debug("deleteUsuarioRol - Success");
+        console.log("Respuesta :: ", response);
         if(response === true){
             UsuarioRolService.getUsuarioRolByIdUsuario($scope.usuarioActor.nidUsuario).then(getUsuarioRolByIdUsuarioSuccess, getUsuarioRolByIdUsuarioError);
         }
     };
-    
     var deleteUsuarioRolError = function(response){
         $log.debug("deleteUsuarioRol - Error");
-        console.log("Response :: ", response);
+        console.log("Respuesta :: ", response);
     };
 
     /********** CRUD ROLES ***********/
@@ -141,12 +143,13 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
         var usuarioFlujo = {
             nidFlujoActor : $scope.actor.nidFlujoActor,
             nidUsuario : $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario,
+            suserCreacion : $scope.sharedService.nombreUsuario,
             sestado : 'A'
         };
-        
         var usuarioRol = {
             nidRol : $scope.rol.nidRol,
             nidUsuario : $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario,
+            suserCreacion : $scope.sharedService.nombreUsuario,
             sestado : 'A'
         };
         UsuarioRolService.registrarUsuarioRol(usuarioRol).then(registrarUsuarioRolSuccess, registrarUsuarioRolError);
@@ -154,11 +157,14 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     };
 
     $scope.updateUsuarioActor = function(){
+        $scope.actor.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.actor.sestado = 'A';
     	UsuarioFlujoService.updateUsuarioActor($scope.actor).then(updateUsuarioActorSuccess, updateUsuarioActorError);
     };
 
     $scope.deleteUsuarioActor = function(usuarioActor){
     	$scope.usuarioActor = usuarioActor;
+        $scope.actor.suserModificacion = $scope.sharedService.nombreUsuario;
     	UsuarioFlujoService.deleteRol($scope.usuarioActor).then(deleteUsuarioActorSuccess. deleteUsuarioActorError);
     };
 
@@ -209,13 +215,15 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     
     var getUsuarioFlujoByPaginaSuccess = function(response){
         $log.debug("Get Paginacion Usuarios Actores - Success");
+        console.log("Respuesta :: ", response);
         $scope.usuarioActores = [];
         $scope.usuarioActores = response.lista;
         $scope.total = response.total;
     };
     
     var getUsuarioFlujoByPaginaError = function(response){
-        console.log("Get Paginacion Usuario Actores - Error :: ", response);
+        $log.debug("Get Paginacion Usuario Actores - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getUsuarioFlujoByPagina = function(){

@@ -1,6 +1,7 @@
 investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $location, $rootScope, $filter, 
     TipoAsesoriaService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.asesorias = [];
     $scope.asesoria = {};
 	
@@ -8,42 +9,42 @@ investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $lo
         
     var getAsesoriaServiceSuccess = function(response){
     	$log.debug("Get Asesoria - Success");
-    	$scope.asesorias = response;
+        console.log("Respuesta :: ", response);
     };
-
     var getAsesoriaServiceError = function(response){
      	$log.debug("Get Asesoria - Error"); 
+        console.log("Respuesta :: ", response);
     };
 
     var registrarAsesoriaSuccess = function(response){
-        
     	$log.debug("Registrar Asesoria - Success");
-    	$scope.asesorias.push($scope.asesoria);
+    	console.log("Respuesta :: ", response);
+        $scope.getTipoAsesoriaByPagina();
     	$scope.asesoria = {};
     };
-
     var registrarAsesoriaError = function(response){
         $log.debug("Registrar Asesoria - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var updateAsesoriaSuccess = function(response){
     	$log.debug("Update Asesoria - Success");
-    	console.log("success :: ", response);
-    	$scope.asesoria = response;
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoAsesoriaByPagina();
     };
-
     var updateAsesoriaError = function(response){
         $log.debug("Update Asesoria - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var deleteAsesoriaSuccess = function(response){
     	$log.debug("Delete Asesoria - Success");
-    	console.log("success :: ", response);
-    	$scope.asesoria = response;
+    	console.log("Respuesta :: ", response);
+        $scope.getTipoAsesoriaByPagina();
     };
-
     var deleteAsesoriaError = function(response){
-
+        $log.debug("Delete Asesoria - Error");
+    	console.log("Respuesta :: ", response);
     };
 
     /********** CRUD ASESORIAS ***********/
@@ -53,17 +54,21 @@ investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $lo
     };
 
     $scope.registrarAsesoria = function(){
+        $scope.asesoria.suserCreacion = $scope.sharedService.nombreUsuario;
+        $scope.asesoria.sestado = 'A';
 	TipoAsesoriaService.registrarAsesoria($scope.asesoria).then(registrarAsesoriaSuccess, registrarAsesoriaError);
     };
 
     $scope.updateAsesoria = function(){
-    	
+    	$scope.asesoria.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.asesoria.sestado = 'A';
     	TipoAsesoriaService.updateAsesoria($scope.asesoria).then(updateAsesoriaSuccess, updateAsesoriaError);
     };
 
     $scope.deleteAsesoria = function(asesoria){
     	$scope.asesoria = asesoria;
-    	TipoAsesoriaService.deleteAsesoria ($scope.asesoria).then(deleteAsesoriaSuccess. deleteAsesoriaError);
+        $scope.asesoria.suserModificacion = $scope.sharedService.nombreUsuario;
+    	TipoAsesoriaService.deleteAsesoria ($scope.asesoria).then(deleteAsesoriaSuccess, deleteAsesoriaError);
     };
 
     $scope.update = function(asesoria){
@@ -89,13 +94,16 @@ investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $lo
     /*********************************************/
     
     var getTipoAsesoriaByPaginaSuccess = function(response){
-        $log.debug("getTipoAsesoriaByPaginaSuccess - Success");
+        $log.debug("getTipoAsesoriaByPagina - Success");
+        console.log("Respuesta :: ", response);
+        $scope.asesorias = [];
         $scope.asesorias = response.lista;
         $scope.total = response.total;
     };
     
     var getTipoAsesoriaByPaginaError = function(response){
-        console.log("getTipoAsesoriaByPaginaError  :: ", response);
+        $log.debug("getTipoAsesoriaByPagina - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getTipoAsesoriaByPagina = function(){

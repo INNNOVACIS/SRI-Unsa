@@ -1,74 +1,78 @@
-investigacionApp.controller('TipoNivelController', function($log, $scope, $location, $rootScope, $filter, 
-    TipoNivelService, SharedService) {
+investigacionApp.controller('TipoNivelController', function($log, $scope, TipoNivelService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.listarTipoNivel = [];
     $scope.tipoNivel = {};
-	
+    
+    /***************** Callback ****************/
+    
     var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("Get tipoNivel - Success");
-    	console.log("Success :: ", response);
-    	$scope.listarTipoNivel = response;
-    }
-
+    	$log.debug("GetTipoNivel - Success");
+    	console.log("Respuesta :: ", response);    	
+    };
     var getTipoNivelServiceError = function(response){
-     	$log.debug("Get TipoNivel - Error"); 
-    }
+     	$log.debug("GetTipoNivel - Error"); 
+        console.log("Respuesta :: ", response);
+    };
 
     var registrarTipoNivelSuccess = function(response){
-    	$log.debug("Registrar TipoNivel - Success");
-    	console.log("success :: ", response);
-    	$scope.listarTipoNivel.push($scope.tipoNivel);
+    	$log.debug("RegistrarTipoNivel - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoNivelByPagina();
     	$scope.tipoNivel = {};
-    }
-
+    };
     var registrarTipoNivelError = function(response){
-
-    }
-
+        $log.debug("RegistrarTipoNivel - Error");
+    	console.log("Respuesta :: ", response);
+    };
+    
     var updateTipoNivelSuccess = function(response){
-    	$log.debug("Update User - Success");
-    	console.log("success :: ", response);
-    	$scope.tipoNivel = response;
-    }
-
+    	$log.debug("UpdateTipoNivel - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoNivelByPagina();
+    };
     var updateTipoNivelError = function(response){
-
-    }
+        $log.debug("UpdateTipoNivel - Error");
+    	console.log("Respuesta :: ", response);
+    };
 
     var deleteTipoNivelSuccess = function(response){
-    	$log.debug("Delete User - Success");
-    	console.log("success :: ", response);
-    	$scope.tipoNivel = response;
-    }
-
+    	$log.debug("DeleteTipoNivel - Success");
+    	console.log("Respuesta :: ", response);
+        $scope.getTipoNivelByPagina();
+    };
     var deleteTipoNivelError = function(response){
+        $log.debug("DeleteTipoNivel - Error");
+    	console.log("Respuesta :: ", response);
+    };
 
-    }
-
-    /********** CRUD TIPO PRODUCCION ***********/
+    /***************** Servicios ****************/
 
     $scope.getListaTipoNivel = function(){
       	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
-    }
+    };
 
     $scope.registrarTipoNivel = function(){
-    	console.log("TipoNivel :: ", $scope.tipoNivel);
-		TipoNivelService.registrarTipoNivel($scope.tipoNivel).then(registrarTipoNivelSuccess, registrarTipoNivelError);
-    }
+    	$scope.tipoNivel.suserCreacion = $scope.sharedService.nombreUsuario;
+        $scope.tipoNivel.sestado = 'A';
+        TipoNivelService.registrarTipoNivel($scope.tipoNivel).then(registrarTipoNivelSuccess, registrarTipoNivelError);
+    };
 
     $scope.updateTipoNivel = function(){
-    	
+    	$scope.tipoNivel.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.tipoNivel.sestado = 'A';
     	TipoNivelService.updateTipoNivel($scope.tipoNivel).then(updateTipoNivelSuccess, updateTipoNivelError);
-    }
+    };
 
     $scope.deleteTipoNivel = function(tipoNivel){
     	$scope.tipoNivel = tipoNivel;
-    	TipoNivelService.deleteTipoNivel($scope.tipoNivel).then(deleteTipoNivelSuccess. deleteTipoNivelError);
-    }
+        $scope.tipoNivel.suserModificacion = $scope.sharedService.nombreUsuario;
+    	TipoNivelService.deleteTipoNivel($scope.tipoNivel).then(deleteTipoNivelSuccess, deleteTipoNivelError);
+    };
 
     $scope.update = function(tipoNivel){
     	$scope.tipoNivel = tipoNivel;
-    }
+    };
 
     /**************** PAGINACION *****************/
     
@@ -90,12 +94,15 @@ investigacionApp.controller('TipoNivelController', function($log, $scope, $locat
     
     var getTipoNivelByPaginaSuccess = function(response){
         $log.debug("Get paginacionUsuario - Success");
+        console.log("Respuesta :: ", response);
+        $scope.listarTipoNivel = [];
         $scope.listarTipoNivel = response.lista;
         $scope.total = response.total;
     };
     
     var getTipoNivelByPaginaError = function(response){
-        console.log("error :: ", response);
+        $log.debug("Get paginacionUsuario - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getTipoNivelByPagina = function(){

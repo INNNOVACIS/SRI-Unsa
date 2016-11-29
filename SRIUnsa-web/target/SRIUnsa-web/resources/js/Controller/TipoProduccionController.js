@@ -1,74 +1,76 @@
-investigacionApp.controller('TipoProduccionController', function($log, $scope, $location, $rootScope, $filter, 
-    TipoProduccionService, SharedService) {
-
+investigacionApp.controller('TipoProduccionController', function($log, $scope, TipoProduccionService, SharedService) {
+        
+    $scope.sharedService = SharedService;
     $scope.tipoProducciones = [];
     $scope.tipoProduccion = {};
 	
     var getTipoProduccionServiceSuccess = function(response){
-    	$log.debug("Get TipoProduccion - Success");
-    	console.log("Success :: ", response);
-    	$scope.tipoProducciones = response;
-    }
-
+    	$log.debug("GetTipoProduccion - Success");
+    	console.log("Respuesta :: ", response);    	
+    };
     var getTipoProduccionServiceError = function(response){
-     	$log.debug("Get TipoProduccion - Error"); 
-    }
+     	$log.debug("GetTipoProduccion - Error"); 
+        console.log("Respuesta :: ", response);
+    };
 
     var registrarTipoProduccionSuccess = function(response){
-    	$log.debug("Registrar TipoProduccion - Success");
-    	console.log("success :: ", response);
-    	$scope.tipoProducciones.push($scope.tipoProduccion);
+    	$log.debug("RegistrarTipoProduccion - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoProduccionByPagina();
     	$scope.tipoProduccion = {};
-    }
-
+    };
     var registrarTipoProduccionError = function(response){
-
-    }
+        $log.debug("RegistrarTipoProduccion - Error");
+    	console.log("Respuesta :: ", response);
+    };
 
     var updateTipoProduccionSuccess = function(response){
-    	$log.debug("Update User - Success");
-    	console.log("success :: ", response);
-    	$scope.tipoProduccion = response;
-    }
-
+    	$log.debug("UpdateTipoProduccion - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoProduccionByPagina();
+    };
     var updateTipoProduccionError = function(response){
-
-    }
+        $log.debug("UpdateTipoProduccion - Error");
+    	console.log("Respuesta :: ", response);
+    };
 
     var deleteTipoProduccionSuccess = function(response){
-    	$log.debug("Delete User - Success");
-    	console.log("success :: ", response);
-    	$scope.tipoProduccion = response;
-    }
-
+    	$log.debug("DeleteTipoProduccion - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoProduccionByPagina();
+    };
     var deleteTipoProduccionError = function(response){
-
-    }
+        $log.debug("DeleteTipoProduccion - Error");
+    	console.log("Respuesta :: ", response);
+    };
 
     /********** CRUD TIPO PRODUCCION ***********/
 
     $scope.getListaTipoProduccion = function(){
       	TipoProduccionService.getListaTipoProduccion().then(getTipoProduccionServiceSuccess, getTipoProduccionServiceError);
-    }
+    };
 
     $scope.registrarTipoProduccion = function(){
-    	console.log("TipoProduccion :: ", $scope.tipoProduccion);
-		TipoProduccionService.registrarTipoProduccion($scope.tipoProduccion).then(registrarTipoProduccionSuccess, registrarTipoProduccionError);
-    }
+    	$scope.tipoProduccion.suserCreacion = $scope.sharedService.nombreUsuario;
+        $scope.tipoProduccion.sestado = 'A';
+        TipoProduccionService.registrarTipoProduccion($scope.tipoProduccion).then(registrarTipoProduccionSuccess, registrarTipoProduccionError);
+    };
 
     $scope.updateTipoProduccion = function(){
-    	
+    	$scope.tipoProduccion.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.tipoProduccion.sestado = 'A';
     	TipoProduccionService.updateTipoProduccion($scope.tipoProduccion).then(updateTipoProduccionSuccess, updateTipoProduccionError);
-    }
+    };
 
     $scope.deleteTipoProduccion = function(tipoProduccion){
     	$scope.tipoProduccion = tipoProduccion;
-    	TipoProduccionService.deleteTipoProduccion($scope.tipoProduccion).then(deleteTipoProduccionSuccess. deleteTipoProduccionError);
-    }
+        $scope.tipoProduccion.suserModificacion = $scope.sharedService.nombreUsuario;
+    	TipoProduccionService.deleteTipoProduccion($scope.tipoProduccion).then(deleteTipoProduccionSuccess, deleteTipoProduccionError);
+    };
 
     $scope.update = function(tipoProduccion){
     	$scope.tipoProduccion = tipoProduccion;
-    }
+    };
 
    /**************** PAGINACION *****************/
     
@@ -89,13 +91,16 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, $
     /*********************************************/
     
     var getTipoProduccionByPaginaSuccess = function(response){
-        $log.debug("Get paginacionUsuario - Success");
+        $log.debug("Get paginacionTipoProduccion - Success");
+        console.log("Respuesta :: ", response);
+        $scope.tipoProducciones = [];
         $scope.tipoProducciones = response.lista;
         $scope.total = response.total;
     };
     
     var getTipoProduccionByPaginaError = function(response){
-        console.log("error :: ", response);
+        $log.debug("Get paginacionTipoProduccion - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getTipoProduccionByPagina = function(){

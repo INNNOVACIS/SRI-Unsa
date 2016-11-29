@@ -1,44 +1,48 @@
-investigacionApp.controller('FlujoActorController', function($log, $scope, FlujoActorService) {
+investigacionApp.controller('FlujoActorController', function($log, $scope, FlujoActorService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.actores = [];
     $scope.actor = {};
 	
     var getActoresServiceSuccess = function(response){
     	$log.debug("Get Actores - Success");
-    	console.log("Success :: ", response);
-    	$scope.actores = response;
+    	console.log("Respuesta :: ", response);    	
     };
-
     var getActoresServiceError = function(response){
-     	$log.debug("Get Actores - Error :: ", response ); 
+     	$log.debug("Get Actores - Error"); 
+        console.log("Respuesta :: ", response);
     };
 
     var registrarActorSuccess = function(response){
     	$log.debug("Registrar Actores - Success");
-    	$scope.actores.push($scope.actor);
+    	console.log("Respuesta :: ", response);
+        $scope.getActoresByPagina();
     	$scope.actor = {};
     };
-
     var registrarActorError = function(response){
-        $log.debug("Registrar Actores - Error :: ", response);
+        $log.debug("Registrar Actores - Error");
+        console.log("Respuesta :: ", response);
     };
-
+    
     var updateActorSuccess = function(response){
     	$log.debug("Update Actor - Success");
-    	$scope.actor = response;
+    	console.log("Respuesta :: ", response);
+        $scope.getActoresByPagina();
     };
-
     var updateActorError = function(response){
-        $log.debug("Update Actor - Error :: ", response);
+        $log.debug("Update Actor - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var deleteActorSuccess = function(response){
-    	$log.debug("Delete Actor - Success");
-    	$scope.actor = response;
+    	$log.debug("DeleteActor - Success");
+    	console.log("Respuesta :: ", response);
+        $scope.getActoresByPagina();
     };
 
     var deleteActorError = function(response){
-        $log.debug("Delete Actor - Error :: ", response);
+        $log.debug("DeleteActor - Error");
+        console.log("Respuesta :: ", response);
     };
 
     /********** CRUD ROLES ***********/
@@ -48,16 +52,21 @@ investigacionApp.controller('FlujoActorController', function($log, $scope, Flujo
     };
 
     $scope.registrarActor = function(){
+        $scope.actor.suserCreacion = $scope.sharedService.nombreUsuario;
+        $scope.actor.sestado = 'A';
 	FlujoActorService.registrarActor($scope.actor).then(registrarActorSuccess, registrarActorError);
     };
 
     $scope.updateActor = function(){
+        $scope.actor.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.actor.sestado = 'A';
     	FlujoActorService.updateActor($scope.actor).then(updateActorSuccess, updateActorError);
     };
 
     $scope.deleteActor = function(actor){
     	$scope.actor = actor;
-    	FlujoActorService.deleteRol ($scope.actor).then(deleteActorSuccess. deleteActorError);
+        $scope.actor.suserModificacion = $scope.sharedService.nombreUsuario;
+    	FlujoActorService.deleteRol ($scope.actor).then(deleteActorSuccess, deleteActorError);
     };
 
     $scope.update = function(actor){
@@ -84,12 +93,15 @@ investigacionApp.controller('FlujoActorController', function($log, $scope, Flujo
     
     var getActoresByPaginaSuccess = function(response){
         $log.debug("Get Paginacion Actores - Success");
+        console.log("Respuesta :: ", response);
+        $scope.actores = [];
         $scope.actores = response.lista;
         $scope.total = response.total;
     };
     
     var getActoresByPaginaError = function(response){
-        console.log("Get Pagincion Actores - Error :: ", response);
+        $log.debug("Get Pagincion Actores - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getActoresByPagina = function(){

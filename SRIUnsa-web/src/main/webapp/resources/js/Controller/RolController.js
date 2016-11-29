@@ -7,8 +7,6 @@ investigacionApp.controller('RolController', function($log, $scope, RolService, 
     var getRolServiceSuccess = function(response){
     	$log.debug("GetRol - Success");
     	console.log("Respuesta :: ", response);
-    	$scope.roles = response;
-
     };
     var getRolServiceError = function(response){
      	$log.debug("Get Rol - Error");
@@ -18,7 +16,7 @@ investigacionApp.controller('RolController', function($log, $scope, RolService, 
     var registrarRolSuccess = function(response){
     	$log.debug("RegistrarRol - Success");
     	console.log("Respuesta :: ", response);
-    	
+    	$scope.getRolesByPagina();
     	$scope.rol = {};
     };
 
@@ -70,7 +68,7 @@ investigacionApp.controller('RolController', function($log, $scope, RolService, 
 
     $scope.deleteRol = function(rol){
     	$scope.rol = rol;    	
-    	RolService.deleteRol ($scope.rol).then(deleteRolSuccess. deleteRolError);
+    	RolService.deleteRol ($scope.rol).then(deleteRolSuccess, deleteRolError);
     };
 
     $scope.update = function(rol){
