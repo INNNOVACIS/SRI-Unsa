@@ -3,9 +3,9 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IEstructuraAreaInvestigacionDao;
 import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
-import com.innnovacis.unsa.model.SRIRol;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +24,7 @@ public class EstructuraAreaInvestigacionDaoImp implements IEstructuraAreaInvesti
     @Override
     @Transactional
     public SRIEstructuraAreaInvestigacion  Insert(SRIEstructuraAreaInvestigacion entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -31,6 +32,7 @@ public class EstructuraAreaInvestigacionDaoImp implements IEstructuraAreaInvesti
     @Override
     @Transactional
     public SRIEstructuraAreaInvestigacion Update(SRIEstructuraAreaInvestigacion entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -38,6 +40,7 @@ public class EstructuraAreaInvestigacionDaoImp implements IEstructuraAreaInvesti
     @Override
     @Transactional
     public boolean Delete(SRIEstructuraAreaInvestigacion entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

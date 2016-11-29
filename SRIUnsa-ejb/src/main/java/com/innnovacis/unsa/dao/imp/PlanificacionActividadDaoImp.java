@@ -3,6 +3,7 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IPlanificacionActividadDao;
 import com.innnovacis.unsa.model.SRIPlanificacionActividad;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,6 +21,7 @@ public class PlanificacionActividadDaoImp implements IPlanificacionActividadDao 
     @Override
     @Transactional
     public SRIPlanificacionActividad  Insert(SRIPlanificacionActividad entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -27,6 +29,7 @@ public class PlanificacionActividadDaoImp implements IPlanificacionActividadDao 
     @Override
     @Transactional
     public SRIPlanificacionActividad Update(SRIPlanificacionActividad entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -34,6 +37,7 @@ public class PlanificacionActividadDaoImp implements IPlanificacionActividadDao 
     @Override
     @Transactional
     public boolean Delete(SRIPlanificacionActividad entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

@@ -3,6 +3,7 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IRolPrivilegioDao;
 import com.innnovacis.unsa.model.SRIRolPrivilegio;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,6 +21,7 @@ public class RolPrivilegioDaoImp implements IRolPrivilegioDao {
     @Override
     @Transactional
     public SRIRolPrivilegio  Insert(SRIRolPrivilegio entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -27,6 +29,7 @@ public class RolPrivilegioDaoImp implements IRolPrivilegioDao {
     @Override
     @Transactional
     public SRIRolPrivilegio Update(SRIRolPrivilegio entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -34,6 +37,7 @@ public class RolPrivilegioDaoImp implements IRolPrivilegioDao {
     @Override
     @Transactional
     public boolean Delete(SRIRolPrivilegio entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

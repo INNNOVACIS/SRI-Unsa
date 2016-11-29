@@ -6,6 +6,7 @@ import com.innnovacis.unsa.model.SRIFlujoArista;
 import com.innnovacis.unsa.util.SRIFlujoAristaActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +25,7 @@ public class FlujoAristaDaoImp implements IFlujoAristaDao {
     @Override
     @Transactional
     public SRIFlujoArista  Insert(SRIFlujoArista entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -31,6 +33,7 @@ public class FlujoAristaDaoImp implements IFlujoAristaDao {
     @Override
     @Transactional
     public SRIFlujoArista Update(SRIFlujoArista entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -38,6 +41,7 @@ public class FlujoAristaDaoImp implements IFlujoAristaDao {
     @Override
     @Transactional
     public boolean Delete(SRIFlujoArista entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

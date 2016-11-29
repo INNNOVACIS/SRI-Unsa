@@ -7,6 +7,7 @@ import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioFlujoUtil;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -25,6 +26,7 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
     @Override
     @Transactional
     public SRIUsuarioFlujo  Insert(SRIUsuarioFlujo entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -32,6 +34,7 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
     @Override
     @Transactional
     public SRIUsuarioFlujo Update(SRIUsuarioFlujo entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -39,6 +42,7 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
     @Override
     @Transactional
     public boolean Delete(SRIUsuarioFlujo entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

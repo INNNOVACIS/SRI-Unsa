@@ -3,6 +3,7 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.ITipoInvestigadorDao;
 import com.innnovacis.unsa.model.SRITipoInvestigador;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,20 +21,23 @@ public class TipoInvestigadorDaoImp implements ITipoInvestigadorDao {
     @Override
     @Transactional
     public SRITipoInvestigador  Insert(SRITipoInvestigador entidad) {
-         em.persist(entidad);
-         return entidad;
+        entidad.setDFechaCreacion(new Date());
+        em.persist(entidad);
+        return entidad;
     }
 
     @Override
     @Transactional
     public SRITipoInvestigador Update(SRITipoInvestigador entidad) {
-         em.merge(entidad);
-         return entidad;
+        entidad.setDFechaModificacion(new Date());
+        em.merge(entidad);
+        return entidad;
     }
 
     @Override
     @Transactional
     public boolean Delete(SRITipoInvestigador entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

@@ -1,49 +1,54 @@
-investigacionApp.controller('PrivilegioController', function($log, $scope, $location, $rootScope, $filter, 
-    PrivilegioService, SharedService) {
+investigacionApp.controller('PrivilegioController', function($log, $scope, PrivilegioService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.privilegios = [];
     $scope.privilegio = {};
 	
     /********** Servicios Callback **********/
         
     var getPrivilegioServiceSuccess = function(response){
-    	$log.debug("Get Privilegio - Success");
+    	$log.debug("GetPrivilegio - Success");
+        console.log("Respuesta :: ", response);
     	$scope.privilegios = response;
     };
 
     var getPrivilegioServiceError = function(response){
-     	$log.debug("Get Privilegio - Error"); 
+     	$log.debug("Get Privilegio - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var registrarPrivilegioSuccess = function(response){
-        
-    	$log.debug("Registrar Privilegio - Success");
-    	$scope.privilegios.push($scope.privilegio);
+    	$log.debug("RegistrarPrivilegio - Success");
+        console.log("Respuesta :: ", response);
+    	$scope.getPrivilegiosByPagina();
     	$scope.privilegio = {};
     };
 
     var registrarPrivilegioError = function(response){
         $log.debug("Registrar Privilegio - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var updatePrivilegioSuccess = function(response){
-    	$log.debug("Update Privilegio - Success");
-    	console.log("success :: ", response);
-    	$scope.privilegio = response;
+    	$log.debug("UpdatePrivilegio - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getPrivilegiosByPagina();
     };
 
     var updatePrivilegioError = function(response){
-        $log.debug("Update Privilegio - Error");
+        $log.debug("UpdatePrivilegio - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var deletePrivilegioSuccess = function(response){
-    	$log.debug("Delete User - Success");
-    	console.log("success :: ", response);
+    	$log.debug("DeletePrivilegio - Success");
+    	console.log("Respuesta :: ", response);
     	$scope.privilegio = response;
     };
 
     var deletePrivilegioError = function(response){
-
+        $log.debug("DeletePrivilegio - Success");
+    	console.log("Respuesta :: ", response);
     };
 
     /********** CRUD PRIVILEGIOS ***********/
@@ -53,17 +58,20 @@ investigacionApp.controller('PrivilegioController', function($log, $scope, $loca
     };
 
     $scope.registrarPrivilegio = function(){
+        $scope.privilegio.suserCreacion = $scope.sharedService.nombreUsuario;
+        $scope.privilegio.sestado = 'A';
 	PrivilegioService.registrarPrivilegio($scope.privilegio).then(registrarPrivilegioSuccess, registrarPrivilegioError);
     };
 
     $scope.updatePrivilegio = function(){
-    	
+    	$scope.privilegio.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.privilegio.sestado = 'A';
     	PrivilegioService.updatePrivilegio($scope.privilegio).then(updatePrivilegioSuccess, updatePrivilegioError);
     };
 
     $scope.deletePrivilegio = function(privilegio){
     	$scope.privilegio = privilegio;
-    	PrivilegioService.deletePrivilegio ($scope.privilegio).then(deletePrivilegioSuccess. deletePrivilegioError);
+    	PrivilegioService.deletePrivilegio ($scope.privilegio).then(deletePrivilegioSuccess, deletePrivilegioError);
     };
 
     $scope.update = function(privilegio){
@@ -89,13 +97,15 @@ investigacionApp.controller('PrivilegioController', function($log, $scope, $loca
     /*********************************************/
     
     var getPrivilegiosByPaginaSuccess = function(response){
-        $log.debug("getPrivilegiosByPaginaError - Success");
+        $log.debug("getPrivilegiosByPagina - Success");
+        $scope.privilegios = [];
         $scope.privilegios = response.lista;
         $scope.total = response.total;
     };
     
     var getPrivilegiosByPaginaError = function(response){
-        console.log("getPrivilegiosByPaginaError  :: ", response);
+        $log.debug("getPrivilegiosByPagina - Success");
+        console.log("Respuesta  :: ", response);
     };
     
     $scope.getPrivilegiosByPagina = function(){

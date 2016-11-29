@@ -6,6 +6,7 @@ import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.model.SRITipoProduccion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +25,7 @@ public class TipoProduccionDaoImp implements ITipoProduccionDao {
     @Override
     @Transactional
     public SRITipoProduccion  Insert(SRITipoProduccion entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -31,6 +33,7 @@ public class TipoProduccionDaoImp implements ITipoProduccionDao {
     @Override
     @Transactional
     public SRITipoProduccion Update(SRITipoProduccion entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -38,6 +41,7 @@ public class TipoProduccionDaoImp implements ITipoProduccionDao {
     @Override
     @Transactional
     public boolean Delete(SRITipoProduccion entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

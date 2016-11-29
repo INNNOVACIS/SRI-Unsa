@@ -2,7 +2,6 @@
 package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IProcesoFlujoDao;
-import com.innnovacis.unsa.model.SRIDetalleInvestigacionFlujo;
 import com.innnovacis.unsa.model.SRIProcesoFlujo;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

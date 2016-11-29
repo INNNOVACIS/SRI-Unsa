@@ -6,6 +6,7 @@ import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -25,20 +26,23 @@ public class UsuarioDaoImp implements IUsuarioDao {
     @Override
     @Transactional
     public SRIUsuario  Insert(SRIUsuario entidad) {
-         em.persist(entidad);
-         return entidad;
+        entidad.setDFechaCreacion(new Date());
+        em.persist(entidad);
+        return entidad;
     }
 
     @Override
     @Transactional
     public SRIUsuario Update(SRIUsuario entidad) {
-         em.merge(entidad);
-         return entidad;
+        entidad.setDFechaModificacion(new Date());
+        em.merge(entidad);
+        return entidad;
     }
 
     @Override
     @Transactional
     public boolean Delete(SRIUsuario entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

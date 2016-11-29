@@ -7,6 +7,7 @@ import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import com.innnovacis.unsa.util.SRIUsuarioRolesUtil;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -25,6 +26,7 @@ public class UsuarioRolDaoImp implements IUsuarioRolDao {
     @Override
     @Transactional
     public SRIUsuarioRol  Insert(SRIUsuarioRol entidad) {
+        entidad.setDFechaCreacion(new Date());
         em.persist(entidad);
         return entidad;
     }
@@ -32,6 +34,7 @@ public class UsuarioRolDaoImp implements IUsuarioRolDao {
     @Override
     @Transactional
     public SRIUsuarioRol Update(SRIUsuarioRol entidad) {
+        entidad.setDFechaModificacion(new Date());
         em.merge(entidad);
         return entidad;
     }
@@ -39,6 +42,7 @@ public class UsuarioRolDaoImp implements IUsuarioRolDao {
     @Override
     @Transactional
     public boolean Delete(SRIUsuarioRol entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

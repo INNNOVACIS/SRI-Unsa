@@ -4,6 +4,7 @@ package com.innnovacis.unsa.dao.imp;
 import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -21,6 +22,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     @Override
     @Transactional
     public SRIActividadInvestigacion  Insert(SRIActividadInvestigacion entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -28,6 +30,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     @Override
     @Transactional
     public SRIActividadInvestigacion Update(SRIActividadInvestigacion entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -35,6 +38,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     @Override
     @Transactional
     public boolean Delete(SRIActividadInvestigacion entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

@@ -1,50 +1,50 @@
 investigacionApp.controller('TipoInvestigacionController', function($log, $scope, $location, $rootScope, $filter, 
     TipoInvestigacionService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.investigaciones = [];
     $scope.investigacion = {};
-    
 	
     /********** Servicios Callback **********/
         
     var getInvestigacionServiceSuccess = function(response){
-    	$log.debug("Get Investigacion - Success");
-    	$scope.investigaciones = response;
+    	$log.debug("GetInvestigacion - Success");
+        console.log("Respuesta :: ", response);
     };
-
     var getInvestigacionServiceError = function(response){
-     	$log.debug("Get Investigacion - Error"); 
+     	$log.debug("GetInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var registrarInvestigacionSuccess = function(response){
-        
     	$log.debug("Registrar Investigacion - Success");
-    	$scope.investigaciones.push($scope.investigacion);
-    	$scope.investigacion = {};
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoInvestigacionByPagina();
+        $scope.investigacion = {};
     };
-
     var registrarInvestigacionError = function(response){
-        $log.debug("Registrar Investigacion - Error");
+        $log.debug("RegistrarInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var updateInvestigacionSuccess = function(response){
-    	$log.debug("Update Investigacion - Success");
-    	console.log("success :: ", response);
-    	$scope.investigacion = response;
+    	$log.debug("UpdateInvestigacion - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoInvestigacionByPagina();
     };
-
     var updateInvestigacionError = function(response){
-        $log.debug("Update Investigacion - Error");
+        $log.debug("UpdateInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var deleteInvestigacionSuccess = function(response){
     	$log.debug("Delete Investigacion - Success");
-    	console.log("success :: ", response);
-    	$scope.investigacion = response;
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoInvestigacionByPagina();
     };
-
     var deleteInvestigacionError = function(response){
-
+        $log.debug("DeleteInvestigacion - Success");
+    	console.log("Respuesta :: ", response);
     };
 
     /********** CRUD INVESTIGACIONES ***********/
@@ -54,17 +54,20 @@ investigacionApp.controller('TipoInvestigacionController', function($log, $scope
     };
 
     $scope.registrarInvestigacion = function(){
+        $scope.investigacion.suserCreacion = $scope.sharedService.nombreUsuario;
+        $scope.investigacion.sestado = 'A';
 	TipoInvestigacionService.registrarInvestigacion($scope.investigacion).then(registrarInvestigacionSuccess, registrarInvestigacionError);
     };
 
     $scope.updateInvestigacion = function(){
-    	
+        $scope.investigacion.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.investigacion.sestado = 'A';
     	TipoInvestigacionService.updateInvestigacion($scope.investigacion).then(updateInvestigacionSuccess, updateInvestigacionError);
     };
 
     $scope.deleteInvestigacion = function(investigacion){
     	$scope.investigacion = investigacion;
-    	TipoInvestigacionService.deleteInvestigacion ($scope.investigacion).then(deleteInvestigacionSuccess. deleteInvestigacionError);
+    	TipoInvestigacionService.deleteInvestigacion ($scope.investigacion).then(deleteInvestigacionSuccess, deleteInvestigacionError);
     };
 
     $scope.update = function(investigacion){
@@ -90,13 +93,16 @@ investigacionApp.controller('TipoInvestigacionController', function($log, $scope
     /*********************************************/
     
     var getTipoInvestigacionByPaginaSuccess = function(response){
-        $log.debug("Get paginacionUsuario - Success");
+        $log.debug("GetPaginacionInvestigacion - Success");
+        console.log("Respuesta :: ", response);
+        $scope.investigaciones = [];
         $scope.investigaciones = response.lista;
         $scope.total = response.total;
     };
     
     var getTipoInvestigacionByPaginaError = function(response){
-        console.log("error :: ", response);
+        $log.debug("GetPaginacionInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getTipoInvestigacionByPagina = function(){

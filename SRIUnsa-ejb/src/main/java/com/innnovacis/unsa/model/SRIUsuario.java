@@ -27,7 +27,6 @@ import javax.persistence.Table;
 })
 public class SRIUsuario  extends SRIEntidad implements Serializable  {
     
-
     @Id
     @GeneratedValue
     @Column(name = "idusuario" )
@@ -39,7 +38,16 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
     @Column(name = "usuariopassword")
     private String SUsuarioPassword;
 
+    @Column(name = "usuarioemail")
+    private String SUsuarioEmail;
 
+    public String getSUsuarioEmail() {
+        return SUsuarioEmail;
+    }
+
+    public void setSUsuarioEmail(String SUsuarioEmail) {
+        this.SUsuarioEmail = SUsuarioEmail;
+    }
 
     public int getNIdUsuario() {
         return NIdUsuario;
@@ -64,17 +72,6 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
     public void setSUsuarioPassword(String SUsuarioPassword) {
         this.SUsuarioPassword = SUsuarioPassword;
     }
-    
-
-
   
-
-
-
-    
-
-    
-    
-
 }
 

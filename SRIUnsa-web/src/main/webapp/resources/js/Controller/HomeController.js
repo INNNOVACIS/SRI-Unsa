@@ -226,14 +226,16 @@
         HomeService.registrarInvestigacion($scope.actividadInvestigacion).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
     };
     
-    $scope.registrarProcesoFlujo = function(){
-        $scope.loader = true;
-        scrollTop();
-        var procesoflujo = {
-            nidUsuarioFlujo : $scope.idUsuarioFlujo,
-            nidArista : $scope.idFlujoArista
-        };
-        ProcesoFlujoService.RegistrarProcesoFlujo(procesoflujo).then(RegistrarProcesoFlujoSuccess, RegistrarProcesoFlujoError);
+    $scope.registrarProcesoFlujo = function(isValid){
+        if(isValid){
+            $scope.loader = true;
+            scrollTop();
+            var procesoflujo = {
+                nidUsuarioFlujo : $scope.idUsuarioFlujo,
+                nidArista : $scope.idFlujoArista
+            };
+            ProcesoFlujoService.RegistrarProcesoFlujo(procesoflujo).then(RegistrarProcesoFlujoSuccess, RegistrarProcesoFlujoError);
+        }
     };
     
     $scope.RegistrarDetalleInvestigacion = function(){

@@ -5,6 +5,7 @@ import com.innnovacis.unsa.dao.IRolDao;
 import com.innnovacis.unsa.model.SRIRol;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -23,20 +24,23 @@ public class RolDaoImp implements IRolDao {
     @Override
     @Transactional
     public SRIRol  Insert(SRIRol entidad) {
-         em.persist(entidad);
-         return entidad;
+        entidad.setDFechaCreacion(new Date());
+        em.persist(entidad);
+        return entidad;
     }
 
     @Override
     @Transactional
     public SRIRol Update(SRIRol entidad) {
-         em.merge(entidad);
-         return entidad;
+        entidad.setDFechaModificacion(new Date());
+        em.merge(entidad);
+        return entidad;
     }
 
     @Override
     @Transactional
     public boolean Delete(SRIRol entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

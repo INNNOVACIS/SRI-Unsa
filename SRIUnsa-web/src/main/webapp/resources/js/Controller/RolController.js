@@ -1,51 +1,53 @@
-investigacionApp.controller('RolController', function($log, $scope, $location, $rootScope, $filter, 
-    RolService, SharedService) {
+investigacionApp.controller('RolController', function($log, $scope, RolService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.roles = [];
     $scope.rol = {};
 	
     var getRolServiceSuccess = function(response){
-    	$log.debug("Get Rol - Success");
-    	console.log("Success :: ", response);
+    	$log.debug("GetRol - Success");
+    	console.log("Respuesta :: ", response);
     	$scope.roles = response;
 
     };
-
     var getRolServiceError = function(response){
-     	$log.debug("Get Rol - Error"); 
+     	$log.debug("Get Rol - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var registrarRolSuccess = function(response){
-        
-    	$log.debug("Registrar Rol - Success");
-    	console.log("success :: ", response);
-        
-    	$scope.roles.push($scope.rol);
+    	$log.debug("RegistrarRol - Success");
+    	console.log("Respuesta :: ", response);
+    	
     	$scope.rol = {};
     };
 
     var registrarRolError = function(response){
-
+        $log.debug("RegistrarRol - Error");
+    	console.log("Respuesta :: ", response);
+        $scope.getRolesByPagina();
     };
 
     var updateRolSuccess = function(response){
-    	$log.debug("Update User - Success");
-    	console.log("success :: ", response);
-    	$scope.rol = response;
+    	$log.debug("UpdateUser - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getRolesByPagina();
     };
 
     var updateRolError = function(response){
-
+        $log.debug("UpdateUser - Error");
+    	console.log("Respuesta :: ", response);
     };
 
     var deleteRolSuccess = function(response){
-    	$log.debug("Delete User - Success");
-    	console.log("success :: ", response);
+    	$log.debug("DeleteUser - Success");
+    	console.log("Respuesta :: ", response);
     	$scope.rol = response;
     };
 
     var deleteRolError = function(response){
-
+        $log.debug("DeleteUser - Error");
+    	console.log("Respuesta :: ", response);
     };
 
     /********** CRUD ROLES ***********/
@@ -55,23 +57,19 @@ investigacionApp.controller('RolController', function($log, $scope, $location, $
     };
 
     $scope.registrarRol = function(){
-    	console.log("Rol :: ", $scope.rol);
-        //$scope.rol.nidRol = 2;
-        //$scope.rol.SUserCreacion = "admin";
-        //$scope.rol.SUserModificacion = "admin";
-        //$scope.rol.SEstado = "A";
-        console.log("Rol Completo :: ", $scope.rol);
+        $scope.rol.suserCreacion = $scope.sharedService.nombreUsuario;
+        $scope.rol.sestado = 'A';
 	RolService.registrarRol($scope.rol).then(registrarRolSuccess, registrarRolError);
     };
 
     $scope.updateRol = function(){
-    	
+        $scope.rol.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.rol.sestado = 'A';
     	RolService.updateRol($scope.rol).then(updateRolSuccess, updateRolError);
     };
 
     $scope.deleteRol = function(rol){
-    	$scope.rol = rol;
-    	//$scope.rol.sEstado = "0";
+    	$scope.rol = rol;    	
     	RolService.deleteRol ($scope.rol).then(deleteRolSuccess. deleteRolError);
     };
 
@@ -99,6 +97,7 @@ investigacionApp.controller('RolController', function($log, $scope, $location, $
     
     var getRolesByPaginaSuccess = function(response){
         $log.debug("Get paginacionUsuario - Success");
+        $scope.roles = [];
         $scope.roles = response.lista;
         $scope.total = response.total;
     };

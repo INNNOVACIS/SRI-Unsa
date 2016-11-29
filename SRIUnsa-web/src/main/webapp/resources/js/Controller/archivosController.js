@@ -1,35 +1,41 @@
 investigacionApp.controller('archivosController', function($log, $scope, $location, $rootScope, $filter, 
     ArchivosService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.files = [];
     $scope.file = {};
 	
     var getArchivoServiceSuccess = function(response){
-    	$log.debug("Get Archivo - Success");
+    	$log.debug("GetArchivo - Success");
+        console.log("Respuesta :: ", response);
     	$scope.files = response;
         console.log("Success :: ", $scope.files);
     };
 
     var getArchivoServiceError = function(response){
-     	$log.debug("Get Archivo - Error");
-        console.log("Success :: ", response);
+     	$log.debug("GetArchivo - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var descargarArchivoSuccess = function(response){
-        $log.debug("Descargar Archivo - Success");
+        $log.debug("DescargarArchivo - Success");
+        console.log("Respuesta :: ", response);
     };
     
     var descargarArchivoError = function(response){
-        $log.debug("Descargar Archivo - Error");
-        console.log("Descargar Archivo :: ", response);
+        $log.debug("DescargarArchivo - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var subirArchivoSuccess = function(response){
-        $log.debug("Subir Archivo - Success");
+        $log.debug("SubirArchivo - Success");
+        console.log("Respuesta :: ", response);
+        $scope.getArchivosByPagina();
     };
     
     var subirArchivoError = function(response){
-        $log.debug("Subir Archivo - Error");
+        $log.debug("SubirArchivo - Error");
+        console.log("Respuesta :: ", response);
     };
 
     /********** CRUD ARCHIVOS ***********/
@@ -76,12 +82,15 @@ investigacionApp.controller('archivosController', function($log, $scope, $locati
     
     var getArchivosByPaginaSuccess = function(response){
         $log.debug("getArchivosByPagina - Success");
+        console.log("Respuesta :: ", response);
+        $scope.files = [];
         $scope.files = response.lista;
         $scope.total = response.total;
     };
     
     var getArchivosByPaginaError = function(response){
-        console.log("getArchivosByPaginaError :: ", response);
+        $log.debug("getArchivosByPagina - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getArchivosByPagina = function(){

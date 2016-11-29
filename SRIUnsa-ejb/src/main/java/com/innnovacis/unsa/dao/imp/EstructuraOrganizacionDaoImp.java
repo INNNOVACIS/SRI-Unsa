@@ -2,10 +2,10 @@
 package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IEstructuraOrganizacionDao;
-import com.innnovacis.unsa.model.SRIEstructuraAreaInvestigacion;
 import com.innnovacis.unsa.model.SRIEstructuraOrganizacion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +24,7 @@ public class EstructuraOrganizacionDaoImp implements IEstructuraOrganizacionDao 
     @Override
     @Transactional
     public SRIEstructuraOrganizacion  Insert(SRIEstructuraOrganizacion entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -31,6 +32,7 @@ public class EstructuraOrganizacionDaoImp implements IEstructuraOrganizacionDao 
     @Override
     @Transactional
     public SRIEstructuraOrganizacion Update(SRIEstructuraOrganizacion entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -38,6 +40,7 @@ public class EstructuraOrganizacionDaoImp implements IEstructuraOrganizacionDao 
     @Override
     @Transactional
     public boolean Delete(SRIEstructuraOrganizacion entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

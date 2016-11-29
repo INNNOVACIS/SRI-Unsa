@@ -6,6 +6,7 @@ import com.innnovacis.unsa.model.SRIRol;
 import com.innnovacis.unsa.model.SRITipoActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +25,7 @@ public class TipoActividadInvestigacionDaoImp implements ITipoActividadInvestiga
     @Override
     @Transactional
     public SRITipoActividadInvestigacion  Insert(SRITipoActividadInvestigacion entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -31,6 +33,7 @@ public class TipoActividadInvestigacionDaoImp implements ITipoActividadInvestiga
     @Override
     @Transactional
     public SRITipoActividadInvestigacion Update(SRITipoActividadInvestigacion entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -38,6 +41,7 @@ public class TipoActividadInvestigacionDaoImp implements ITipoActividadInvestiga
     @Override
     @Transactional
     public boolean Delete(SRITipoActividadInvestigacion entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

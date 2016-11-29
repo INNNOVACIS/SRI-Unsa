@@ -37,8 +37,19 @@ public class SRIProcesoFlujo  extends SRIEntidad implements Serializable  {
     @Column(name = "idusuarioflujo")
     private int NIdUsuarioFlujo;
 
+    @Column(name = "idestado")
+    private int NIdEstado;
+    
     @Column(name = "flujo")
     private String SFlujo;    
+
+    public int getNIdEstado() {
+        return NIdEstado;
+    }
+
+    public void setNIdEstado(int NIdEstado) {
+        this.NIdEstado = NIdEstado;
+    }
 
     public int getNIdArista() {
         return NIdArista;

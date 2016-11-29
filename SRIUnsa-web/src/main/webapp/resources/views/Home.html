@@ -7,15 +7,17 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Actividad de Investigación: <strong>{{tipoInvestigacion.nombre}}</strong></div>
                 <div class="panel-body">
-                    <form class="form-horizontal">
+                    <form name="actividadForm" novalidate class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-md-2" style="">Actividad Investigación</label>
-                            <div class="col-md-4">
-                                <select class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion)></select>
+                            <label class="control-label col-md-2" >Actividad Investigación</label>
+                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && actividadForm.investigacion.$pristine }">
+                                <select name="investigacion" class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion) required></select>
+                                <p ng-show="actividadForm.investigacion.$invalid && actividadForm.investigacion.$pristine" class="help-block">El Tipo de Investigacion es Requerido.</p>
                             </div>
-                            <label class="control-label col-md-2" style="">Nombre</label>
-                            <div class="col-md-4">
-                                <input ng-model="nombreInvestigacion" type="text" class="form-control" placeholder="Nombre de la investigación">
+                            <label class="control-label col-md-2" >Nombre</label>
+                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && actividadForm.nombre.$pristine }">
+                                <input name="nombre" ng-model="nombreInvestigacion" type="text" class="form-control" placeholder="Nombre de la investigación" required>
+                                <p ng-show="actividadForm.nombre.$invalid && actividadForm.nombre.$pristine" class="help-block">El nombre es Requerido.</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -58,8 +60,9 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2"> Duración </label>
-                            <div class="col-md-4">
-                                    <input class="form-control" type="number" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación">
+                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && actividadForm.duracion.$pristine }">
+                                <input name="duracion" class="form-control" type="number" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación" required>
+                                <p ng-show="actividadForm.duracion.$invalid && actividadForm.duracion.$pristine" class="help-block">La duración es Requerida.</p>
                             </div>
                             <div id="actividad2" ng-show="mostrarActividad[1]">
                                 <label class="control-label col-md-2"> Tipo de Asesoria</label>
@@ -190,8 +193,8 @@
                                     </div>
                                 </div>
                             <div class="col-md-12" style="margin-top:10px;">
-                                <button type="submit" ng-click="registrarProcesoFlujo()" class="btn btn-primary pull-right"> 
-                                     <span class="glyphicon glyphicon-save"> Registrar</span>
+                                <button type="submit" ng-click="registrarProcesoFlujo(actividadForm.$valid)" class="btn btn-primary pull-right"> 
+                                    <span class="glyphicon glyphicon-save"> Registrar</span>
                                 </button>
                             </div>
                         </div>
@@ -230,21 +233,3 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Registro Correcto!!!</h4>
-            </div>
-            <div class="modal-body">
-                <p>Esta seguro de iniciar el proyecto?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-sm btn-primary" data-dismiss="modal">ir Actividades Generadas</button>
-                <button type="button" class="btn-sm btn-danger" data-dismiss="modal">Nuevo Registro</button>
-            </div>
-        </div>
-    </div>
-</div>

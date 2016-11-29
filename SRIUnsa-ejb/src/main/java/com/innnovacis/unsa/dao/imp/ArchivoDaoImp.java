@@ -3,12 +3,12 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IArchivoDao;
 import com.innnovacis.unsa.model.SRIArchivo;
-import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.util.SRIArchivoUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -31,6 +31,7 @@ public class ArchivoDaoImp implements IArchivoDao {
     @Override
     @Transactional
     public SRIArchivo  Insert(SRIArchivo entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -38,6 +39,7 @@ public class ArchivoDaoImp implements IArchivoDao {
     @Override
     @Transactional
     public SRIArchivo Update(SRIArchivo entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -45,6 +47,7 @@ public class ArchivoDaoImp implements IArchivoDao {
     @Override
     @Transactional
     public boolean Delete(SRIArchivo entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;

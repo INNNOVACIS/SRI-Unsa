@@ -2,10 +2,10 @@
 package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.ISemestreDao;
-import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.model.SRISemestre;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +24,7 @@ public class SemestreDaoImp implements ISemestreDao {
     @Override
     @Transactional
     public SRISemestre  Insert(SRISemestre entidad) {
+        entidad.setDFechaCreacion(new Date());
          em.persist(entidad);
          return entidad;
     }
@@ -31,6 +32,7 @@ public class SemestreDaoImp implements ISemestreDao {
     @Override
     @Transactional
     public SRISemestre Update(SRISemestre entidad) {
+        entidad.setDFechaModificacion(new Date());
          em.merge(entidad);
          return entidad;
     }
@@ -38,6 +40,7 @@ public class SemestreDaoImp implements ISemestreDao {
     @Override
     @Transactional
     public boolean Delete(SRISemestre entidad) {
+        entidad.setDFechaModificacion(new Date());
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;
