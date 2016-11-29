@@ -27,4 +27,5 @@ public interface IUsuarioFlujoBusiness {
     List<SRIUsuarioFlujoUtil> GetPagina(SRIPaginacionObject object);
     List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id);
     List<SRIFlujoActorUtil> getUsuarioFlujoActorByIdUsuario(int id);
+    int CreateAndGetUsuarioFlujo(SRIUsuarioFlujo entidad);
 }

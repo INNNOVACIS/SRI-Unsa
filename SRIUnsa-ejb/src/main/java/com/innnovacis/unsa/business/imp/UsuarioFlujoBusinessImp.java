@@ -4,7 +4,6 @@ package com.innnovacis.unsa.business.imp;
 
 import com.innnovacis.unsa.business.IUsuarioFlujoBusiness;
 import com.innnovacis.unsa.dao.IUsuarioFlujoDao;
-import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
 import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
@@ -130,6 +129,18 @@ public class UsuarioFlujoBusinessImp implements IUsuarioFlujoBusiness {
             respuesta = usuarioFlujoDao.getUsuarioFlujoActorByIdUsuario(id);
         }
         catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public int CreateAndGetUsuarioFlujo(SRIUsuarioFlujo entidad) {
+        int respuesta = -1;
+        try{
+            respuesta = usuarioFlujoDao.CreateAndGetUsuarioFlujo(entidad);
+        }
+        catch(Exception ex){
+            System.out.println("Error ===> " + ex.getMessage());
         }
         return respuesta;
     }

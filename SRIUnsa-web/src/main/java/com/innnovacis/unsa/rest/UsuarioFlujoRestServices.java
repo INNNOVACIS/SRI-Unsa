@@ -106,4 +106,12 @@ public class UsuarioFlujoRestServices {
         return usuarioFlujoBusiness.Delete(object);
     }
     
+    @POST
+    @Path("/createGetUsuarioFlujo")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int CreateAndGetUsuarioFlujo(SRIUsuarioFlujo object) {        
+        return usuarioFlujoBusiness.CreateAndGetUsuarioFlujo(object);
+    }
+    
 }

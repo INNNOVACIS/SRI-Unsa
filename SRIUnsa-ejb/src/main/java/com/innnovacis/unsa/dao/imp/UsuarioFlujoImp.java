@@ -2,7 +2,6 @@
 package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IUsuarioFlujoDao;
-import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
 import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
@@ -87,5 +86,20 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
                         .setParameter(1, id);
         List<SRIFlujoActorUtil> listFlujoActor = query.getResultList();
         return listFlujoActor;
+    }
+
+    @Override
+    @Transactional
+    public int CreateAndGetUsuarioFlujo(SRIUsuarioFlujo entidad) {
+        Query query = em.createNativeQuery("{call CreateAndGetUsuarioFlujo(?1,?2)}", SRIUsuarioFlujo.class)
+                        .setParameter(1, entidad.getNIdFlujoActor())
+                        .setParameter(2, entidad.getNIdUsuario());
+        List<SRIUsuarioFlujo> usuarioFlujo = query.getResultList();
+        if(usuarioFlujo.isEmpty()) {
+            em.persist(entidad);
+        } else {
+            entidad = usuarioFlujo.get(0);
+        }
+        return entidad.getNIdUsuarioFlujo();
     }
 }

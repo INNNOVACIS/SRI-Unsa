@@ -5,7 +5,6 @@
  */
 package com.innnovacis.unsa.dao;
 
-import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
 import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
@@ -28,4 +27,5 @@ public interface IUsuarioFlujoDao {
     List<SRIUsuarioFlujoUtil> GetPagina(SRIPaginacionObject object);
     List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id);
     List<SRIFlujoActorUtil> getUsuarioFlujoActorByIdUsuario(int id);
+    int CreateAndGetUsuarioFlujo(SRIUsuarioFlujo entidad);
 }

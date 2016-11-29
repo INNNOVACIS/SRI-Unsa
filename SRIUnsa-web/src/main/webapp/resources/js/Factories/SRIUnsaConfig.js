@@ -8,11 +8,11 @@ investigacionApp.factory("SRIUnsaConfig", function() {
         //Modo Local
         SRIUnsaUrlServicio: 'http://localhost:8080/SRIUnsa-web/rest',
         /*Codigo Actores*/
-        DOCE : "DOCE", //Docente Actor
-        DIDE : "DIDE", //Director Departamento
-        DIUN : "DIUN", //Director Unidad
-        DECA : "DECA", //Decano
-        DIGE : "DIGE", //Director General
+        DOCE : 1, //Docente Actor
+        DIDE : 2, //Director Departamento
+        DIUN : 3, //Director Unidad
+        DECA : 4, //Decano
+        DIGE : 5, //Director General
         
         /*Codigo Estados*/
         CREADO : 1,

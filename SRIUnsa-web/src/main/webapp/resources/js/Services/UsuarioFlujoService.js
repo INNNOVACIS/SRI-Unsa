@@ -111,4 +111,19 @@ investigacionApp.service("UsuarioFlujoService", function(SRIUnsaConfig, $log, $h
 		});
 		return deferred.promise;
 	};
+        
+        this.CreateAndGetUsuarioFlujo = function(request) {//request es un objeto UsuarioFlujo
+            $log.debug("UsuarioFlujo Service - CreateAndGetUsuarioFlujo");
+            var deferred = $q.defer();
+            $http({
+                method : 'POST',
+                url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarioflujo/createGetUsuarioFlujo',
+                data : request
+            }).success(function(response) {
+                deferred.resolve(response);
+            }).error(function(response) {			
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
 });
