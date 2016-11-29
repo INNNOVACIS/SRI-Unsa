@@ -8,7 +8,6 @@ import com.innnovacis.unsa.dao.IArchivoDao;
 import com.innnovacis.unsa.dao.IPlanificacionActividadDao;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.model.SRIPlanificacionActividad;
-
 import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
@@ -95,17 +94,19 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public int RegistrarActividad(SRIActividadInvestigacion entidad) {
-        int id = -1;
+    public SRIPlanificacionActividad RegistrarActividad(SRIActividadInvestigacion entidad) {
+        SRIPlanificacionActividad respuesta = null;
         SRIPlanificacionActividad entidadPlanificacion = new SRIPlanificacionActividad();
         try{
             entidad = actividadInvestigacionDao.Insert(entidad);
             entidadPlanificacion.setNIdActividadInvestigacion(entidad.getNIdActividadInvestigacion());
-            id = planificacionActividadDao.Insert(entidadPlanificacion).getNIdPlanificacionActidad();
+            entidadPlanificacion.setSUserCreacion(entidad.getSUserCreacion());
+            entidadPlanificacion.setSEstado(entidad.getSEstado());
+            respuesta = planificacionActividadDao.Insert(entidadPlanificacion);
         }
         catch(Exception ex){
         }
-        return id;
+        return respuesta;
     }
 
 }

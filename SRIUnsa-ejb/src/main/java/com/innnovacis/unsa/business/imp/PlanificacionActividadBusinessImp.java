@@ -27,7 +27,7 @@ public class PlanificacionActividadBusinessImp implements IPlanificacionActivida
         int id = -1;
         try{
             entidad = planificacionActividadDao.Insert(entidad);
-            id = entidad.getNIdPlanificacionActidad();
+            id = entidad.getNIdPlanificacionActividad();
                     
         }
         catch(Exception ex){

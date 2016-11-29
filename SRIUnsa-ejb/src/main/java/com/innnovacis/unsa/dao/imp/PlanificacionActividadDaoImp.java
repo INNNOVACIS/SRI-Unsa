@@ -22,8 +22,8 @@ public class PlanificacionActividadDaoImp implements IPlanificacionActividadDao 
     @Transactional
     public SRIPlanificacionActividad  Insert(SRIPlanificacionActividad entidad) {
         entidad.setDFechaCreacion(new Date());
-         em.persist(entidad);
-         return entidad;
+        em.persist(entidad);
+        return entidad;
     }
 
     @Override

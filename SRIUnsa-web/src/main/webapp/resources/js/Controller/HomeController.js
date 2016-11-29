@@ -143,9 +143,9 @@
     };
     
     var RegistrarInvestigacionSuccess = function(response){
-        addPlanificacion(response);
+        addPlanificacion(response.nidPlanificacionActividad);
         uploader.uploadAll();
-        $scope.idActividadInvestigacion = response;
+        $scope.idActividadInvestigacion = response.nidActividadInvestigacion;
         $scope.RegistrarDetalleInvestigacion();
     };
     var RegistrarInvestigacionError = function(response){
@@ -195,7 +195,9 @@
     $scope.GetUsuarioFlujo = function(){
         var usuarioFlujo = {
             nidFlujoActor : SRIUnsaConfig.DOCE,
-            nidUsuario : $scope.sharedService.idUsuario
+            nidUsuario : $scope.sharedService.idUsuario,
+            suserCreacion : $scope.sharedService.nombreUsuario,
+            sestado : 'A'
         };
         UsuarioFlujoService.CreateAndGetUsuarioFlujo(usuarioFlujo).then(GetUsuarioFlujoSuccess, GetUsuarioFlujoError);
     };
@@ -221,7 +223,9 @@
             sdisciplina : $scope.disciplinaInvestigacion.sNombre,
             stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
             snombreActividadInvestigacion : $scope.nombreInvestigacion,
-            sdescripcionActividad : $scope.descripcion
+            sdescripcionActividad : $scope.descripcion,
+            suserCreacion : $scope.sharedService.nombreUsuario,
+            sestado : 'A'
         };
         HomeService.registrarInvestigacion($scope.actividadInvestigacion).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
     };
@@ -232,7 +236,10 @@
             scrollTop();
             var procesoflujo = {
                 nidUsuarioFlujo : $scope.idUsuarioFlujo,
-                nidArista : $scope.idFlujoArista
+                nidArista : $scope.idFlujoArista,
+                nidEstado : SRIUnsaConfig.CREADO,
+                suserCreacion : $scope.sharedService.nombreUsuario,
+                sestado : 'A'
             };
             ProcesoFlujoService.RegistrarProcesoFlujo(procesoflujo).then(RegistrarProcesoFlujoSuccess, RegistrarProcesoFlujoError);
         }
@@ -241,7 +248,9 @@
     $scope.RegistrarDetalleInvestigacion = function(){
         var detalleInvestigacion = {
             nidActividadInvestigacion : $scope.idActividadInvestigacion,
-            nidProcesoFlujo : $scope.idProcesoFlujo
+            nidProcesoFlujo : $scope.idProcesoFlujo,
+            suserCreacion : $scope.sharedService.nombreUsuario,
+            sestado : 'A'
         };
         DetalleInvestigacionService.RegistrarDetalleInvestigacion(detalleInvestigacion).then(RegistrarDetalleInvestigacionSuccess, RegistrarDetalleInvestigacionError);
     };

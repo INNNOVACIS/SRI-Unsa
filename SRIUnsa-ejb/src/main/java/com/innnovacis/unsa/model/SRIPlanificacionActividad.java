@@ -33,14 +33,11 @@ public class SRIPlanificacionActividad  extends SRIEntidad implements Serializab
 
     @Column(name = "idactividadinvestigacion")
     private int NIdActividadInvestigacion;
-
     
     @Column(name = "horasparciales")
     private int NHorasParciales;
 
-    
-
-    public int getNIdPlanificacionActidad() {
+    public int getNIdPlanificacionActividad() {
         return NIdPlanificacionActividad;
     }
 

@@ -7,6 +7,7 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import com.innnovacis.unsa.model.SRIPlanificacionActividad;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -78,7 +79,7 @@ public class ActividadInvestigacionRestService {
     @Path("/registrarActividadPlanificacion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public int RegistrarActividadInvestigacion(SRIActividadInvestigacion investigacion){
+    public SRIPlanificacionActividad RegistrarActividadInvestigacion(SRIActividadInvestigacion investigacion){
         return investigacionBusiness.RegistrarActividad(investigacion);
     }
     

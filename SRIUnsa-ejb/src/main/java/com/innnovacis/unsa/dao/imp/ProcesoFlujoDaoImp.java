@@ -3,6 +3,7 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IProcesoFlujoDao;
 import com.innnovacis.unsa.model.SRIProcesoFlujo;
+import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -21,6 +22,7 @@ public class ProcesoFlujoDaoImp implements IProcesoFlujoDao {
     @Override
     @Transactional
     public SRIProcesoFlujo  Insert(SRIProcesoFlujo entidad) {
+        entidad.setDFechaCreacion(new Date());
         Query query = em.createNativeQuery("{call getProcesoFlujo(?1,?2)}", SRIProcesoFlujo.class)
                         .setParameter(1, entidad.getNIdArista())
                         .setParameter(2, entidad.getNIdUsuarioFlujo());

@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import com.innnovacis.unsa.model.SRIPlanificacionActividad;
 
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -23,6 +24,6 @@ public interface IActividadInvestigacionBusiness {
     SRIActividadInvestigacion Get(int idEntidad);
     List<SRIActividadInvestigacion> GetAll();
     
-    int RegistrarActividad(SRIActividadInvestigacion entidad);
+    SRIPlanificacionActividad RegistrarActividad(SRIActividadInvestigacion entidad);
 
 }

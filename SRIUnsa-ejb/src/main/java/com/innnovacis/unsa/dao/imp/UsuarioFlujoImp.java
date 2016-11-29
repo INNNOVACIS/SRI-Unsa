@@ -95,6 +95,7 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
     @Override
     @Transactional
     public int CreateAndGetUsuarioFlujo(SRIUsuarioFlujo entidad) {
+        entidad.setDFechaCreacion(new Date());
         Query query = em.createNativeQuery("{call CreateAndGetUsuarioFlujo(?1,?2)}", SRIUsuarioFlujo.class)
                         .setParameter(1, entidad.getNIdFlujoActor())
                         .setParameter(2, entidad.getNIdUsuario());
