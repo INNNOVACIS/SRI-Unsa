@@ -242,6 +242,8 @@
                 sestado : 'A'
             };
             ProcesoFlujoService.RegistrarProcesoFlujo(procesoflujo).then(RegistrarProcesoFlujoSuccess, RegistrarProcesoFlujoError);
+        } else {
+//            $scope.submitted = true;
         }
     };
     

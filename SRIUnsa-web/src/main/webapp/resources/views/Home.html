@@ -9,75 +9,134 @@
                 <div class="panel-body">
                     <form name="actividadForm" novalidate class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-md-2" >Actividad Investigación</label>
-                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && actividadForm.investigacion.$pristine }">
-                                <select name="investigacion" class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion) required></select>
-                                <p ng-show="actividadForm.investigacion.$invalid && actividadForm.investigacion.$pristine" class="help-block">El Tipo de Investigacion es Requerido.</p>
-                            </div>
                             <label class="control-label col-md-2" >Nombre</label>
-                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && actividadForm.nombre.$pristine }">
+                            <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine }">
                                 <input name="nombre" ng-model="nombreInvestigacion" type="text" class="form-control" placeholder="Nombre de la investigación" required>
-                                <p ng-show="actividadForm.nombre.$invalid && actividadForm.nombre.$pristine" class="help-block">El nombre es Requerido.</p>
+                                <p ng-show="actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine" class="help-block">El nombre es Requerido.</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">Facultad</label>
-                            <div class="col-md-4">
-                                <select ng-model="facultad"                
-                                    ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
-                                    class="form-control"
-                                    ng-change="facultadChange()"
-                                    ng-required="true"
-                                    ng-init="facultad=''">
-                                </select>
+                            <label class="control-label col-md-2" >Tipo Actividad</label>
+                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && !actividadForm.investigacion.$pristine }">
+                                <select name="investigacion" class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion) required></select>
+                                <p ng-show="actividadForm.investigacion.$invalid && !actividadForm.investigacion.$pristine" class="help-block">El Tipo de Investigacion es Requerido.</p>
                             </div>
-
-                            <label class="control-label col-md-2">Departamento</label>
-                            <div class="col-md-4">
-                                <select  ng-model="departamento"
-                                    ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
-                                    class="form-control"
-                                    ng-change="departamentoChange()"
-                                    ng-required="true"
-                                    ng-init="departamento=''">
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Escuela</label>
-                            <div class="col-md-4">
-                                <select  ng-model="escuela"
-                                    ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
-                                    class="form-control" 
-                                    ng-required="true"
-                                    ng-init="escuela=''">
-                                </select> 
-                            </div>
-                            <label class="control-label col-md-2">Semestre</label>
-                            <div class="col-md-4">
-                                <select class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2"> Duración </label>
-                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && actividadForm.duracion.$pristine }">
+                            <label class="control-label col-md-2"> Duraci&oacute;n </label>
+                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && !actividadForm.duracion.$pristine }">
                                 <input name="duracion" class="form-control" type="number" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación" required>
-                                <p ng-show="actividadForm.duracion.$invalid && actividadForm.duracion.$pristine" class="help-block">La duración es Requerida.</p>
+                                <p ng-show="actividadForm.duracion.$invalid && !actividadForm.duracion.$pristine" class="help-block">La duración es Requerida.</p>
                             </div>
-                            <div id="actividad2" ng-show="mostrarActividad[1]">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Facultad</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && !actividadForm.facultadValidacion.$pristine }">
+                                        <select name="facultadValidacion" ng-model="facultad"                
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
+                                            class="form-control"
+                                            ng-change="facultadChange()"
+                                            ng-init="facultad=''"
+                                            required>
+                                        </select>
+                                        <p ng-show="actividadForm.facultadValidacion.$invalid && !actividadForm.facultadValidacion.$pristine" class="help-block">La Facultad es Requerida.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Departamento</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.departamentoValidacion.$invalid && !actividadForm.departamentoValidacion.$pristine }">
+                                        <select  name="departamentoValidacion" ng-model="departamento"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
+                                            class="form-control"
+                                            ng-change="departamentoChange()"
+                                            ng-init="departamento=''"
+                                            required>
+                                        </select>
+                                        <p ng-show="actividadForm.departamentoValidacion.$invalid && !actividadForm.departamentoValidacion.$pristine" class="help-block">El Departamento es Requerida.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Escuela</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && !actividadForm.escuelaValidacion.$pristine }">
+                                        <select name="escuelaValidacion" ng-model="escuela"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
+                                            class="form-control"
+                                            ng-init="escuela=''"
+                                            required>
+                                        </select>
+                                        <p ng-show="actividadForm.escuelaValidacion.$invalid && !actividadForm.escuelaValidacion.$pristine" class="help-block">La Escuela es Requerida.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Area </label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.area.$invalid && !actividadForm.area.$pristine }">
+                                        <select name="area" ng-model="areaInvestigacion"                
+                                            ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: '0'}"
+                                            class="form-control"
+                                            ng-init="areaInvestigacion=''"
+                                            required>
+                                        </select>
+                                        <p ng-show="actividadForm.area.$invalid && !actividadForm.area.$pristine" class="help-block">El area es Requerida.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Sub-Area</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.subarea.$invalid && !actividadForm.subarea.$pristine }">
+                                        <select name="subarea" ng-model="subareaInvestigacion"
+                                            ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: areaInvestigacion.nidEstructura}"
+                                            class="form-control"
+                                            ng-init="subareaInvestigacion=''"
+                                            required>
+                                        </select>
+                                        <p ng-show="actividadForm.subarea.$invalid && !actividadForm.subarea.$pristine" class="help-block">La subArea es Requerida.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Disciplina</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.disciplina.$invalid && !actividadForm.disciplina.$pristine }">
+                                        <select name="disciplina" ng-model="disciplinaInvestigacion" 
+                                            ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: subareaInvestigacion.nidEstructura}"
+                                            class="form-control"
+                                            ng-init="disciplinaInvestigacion=''"
+                                            required>
+                                        </select>
+                                        <p ng-show="actividadForm.disciplina.$invalid && !actividadForm.disciplina.$pristine" class="help-block">La Disciplina es Requerida.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Semestre</label>
+                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.escuela.$invalid && !actividadForm.escuela.$pristine }">
+                                <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
+                                <p ng-show="actividadForm.semestre.$invalid && !actividadForm.semestre.$pristine" class="help-block">El Semestre es Requerido.</p>
+                            </div>
+                            <label class="control-label col-md-2"> Colaboradores</label>
+                            <div class="col-md-3">
+                                <input ng-model="colaborador.nombre" type="text" class="form-control" placeholder="Seleccione los alumnos">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalColaborador">
+                                    <span class="glyphicon glyphicon-user"></span></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div ng-show="mostrarActividad[1]">
                                 <label class="control-label col-md-2"> Tipo de Asesoria</label>
                                 <div class="col-md-4">
                                         <select class="form-control" ng-model="tipoAsesoria" ng-options="opt as opt.snombreTipoAsesoria for opt in tipoAsesorias" ng-init="tipoAsesoria=''"></select>
                                 </div>
                             </div>
-                            <div id="actividad4" ng-show="mostrarActividad[3]">
+                            <div ng-show="mostrarActividad[3]">
                                 <label class="control-label col-md-2"> Tipo de Producción</label>
                                 <div class="col-md-4">
                                         <select class="form-control" ng-model="tipoProduccion" ng-options="opt as opt.snombreTipoProduccion for opt in tipoProducciones" ng-init="tipoProduccion=''"></select>
                                 </div>
                             </div>
                         </div>
-                        <div id="actividad3" ng-show="mostrarActividad[2]" class="form-group">
+                        <div ng-show="mostrarActividad[2]" class="form-group">
                             <label class="control-label col-md-2">Investigador</label>
                             <div class="col-md-4">
                                     <select class="form-control" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
@@ -87,51 +146,13 @@
                                 <select class="form-control" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div id="actividad1" ng-show="mostrarActividad[0]">
-                                <label class="control-label col-md-2">Tipo de Labor</label>
-                                <div class="col-md-4">
-                                    <select class="form-control" ng-model="tipoLabor" ng-options="opt as opt.nombre for opt in tipoLabores" ng-init="tipoLabor=''"></select>
-                                </div>
-                            </div>
-                            <label class="control-label col-md-2"> Colaboradores</label>
+                        <div ng-show="mostrarActividad[0]" class="form-group">
+                            <label class="control-label col-md-2">Tipo de Labor</label>
                             <div class="col-md-4">
-                                <input ng-model="colaborador.nombre" type="text" class="form-control" placeholder="Seleccione los alumnos">
-                            </div>
+                                <select class="form-control" ng-model="tipoLabor" ng-options="opt as opt.nombre for opt in tipoLabores" ng-init="tipoLabor=''"></select>
+                            </div>                            
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2"> Area Investigación</label>
-                            <div class="col-md-4">
-                                <select ng-model="areaInvestigacion"                
-                                    ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: '0'}"
-                                    class="form-control" 
-                                    ng-required="true"
-                                    ng-init="areaInvestigacion=''">
-                                </select>
-                            </div>
 
-                            <label class="control-label col-md-2"> Sub-Area Investigación</label>
-                            <div class="col-md-4">
-                                <select  ng-model="subareaInvestigacion"
-                                    ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: areaInvestigacion.nidEstructura}"
-                                    class="form-control" 
-                                    ng-required="true"
-                                    ng-init="subareaInvestigacion=''">
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2"> Disciplina</label>
-                            <div class="col-md-4">
-                                <select ng-model="disciplinaInvestigacion" 
-                                    ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: subareaInvestigacion.nidEstructura}"
-                                    class="form-control"
-                                    ng-required="true"
-                                    ng-init="disciplinaInvestigacion=''">
-                                </select> 
-                            </div>
-
-                        </div>
                     </form>
                     <form class="form-horizontal">
                         <div class="form-group">
@@ -194,7 +215,7 @@
                                 </div>
                             <div class="col-md-12" style="margin-top:10px;">
                                 <button type="submit" ng-click="registrarProcesoFlujo(actividadForm.$valid)" class="btn btn-primary pull-right"> 
-                                    <span class="glyphicon glyphicon-save"> Registrar</span>
+                                    <span class="glyphicon glyphicon-floppy-disk"></span> Registrar
                                 </button>
                             </div>
                         </div>
@@ -229,6 +250,63 @@
 <!--        <button ng-click="revisarActividad()" class="SRIModal-button SRI-cancelar">Cancelar</button>-->
         <button ng-click="registrarNuevaActividad()" class="SRIModal-button SRI-nuevo">Generar Actividad</button>
         <button ng-click="irActividadesGeneradas()" class="SRIModal-button SRI-confirmar">Ir a Bandeja</button>
+    </div>
+</div>
+
+
+<div id="modalColaborador" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Colaboradoes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Usuarios</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" ng-model="colaborador" ng-options="opt as opt.snombreActor for opt in colaboradores"></select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-primary" ng-click="agregarColaborador()">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                                <table width="100%" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="70%">Colaboradores Asignados</th>
+                                            <th>Acci&oacute;n</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="colaborador in colaboradores">                   
+                                            <td>{{ colaborador.snombreUsuario }}</td>
+                                            <td nowrap>
+                                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioFlujo(actorById)">
+                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="updatePaginacion()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
