@@ -62,37 +62,7 @@ investigacionApp.factory('SeguridadEnrutamiento', function($q, SharedService) {
 
     return {
         verificarPropiedades: function(){
-            DataBase.getAllDatabaseDevice(function (results){
-                $rootScope.load = true;
-                for(var i= 0 ; i < results.length; i++){	
-                    switch (results.item(i).propertyId) {  
-                        case "token":localInstance.token = results.item(i).value;break;  
-                        case "nombreCompleto":localInstance.nombreCompleto = results.item(i).value;break;  
-                        case "lastLogin":localInstance.lastLogin = results.item(i).value;break;  
-                        case "usuarioRol":localInstance.usuarioRol = results.item(i).value ;break;  
-                        case "homepath":localInstance.homepath = results.item(i).value ;break;  
-                    }
-                }
-                console.log(localInstance.token);
-                console.log($location.path());
-                if ($location.path() == "/" && !localInstance.token){
-                    console.log("login path");
-                    $rootScope.$broadcast("loaded-token-mpa");
-                    deferred.resolve('Resuelto');
-                }
-                else if(localInstance.token && localInstance.token!=""){
-                    console.log("############");
-                    console.log($location.path());
-                    $rootScope.$broadcast("loaded-token-mpa");
-                    deferred.resolve('Resuelto');
-                    // Hacer las verificaciones para los paths
-                }else{
-                    deferred.reject('Rechazado');
-                    $location.path("/"); 
-                }
-            });
-            
-            return deferred.promise;
+            return "";
         }
     };
 });
