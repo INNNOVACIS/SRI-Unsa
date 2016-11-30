@@ -116,6 +116,14 @@
             <artifactId>json</artifactId>
             <version>20160810</version>
         </dependency>
+<!--        
+        <dependency>
+            <groupId>SRIUnsaEmail</groupId>
+            <artifactId>com.SRIUnsa</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/SRIUnsaEmail-1.0.jar</systemPath>
+        </dependency>-->
    
    </dependencies>
 

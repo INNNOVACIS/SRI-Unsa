@@ -4,10 +4,21 @@ package com.innnovacis.unsa.business.imp;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
-import com.innnovacis.unsa.dao.IArchivoDao;
+import com.innnovacis.unsa.dao.IDetalleInvestigacionFlujoDao;
+import com.innnovacis.unsa.dao.IFlujoAristaDao;
 import com.innnovacis.unsa.dao.IPlanificacionActividadDao;
+import com.innnovacis.unsa.dao.IProcesoFlujoDao;
+import com.innnovacis.unsa.dao.IUsuarioDao;
+import com.innnovacis.unsa.dao.IUsuarioFlujoDao;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import com.innnovacis.unsa.model.SRIDetalleInvestigacionFlujo;
+import com.innnovacis.unsa.model.SRIFlujoArista;
 import com.innnovacis.unsa.model.SRIPlanificacionActividad;
+import com.innnovacis.unsa.model.SRIProcesoFlujo;
+import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.model.SRIUsuarioFlujo;
+import com.innnovacis.unsa.util.Email;
+import com.innnovacis.unsa.util.SRIActividadGeneral;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
@@ -22,10 +33,22 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     private IActividadInvestigacionDao actividadInvestigacionDao;
     
     @Inject
+    private IProcesoFlujoDao procesoFlujoDao;
+    
+    @Inject
+    private IDetalleInvestigacionFlujoDao detalleInvestigacionFlujoDao;
+    
+    @Inject
+    private IFlujoAristaDao flujoAristaDao;
+    
+    @Inject
     private IPlanificacionActividadDao planificacionActividadDao;
     
     @Inject
-    private IArchivoDao archivoDao;
+    private IUsuarioFlujoDao usuarioFlujoDao;
+    
+    @Inject
+    private IUsuarioDao usuarioDao;
     
     @Inject
     private Logger log;
@@ -94,19 +117,48 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public SRIPlanificacionActividad RegistrarActividad(SRIActividadInvestigacion entidad) {
-        SRIPlanificacionActividad respuesta = null;
-        SRIPlanificacionActividad entidadPlanificacion = new SRIPlanificacionActividad();
+    public SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad) {
+        
+        int idUsuarioFlujo = -1;
+        SRIUsuario usuarioOrigen = null;
+        List<SRIUsuario> usuariosDestino = null;
+        SRIFlujoArista flujoArista = new SRIFlujoArista();
+        SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
+        SRIActividadInvestigacion actividadInvestigacion = new SRIActividadInvestigacion();
+        SRIPlanificacionActividad planificacionActividad = new SRIPlanificacionActividad(); 
+        SRIDetalleInvestigacionFlujo detalleInvestigacionFlujo =  new SRIDetalleInvestigacionFlujo();
+        
+        SRIUsuarioFlujo usuarioFlujo = new SRIUsuarioFlujo();
+        usuarioFlujo.setNIdFlujoActor(entidad.getIdFlujoActorOrigen());
+        usuarioFlujo.setNIdUsuario(entidad.getIdUsuario());
+        
         try{
-            entidad = actividadInvestigacionDao.Insert(entidad);
-            entidadPlanificacion.setNIdActividadInvestigacion(entidad.getNIdActividadInvestigacion());
-            entidadPlanificacion.setSUserCreacion(entidad.getSUserCreacion());
-            entidadPlanificacion.setSEstado(entidad.getSEstado());
-            respuesta = planificacionActividadDao.Insert(entidadPlanificacion);
+            idUsuarioFlujo = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujo);
+            flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
+         
+            procesoFlujo.setNIdArista(flujoArista.getNIdArista());
+            procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujo);
+            procesoFlujo = procesoFlujoDao.Insert(procesoFlujo);
+            
+            actividadInvestigacion = actividadInvestigacionDao.Insert(entidad.getActividadInvestigacion());
+            planificacionActividad.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+            planificacionActividad = planificacionActividadDao.Insert(planificacionActividad);
+            
+            detalleInvestigacionFlujo.setNIdProcesoFlujo(procesoFlujo.getNIdProcesoFlujo());
+            detalleInvestigacionFlujo.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+            detalleInvestigacionFlujo.setSUserCreacion("Administrador");
+            detalleInvestigacionFlujo.setSEstado("A");
+            detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
+            
+            entidad.setIdPlanificacion(planificacionActividad.getNIdPlanificacionActividad());
+            
+            usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
+            usuariosDestino = usuarioDao.GetByIdActorDestino(flujoArista.getSIdFlujoActorDestino());
+            Email email = new Email();
+            email.initGmail(usuarioOrigen.getSUsuarioEmail(), usuariosDestino.get(0).getSUsuarioEmail(),entidad.getActividadInvestigacion());
         }
         catch(Exception ex){
         }
-        return respuesta;
+        return entidad;
     }
-
 }

@@ -1,7 +1,7 @@
-    investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig, DetalleInvestigacionService,
-    HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService, ProcesoFlujoService,
-    EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, FlujoAristaService,
-    UsuarioFlujoService, FileUploader) {
+    investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
+    HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService,
+    EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService,
+    UsuariosService, FileUploader) {
     
     $scope.sharedService = SharedService;
     $scope.tipoInvestigaciones = [];
@@ -14,6 +14,7 @@
     $scope.descripcion = "";
     $scope.nombreInvestigacion = "";
     $scope.duracionInvestigacion = 0;
+    $scope.colaboradores = [];
 
     /***************** CallBack *******************/
     
@@ -111,42 +112,13 @@
         console.log("Respuesta :: ", response);
     };
     
-    var GetUsuarioFlujoSuccess = function(response){
-        $log.debug("GetUsuarioFlujo - Success");
-        console.log("Respuesta :: ", response);
-        $scope.idUsuarioFlujo = response;
-    };
-    var GetUsuarioFlujoError = function(response){
-        $log.debug("GetUsuarioFlujo - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var GetFlujoAristaSuccess = function(response){
-        $log.debug("GetFlujoArista - Success");
-        console.log("Respuesta :: ", response);
-        $scope.idFlujoArista = response.nidArista;
-    };
-    var GetFlujoAristaError = function(response){
-        $log.debug("GetFlujoArista - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var RegistrarProcesoFlujoSuccess = function(response){
-        $log.debug("RegistrarProcesoFlujo - Success");
-        console.log("Respuesta :: ", response);
-        $scope.idProcesoFlujo = response;
-        $scope.registrarInvestigacion();
-    };
-    var RegistrarProcesoFlujoError = function(response){
-        $log.debug("RegistrarProcesoFlujo - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
     var RegistrarInvestigacionSuccess = function(response){
-        addPlanificacion(response.nidPlanificacionActividad);
+        $log.debug("RegistrarInvestigacion - Success");
+        console.log("Respuesta :: ", response);
+        addPlanificacion(response.idPlanificacion);
         uploader.uploadAll();
-        $scope.idActividadInvestigacion = response.nidActividadInvestigacion;
-        $scope.RegistrarDetalleInvestigacion();
+        $scope.loader = false;
+        $scope.openCloseModal(true,false);
     };
     var RegistrarInvestigacionError = function(response){
         $log.debug(response);
@@ -155,16 +127,16 @@
         $scope.loader = false;
     };
     
-    var RegistrarDetalleInvestigacionSuccess = function(response){
-        $log.debug("RegistrarDetalleInvestigacion - Success");
+    var GetUsuariosSuccess = function(response){
+        $log.debug("GetUsuarios - Success");
         console.log("Respuesta :: ", response);
-        $scope.loader = false;
-        $scope.openCloseModal(true,false);
+        $scope.usuarios = response;
     };
-    var RegistrarDetalleInvestigacionError = function(response){
-        $log.debug("RegistrarDetalleInvestigacion - Error");
-        console.log("Respuesta :: ", response);  
+    var GetUsuariosError = function(response){
+        $log.debug("GetUsuarios - Error");
+        console.log("Respuesta :: ", response);
     };
+    
     
     /***************** Servicios ******************/
     
@@ -192,69 +164,69 @@
     $scope.GetTipoProducciones = function(){
         TipoProduccionService.getListaTipoProduccion().then(GetTipoProduccionesSuccess, GetTipoProduccionesError);
     };
-    $scope.GetUsuarioFlujo = function(){
-        var usuarioFlujo = {
-            nidFlujoActor : SRIUnsaConfig.DOCE,
-            nidUsuario : $scope.sharedService.idUsuario,
-            suserCreacion : $scope.sharedService.nombreUsuario,
-            sestado : 'A'
-        };
-        UsuarioFlujoService.CreateAndGetUsuarioFlujo(usuarioFlujo).then(GetUsuarioFlujoSuccess, GetUsuarioFlujoError);
+    $scope.GetUsuarios = function(){
+      	UsuariosService.getUsuarios().then(GetUsuariosSuccess, GetUsuariosError);
     };
-    $scope.GetFlujoArista = function(){
-        FlujoAristaService.GetFlujoAristaByIdOrigenIdEstado(SRIUnsaConfig.DOCE, SRIUnsaConfig.CREADO).then(GetFlujoAristaSuccess, GetFlujoAristaError);
+    
+    $scope.AgregarColaborador = function(){
+        if(!isRepetido($scope.colaboradores, $scope.usuario)){
+            $scope.colaboradores.push($scope.usuario);
+        }
+    };
+    $scope.DeleteColaborador = function(colaborador){
+        var index = -1;
+        angular.forEach($scope.colaboradores, function(valor, key){
+            if(valor.nidUsuario === colaborador.nidUsuario){
+                index = key;
+            }
+        });
+        $scope.colaboradores.splice(index, 1);
+    };
+    var isRepetido = function(lista, objeto){
+        var repetido = false;
+        angular.forEach(lista, function(valor, key){
+            if(valor.nidUsuario === objeto.nidUsuario){
+                repetido = true;
+            }
+        });
+        return repetido;
     };
     
     /************ Registrar Actividad de Investigacion ****************/
     
-    $scope.registrarInvestigacion = function(){
-        $scope.actividadInvestigacion = {
-            nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
-            nhoras : $scope.duracionInvestigacion,
-            sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,
-            sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable,
-            stipoAsesoria : $scope.tipoAsesoria === undefined ? "" : $scope.tipoAsesoria.snombreTipoAsesoria,
-            ssemestre : $scope.semestre.snombreSemestre,
-            sfacultad : $scope.facultad.snombreEstructuraOrganizacion,
-            sescuela : $scope.escuela.snombreEstructuraOrganizacion,
-            sdepartamento : $scope.departamento.snombreEstructuraOrganizacion,
-            sareaInvestigacion: $scope.areaInvestigacion.sNombre,
-            ssubAreaInvestigacion : $scope.subareaInvestigacion.sNombre,
-            sdisciplina : $scope.disciplinaInvestigacion.sNombre,
-            stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
-            snombreActividadInvestigacion : $scope.nombreInvestigacion,
-            sdescripcionActividad : $scope.descripcion,
-            suserCreacion : $scope.sharedService.nombreUsuario,
-            sestado : 'A'
-        };
-        HomeService.registrarInvestigacion($scope.actividadInvestigacion).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
-    };
-    
-    $scope.registrarProcesoFlujo = function(isValid){
+    $scope.registrarInvestigacion = function(isValid){
         if(isValid){
             $scope.loader = true;
             scrollTop();
-            var procesoflujo = {
-                nidUsuarioFlujo : $scope.idUsuarioFlujo,
-                nidArista : $scope.idFlujoArista,
-                nidEstado : SRIUnsaConfig.CREADO,
-                suserCreacion : $scope.sharedService.nombreUsuario,
-                sestado : 'A'
+            var actividadGeneral = {
+                idUsuario : $scope.sharedService.idUsuario,
+                idFlujoActorOrigen : SRIUnsaConfig.DOCE,
+                idEstado : SRIUnsaConfig.CREADO,
+                idPlanificacion : -1,
+                actividadInvestigacion : {
+                    nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
+                    nhoras : $scope.duracionInvestigacion,
+                    sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,
+                    sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable,
+                    stipoAsesoria : $scope.tipoAsesoria === undefined ? "" : $scope.tipoAsesoria.snombreTipoAsesoria,
+                    ssemestre : $scope.semestre.snombreSemestre,
+                    sfacultad : $scope.facultad.snombreEstructuraOrganizacion,
+                    sescuela : $scope.escuela.snombreEstructuraOrganizacion,
+                    sdepartamento : $scope.departamento.snombreEstructuraOrganizacion,
+                    sareaInvestigacion: $scope.areaInvestigacion.sNombre,
+                    ssubAreaInvestigacion : $scope.subareaInvestigacion.sNombre,
+                    sdisciplina : $scope.disciplinaInvestigacion.sNombre,
+                    stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
+                    snombreActividadInvestigacion : $scope.nombreInvestigacion,
+                    sdescripcionActividad : $scope.descripcion,
+                    suserCreacion : $scope.sharedService.nombreUsuario,
+                    sestado : 'A'
+                }
             };
-            ProcesoFlujoService.RegistrarProcesoFlujo(procesoflujo).then(RegistrarProcesoFlujoSuccess, RegistrarProcesoFlujoError);
+            HomeService.registrarInvestigacion(actividadGeneral).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
         } else {
-//            $scope.submitted = true;
+            console.log("campos por validar");
         }
-    };
-    
-    $scope.RegistrarDetalleInvestigacion = function(){
-        var detalleInvestigacion = {
-            nidActividadInvestigacion : $scope.idActividadInvestigacion,
-            nidProcesoFlujo : $scope.idProcesoFlujo,
-            suserCreacion : $scope.sharedService.nombreUsuario,
-            sestado : 'A'
-        };
-        DetalleInvestigacionService.RegistrarDetalleInvestigacion(detalleInvestigacion).then(RegistrarDetalleInvestigacionSuccess, RegistrarDetalleInvestigacionError);
     };
     
     
@@ -265,8 +237,7 @@
     $scope.GetFondos();
     $scope.GetTipoAsesorias();
     $scope.GetTipoProducciones();
-    $scope.GetUsuarioFlujo();
-    $scope.GetFlujoArista();
+    $scope.GetUsuarios();
     
     /*********** Funciones Utilitarias ************/
     

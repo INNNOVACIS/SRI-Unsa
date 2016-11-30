@@ -15,20 +15,16 @@
                                 <p ng-show="actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine" class="help-block">El nombre es Requerido.</p>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" >Tipo Actividad</label>
-                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && !actividadForm.investigacion.$pristine }">
-                                <select name="investigacion" class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion) required></select>
-                                <p ng-show="actividadForm.investigacion.$invalid && !actividadForm.investigacion.$pristine" class="help-block">El Tipo de Investigacion es Requerido.</p>
-                            </div>
-                            <label class="control-label col-md-2"> Duraci&oacute;n </label>
-                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && !actividadForm.duracion.$pristine }">
-                                <input name="duracion" class="form-control" type="number" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación" required>
-                                <p ng-show="actividadForm.duracion.$invalid && !actividadForm.duracion.$pristine" class="help-block">La duración es Requerida.</p>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4" >Tipo Actividad</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && !actividadForm.investigacion.$pristine }">
+                                        <select name="investigacion" class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion) required></select>
+                                        <p ng-show="actividadForm.investigacion.$invalid && !actividadForm.investigacion.$pristine" class="help-block">El Tipo de Investigacion es Requerido.</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Facultad</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && !actividadForm.facultadValidacion.$pristine }">
@@ -69,6 +65,13 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Duraci&oacute;n </label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && !actividadForm.duracion.$pristine }">
+                                        <input name="duracion" class="form-control" type="number" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación" required>
+                                        <p ng-show="actividadForm.duracion.$invalid && !actividadForm.duracion.$pristine" class="help-block">La duración es Requerida.</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Area </label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.area.$invalid && !actividadForm.area.$pristine }">
@@ -214,7 +217,7 @@
                                     </div>
                                 </div>
                             <div class="col-md-12" style="margin-top:10px;">
-                                <button type="submit" ng-click="registrarProcesoFlujo(actividadForm.$valid)" class="btn btn-primary pull-right"> 
+                                <button type="submit" ng-click="registrarInvestigacion(actividadForm.$valid)" class="btn btn-primary pull-right"> 
                                     <span class="glyphicon glyphicon-floppy-disk"></span> Registrar
                                 </button>
                             </div>
@@ -259,7 +262,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Colaboradoes</h4>
+                <h4 class="modal-title">Colaboradores</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -269,10 +272,10 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Usuarios</label>
                                     <div class="col-md-8">
-                                        <select class="form-control" ng-model="colaborador" ng-options="opt as opt.snombreActor for opt in colaboradores"></select>
+                                        <input type="text" ng-model="usuario" uib-typeahead="opt as opt.susuarioLogin for opt in usuarios | filter:$viewValue | limitTo:8" class="form-control">
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="button" class="btn btn-primary" ng-click="agregarColaborador()">
+                                        <button type="button" class="btn btn-primary" ng-click="AgregarColaborador()">
                                             <span class="glyphicon glyphicon-plus"></span>
                                         </button>
                                     </div>
@@ -287,9 +290,9 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="colaborador in colaboradores">                   
-                                            <td>{{ colaborador.snombreUsuario }}</td>
+                                            <td>{{ colaborador.susuarioLogin }}</td>
                                             <td nowrap>
-                                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioFlujo(actorById)">
+                                                <button type="button" class="btn btn-default btn-xs" ng-click="DeleteColaborador(colaborador)">
                                                     <span class="glyphicon glyphicon-trash"></span> Eliminar
                                                 </button>
                                             </td>

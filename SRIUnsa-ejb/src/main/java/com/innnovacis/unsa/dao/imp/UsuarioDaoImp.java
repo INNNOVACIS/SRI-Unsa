@@ -98,4 +98,12 @@ public class UsuarioDaoImp implements IUsuarioDao {
         return objUsuarioRol;
     }
 
+    @Override
+    public List<SRIUsuario> GetByIdActorDestino(int idActorDestino) {
+        Query query = em.createNativeQuery("{call GetByIdActorDestino(?1)}", SRIUsuario.class)
+                        .setParameter(1, idActorDestino);
+        List<SRIUsuario> listUsuarios = query.getResultList();
+        return listUsuarios;
+    }
+
 }

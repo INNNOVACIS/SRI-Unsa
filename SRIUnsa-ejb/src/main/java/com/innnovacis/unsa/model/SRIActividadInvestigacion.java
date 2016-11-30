@@ -31,27 +31,20 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     @Column(name = "idactividadinvestigacion" )
     private int NIdActividadInvestigacion;
 
-    
-    
-
     @Column(name = "idtipoactividadinvestigacion")
     private int NIdTipoActividadInvestigacion;
 
-    
     @Column(name = "horas")
     private int NHoras;
 
     @Column(name = "tipoproduccion")
     private String SRITipoProduccion;
     
-
     @Column(name = "fondoconcursable")
     private String SFondoConcursable;
     
-    
     @Column(name = "tipoasesoria")
     private String STipoAsesoria;
-    
     
     @Column(name = "semestre")
     private String SSemestre;
@@ -73,8 +66,7 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     
     @Column(name = "disciplina")
     private String SDisciplina;
-    
-    
+     
     @Column(name = "tipolabor")
     private String STipoLabor;
     

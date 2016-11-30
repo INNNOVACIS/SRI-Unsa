@@ -28,4 +28,5 @@ public interface IUsuarioDao {
     int GetTotalPaginacion(SRIUsuariosPaginacion entidad);
     List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad);
     SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad);
+    List<SRIUsuario> GetByIdActorDestino(int idActorDestino);
 }

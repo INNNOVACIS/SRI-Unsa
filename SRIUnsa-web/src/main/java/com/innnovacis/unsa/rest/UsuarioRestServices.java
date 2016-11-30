@@ -5,10 +5,13 @@
  */
 package com.innnovacis.unsa.rest;
 
+
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +75,7 @@ public class UsuarioRestServices {
     @Path("/updateUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean updateUsuario(SRIUsuario usuario) {
-        
+    public boolean updateUsuario(SRIUsuario usuario) throws GeneralSecurityException, IOException {
         return usuarioBusiness.Update(usuario);
     }
     
