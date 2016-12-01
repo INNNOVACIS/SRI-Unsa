@@ -19,5 +19,5 @@ public interface IProcesoFlujoDestinoDao {
     SRIProcesoFlujoDestino Update(SRIProcesoFlujoDestino entidad);
     boolean Delete(SRIProcesoFlujoDestino entidad);
     SRIProcesoFlujoDestino GetById(int idEntidad);
-    List<SRIProcesoFlujoDestino> GetAll();  
+    List<SRIProcesoFlujoDestino> GetByIdUsuarioFlujoAndEstadoEnvio(int idUsuarioFlujo, String estadoEnvio);  
 }

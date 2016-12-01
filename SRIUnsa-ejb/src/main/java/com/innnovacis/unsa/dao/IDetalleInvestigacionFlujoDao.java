@@ -19,5 +19,7 @@ public interface IDetalleInvestigacionFlujoDao {
     SRIDetalleInvestigacionFlujo Update(SRIDetalleInvestigacionFlujo entidad);
     boolean Delete(SRIDetalleInvestigacionFlujo entidad);
     SRIDetalleInvestigacionFlujo GetById(int idEntidad);
-    List<SRIDetalleInvestigacionFlujo> GetAll();  
+    List<SRIDetalleInvestigacionFlujo> GetAll();
+    List<SRIDetalleInvestigacionFlujo> GetByIdProcesoFlujo(String stringIdProcesoFlujo);
+    SRIDetalleInvestigacionFlujo GetByIdActividad(int idActividad);
 }

@@ -4,11 +4,15 @@ package com.innnovacis.unsa.dao.imp;
 import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIPaginacion;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
@@ -54,6 +58,36 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     public List<SRIActividadInvestigacion> GetAll() {
         List<SRIActividadInvestigacion> olistaRespuesta = em.createNamedQuery("SRIActividadInvestigacion.GetAll",SRIActividadInvestigacion.class).getResultList();
         return olistaRespuesta;
+    }
+
+    @Override
+    public List<SRIActividadGeneralPaginacion> GetPagina(SRIPaginacion entidad, String idActividades) {
+        Query query = em.createNativeQuery("{call GetActividadesPaginacion(?1,?2,?3,?4,?5,?6,?7,?8,?9)}", SRIActividadGeneralPaginacion.class)
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable())
+                        .setParameter(7, entidad.getRango())
+                        .setParameter(8, entidad.getCurrentPage())
+                        .setParameter(9, idActividades);
+        List<SRIActividadGeneralPaginacion> listActividades = query.getResultList();
+        return listActividades;
+    }
+
+    @Override
+    public int GetTotalPagina(SRIPaginacion entidad, String idActividades) {
+        Query query = em.createNativeQuery("{call GetActividadesTotalPaginacion(?1,?2,?3,?4,?5,?6,?7)}")
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable())
+                        .setParameter(7, idActividades);
+        BigInteger total = (BigInteger) query.getSingleResult();
+        return total.intValue();
     }
 
 }

@@ -16,11 +16,43 @@ import java.io.Serializable;
 public class SRIPaginacion implements Serializable {
     
     private int currentPage;
+    
     private int rango;
+    
     private int total;
+    
+    private int idUsuario;
+    
+    private int idEstado;
+    
+    private int idFlujoActor;
+    
     private SRIActividadInvestigacion filtro;
 
-    
+    public int getIdFlujoActor() {
+        return idFlujoActor;
+    }
+
+    public void setIdFlujoActor(int idFlujoActor) {
+        this.idFlujoActor = idFlujoActor;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
+    }
+
     public SRIActividadInvestigacion getFiltro() {
         return filtro;
     }

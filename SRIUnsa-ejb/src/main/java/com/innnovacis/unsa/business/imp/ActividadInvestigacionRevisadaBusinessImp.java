@@ -4,7 +4,7 @@ package com.innnovacis.unsa.business.imp;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionRevisadaBusiness;
 import com.innnovacis.unsa.dao.IActividadInvestigacionRevisadaDao;
-import com.innnovacis.unsa.util.SRIActividadesRevisadas;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacion;
 
 import javax.inject.Inject;
@@ -21,8 +21,8 @@ public class ActividadInvestigacionRevisadaBusinessImp implements IActividadInve
     private IActividadInvestigacionRevisadaDao actividadRevisadaDao;
 
     @Override
-    public List<SRIActividadesRevisadas> GetAll() {
-         List<SRIActividadesRevisadas> respuesta = null;
+    public List<SRIActividadGeneralPaginacion> GetAll() {
+         List<SRIActividadGeneralPaginacion> respuesta = null;
          try{
             respuesta = actividadRevisadaDao.GetAll();
         }
@@ -33,9 +33,9 @@ public class ActividadInvestigacionRevisadaBusinessImp implements IActividadInve
     }
 
     @Override
-    public List<SRIActividadesRevisadas> GetPaginacion(SRIPaginacion entidad) {
+    public List<SRIActividadGeneralPaginacion> GetPaginacion(SRIPaginacion entidad) {
         
-        List<SRIActividadesRevisadas> respuesta = null;
+        List<SRIActividadGeneralPaginacion> respuesta = null;
          try{
             respuesta = actividadRevisadaDao.GetPagina(entidad);
         }

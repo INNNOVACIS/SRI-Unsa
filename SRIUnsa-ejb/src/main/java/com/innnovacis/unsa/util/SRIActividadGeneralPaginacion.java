@@ -19,7 +19,7 @@ import org.hibernate.annotations.Subselect;
 @Entity
 @Immutable
 @Subselect("")
-public class SRIActividadesRevisadas implements Serializable {
+public class SRIActividadGeneralPaginacion implements Serializable {
     
     @Id
     @Column(name = "idactividadinvestigacion" )

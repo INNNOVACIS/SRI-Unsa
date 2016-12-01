@@ -6,7 +6,7 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionRevisadaBusiness;
-import com.innnovacis.unsa.util.SRIActividadesRevisadas;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +35,7 @@ public class ActividadInvestigacionGeneradaRestService {
     @GET
     @Path("/listarActividadGenerada")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SRIActividadesRevisadas> GetAll(){
+    public List<SRIActividadGeneralPaginacion> GetAll(){
         return actividadRevisadaBusiness.GetAll();
     }
     
@@ -45,7 +45,7 @@ public class ActividadInvestigacionGeneradaRestService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response paginacionUsuario(SRIPaginacion entidad) {
         
-        List<SRIActividadesRevisadas> lista = actividadRevisadaBusiness.GetPaginacion(entidad);
+        List<SRIActividadGeneralPaginacion> lista = actividadRevisadaBusiness.GetPaginacion(entidad);
         int total = actividadRevisadaBusiness.GetTotalPaginacion(entidad);
 
         Map<String, Object> responseObj = new HashMap<>();

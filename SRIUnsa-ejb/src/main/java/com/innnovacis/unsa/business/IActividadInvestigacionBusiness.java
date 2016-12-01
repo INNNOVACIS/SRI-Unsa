@@ -6,10 +6,11 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import com.innnovacis.unsa.model.SRIPlanificacionActividad;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
+import com.innnovacis.unsa.util.SRIPaginacion;
 
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 
 /**
@@ -26,5 +27,6 @@ public interface IActividadInvestigacionBusiness {
     List<SRIActividadInvestigacion> GetAll();
     
     SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad);
-
+    Map<String, Object> GetActividadPaginacion(SRIPaginacion pagina);
+    SRIActividadGeneral AprobarActividadInvestigacion(SRIActividadGeneral entidad);
 }

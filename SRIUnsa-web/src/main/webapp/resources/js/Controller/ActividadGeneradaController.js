@@ -1,6 +1,7 @@
 investigacionApp.controller('ActividadGeneradaController', function($log, $scope, $routeParams, $location, TipoInvestigacionService, 
-    ArchivosService, SharedService) {
+    ArchivosService, ActividadesPendientesService, SharedService, SRIUnsaConfig) {
     
+    $scope.sharedService = SharedService;
     $scope.loader = false;
     $scope.idActividad = $routeParams.ID;
     $scope.revisado = false;
@@ -21,13 +22,11 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     
     /******************* Servicios Callback *******************/
     
-    
     var getInvestigacionByIdSuccess = function(response){
         console.log("getInvestigacionByIdSuccess :: ", response);
         $scope.actividadGeneradaVista = response;
         $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
     };
-    
     var getInvestigacionByIdError = function(response){
         console.log("getInvestigacionByIdError :: ", response);
         $scope.loader = false;  
@@ -42,7 +41,6 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
             });
         }, 1000);
     };
-    
     var getArchivoByIdActividadError = function(response){
         console.log("getArchivoByIdActividadError :: ", response);
         $scope.loader = false;  
@@ -51,10 +49,36 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     var descargarArchivoSuccess = function(response){
         $log.debug("Descargar Archivo - Success");
     };
-    
     var descargarArchivoError = function(response){
         $log.debug("Descargar Archivo - Error");
         console.log("Descargar Archivo :: ", response);
+    };
+    
+    var AprobarActividadSuccess = function(response){
+        $log.debug("AprobarActividad - Success");
+        console.log("Respuesta :: ", response);
+                scrollTop();
+        setTimeout(function(){
+            $scope.$apply(function(){ 
+                var popUp = SharedService.popUp;
+                var titulo = "Aprobación Exitosa!";
+                var mensaje = "La Actividad de Investigación se aprobó correctamente.";
+                var url = "";
+                if($scope.revisado) { url = "/actividad/Revisadas"; }
+                if($scope.generado) { url = "/actividad/Generadas"; }
+                if($scope.pendiente){ url = "/actividad/Pendientes"; }
+                
+                var op1 = {open:true, txt:'Ir a Bandeja', fun:function(){
+                    popUp.irPopUp();
+                }};
+                popUp.showPopUp(titulo, mensaje, url, op1);
+                $scope.loader = false;
+            });
+        }, 1000);
+    };
+    var AprobarActividadError = function(response){
+        $log.debug("AprobarActividad - Error");
+        console.log("Respuesta :: ", response);
     };
     
     /******************* Servicios *******************/
@@ -77,26 +101,18 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
         ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
     };
     
-    $scope.aprobarActividad = function(){
+    $scope.AprobarActividad = function(){
         $scope.loader = true;
-        scrollTop();
-        setTimeout(function(){
-            $scope.$apply(function(){ 
-                var popUp = SharedService.popUp;
-                var titulo = "Aprobación Exitosa!";
-                var mensaje = "La Actividad de Investigación se aprobó correctamente.";
-                var url = "";
-                if($scope.revisado) { url = "/actividad/Revisadas"; }
-                if($scope.generado) { url = "/actividad/Generadas"; }
-                if($scope.pendiente){ url = "/actividad/Pendientes"; }
-                
-                var op1 = {open:true, txt:'Ir a Bandeja', fun:function(){
-                    popUp.irPopUp();
-                }};
-                popUp.showPopUp(titulo, mensaje, url, op1);
-                $scope.loader = false;
-            });
-        }, 1000);
+        var actividadGeneral = {
+            idUsuario : $scope.sharedService.idUsuario,
+            idFlujoActorOrigen : SRIUnsaConfig.DIDE,
+            idEstado : SRIUnsaConfig.REVISADO,
+            idPlanificacion : -1,
+            actividadInvestigacion : {
+                nidActividadInvestigacion : $scope.idActividad
+            }
+        };
+        ActividadesPendientesService.AprobarActividad(actividadGeneral).then(AprobarActividadSuccess, AprobarActividadError);
     };
     
     /************ Funciones Utilitarias ************/

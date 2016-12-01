@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
@@ -23,16 +24,16 @@ public class DetalleInvestigacionFlujoDaoImp implements IDetalleInvestigacionFlu
     @Transactional
     public SRIDetalleInvestigacionFlujo  Insert(SRIDetalleInvestigacionFlujo entidad) {
         entidad.setDFechaCreacion(new Date());
-         em.persist(entidad);
-         return entidad;
+        em.persist(entidad);
+        return entidad;
     }
 
     @Override
     @Transactional
     public SRIDetalleInvestigacionFlujo Update(SRIDetalleInvestigacionFlujo entidad) {
         entidad.setDFechaModificacion(new Date());
-         em.merge(entidad);
-         return entidad;
+        em.merge(entidad);
+        return entidad;
     }
 
     @Override
@@ -54,6 +55,20 @@ public class DetalleInvestigacionFlujoDaoImp implements IDetalleInvestigacionFlu
     public List<SRIDetalleInvestigacionFlujo> GetAll() {
         List<SRIDetalleInvestigacionFlujo> olistaRespuesta = em.createNamedQuery("SRIDetalleInvestigacionFlujo.GetAll",SRIDetalleInvestigacionFlujo.class).getResultList();
         return olistaRespuesta;
+    }
+
+    @Override
+    public List<SRIDetalleInvestigacionFlujo> GetByIdProcesoFlujo(String stringIdProcesoFlujo) {
+        Query query = em.createNativeQuery("{call GetDetalleInvestigacionFlujoByIdProcesoFlujo(?1)}", SRIDetalleInvestigacionFlujo.class)
+                        .setParameter(1, stringIdProcesoFlujo);
+        List<SRIDetalleInvestigacionFlujo> listDetalleInvestigacionFlujo = query.getResultList();
+        return listDetalleInvestigacionFlujo;
+    }
+
+    @Override
+    public SRIDetalleInvestigacionFlujo GetByIdActividad(int idActividad) {
+        SRIDetalleInvestigacionFlujo entidad = em.createNamedQuery("SRIDetalleInvestigacionFlujo.GetByIdActividad", SRIDetalleInvestigacionFlujo.class).setParameter("idEntidad", idActividad).getSingleResult();
+        return entidad;
     }
 
 }

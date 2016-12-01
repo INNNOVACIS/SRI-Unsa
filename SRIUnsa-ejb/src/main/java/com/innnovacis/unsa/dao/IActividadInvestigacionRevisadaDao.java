@@ -5,7 +5,7 @@
  */
 package com.innnovacis.unsa.dao;
 
-import com.innnovacis.unsa.util.SRIActividadesRevisadas;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -17,7 +17,7 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public interface IActividadInvestigacionRevisadaDao {
     
-    List<SRIActividadesRevisadas> GetAll();
-    List<SRIActividadesRevisadas> GetPagina(SRIPaginacion entidad);
+    List<SRIActividadGeneralPaginacion> GetAll();
+    List<SRIActividadGeneralPaginacion> GetPagina(SRIPaginacion entidad);
     int GetTotalPaginacion(SRIPaginacion entidad);
 }

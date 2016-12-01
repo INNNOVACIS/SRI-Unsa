@@ -1,7 +1,8 @@
-investigacionApp.controller('ActividadesPendientesController', function($log, $scope, $location, FondoConcursableService, 
-    SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService
+investigacionApp.controller('ActividadesPendientesController', function($log, $scope, $location, FondoConcursableService, SRIUnsaConfig,
+    SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService, SharedService
     ) {
     
+    $scope.sharedService = SharedService;
     $scope.loader = false;
     
     /******************* Servicios Callback *******************/
@@ -94,16 +95,7 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
      	$log.debug("Get Semestre - Error");
         console.log("Error Response Semestre :: ", response);
     };
-    
-    var getAllActividadesPendientessSuccess = function(response){
-        $scope.actividadesPendientes = response;
-        console.log("succcess :: ", response);
-    };
-    
-    var getAllActividadesPendientesError = function(response){
-        console.log("error :: ", response);
-    };
-    
+
     var getTipoInvestigacionSuccess = function(response){
     	$log.debug("Get Investigacion - Success");
         console.log("Respuesta Investigacion :: ", response);
@@ -136,11 +128,7 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
     };
-    
-    $scope.getAllActividadesPendientes = function(){
-        ActividadesPendientesService.getAllActividadesPendientes().then(getAllActividadesPendientessSuccess, getAllActividadesPendientesError);
-    };
-    
+
     $scope.facultadChange = function(){
         $scope.departamento = {};
         $scope.escuela = {};
@@ -188,7 +176,9 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     };
     
     $scope.getActividades = function(){
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : getFiltros()};
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: SRIUnsaConfig.DIDE, 
+                          filtro : getFiltros()};
         ActividadesPendientesService.paginacionActividades(objPagina).then(paginacionActividadesSuccess, paginacionActividadesError);
     };
     

@@ -78,7 +78,7 @@ public class ProcesoFlujoDestinoBusinessImp implements IProcesoFlujoDestinoBusin
     public List<SRIProcesoFlujoDestino> GetAll() {
          List<SRIProcesoFlujoDestino> respuesta = null;
          try{
-            respuesta = procesoFlujoDestinoDao.GetAll();
+            respuesta = null;//procesoFlujoDestinoDao.GetAll();
         }
         catch(Exception ex){
         }

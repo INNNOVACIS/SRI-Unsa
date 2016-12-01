@@ -50,8 +50,10 @@ public class ProcesoFlujoDestinoDaoImp implements IProcesoFlujoDestinoDao {
     }
 
     @Override
-    public List<SRIProcesoFlujoDestino> GetAll() {
-        List<SRIProcesoFlujoDestino> olistaRespuesta = em.createNamedQuery("SRIProcesoFlujoDestino.GetAll",SRIProcesoFlujoDestino.class).getResultList();
+    public List<SRIProcesoFlujoDestino> GetByIdUsuarioFlujoAndEstadoEnvio(int idUsuarioFlujo, String estadoEnvio) {
+        List<SRIProcesoFlujoDestino> olistaRespuesta = em.createNamedQuery("SRIProcesoFlujoDestino.GetByIdUsuarioFlujoAndEstadoEnvio",SRIProcesoFlujoDestino.class)
+                                                        .setParameter("idUsuarioFlujo", idUsuarioFlujo)
+                                                        .setParameter("estadoEnvio", estadoEnvio).getResultList();
         return olistaRespuesta;
     }
 

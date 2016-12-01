@@ -6,6 +6,8 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -19,5 +21,8 @@ public interface IActividadInvestigacionDao {
     SRIActividadInvestigacion Update(SRIActividadInvestigacion entidad);
     boolean Delete(SRIActividadInvestigacion entidad);
     SRIActividadInvestigacion GetById(int idEntidad);
-    List<SRIActividadInvestigacion> GetAll();  
+    List<SRIActividadInvestigacion> GetAll();
+    
+    List<SRIActividadGeneralPaginacion> GetPagina(SRIPaginacion pagina, String idActividades);
+    int GetTotalPagina(SRIPaginacion pagina, String idActividades);
 }
