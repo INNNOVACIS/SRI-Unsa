@@ -19,6 +19,7 @@ import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.model.SRIUsuarioFlujo;
 import com.innnovacis.unsa.util.Email;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
+import java.util.ArrayList;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
@@ -121,7 +122,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         
         int idUsuarioFlujo = -1;
         SRIUsuario usuarioOrigen = null;
-        List<SRIUsuario> usuariosDestino = null;
+        List<SRIUsuario> usuariosDestino = new ArrayList<SRIUsuario>();
         SRIFlujoArista flujoArista = new SRIFlujoArista();
         SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
         SRIActividadInvestigacion actividadInvestigacion = new SRIActividadInvestigacion();
@@ -155,7 +156,12 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
             usuariosDestino = usuarioDao.GetByIdActorDestino(flujoArista.getSIdFlujoActorDestino());
             Email email = new Email();
-            email.initGmail(usuarioOrigen.getSUsuarioEmail(), usuariosDestino.get(0).getSUsuarioEmail(),entidad.getActividadInvestigacion());
+            List<String> to = new ArrayList<String>();
+            for(int i = 0 ; i < usuariosDestino.size(); i++){
+                to.add(usuariosDestino.get(i).getSUsuarioEmail());
+            }
+            to.add(usuarioOrigen.getSUsuarioEmail());
+            email.initGmail(to,entidad.getActividadInvestigacion());
         }
         catch(Exception ex){
         }

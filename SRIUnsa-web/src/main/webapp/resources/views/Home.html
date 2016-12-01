@@ -8,14 +8,17 @@
                 <div class="panel-heading">Actividad de Investigación: <strong>{{tipoInvestigacion.nombre}}</strong></div>
                 <div class="panel-body">
                     <form name="actividadForm" novalidate class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-md-2" >Nombre</label>
-                            <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine }">
-                                <input name="nombre" ng-model="nombreInvestigacion" type="text" class="form-control" placeholder="Nombre de la investigación" required>
-                                <p ng-show="actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine" class="help-block">El nombre es Requerido.</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" >Nombre</label>
+                                    <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine }">
+                                        <input name="nombre" ng-model="nombreInvestigacion" type="text" class="form-control" placeholder="Nombre de la investigación" required>
+                                        <p ng-show="actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine" class="help-block">El nombre es Requerido.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -110,52 +113,77 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Semestre</label>
-                            <div class="col-md-4" ng-class="{ 'has-error' : actividadForm.escuela.$invalid && !actividadForm.escuela.$pristine }">
-                                <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
-                                <p ng-show="actividadForm.semestre.$invalid && !actividadForm.semestre.$pristine" class="help-block">El Semestre es Requerido.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Semestre</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.escuela.$invalid && !actividadForm.escuela.$pristine }">
+                                        <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
+                                        <p ng-show="actividadForm.semestre.$invalid && !actividadForm.semestre.$pristine" class="help-block">El Semestre es Requerido.</p>
+                                    </div>
+                                </div>
                             </div>
-                            <label class="control-label col-md-2"> Colaboradores</label>
-                            <div class="col-md-3">
-                                <input ng-model="colaborador.nombre" type="text" class="form-control" placeholder="Seleccione los alumnos">
-                            </div>
-                            <div class="col-md-1">
-                                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalColaborador">
-                                    <span class="glyphicon glyphicon-user"></span></button>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Colaboradores</label>
+                                    <div class="col-md-6">
+                                        <input ng-model="colaborador.nombre" type="text" class="form-control" placeholder="Seleccione los alumnos">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalColaborador">
+                                            <span class="glyphicon glyphicon-user"></span></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div ng-show="mostrarActividad[1]">
-                                <label class="control-label col-md-2"> Tipo de Asesoria</label>
-                                <div class="col-md-4">
+                        <div class="row" ng-show="mostrarActividad[1]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Tipo de Asesoria</label>
+                                    <div class="col-md-8">
                                         <select class="form-control" ng-model="tipoAsesoria" ng-options="opt as opt.snombreTipoAsesoria for opt in tipoAsesorias" ng-init="tipoAsesoria=''"></select>
+                                    </div>
                                 </div>
                             </div>
-                            <div ng-show="mostrarActividad[3]">
-                                <label class="control-label col-md-2"> Tipo de Producción</label>
-                                <div class="col-md-4">
+                        </div>
+                        <div class="row" ng-show="mostrarActividad[3]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Tipo de Producción</label>
+                                    <div class="col-md-8">
                                         <select class="form-control" ng-model="tipoProduccion" ng-options="opt as opt.snombreTipoProduccion for opt in tipoProducciones" ng-init="tipoProduccion=''"></select>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
-                        <div ng-show="mostrarActividad[2]" class="form-group">
-                            <label class="control-label col-md-2">Investigador</label>
-                            <div class="col-md-4">
-                                    <select class="form-control" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
+                        <div class="row" ng-show="mostrarActividad[2]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Investigador</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
+                                    </div>
+                                </div>
                             </div>
-                            <label class="control-label col-md-2"> Fondo Concursable</label>
-                            <div class="col-md-4">
-                                <select class="form-control" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Fondo Concursable</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div ng-show="mostrarActividad[0]" class="form-group">
-                            <label class="control-label col-md-2">Tipo de Labor</label>
-                            <div class="col-md-4">
-                                <select class="form-control" ng-model="tipoLabor" ng-options="opt as opt.nombre for opt in tipoLabores" ng-init="tipoLabor=''"></select>
-                            </div>                            
+                        <div class="row" ng-show="mostrarActividad[0]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Tipo de Labor</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" ng-model="tipoLabor" ng-options="opt as opt.nombre for opt in tipoLabores" ng-init="tipoLabor=''"></select>
+                                    </div>                            
+                                </div>
+                            </div>
                         </div>
-
                     </form>
                     <form class="form-horizontal">
                         <div class="form-group">
