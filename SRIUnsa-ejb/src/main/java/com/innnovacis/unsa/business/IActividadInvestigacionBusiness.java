@@ -29,4 +29,5 @@ public interface IActividadInvestigacionBusiness {
     SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad);
     Map<String, Object> GetActividadPaginacion(SRIPaginacion pagina);
     SRIActividadGeneral AprobarActividadInvestigacion(SRIActividadGeneral entidad);
+    Map<String, Object> GetActividadesGeneradas(SRIPaginacion pagina);
 }

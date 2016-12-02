@@ -90,4 +90,26 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
         return total.intValue();
     }
 
+    @Override
+    public int GetTotalActividadesGeneradas(SRIPaginacion entidad) {
+        
+        return 0;
+    }
+
+    @Override
+    public List<SRIActividadGeneralPaginacion> GetActividadesGeneradas(SRIPaginacion entidad) {
+        Query query = em.createNativeQuery("{call GetActividadesGeneradas(?1,?2,?3,?4,?5,?6,?7,?8,?9)}", SRIActividadGeneralPaginacion.class)
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable())
+                        .setParameter(7, entidad.getRango())
+                        .setParameter(8, entidad.getCurrentPage())
+                        .setParameter(9, entidad.getIdUsuario());
+        List<SRIActividadGeneralPaginacion> listActividades = query.getResultList();
+        return listActividades;
+    }
+
 }

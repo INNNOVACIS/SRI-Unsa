@@ -18,13 +18,13 @@ investigacionApp.service("ActividadesGeneradasService", function(SRIUnsaConfig, 
         return deferred.promise;
     };
     
-    this.paginacionActividades = function(request) {
-        $log.debug("Actividades Generadas Service - paginacionActividades");
+    this.GetActividadesGeneradas = function(request) {
+        $log.debug("ActividadesGeneradasService - GetActividadesGeneradas");
 
         var deferred = $q.defer();
         $http({
             method : 'POST',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/actividadesPaginacion',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/actividades',
             data : request
         }).success(function(response) {
             deferred.resolve(response);

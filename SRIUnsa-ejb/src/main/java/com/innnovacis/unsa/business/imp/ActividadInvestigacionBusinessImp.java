@@ -248,6 +248,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     @Override
     public SRIActividadGeneral AprobarActividadInvestigacion(SRIActividadGeneral entidad) {
         
+        SRIActividadGeneral respuesta= null;
         int idUsuarioFlujoOrigen = -1;
         SRIUsuario usuarioOrigen = null;
         SRIDetalleInvestigacionFlujo detalleInvestigacionFlujo =  null;
@@ -274,12 +275,31 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             detalleInvestigacionFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
             detalleInvestigacionFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
             detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Update(detalleInvestigacionFlujo);
-            
+//            if(detalleInvestigacionFlujo.getNIdDetalleInvestigacionFlujo() != 0){
+//            
+//            }
                 
         } catch(Exception ex) {
         
         }
         return entidad;
+    }
+
+    @Override
+    public Map<String, Object> GetActividadesGeneradas(SRIPaginacion entidad) {
+        
+        int total = -1;
+        List<SRIActividadGeneralPaginacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            lstActividadGeneral = actividadInvestigacionDao.GetActividadesGeneradas(entidad);
+            total = actividadInvestigacionDao.GetTotalActividadesGeneradas(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+        
+        }
+        return respuesta;
     }
 
 }

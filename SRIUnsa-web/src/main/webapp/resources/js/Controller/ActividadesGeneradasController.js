@@ -1,26 +1,26 @@
 investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, $location, SharedService, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService,
-    TipoNivelService, EstructuraOrganizacionService) {
+    TipoNivelService, EstructuraOrganizacionService, SRIUnsaConfig) {
     
     $scope.sharedService = SharedService;
-    console.log("sessvars :: ", sessvars);
     $scope.loader = false;
     
     /******************* Servicios Callback *******************/
     
     var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("Get tipoNivel - Success");    	
+    	$log.debug("GettipoNivel - Success");
+        console.log("Respuesta :: ", response);
     	$scope.niveles = response;
         $scope.getEstructuraOrganizaciones();
     };
-
     var getTipoNivelServiceError = function(response){
-     	$log.debug("Get TipoNivel - Error"); 
+     	$log.debug("GetTipoNivel - Error"); 
+        console.log("Respuesta :: ", response);
     };
 
     var getEstructuraOrganizacionServiceSuccess = function(response){
-    	$log.debug("Get EstructuraOrganizacion - Success");
-        
+    	$log.debug("GetEstructuraOrganizacion - Success");
+        console.log("Respuesta :: ", response);
         angular.forEach(response, function(superior, key) {
             angular.forEach(response, function(value, key) {
                 if(superior.nidPadre === value.nidEstructuraOrganizacion){
@@ -34,60 +34,51 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
                 }
             });
         });
-        
     	$scope.estructuraOrganizaciones = response;
     };
-
     var getEstructuraOrganizacionServiceError = function(response){
-     	$log.debug("Get EstructuraOrganizacion - Error"); 
+     	$log.debug("GetEstructuraOrganizacion - Error"); 
+        console.log("Respuesta :: ", response);
     };
     
     var getFondoServiceSuccess = function(response){
-    	$log.debug("Get Fondo - Success");
+    	$log.debug("GetFondo - Success");
+        console.log("Respuesta :: ", response);
     	$scope.fondos = response;
     };
-
     var getFondoServiceError = function(response){
-     	$log.debug("Get Fondo - Error", response); 
+     	$log.debug("GetFondo - Error", response);
+        console.log("Respuesta :: ", response);
     };
     
     var getSemestreServiceSuccess = function(response){
-    	$log.debug("Get Semestre - Success");        
+    	$log.debug("GetSemestre - Success");
+        console.log("Respuesta :: ", response);
     	$scope.semestres = response;
     };
-    
     var getSemestreServiceError = function(response){
-     	$log.debug("Get Semestre - Error");
-        console.log("Error Response Semestre :: ", response);
+     	$log.debug("GetSemestre - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getTipoInvestigacionSuccess = function(response){
-    	$log.debug("Get Investigacion - Success");
-        console.log("Respuesta Investigacion :: ", response);
+    	$log.debug("GetInvestigacion - Success");
+        console.log("Respuesta :: ", response);
     	$scope.tipoInvestigaciones = response;
-    };
-    
+    };   
     var getTipoInvestigacionError = function(response){
-     	$log.debug("Get Investigacion - Error");
-        console.log("Error Response Investigacion :: ", response);
-    };
-    
-    var getAllActividadesGeneradasSuccess = function(response){
-        $scope.actividadesGeneradas = response;
-        console.log("succcess :: ", response);
-    };
-    
-    var getAllActividadesGeneradasError = function(response){
-        console.log("error :: ", response);
+     	$log.debug("GetInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getAreaInvestigacionServiceSuccess = function(response){
-    	$log.debug("Get AreaInvestigacion - Success");
+    	$log.debug("GetAreaInvestigacion - Success");
+        console.log("Respuesta :: ", response);
     	$scope.areaInvestigaciones = response;
     };
-
     var getAreaInvestigacionServiceError = function(response){
-     	$log.debug("Get AreaInvestigacion - Error"); 
+     	$log.debug("GetAreaInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
 
     
@@ -96,30 +87,22 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     $scope.getListaTipoNivel = function(){
       	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
     };
-
     $scope.getEstructuraOrganizaciones = function(){
       	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
-    };
-    
+    };   
     $scope.getAreaInvestigaciones = function(){
       	EstructuraAreaInvestigacionService.getAreaInvestigaciones().then(getAreaInvestigacionServiceSuccess, getAreaInvestigacionServiceError);
-    };
-    
+    };   
     $scope.getFondos = function(){
       	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
-    };
-    
+    };   
     $scope.getSemestres = function(){
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
-    
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
     };
-    
-    $scope.getAllActividadesGeneradas = function(){
-        ActividadesGeneradasService.getAllActividadesGeneradas().then(getAllActividadesGeneradasSuccess, getAllActividadesGeneradasError);
-    };
+
     
     $scope.facultadChange = function(){
         $scope.departamento = {};
@@ -159,18 +142,22 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         return filtro;
     };
     
-    var paginacionActividadesSuccess = function(response){
-        $log.debug("Get Actividades - Success");
+    var GetActividadesGeneradasSuccess = function(response){
+        $log.debug("GetActividadesGeneradas - Success");
+        console.log("Respuesta :: ", response);
         $scope.actividadesGeneradas = response.lista;
         $scope.total = response.total;
     };
-    var paginacionActividadesError = function(response){
-        console.log("error :: ", response);
+    var GetActividadesGeneradasError = function(response){
+        $log.debug("GetActividadesGeneradas - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getActividades = function(){
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : getFiltros()};
-        ActividadesGeneradasService.paginacionActividades(objPagina).then(paginacionActividadesSuccess, paginacionActividadesError);
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        ActividadesGeneradasService.GetActividadesGeneradas(objPagina).then(GetActividadesGeneradasSuccess, GetActividadesGeneradasError);
     };
     
     $scope.filtrar = function() {
