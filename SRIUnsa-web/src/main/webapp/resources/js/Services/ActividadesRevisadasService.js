@@ -37,13 +37,13 @@ investigacionApp.service("ActividadesRevisadasService", function(SRIUnsaConfig, 
         return deferred.promise;
     };
     
-    this.paginacionActividades = function(request) {
-        $log.debug("Actividades Generadas Service - paginacionActividades");
+    this.GetActividadesRevisadas = function(request) {
+        $log.debug("ActividadesRevisadasService - GetActividadesRevisadas");
 
         var deferred = $q.defer();
         $http({
             method : 'POST',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionRevisada/actividadesPaginacion',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionRevisada/actividades',
             data : request
         }).success(function(response) {
             deferred.resolve(response);

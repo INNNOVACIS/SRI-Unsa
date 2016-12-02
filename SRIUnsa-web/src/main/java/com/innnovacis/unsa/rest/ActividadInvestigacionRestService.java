@@ -7,11 +7,7 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import com.innnovacis.unsa.model.SRIPlanificacionActividad;
-import com.innnovacis.unsa.util.Email;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -84,8 +80,6 @@ public class ActividadInvestigacionRestService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public SRIActividadGeneral RegistrarActividadInvestigacion(SRIActividadGeneral entidad){
-//        Email email = new Email();
-//        email.initGmail("ali.arapa@gmail.com", investigacion);
         return investigacionBusiness.RegistrarActividad(entidad);
     }
     

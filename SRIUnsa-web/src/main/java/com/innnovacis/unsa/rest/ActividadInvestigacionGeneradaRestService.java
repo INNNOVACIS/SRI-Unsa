@@ -31,7 +31,7 @@ public class ActividadInvestigacionGeneradaRestService {
     @Path("/actividades")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response paginacionPendientes(SRIPaginacion entidad) {
+    public Response GetActividadesGeneradas(SRIPaginacion entidad) {
         Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(actividadInvestigacionBusiness.GetActividadesGeneradas(entidad));
         return builder.build();
     }

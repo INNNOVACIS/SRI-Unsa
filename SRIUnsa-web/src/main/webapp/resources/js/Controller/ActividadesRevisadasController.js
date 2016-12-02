@@ -1,9 +1,10 @@
 investigacionApp.controller('ActividadesRevisadasController', function($log, $scope, $location, ActividadesRevisadasService, 
-    SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService
-    ) {    
-    
-    $scope.loader = false;
+    SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, SharedService,
+    SRIUnsaConfig
+    ) {
 
+    $scope.sharedService = SharedService;
+    $scope.loader = false;
     
     /*********** Servicios Callback ***********/  
     
@@ -146,17 +147,22 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
         return filtro;    
     };
     
-    var paginacionActividadesSuccess = function(response){
+    var GetActividadesRevisadasSuccess = function(response){
+        $log.debug("GetActividadesRevisadas - Success");
+        console.log("Respuesta :: ", response);
         $scope.actividadesRevisadas = response.lista;
         $scope.total = response.total;
     };
-    var paginacionActividadesError = function(response){
-        console.log("error :: ", response);
+    var GetActividadesRevisadasError = function(response){
+        $log.debug("GetActividadesRevisadas - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getActividades = function(){
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : getFiltros()};
-        ActividadesRevisadasService.paginacionActividades(objPagina).then(paginacionActividadesSuccess, paginacionActividadesError);
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
+                          filtro : getFiltros()};
+        ActividadesRevisadasService.GetActividadesRevisadas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
     };
     
     $scope.filtrar = function() {

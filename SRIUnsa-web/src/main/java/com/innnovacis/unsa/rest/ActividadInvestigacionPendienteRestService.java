@@ -6,7 +6,6 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
-import com.innnovacis.unsa.business.IActividadInvestigacionRevisadaBusiness;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import javax.enterprise.context.RequestScoped;
@@ -33,8 +32,8 @@ public class ActividadInvestigacionPendienteRestService {
     @Path("/actividadesPaginacion")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response paginacionPendientes(SRIPaginacion entidad) {
-        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(actividadInvestigacionBusiness.GetActividadPaginacion(entidad));
+    public Response GetActividadesPendientes(SRIPaginacion entidad) {
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(actividadInvestigacionBusiness.GetActividadesPendientes(entidad));
         return builder.build();
     }
     

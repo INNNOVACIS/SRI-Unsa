@@ -6,6 +6,7 @@ import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
 import com.innnovacis.unsa.dao.IDetalleInvestigacionFlujoDao;
 import com.innnovacis.unsa.dao.IEstadoDao;
+import com.innnovacis.unsa.dao.IFlujoActorDao;
 import com.innnovacis.unsa.dao.IFlujoAristaDao;
 import com.innnovacis.unsa.dao.IPlanificacionActividadDao;
 import com.innnovacis.unsa.dao.IProcesoFlujoDao;
@@ -14,7 +15,7 @@ import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.dao.IUsuarioFlujoDao;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.model.SRIDetalleInvestigacionFlujo;
-import com.innnovacis.unsa.model.SRIEstado;
+import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIFlujoArista;
 import com.innnovacis.unsa.model.SRIPlanificacionActividad;
 import com.innnovacis.unsa.model.SRIProcesoFlujo;
@@ -64,6 +65,9 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     
     @Inject
     private IEstadoDao estadoDao;
+    
+    @Inject
+    private IFlujoActorDao flujoActorDao;
     
     @Inject
     private Logger log;
@@ -130,50 +134,6 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         }
          return respuesta;
     }
-
-    
-    @Override
-    public Map<String, Object> GetActividadPaginacion(SRIPaginacion entidad) {
-        
-        Map<String, Object> respuestaMap = new HashMap<>();
-        int total = -1;
-        int idUsuarioFlujo = -1;
-        SRIEstado estado = null;
-        String stringIdProcesoFlujo = "";
-        String stringIDActividades = "";
-        
-        List<SRIActividadGeneralPaginacion> respuesta = null;
-        List<SRIProcesoFlujoDestino> lstProcesoFlujoDestino = null;
-        SRIUsuarioFlujo usuarioFlujo = new SRIUsuarioFlujo();
-        List<SRIDetalleInvestigacionFlujo> lstDetalleInvestigacionFlujo = null;
-        
-        try{
-            estado = estadoDao.GetById(entidad.getIdEstado());
-            
-            usuarioFlujo.setNIdFlujoActor(entidad.getIdFlujoActor());
-            usuarioFlujo.setNIdUsuario(entidad.getIdUsuario());
-            idUsuarioFlujo = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujo);
-            
-            lstProcesoFlujoDestino = procesoFlujoDestinoDao.GetByIdUsuarioFlujoAndEstadoEnvio(idUsuarioFlujo, estado.getSNombreEstado());
-            for(int i = 0; i < lstProcesoFlujoDestino.size(); i++){
-                stringIdProcesoFlujo = stringIdProcesoFlujo + String.valueOf(lstProcesoFlujoDestino.get(i).getNIdProcesoFlujo()) + ",";
-            }
-            lstDetalleInvestigacionFlujo = detalleInvestigacionFlujoDao.GetByIdProcesoFlujo(stringIdProcesoFlujo);
-            
-            for(int i = 0; i < lstDetalleInvestigacionFlujo.size(); i++){
-                stringIDActividades = stringIDActividades + String.valueOf(lstDetalleInvestigacionFlujo.get(i).getNIdActividadInvestigacion()) + ",";
-            }
-            respuesta = actividadInvestigacionDao.GetPagina(entidad, stringIDActividades);
-            total = actividadInvestigacionDao.GetTotalPagina(entidad, stringIDActividades);
-            
-            respuestaMap.put("total", total);
-            respuestaMap.put("lista", respuesta);
-            
-        } catch(Exception ex) {
-        
-        }
-        return respuestaMap;
-    }
     
     @Override
     public SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad) {
@@ -199,8 +159,14 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
             flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
          
+            usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
+            usuariosDestino = usuarioDao.GetByIdActorDestino(flujoArista.getSIdFlujoActorDestino());
+            
+            procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
             procesoFlujo.setNIdArista(flujoArista.getNIdArista());
             procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
+            procesoFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+            procesoFlujo.setSEstado("A");
             procesoFlujo = procesoFlujoDao.Insert(procesoFlujo);
             
             actividadInvestigacion = actividadInvestigacionDao.Insert(entidad.getActividadInvestigacion());
@@ -209,14 +175,11 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             
             detalleInvestigacionFlujo.setNIdProcesoFlujo(procesoFlujo.getNIdProcesoFlujo());
             detalleInvestigacionFlujo.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
-            detalleInvestigacionFlujo.setSUserCreacion("Administrador");
+            detalleInvestigacionFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
             detalleInvestigacionFlujo.setSEstado("A");
             detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
             
-            entidad.setIdPlanificacion(planificacionActividad.getNIdPlanificacionActividad());
-            
-            usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
-            usuariosDestino = usuarioDao.GetByIdActorDestino(flujoArista.getSIdFlujoActorDestino());
+            entidad.setIdPlanificacion(planificacionActividad.getNIdPlanificacionActividad());            
             
             /* Insert ProcesoFlujoDestino*/
             for(int i = 0; i < usuariosDestino.size(); i++){
@@ -248,37 +211,36 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     @Override
     public SRIActividadGeneral AprobarActividadInvestigacion(SRIActividadGeneral entidad) {
         
-        SRIActividadGeneral respuesta= null;
         int idUsuarioFlujoOrigen = -1;
-        SRIUsuario usuarioOrigen = null;
-        SRIDetalleInvestigacionFlujo detalleInvestigacionFlujo =  null;
         SRIUsuarioFlujo usuarioFlujoOrigen = new SRIUsuarioFlujo();
-        
         SRIFlujoArista flujoArista = new SRIFlujoArista();
+        SRIUsuario usuarioOrigen = new SRIUsuario();
         SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
+        SRIDetalleInvestigacionFlujo detalleInvestigacionFlujo =  new SRIDetalleInvestigacionFlujo();
         
         try{
-            usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
-            detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.GetByIdActividad(entidad.getActividadInvestigacion().getNIdActividadInvestigacion());
+            /*Get o crear UsuarioFlujo*/
             usuarioFlujoOrigen.setNIdFlujoActor(entidad.getIdFlujoActorOrigen());
             usuarioFlujoOrigen.setNIdUsuario(entidad.getIdUsuario());
-            
             idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
+            /*Get FlujoArista*/
             flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
+            usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
             
+            procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
             procesoFlujo.setNIdArista(flujoArista.getNIdArista());
             procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
+            procesoFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+            procesoFlujo.setSEstado("A");
             procesoFlujo = procesoFlujoDao.Insert(procesoFlujo);
             
-            /*UpdateDetalle con nuevo idProcesoFlujo*/
             detalleInvestigacionFlujo.setNIdProcesoFlujo(procesoFlujo.getNIdProcesoFlujo());
-            detalleInvestigacionFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
-            detalleInvestigacionFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
-            detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Update(detalleInvestigacionFlujo);
-//            if(detalleInvestigacionFlujo.getNIdDetalleInvestigacionFlujo() != 0){
-//            
-//            }
-                
+            detalleInvestigacionFlujo.setNIdActividadInvestigacion(entidad.getActividadInvestigacion().getNIdActividadInvestigacion());
+            detalleInvestigacionFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+            detalleInvestigacionFlujo.setSEstado("A");
+            detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
+            
+            
         } catch(Exception ex) {
         
         }
@@ -294,6 +256,43 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         try{
             lstActividadGeneral = actividadInvestigacionDao.GetActividadesGeneradas(entidad);
             total = actividadInvestigacionDao.GetTotalActividadesGeneradas(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+        
+        }
+        return respuesta;
+    }
+    
+    @Override
+    public Map<String, Object> GetActividadesPendientes(SRIPaginacion entidad) {
+        
+        int total = -1;
+        List<SRIActividadGeneralPaginacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try{
+            lstActividadGeneral = actividadInvestigacionDao.GetActividadesPendientes(entidad);
+            total = actividadInvestigacionDao.GetTotalActividadesPendientes(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+        
+        }
+        return respuesta;
+    }
+
+    @Override
+    public Map<String, Object> GetActividadesRevisadas(SRIPaginacion entidad) {
+        int total = -1;
+        List<SRIActividadGeneralPaginacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIFlujoActor flujoActor = null; 
+        try{
+            flujoActor = flujoActorDao.GetById(entidad.getIdFlujoActor());
+            entidad.setCodigoActor(flujoActor.getSCodigo());
+            lstActividadGeneral = actividadInvestigacionDao.GetActividadesRevisadas(entidad);
+            total = actividadInvestigacionDao.GetTotalActividadesRevisadas(entidad);
             respuesta.put("lista", lstActividadGeneral);
             respuesta.put("total", total);
         } catch(Exception ex) {

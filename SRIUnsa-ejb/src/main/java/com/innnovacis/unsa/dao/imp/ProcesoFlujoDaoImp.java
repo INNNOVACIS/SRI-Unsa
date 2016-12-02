@@ -23,15 +23,15 @@ public class ProcesoFlujoDaoImp implements IProcesoFlujoDao {
     @Transactional
     public SRIProcesoFlujo  Insert(SRIProcesoFlujo entidad) {
         entidad.setDFechaCreacion(new Date());
-        Query query = em.createNativeQuery("{call getProcesoFlujo(?1,?2)}", SRIProcesoFlujo.class)
-                        .setParameter(1, entidad.getNIdArista())
-                        .setParameter(2, entidad.getNIdUsuarioFlujo());
-        List<SRIProcesoFlujo> listProcesoFlujo = query.getResultList();
-        if(listProcesoFlujo.isEmpty()){
+//        Query query = em.createNativeQuery("{call getProcesoFlujo(?1,?2)}", SRIProcesoFlujo.class)
+//                        .setParameter(1, entidad.getNIdArista())
+//                        .setParameter(2, entidad.getNIdUsuarioFlujo());
+//        List<SRIProcesoFlujo> listProcesoFlujo = query.getResultList();
+//        if(listProcesoFlujo.isEmpty()){
             em.persist(entidad);
-        } else {
-            entidad = listProcesoFlujo.get(0);
-        }
+//        } else {
+//            entidad = listProcesoFlujo.get(0);
+//        }
         return entidad;
     }
 

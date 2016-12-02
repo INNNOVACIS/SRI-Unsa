@@ -27,6 +27,16 @@ public class SRIPaginacion implements Serializable {
     
     private int idFlujoActor;
     
+    private String codigoActor;
+
+    public String getCodigoActor() {
+        return codigoActor;
+    }
+
+    public void setCodigoActor(String codigoActor) {
+        this.codigoActor = codigoActor;
+    }
+    
     private SRIActividadInvestigacion filtro;
 
     public int getIdFlujoActor() {
