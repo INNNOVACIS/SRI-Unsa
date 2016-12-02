@@ -9,19 +9,19 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     /*********** Servicios Callback ***********/  
     
     var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("Get tipoNivel - Success");
-    	console.log("Success :: ", response);
+    	$log.debug("GetTipoNivel - Success");
+    	console.log("Respuesta :: ", response);
     	$scope.niveles = response;
         $scope.getEstructuraOrganizaciones();
     };
-
     var getTipoNivelServiceError = function(response){
-     	$log.debug("Get TipoNivel - Error"); 
+     	$log.debug("GetTipoNivel - Error"); 
+        console.log("Respuesta :: ", response);
     };
 
     var getEstructuraOrganizacionServiceSuccess = function(response){
-    	$log.debug("Get EstructuraOrganizacion - Success");
-        
+    	$log.debug("GetEstructuraOrganizacion - Success");
+        console.log("Respuesta :: ", response);
         angular.forEach(response, function(superior, key) {
             angular.forEach(response, function(value, key) {
                 if(superior.nidPadre === value.nidEstructuraOrganizacion){
@@ -35,52 +35,41 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
                 }
             });
         });
-        
     	$scope.estructuraOrganizaciones = response;
-        console.log("Estructura Organizacion :: ", $scope.estructuraOrganizaciones);
     };
-
     var getEstructuraOrganizacionServiceError = function(response){
-     	$log.debug("Get EstructuraOrganizacion - Error"); 
+     	$log.debug("GetEstructuraOrganizacion - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getFondoServiceSuccess = function(response){
-    	$log.debug("Get Fondo - Success");
+    	$log.debug("GetFondo - Success");
+        console.log("Respuesta :: ", response);
     	$scope.fondos = response;
     };
-
     var getFondoServiceError = function(response){
-     	$log.debug("Get Fondo - Error"); 
-    };
-    
-    var getActividadesRevisadasSuccess = function(response){
-        $scope.actividadesRevisadas = response;
-        console.log("succcess :: ", response);
-    };
-    
-    var getActividadesRevisadasError = function(response){
-        console.log("error :: ", response);
+     	$log.debug("GetFondo - Error"); 
+        console.log("Respuesta :: ", response);
     };
     
     var getTipoInvestigacionSuccess = function(response){
-    	$log.debug("Get Investigacion - Success");
-        console.log("Response Investigacion :: ", response);
+    	$log.debug("GetTipoInvestigacion - Success");
+        console.log("Respuesta :: ", response);
     	$scope.tipoInvestigaciones = response;
     };
-    
     var getTipoInvestigacionError = function(response){
-     	$log.debug("Get Investigacion - Error");
-        console.log("Error Response Investigacion :: ", response);
+     	$log.debug("GetTipoInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getSemestreServiceSuccess = function(response){
-    	$log.debug("Get Semestre - Success");        
+    	$log.debug("GetSemestre - Success"); 
+        console.log("Respuesta :: ", response);
     	$scope.semestres = response;
     };
-    
     var getSemestreServiceError = function(response){
-     	$log.debug("Get Semestre - Error");
-        console.log("Error Response Semestre :: ", response);
+     	$log.debug("GetSemestre - Error");
+        console.log("Respuesta :: ", response);
     };
     
     /******************* Servicios *******************/
@@ -88,25 +77,17 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     $scope.getListaTipoNivel = function(){
       	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
     };
-
     $scope.getEstructuraOrganizaciones = function(){
       	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
     };
-    
     $scope.getFondos = function(){
       	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
     };
-    
     $scope.getSemestres = function(){
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
-    
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
-    };
-    
-    $scope.getActividadesRevisadas = function(){
-        ActividadesRevisadasService.getInvestigaciones().then(getActividadesRevisadasSuccess, getActividadesRevisadasError);
     };
     
     $scope.facultadChange = function(){

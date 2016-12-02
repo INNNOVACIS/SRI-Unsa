@@ -163,8 +163,7 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     $scope.filtrar = function() {
         $scope.getActividades();
     };
-    
-        
+     
     $scope.getListaTipoNivel();
     $scope.getEstructuraOrganizaciones();
     $scope.getFondos();
