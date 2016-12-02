@@ -1,7 +1,6 @@
 investigacionApp.controller('ActividadesRevisadasController', function($log, $scope, $location, ActividadesRevisadasService, 
     SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, SharedService,
-    SRIUnsaConfig
-    ) {
+    SRIUnsaConfig, UsuarioFlujoService ) {
 
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -72,6 +71,15 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
         console.log("Respuesta :: ", response);
     };
     
+    var CreateAndGetUsuarioFlujoSuccess = function(response){
+        $log.debug("CreateAndGetUsuarioFlujo - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var CreateAndGetUsuarioFlujoError = function(response){
+        $log.debug("CreateAndGetUsuarioFlujo - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     /******************* Servicios *******************/
     
     $scope.getListaTipoNivel = function(){
@@ -88,6 +96,13 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     };
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
+    };
+    $scope.CrearOrActualizarUsuarioFlujo = function(){
+        var usuarioFlujo = {
+            nidFlujoActor : SRIUnsaConfig.DIDE,
+            nidUsuario : $scope.sharedService.idUsuario
+        };
+        UsuarioFlujoService.CreateAndGetUsuarioFlujo(usuarioFlujo).then(CreateAndGetUsuarioFlujoSuccess, CreateAndGetUsuarioFlujoError);
     };
     
     $scope.facultadChange = function(){
@@ -154,6 +169,7 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
+    $scope.CrearOrActualizarUsuarioFlujo();
     
     $scope.getActividades();
     

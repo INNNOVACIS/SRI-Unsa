@@ -1,6 +1,6 @@
 investigacionApp.controller('ActividadesPendientesController', function($log, $scope, $location, FondoConcursableService, SRIUnsaConfig,
-    SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService, SharedService
-    ) {
+    SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService, SharedService,
+    UsuarioFlujoService ) {
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -81,6 +81,15 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
         console.log("Respuesta :: ", response);
     };
     
+    var CreateAndGetUsuarioFlujoSuccess = function(response){
+        $log.debug("CreateAndGetUsuarioFlujo - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var CreateAndGetUsuarioFlujoError = function(response){
+        $log.debug("CreateAndGetUsuarioFlujo - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     /******************* Servicios *******************/
     
     $scope.getListaTipoNivel = function(){
@@ -101,6 +110,13 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
+    };
+    $scope.CrearOrActualizarUsuarioFlujo = function(){
+        var usuarioFlujo = {
+            nidFlujoActor : SRIUnsaConfig.DIDE,
+            nidUsuario : $scope.sharedService.idUsuario
+        };
+        UsuarioFlujoService.CreateAndGetUsuarioFlujo(usuarioFlujo).then(CreateAndGetUsuarioFlujoSuccess, CreateAndGetUsuarioFlujoError);
     };
 
     $scope.facultadChange = function(){
@@ -164,6 +180,7 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
+    $scope.CrearOrActualizarUsuarioFlujo();
     
     $scope.getActividades();
     
