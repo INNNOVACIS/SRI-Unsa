@@ -132,13 +132,13 @@
                         </div>
                     </div>
                 </form>
-                <div ng-show="generado || pendiente">
+                <div ng-show="pendiente">
                     <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="AprobarActividad()">
                         <span class="glyphicon glyphicon-ok"></span> Aprobar</button>
                     <button type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-trash"></span> Rechazar</button>
                 </div>
-                <div ng-show="revisado">
+                <div ng-show="generado || revisado">
                     <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="irBandejaRevisados()">
                         <span class="glyphicon glyphicon-arrow-right"></span> Ir a Bandeja</button>
                 </div>

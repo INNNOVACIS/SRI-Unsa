@@ -301,4 +301,26 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         return respuesta;
     }
 
+    @Override
+    public boolean EnviarEmail(SRIActividadGeneral entidad) {
+        boolean respuesta = false;
+        List<SRIUsuario> usuariosDestino = new ArrayList<SRIUsuario>();
+        SRIFlujoArista flujoArista = new SRIFlujoArista();
+        try {
+            flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
+            usuariosDestino = usuarioDao.GetByIdActorDestino(flujoArista.getSIdFlujoActorDestino());
+            
+            Email email = new Email();
+            List<String> to = new ArrayList<String>();
+            for(int i = 0 ; i < usuariosDestino.size(); i++){
+                to.add(usuariosDestino.get(i).getSUsuarioEmail());
+            }
+            email.initGmail(to,entidad.getActividadInvestigacion());
+            respuesta = true;
+        } catch(Exception ex) {
+        
+        }
+        return respuesta;
+    }
+
 }

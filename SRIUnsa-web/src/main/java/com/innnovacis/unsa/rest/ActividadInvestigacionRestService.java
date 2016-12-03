@@ -83,4 +83,12 @@ public class ActividadInvestigacionRestService {
         return investigacionBusiness.RegistrarActividad(entidad);
     }
     
+    @POST
+    @Path("/enviarEmail")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean EnviarEmail(SRIActividadGeneral entidad){
+        return investigacionBusiness.EnviarEmail(entidad);
+    }
+    
 }

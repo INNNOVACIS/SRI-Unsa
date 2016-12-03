@@ -118,7 +118,8 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     /************ Funciones Utilitarias ************/
     $scope.irBandejaRevisados = function(){
         $scope.loader = true;
-        $location.path("/actividad/Revisadas");
+        if($scope.generado){ $location.path("/actividad/Generadas"); }
+        if($scope.revisado){ $location.path("/actividad/Revisadas"); }
     };
     
     var scrollTop = function(){

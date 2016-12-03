@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-md-2">
                     <a class="btn btn-primary" ng-click="filtrar()" >
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
                     </a> 
                 </div>
             </div>
@@ -90,14 +90,17 @@
                                 <td>{{ actividadGenerada.idactividadinvestigacion }}</td>
                                 <td><strong>{{ actividadGenerada.nombreactividad }}</strong></td>
                                 <td>{{ actividadGenerada.tipoactividad }}</td>
-                                <td>{{ actividadGenerada.horas }}</td>
-                                <td>{{ actividadGenerada.cantidad }}</td>
+                                <td width="8%">{{ actividadGenerada.horas }}</td>
+                                <td width="8%">{{ actividadGenerada.cantidad }}</td>
                                 <td nowrap>
                                     <button ng-click="verActividadById(actividadGenerada)" type="submit" class="btn btn-primary btn-xs">
                                         <span class="glyphicon glyphicon-ok"></span>  Ver
                                     </button>
                                     <button ng-click="updateActividadById(actividadGenerada)" data-toggle="modal" data-target="#modalEditar" type="submit" class="btn btn-default btn-xs">
                                         <span class="glyphicon glyphicon-pencil"></span> Editar
+                                    </button>
+                                    <button ng-click="EnviarEmail(actividadGenerada)" class="btn btn-default btn-xs">
+                                        <span class="glyphicon glyphicon-send"></span> Enviar Recordatorio
                                     </button>
                                 </td>
                             </tr>
@@ -115,4 +118,5 @@
         </div>
     </div>
 </div>
+
 

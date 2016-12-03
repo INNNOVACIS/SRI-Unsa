@@ -81,6 +81,25 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         console.log("Respuesta :: ", response);
     };
 
+    var EnviarEmailSuccess = function(response){
+        $log.debug("EnviarEmail - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+        var popUp = SharedService.popUp;
+        var titulo = "Tu mensaje ha sido enviado.";
+        var mensaje = "El recordatorio de la Actividad fue enviado con éxito.";
+        var url = "/actividad/Generadas";
+
+        var op1 = {open:true, txt:'Cerrar', fun:function(){
+            popUp.irPopUp();
+        }};
+        popUp.showPopUp(titulo, mensaje, url, op1);
+    };
+    var EnviarEmailError = function(response){
+        $log.debug("EnviarEmail - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
     
     /******************* Servicios *******************/
     
@@ -180,6 +199,19 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     $scope.updateActividadById = function(actividadGenerada){
         $scope.loader = true;
         $location.path("/actividad/Generadas/update/" + actividadGenerada.idactividadinvestigacion);
+    };
+    $scope.EnviarEmail = function(actividadGenerada){
+        $scope.loader = true;     
+        var actividadGeneral = {
+            idUsuario : $scope.sharedService.idUsuario,
+            idFlujoActorOrigen : SRIUnsaConfig.DOCE,
+            idEstado : SRIUnsaConfig.CREADO,
+            idPlanificacion : -1,
+            actividadInvestigacion : {
+                nidActividadInvestigacion : actividadGenerada.idactividadinvestigacion
+            }
+        };
+        ActividadesGeneradasService.EnviarEmail(actividadGeneral).then(EnviarEmailSuccess, EnviarEmailError);
     };
     
 });
