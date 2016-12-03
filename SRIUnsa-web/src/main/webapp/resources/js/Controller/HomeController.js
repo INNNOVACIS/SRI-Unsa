@@ -1,7 +1,7 @@
     investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService,
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService,
-    UsuariosService, FileUploader) {
+    UsuariosService, ActividadesGeneradasService, FileUploader) {
     
     $scope.sharedService = SharedService;
     $scope.tipoInvestigaciones = [];
@@ -119,6 +119,7 @@
         uploader.uploadAll();
         $scope.loader = false;
         $scope.openCloseModal(true,false);
+        $scope.EnviarEmail(response.actividadInvestigacion.nidActividadInvestigacion);
     };
     var RegistrarInvestigacionError = function(response){
         $log.debug(response);
@@ -137,6 +138,14 @@
         console.log("Respuesta :: ", response);
     };
     
+    var EnviarEmailSuccess = function(response){
+        $log.debug("EnviarEmail - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var EnviarEmailError = function(response){
+        $log.debug("EnviarEmail - Error");
+        console.log("Respuesta :: ", response);
+    };
     
     /***************** Servicios ******************/
     
@@ -225,8 +234,23 @@
             };
             HomeService.registrarInvestigacion(actividadGeneral).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
         } else {
+//            scrollTop();
+//            $scope.openCloseModal(true,false);
             console.log("campos por validar");
         }
+    };
+    
+    $scope.EnviarEmail = function(idActividadGenerada){   
+        var actividadGeneral = {
+            idUsuario : $scope.sharedService.idUsuario,
+            idFlujoActorOrigen : SRIUnsaConfig.DOCE,
+            idEstado : SRIUnsaConfig.CREADO,
+            idPlanificacion : -1,
+            actividadInvestigacion : {
+                nidActividadInvestigacion : idActividadGenerada
+            }
+        };
+        ActividadesGeneradasService.EnviarEmail(actividadGeneral).then(EnviarEmailSuccess, EnviarEmailError);
     };
     
     
@@ -263,10 +287,11 @@
     
     $scope.registrarNuevaActividad = function(){
         limpiarCampos();
+        $scope.openCloseModal(false, true);
     };
     $scope.irActividadesGeneradas = function(){
         $scope.loader = true;
-        $location.path("/actividadesGeneradas");
+        $location.path("/actividad/Generadas");
     };
     
     $scope.openCloseModal = function(open, close) {
@@ -277,6 +302,24 @@
         $('html,body').animate({
             scrollTop: $("#container").offset().top - 100
         }, 800);
+    };
+    
+    var limpiarCampos = function(){
+        $scope.tipoInvestigacion = {};
+        $scope.duracionInvestigacion = 0;
+        $scope.tipoProduccion = {};
+        $scope.fondo = {};
+        $scope.tipoAsesoria = {};
+        $scope.semestre = {};
+        $scope.facultad = {};
+        $scope.escuela = {};
+        $scope.departamento = {};
+        $scope.areaInvestigacion = {};
+        $scope.subareaInvestigacion = {};
+        $scope.disciplinaInvestigacion = {};
+        $scope.tipoLabor = {};
+        $scope.nombreInvestigacion = " ";
+        $scope.descripcion = "";
     };
     
     /********** FILE UPLOAD **********/

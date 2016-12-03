@@ -272,15 +272,20 @@
     <div class="SRI-modal">
         <a ng-click="openCloseModal(false, true)" class="SRIModal-cerrar" >Cerrar</a>
         <div>
-            <h2>Registro Correcto!</h2>
+            <h3 style="margin-top: 10px; margin-bottom: 5px;">Registro Correcto!</h3>
+            <hr/>
             <ul>
                 <li><p>Ir a actividades generadas clic en :<strong> Ir a Bandeja</strong></p></li>
-                <li><p>Generar otra actividad clic en :<strong> Generar Actividad</strong></p></li>
+                <li><p>Generar otra actividad clic en :<strong> Nueva Actividad</strong></p></li>
             </ul>
         </div>
-<!--        <button ng-click="revisarActividad()" class="SRIModal-button SRI-cancelar">Cancelar</button>-->
-        <button ng-click="registrarNuevaActividad()" class="SRIModal-button SRI-nuevo">Generar Actividad</button>
-        <button ng-click="irActividadesGeneradas()" class="SRIModal-button SRI-confirmar">Ir a Bandeja</button>
+        <hr/>
+        <button ng-click="registrarNuevaActividad()" class="SRIModal-button SRI-confirmar">
+            <span class="glyphicon glyphicon-list-alt"></span> Nueva Actividad
+        </button>
+        <button ng-click="irActividadesGeneradas()" class="btn btn-default">
+            <span class="glyphicon glyphicon-arrow-right"></span> Ir a Bandeja
+        </button>
     </div>
 </div>
 

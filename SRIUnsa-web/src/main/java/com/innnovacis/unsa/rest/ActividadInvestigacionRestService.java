@@ -76,14 +76,6 @@ public class ActividadInvestigacionRestService {
     }
     
     @POST
-    @Path("/registrarActividadPlanificacion")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public SRIActividadGeneral RegistrarActividadInvestigacion(SRIActividadGeneral entidad){
-        return investigacionBusiness.RegistrarActividad(entidad);
-    }
-    
-    @POST
     @Path("/enviarEmail")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

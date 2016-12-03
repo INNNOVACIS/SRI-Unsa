@@ -230,25 +230,27 @@ z-index: 999;
 /* Estilos de botones */
 .SRIModal-button {
     display: inline-block;
-    border-radius: 4px;
-    min-width: 100px;
-    margin: 0;
-    padding: 8px 0;
-    cursor: pointer; /* cmbiar el icono del cursor*/
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
     text-align: center;
+    white-space: nowrap;
     vertical-align: middle;
-    text-decoration: none;
-    color: #FFF;
-    font-family: inherit;
-    font-size: 15px;
-    border: 0;
-    outline: 0;
-    
+    -ms-touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 .SRI-confirmar {
-    background-color: #337ab7;
-    border-color: #2e6da4;
+    color: #fff;
+    background-color: #951f1f;
+    border-color: #951f1f;
 }
 
 .SRI-nuevo {
@@ -260,8 +262,9 @@ z-index: 999;
 
 .SRI-confirmar:hover,
 .SRI-confirmar:focus {
-  background-color: #286090;
-  border-color: #204d74;
+    color: #fff;
+    background-color: #b41a1a;
+    border-color: #731a1a;
 }
 .SRI-nuevo:hover,
 .SRI-nuevo:focus {

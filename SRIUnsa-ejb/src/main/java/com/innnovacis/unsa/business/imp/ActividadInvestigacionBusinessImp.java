@@ -179,7 +179,8 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             detalleInvestigacionFlujo.setSEstado("A");
             detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
             
-            entidad.setIdPlanificacion(planificacionActividad.getNIdPlanificacionActividad());            
+            entidad.setIdPlanificacion(planificacionActividad.getNIdPlanificacionActividad());
+            entidad.getActividadInvestigacion().setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
             
             /* Insert ProcesoFlujoDestino*/
             for(int i = 0; i < usuariosDestino.size(); i++){
@@ -195,13 +196,13 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 procesoFlujoDestino = procesoFlujoDestinoDao.Insert(procesoFlujoDestino);
             }
             
-            Email email = new Email();
-            List<String> to = new ArrayList<String>();
-            for(int i = 0 ; i < usuariosDestino.size(); i++){
-                to.add(usuariosDestino.get(i).getSUsuarioEmail());
-            }
-            to.add(usuarioOrigen.getSUsuarioEmail());
-            email.initGmail(to,entidad.getActividadInvestigacion());
+//            Email email = new Email();
+//            List<String> to = new ArrayList<String>();
+//            for(int i = 0 ; i < usuariosDestino.size(); i++){
+//                to.add(usuariosDestino.get(i).getSUsuarioEmail());
+//            }
+//            to.add(usuarioOrigen.getSUsuarioEmail());
+//            email.initGmail(to,entidad.getActividadInvestigacion());
         } catch(Exception ex) {
             
         }
@@ -306,16 +307,17 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         boolean respuesta = false;
         List<SRIUsuario> usuariosDestino = new ArrayList<SRIUsuario>();
         SRIFlujoArista flujoArista = new SRIFlujoArista();
+        SRIActividadInvestigacion actividadInvestigacion = null;
         try {
             flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
             usuariosDestino = usuarioDao.GetByIdActorDestino(flujoArista.getSIdFlujoActorDestino());
-            
+            actividadInvestigacion =  actividadInvestigacionDao.GetById(entidad.getActividadInvestigacion().getNIdActividadInvestigacion());
             Email email = new Email();
             List<String> to = new ArrayList<String>();
             for(int i = 0 ; i < usuariosDestino.size(); i++){
                 to.add(usuariosDestino.get(i).getSUsuarioEmail());
             }
-            email.initGmail(to,entidad.getActividadInvestigacion());
+            email.initGmail(to,actividadInvestigacion);
             respuesta = true;
         } catch(Exception ex) {
         

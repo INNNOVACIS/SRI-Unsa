@@ -213,5 +213,4 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         };
         ActividadesGeneradasService.EnviarEmail(actividadGeneral).then(EnviarEmailSuccess, EnviarEmailError);
     };
-    
 });
