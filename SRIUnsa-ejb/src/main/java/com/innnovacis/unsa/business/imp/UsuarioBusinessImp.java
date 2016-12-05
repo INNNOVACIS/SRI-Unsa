@@ -96,6 +96,7 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
             respuesta = usuarioDao.Autenticar(entidad);
         }
         catch(Exception ex){
+            log.fine("Error Autenticar " + entidad.toString());
         }
          return respuesta;
     }
