@@ -18,7 +18,7 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
     var getEstadosSuccess = function(response){
         $log.debug("GetEstados - Success");
         console.log("Respuesta :: ", response);
-        $scope.estados = response;
+        $scope.estados = response.body;
     };
     
     var getEstadosError = function(response){

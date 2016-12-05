@@ -27,11 +27,10 @@ public class EstadoBusinessImp implements IEstadoBusiness {
         int id = -1;
         try{
             entidad = estadoDao.Insert(entidad);
-            id = entidad.getNIdEstado();
-                    
+            id = entidad.getNIdEstado();        
         }
         catch(Exception ex){
-            
+            throw ex;
         }
         return id;
     }
@@ -44,7 +43,7 @@ public class EstadoBusinessImp implements IEstadoBusiness {
             respuesta = true;
         }
         catch(Exception ex){
-            
+            throw ex;
         }
          return respuesta;
         
@@ -58,7 +57,7 @@ public class EstadoBusinessImp implements IEstadoBusiness {
             respuesta = true;
         }
         catch(Exception ex){
-            
+            throw ex;
         }
          return respuesta;
     }
@@ -70,6 +69,7 @@ public class EstadoBusinessImp implements IEstadoBusiness {
             respuesta = estadoDao.GetById(idEntidad);
         }
         catch(Exception ex){
+            throw ex;
         }
          return respuesta;
     }
@@ -81,6 +81,7 @@ public class EstadoBusinessImp implements IEstadoBusiness {
             respuesta = estadoDao.GetAll();
         }
         catch(Exception ex){
+            throw ex;
         }
          return respuesta;
     }
@@ -92,6 +93,7 @@ public class EstadoBusinessImp implements IEstadoBusiness {
             respuesta = estadoDao.GetById(id);
         }
         catch(Exception ex){
+            throw ex;
         }
         return respuesta;
     }

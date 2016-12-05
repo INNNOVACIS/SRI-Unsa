@@ -21,37 +21,59 @@ public class EstadoDaoImp implements IEstadoDao {
     @Override
     @Transactional
     public SRIEstado  Insert(SRIEstado entidad) {
-        entidad.setDFechaCreacion(new Date());
-         em.persist(entidad);
-         return entidad;
+        try {
+            entidad.setDFechaCreacion(new Date());
+            em.persist(entidad);
+        } catch(Exception ex){
+            throw ex;
+        }
+        return entidad;
     }
 
     @Override
     @Transactional
     public SRIEstado Update(SRIEstado entidad) {
-        entidad.setDFechaModificacion(new Date());
-         em.merge(entidad);
-         return entidad;
+        try {
+            entidad.setDFechaModificacion(new Date());
+            em.merge(entidad);
+        } catch(Exception ex){
+            throw ex;
+        }
+        return entidad;
     }
 
     @Override
     @Transactional
     public boolean Delete(SRIEstado entidad) {
-        entidad.setDFechaModificacion(new Date());
-        entidad.setSEstado("I");
-        em.merge(entidad);
+        try {
+            entidad.setDFechaModificacion(new Date());
+            entidad.setSEstado("I");
+            em.merge(entidad);
+        } catch(Exception ex){
+            throw ex;
+        }
         return true;
     }
 
     @Override
     public SRIEstado GetById(int idEntidad) {
-        SRIEstado entidad = em.createNamedQuery("SRIEstado.GetById", SRIEstado.class).setParameter("idEntidad", idEntidad).getSingleResult();
+        SRIEstado entidad = null;
+        try {
+            entidad = em.createNamedQuery("SRIEstado.GetById", SRIEstado.class).setParameter("idEntidad", idEntidad).getSingleResult();
+        } catch(Exception ex){
+            throw ex;
+        }
         return entidad;
     }
 
     @Override
     public List<SRIEstado> GetAll() {
-        List<SRIEstado> olistaRespuesta = em.createNamedQuery("SRIEstado.GetAll",SRIEstado.class).getResultList();
+        List<SRIEstado> olistaRespuesta = null;
+        try {
+            olistaRespuesta = em.createNamedQuery("SRIEstado.GetAll",SRIEstado.class).getResultList();
+        } catch(Exception ex){
+            throw ex;
+        }
         return olistaRespuesta;
     }
 
