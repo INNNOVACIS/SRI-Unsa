@@ -91,9 +91,17 @@ public class UsuarioRestServices {
     public SRIUsuarioRolUtil autenticarUsuario(SRIUsuario usuario) {        
 //        usuarioBusiness.Autenticar(usuario);
        String temporal ="";
-log.info("holaaa como estas");
+       SRIUsuarioRolUtil objeto = null; 
+       try{
+            objeto = usuarioBusiness.AutenticarUsuario(usuario);
+            log.info("Se ingreso correctamente : " + objeto.toString());
+       }
+       catch(Exception ex){
+           log.info("holaaa como estas " + ex.getMessage() + " "+ usuario.toString());
+       }
+
                 
-        return usuarioBusiness.AutenticarUsuario(usuario);
+        return objeto;
     }
     
     @PUT

@@ -132,7 +132,8 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
             respuesta = usuarioDao.AutenticarUsuario(entidad);
         }
         catch(Exception ex){
-            System.out.println("Error =========> " + ex.getMessage());
+            
+            throw  ex;
         }
         return respuesta;
     }
