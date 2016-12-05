@@ -9,6 +9,7 @@ import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Properties;
@@ -153,9 +154,10 @@ public class Email {
         return table;
     }
 
-    public String readProperties(String value) {
+    public String readProperties(String value) throws IOException {
         String respuesta = "";
-        String path = System.getProperty("/home/will");
+        URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
+        String path = url.getPath();
         String nombrearchivo = "config.properties";
         Properties prop = new Properties();
 
@@ -173,22 +175,25 @@ public class Email {
         Email email = new Email();
         String from = email.readProperties("user");
         String pass = MD5.decrypt(email.readProperties("password"));
+        String host = email.readProperties("host");
+        String port = email.readProperties("port");
+        String auth = email.readProperties("auth");
+        String enable = email.readProperties("enable");
         List<String> to = destinatarios;
         String subject = "SRI UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
         String body = GetEmail(data);
 
-        sendFromGMail(from, pass, to, subject, body);
+        sendFromGMail(enable, auth, port, host, from, pass, to, subject, body);
     }
 
-    private void sendFromGMail(String from, String pass, List<String> to, String subject, String body) {
+    private void sendFromGMail(String enable, String auth, String port, String host, String from, String pass, List<String> to, String subject, String body) {
         Properties props = System.getProperties();
-        String host = "smtp.gmail.com";
-        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.enable", enable);
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.user", from);
         props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", port);
+        props.put("mail.smtp.auth", auth);
 
         Session session = Session.getDefaultInstance(props);
         MimeMessage message = new MimeMessage(session);
@@ -202,7 +207,9 @@ public class Email {
             messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
-            DataSource fds = new FileDataSource("/home/will/logo-unsa-2.jpg");
+            URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
+            String path = url.getPath();
+            DataSource fds = new FileDataSource(path + "/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);

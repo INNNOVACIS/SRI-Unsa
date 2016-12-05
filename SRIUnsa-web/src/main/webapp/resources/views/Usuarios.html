@@ -29,6 +29,7 @@
 	                                <th width="40%">Usuario</th>
 	                                <th>Email</th>
                                        <th>Clave</th>
+                                       <th>Estado</th>
 	                                <th>Acción</th>
 	                            </tr>
 	                        </thead>
@@ -38,9 +39,10 @@
 	                                <td><strong>{{ user.susuarioLogin }}</strong></td>
                                        <td>{{ user.susuarioEmail }}</td>
 	                                <td>{{ user.susuarioPassword }}</td>
+                                       <td>{{ user.sestado }}</td>
 	                                <td nowrap>
 	                                    <button type="button" class="btn btn-primary btn-xs" ng-click="update(user)" data-toggle="modal" data-target="#popUpdateUsuario">
-	                                        <span class="glyphicon glyphicon-refresh"></span> Actualizar
+	                                        <span class="glyphicon glyphicon-refresh"></span> Editar
 	                                    </button>
 	                                    <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuario(user)">
 	                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
@@ -101,16 +103,16 @@
                     </div>
                 </div>
             </div>
-	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarUsuario()">
-	        		<span class="glyphicon glyphicon-save"></span>
-	        		Registrar
-	        	</button>
-	          	<button type="button" class="btn btn-default" data-dismiss="modal">
-	          		<span class="glyphicon glyphicon-remove"></span>
-	          		Cerrar
-	          	</button>
-	        </div>
+            <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarUsuario()">
+                         <span class="glyphicon glyphicon-save"></span>
+                         Registrar
+                  </button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">
+                         <span class="glyphicon glyphicon-remove"></span>
+                         Cerrar
+                  </button>
+            </div>
         </div>
     </div>
 </div>
@@ -120,11 +122,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" ng-click="Cerrar()" >&times;</button>
                 <h4 class="modal-title">Actualizar Usuario</h4>
             </div>
             <div class="modal-body">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
                             <form class="form-horizontal">
@@ -146,6 +148,12 @@
                                         <input id="inpClave" ng-model="usuario.susuarioPassword" type="password" class="form-control" placeholder="Ingrese su clave de usuario">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" style="">Estado</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" ng-model="usuario.sestado" ng-options="opt as opt for opt in estados" ></select>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>  
@@ -156,7 +164,7 @@
                     <span class="glyphicon glyphicon-refresh"></span>
                     Actualizar
                 </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Cerrar()">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>
