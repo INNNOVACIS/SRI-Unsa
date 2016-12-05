@@ -2,15 +2,8 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
 
     $scope.sharedService = SharedService;
     $scope.users = [];
-    $scope.usuario = {}; 
-	
-    var getUsuarioServiceSuccess = function(response){
-    	$log.debug("Get Usuario - Success");    	
-    };
-
-    var getUsuarioServiceError = function(response){
-     	$log.debug("Get Usuario - Error"); 
-    };
+    $scope.usuario = {};
+    $scope.estados = ['A','I'];
 
     var registrarUsuarioSuccess = function(response){
     	$log.debug("Registrar Usuario - Success");
@@ -18,7 +11,6 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     	$scope.usuario = {};
         $scope.getUsuariosByPagina();
     };
-
     var registrarUsuarioError = function(response){
         $log.debug("RegistrarUsuario - Error");
         console.log("Respuesta :: ", response);
@@ -29,7 +21,6 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     	console.log("Respuesta :: ", response);
     	$scope.getUsuariosByPagina();
     };
-
     var updateUsuarioError = function(response){
         $log.debug("UpdateUsuario - Error");
     	console.log("Respuesta :: ", response);
@@ -38,19 +29,14 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     var deleteUsuarioSuccess = function(response){
     	$log.debug("DeleteUsuario - Success");
         console.log("Respuesta :: ", response);
-    	$scope.usuario = response;
+    	$scope.getUsuariosByPagina();
     };
-
     var deleteUsuarioError = function(response){
         $log.debug("DeleteUsuario - Error");
         console.log("Respuesta :: ", response);
     };
 
     /********** CRUD USUARIOS ***********/
-
-    $scope.getUsuarios = function(){
-      	UsuariosService.getUsuarios().then(getUsuarioServiceSuccess, getUsuarioServiceError);
-    };
 
     $scope.registrarUsuario = function(){
         var usuario = {
@@ -70,7 +56,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
             suserCreacion : $scope.usuario.suserCreacion,
             dfechaCreacion : $scope.usuario.dfechaCreacion,
             suserModificacion : $scope.sharedService.nombreUsuario,
-            sestado : 'A'
+            sestado : $scope.usuario.sestado
         };
     	UsuariosService.updateUsuario(usuario).then(updateUsuarioSuccess, updateUsuarioError);
     };
@@ -82,6 +68,10 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
 
     $scope.update = function(user){
     	$scope.usuario = user;
+    };
+    
+    $scope.Cerrar = function(){
+        $scope.usuario = {};
     };
     
     /**************** PAGINACION *****************/
@@ -104,13 +94,15 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     
     var paginacionUsuarioSuccess = function(response){
         $log.debug("Get paginacionUsuario - Success");
+        console.log("Respuesta :: ", response);
         $scope.users = [];
         $scope.users = response.lista;
         $scope.total = response.total;
     };
     
     var paginacionUsuarioError = function(response){
-        console.log("error :: ", response);
+        $log.debug("Get paginacionUsuario - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getUsuariosByPagina = function(){
