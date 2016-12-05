@@ -7,6 +7,10 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -25,6 +29,9 @@ import javax.ws.rs.core.Response;
 public class ActividadInvestigacionRevisadaRestService {
 
     @Inject
+    private Logger log;
+    
+    @Inject
     private IActividadInvestigacionBusiness actividadInvestigacionBusiness;
     
     @POST
@@ -32,7 +39,16 @@ public class ActividadInvestigacionRevisadaRestService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response GetActividadesRevisadas(SRIPaginacion entidad) {
-        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(actividadInvestigacionBusiness.GetActividadesRevisadas(entidad));
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetActividadesRevisadas(entidad);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetActividadesRevisadas : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetActividadesRevisadas - Error : {0}", ex.getMessage());
+        }
         return builder.build();
     }
     

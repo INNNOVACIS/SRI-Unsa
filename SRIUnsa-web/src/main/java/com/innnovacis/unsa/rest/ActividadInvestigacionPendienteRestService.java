@@ -8,6 +8,10 @@ package com.innnovacis.unsa.rest;
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -26,6 +30,9 @@ import javax.ws.rs.core.Response;
 public class ActividadInvestigacionPendienteRestService {
     
     @Inject
+    private Logger log;
+    
+    @Inject
     private IActividadInvestigacionBusiness actividadInvestigacionBusiness;
     
     @POST
@@ -33,7 +40,16 @@ public class ActividadInvestigacionPendienteRestService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response GetActividadesPendientes(SRIPaginacion entidad) {
-        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(actividadInvestigacionBusiness.GetActividadesPendientes(entidad));
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetActividadesPendientes(entidad);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetActividadesPendientes : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetActividadesPendientes Error : {0}", ex.getMessage());
+        } 
         return builder.build();
     }
     
@@ -41,8 +57,20 @@ public class ActividadInvestigacionPendienteRestService {
     @Path("/aprobarActividad")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public SRIActividadGeneral AprobarActividadInvestigacion(SRIActividadGeneral entidad) {
-        return actividadInvestigacionBusiness.AprobarActividadInvestigacion(entidad);
+    public Response AprobarActividadInvestigacion(SRIActividadGeneral entidad) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIActividadGeneral actividadGeneral= null;
+        try {
+            actividadGeneral = actividadInvestigacionBusiness.AprobarActividadInvestigacion(entidad);
+            respuesta.put("body", actividadGeneral);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "Aprobar Actividad de Investigacion : {0}", actividadGeneral.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "Aprobar Actividad de Investigacion : {0}{1}", new Object[]{ex.getMessage(), entidad.toString()});
+        }
+        return builder.build();
     }
     
 }

@@ -31,7 +31,6 @@ import java.util.HashMap;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 
 
@@ -68,9 +67,6 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     
     @Inject
     private IFlujoActorDao flujoActorDao;
-    
-    @Inject
-    private Logger log;
 
     @Override
     public int Insertar(SRIActividadInvestigacion entidad) {
@@ -78,10 +74,9 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         try{
             entidad = actividadInvestigacionDao.Insert(entidad);
             id = entidad.getNIdActividadInvestigacion();
-                    
         }
         catch(Exception ex){
-            
+            throw ex;
         }
         return id;
     }
@@ -89,50 +84,52 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     @Override
     public boolean Update(SRIActividadInvestigacion entidad) {
         boolean respuesta = false;
-         try{
+        try{
             actividadInvestigacionDao.Update(entidad);
             respuesta = true;
         }
         catch(Exception ex){
-            
+            throw ex;
         }
-         return respuesta;
+        return respuesta;
         
     }
 
     @Override
     public boolean Delete(SRIActividadInvestigacion entidad) {
         boolean respuesta = false;
-         try{
+        try{
             actividadInvestigacionDao.Delete(entidad);
             respuesta = true;
         }
         catch(Exception ex){
-            
+            throw ex;
         }
-         return respuesta;
+        return respuesta;
     }
 
     @Override
     public SRIActividadInvestigacion Get(int idEntidad) {
         SRIActividadInvestigacion respuesta = null;
-         try{
+        try{
             respuesta = actividadInvestigacionDao.GetById(idEntidad);
         }
         catch(Exception ex){
+            throw ex;
         }
-         return respuesta;
+        return respuesta;
     }
 
     @Override
     public List<SRIActividadInvestigacion> GetAll() {
-         List<SRIActividadInvestigacion> respuesta = null;
-         try{
+        List<SRIActividadInvestigacion> respuesta = null;
+        try{
             respuesta = actividadInvestigacionDao.GetAll();
         }
         catch(Exception ex){
+            throw ex;
         }
-         return respuesta;
+        return respuesta;
     }
     
     @Override
@@ -144,7 +141,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         List<SRIUsuario> usuariosDestino = new ArrayList<SRIUsuario>();
         SRIFlujoArista flujoArista = new SRIFlujoArista();
         SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
-        SRIProcesoFlujoDestino procesoFlujoDestino = new SRIProcesoFlujoDestino();
+        
         SRIActividadInvestigacion actividadInvestigacion = new SRIActividadInvestigacion();
         SRIPlanificacionActividad planificacionActividad = new SRIPlanificacionActividad(); 
         SRIDetalleInvestigacionFlujo detalleInvestigacionFlujo =  new SRIDetalleInvestigacionFlujo();
@@ -184,6 +181,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             
             /* Insert ProcesoFlujoDestino*/
             for(int i = 0; i < usuariosDestino.size(); i++){
+                SRIProcesoFlujoDestino procesoFlujoDestino = new SRIProcesoFlujoDestino();
                 usuarioFlujoDestino.setNIdFlujoActor(flujoArista.getSIdFlujoActorDestino());
                 usuarioFlujoDestino.setNIdUsuario(usuariosDestino.get(i).getNIdUsuario());
                 idUsuarioFlujoDestino = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoDestino);
@@ -195,16 +193,8 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 procesoFlujoDestino.setSEstado("A");
                 procesoFlujoDestino = procesoFlujoDestinoDao.Insert(procesoFlujoDestino);
             }
-            
-//            Email email = new Email();
-//            List<String> to = new ArrayList<String>();
-//            for(int i = 0 ; i < usuariosDestino.size(); i++){
-//                to.add(usuariosDestino.get(i).getSUsuarioEmail());
-//            }
-//            to.add(usuarioOrigen.getSUsuarioEmail());
-//            email.initGmail(to,entidad.getActividadInvestigacion());
         } catch(Exception ex) {
-            
+            throw ex;
         }
         return entidad;
     }
@@ -240,10 +230,8 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             detalleInvestigacionFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
             detalleInvestigacionFlujo.setSEstado("A");
             detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
-            
-            
         } catch(Exception ex) {
-        
+            throw ex;
         }
         return entidad;
     }
@@ -260,7 +248,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             respuesta.put("lista", lstActividadGeneral);
             respuesta.put("total", total);
         } catch(Exception ex) {
-        
+            throw ex;
         }
         return respuesta;
     }
@@ -278,7 +266,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             respuesta.put("lista", lstActividadGeneral);
             respuesta.put("total", total);
         } catch(Exception ex) {
-        
+            throw ex;
         }
         return respuesta;
     }
@@ -297,7 +285,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             respuesta.put("lista", lstActividadGeneral);
             respuesta.put("total", total);
         } catch(Exception ex) {
-        
+            throw ex;
         }
         return respuesta;
     }
@@ -320,7 +308,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             email.initGmail(to,actividadInvestigacion);
             respuesta = true;
         } catch(Exception ex) {
-        
+            
         }
         return respuesta;
     }

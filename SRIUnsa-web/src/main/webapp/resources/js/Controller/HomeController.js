@@ -119,7 +119,7 @@
         uploader.uploadAll();
         $scope.loader = false;
         $scope.openCloseModal(true,false);
-        $scope.EnviarEmail(response.actividadInvestigacion.nidActividadInvestigacion);
+        $scope.EnviarEmail(response.body.actividadInvestigacion.nidActividadInvestigacion);
     };
     var RegistrarInvestigacionError = function(response){
         $log.debug(response);

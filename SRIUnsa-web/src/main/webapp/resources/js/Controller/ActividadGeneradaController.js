@@ -73,8 +73,8 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     
     var AprobarActividadSuccess = function(response){
         $log.debug("AprobarActividad - Success");
-        console.log("Respuesta :: ", response);
-                scrollTop();
+        console.log("Respuesta :: ", response.body);
+        scrollTop();
         setTimeout(function(){
             $scope.$apply(function(){ 
                 var popUp = SharedService.popUp;
