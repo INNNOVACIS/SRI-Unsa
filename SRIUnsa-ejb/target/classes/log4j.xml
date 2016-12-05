@@ -20,5 +20,5 @@
   <root>
     <priority value="debug"/>
     <appender-ref ref="ASYNC"/>
-  </Root>
+  </root>
 </log4j:configuration>
