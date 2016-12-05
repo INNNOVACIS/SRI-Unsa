@@ -5,6 +5,7 @@
  */
 package com.innnovacis.unsa.util;
 
+import com.innnovacis.unsa.model.SRIEntidad;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;

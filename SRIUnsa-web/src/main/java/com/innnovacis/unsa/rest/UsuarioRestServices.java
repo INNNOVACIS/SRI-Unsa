@@ -94,7 +94,7 @@ public class UsuarioRestServices {
        SRIUsuarioRolUtil objeto = null; 
        try{
             objeto = usuarioBusiness.AutenticarUsuario(usuario);
-            log.info("Se ingreso correctamente : " + objeto.toString());
+           log.info("holaaa  eee como estas "+ usuario.toString());
        }
        catch(Exception ex){
            log.info("holaaa como estas " + ex.getMessage() + " "+ usuario.toString());
