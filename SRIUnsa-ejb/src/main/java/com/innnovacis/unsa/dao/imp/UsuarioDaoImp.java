@@ -62,12 +62,16 @@ public class UsuarioDaoImp implements IUsuarioDao {
 
     @Override
     public SRIUsuario Autenticar(SRIUsuario entidad) {
-        
-        SRIUsuario usuario = em.createNamedQuery("SRIUsuario.Autenticar", SRIUsuario.class)
+         SRIUsuario usuario = null;
+        try{
+            usuario = em.createNamedQuery("SRIUsuario.Autenticar", SRIUsuario.class)
                 .setParameter("usuario", entidad.getSUsuarioLogin())
                 .setParameter("password", entidad.getSUsuarioPassword())
                 .getSingleResult();
-        
+        }
+        catch(Exception ex){
+            throw  ex;
+        }
         return usuario;
     }
     
