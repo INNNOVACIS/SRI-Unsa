@@ -15,6 +15,8 @@ import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -33,6 +35,9 @@ import javax.ws.rs.core.Response;
 @Path("/usuarios")
 @RequestScoped
 public class UsuarioRestServices {
+
+    @Inject
+    private Logger log;
 
     @Inject
     private IUsuarioBusiness usuarioBusiness;
@@ -85,6 +90,9 @@ public class UsuarioRestServices {
     @Consumes(MediaType.APPLICATION_JSON)
     public SRIUsuarioRolUtil autenticarUsuario(SRIUsuario usuario) {        
 //        usuarioBusiness.Autenticar(usuario);
+       String temporal ="";
+log.info("holaaa como estas");
+                
         return usuarioBusiness.AutenticarUsuario(usuario);
     }
     
