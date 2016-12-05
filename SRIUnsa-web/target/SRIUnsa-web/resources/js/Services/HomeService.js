@@ -25,7 +25,7 @@ investigacionApp.service("HomeService", function(SRIUnsaConfig, $log, $http, $q)
 
     this.registrarInvestigacion = function(request) {
         $log.debug("Investigacion Service - Registrar Investigacion");
-
+        /*registrar actividad*/
         var deferred = $q.defer();
         $http({
             method : 'POST',
