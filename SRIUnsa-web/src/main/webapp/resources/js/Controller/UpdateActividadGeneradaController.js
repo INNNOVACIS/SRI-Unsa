@@ -1,6 +1,6 @@
 investigacionApp.controller('UpdateActividadGeneradaController', function($log, $scope, $location, $routeParams, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService,
-    TipoNivelService, EstructuraOrganizacionService, ArchivosService, SharedService) {
+    TipoNivelService, EstructuraOrganizacionService, ArchivosService, SharedService, FileUploader, SRIUnsaConfig) {
     
     $scope.loader = false;
     $scope.idActividad = $routeParams.ID;
@@ -8,18 +8,19 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
     /******************* Servicios Callback *******************/
     
     var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("Get tipoNivel - Success");    	
+    	$log.debug("GettipoNivel - Success");
+        console.log("Respuesta :: ", response);
     	$scope.niveles = response;
         $scope.getEstructuraOrganizaciones();
     };
-
     var getTipoNivelServiceError = function(response){
-     	$log.debug("Get TipoNivel - Error"); 
+     	$log.debug("Get TipoNivel - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var getEstructuraOrganizacionServiceSuccess = function(response){
     	$log.debug("Get EstructuraOrganizacion - Success");
-        
+        console.log("Respuesta :: ", response);
         angular.forEach(response, function(superior, key) {
             angular.forEach(response, function(value, key) {
                 if(superior.nidPadre === value.nidEstructuraOrganizacion){
@@ -36,55 +37,57 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
         
     	$scope.estructuraOrganizaciones = response;
     };
-
     var getEstructuraOrganizacionServiceError = function(response){
-     	$log.debug("Get EstructuraOrganizacion - Error"); 
+     	$log.debug("Get EstructuraOrganizacion - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var getFondoServiceSuccess = function(response){
     	$log.debug("Get Fondo - Success");
+        console.log("Respuesta :: ", response);
     	$scope.fondos = response;
     };
-
     var getFondoServiceError = function(response){
-     	$log.debug("Get Fondo - Error", response); 
+     	$log.debug("Get Fondo - Error", response);
+        console.log("Respuesta :: ", response);
     };
     
     var getSemestreServiceSuccess = function(response){
-    	$log.debug("Get Semestre - Success");        
+    	$log.debug("Get Semestre - Success");
+        console.log("Respuesta :: ", response);
     	$scope.semestres = response;
     };
-    
     var getSemestreServiceError = function(response){
      	$log.debug("Get Semestre - Error");
-        console.log("Error Response Semestre :: ", response);
+        console.log("Respuesta :: ", response);
     };
     
     var getTipoInvestigacionSuccess = function(response){
     	$log.debug("Get Investigacion - Success");
-        console.log("Respuesta Investigacion :: ", response);
+        console.log("Respuesta :: ", response);
     	$scope.tipoInvestigaciones = response;
     };
-    
     var getTipoInvestigacionError = function(response){
      	$log.debug("Get Investigacion - Error");
-        console.log("Error Response Investigacion :: ", response);
+        console.log("Respuesta :: ", response);
     };
     
     var getInvestigacionByIdSuccess = function(response){
-        console.log("getInvestigacionByIdSuccess :: ", response);
+        $log.debug("GetInvestigacionById - Success");
+        console.log("Respuesta :: ", response);
         $scope.actividadGeneradaVista = response;
         editarActividad(response);
         $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
     };
-    
     var getInvestigacionByIdError = function(response){
-        console.log("getInvestigacionByIdError :: ", response);
+        $log.debug("GetInvestigacionById - Success");
+        console.log("Respuesta :: ", response);
         $scope.loader = false;  
     };
     
     var getArchivoByIdActividadSuccess = function(response){
-        console.log("getArchivoByIdActividadSuccess :: ", response);
+        $log.debug("getArchivoByIdActividad - Success");
+        console.log("Respuesta :: ", response);
         $scope.archivos = response;
         setTimeout(function(){
             $scope.$apply(function(){
@@ -94,26 +97,28 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
     };
     
     var getArchivoByIdActividadError = function(response){
-        console.log("getArchivoByIdActividadError :: ", response);
+        $log.debug("getArchivoByIdActividad - Error");
+        console.log("Respuesta :: ", response);
         $scope.loader = false;  
     };
     
     var getAreaInvestigacionServiceSuccess = function(response){
     	$log.debug("Get AreaInvestigacion - Success");
+        console.log("Respuesta :: ", response);
     	$scope.areaInvestigaciones = response;
     };
-
     var getAreaInvestigacionServiceError = function(response){
-     	$log.debug("Get AreaInvestigacion - Error"); 
+     	$log.debug("Get AreaInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var descargarArchivoSuccess = function(response){
-        $log.debug("Descargar Archivo - Success");
+        $log.debug("DescargarArchivo - Success");
+        console.log("Respuesta :: ", response);
     };
-    
     var descargarArchivoError = function(response){
-        $log.debug("Descargar Archivo - Error");
-        console.log("Descargar Archivo :: ", response);
+        $log.debug("DescargarArchivo - Error");
+        console.log("Respuesta :: ", response);
     };
     
     /******************* Servicios *******************/
@@ -232,7 +237,35 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
     };
     
     /************ Funciones Utilitarias ************/
+    
+    $scope.uploadFile = function(){
+        var file = $scope.archivo;
+        var formData = new FormData();
+        formData.append('file', file);
+//        HomeService.sendFile(formData, true).then(homeServiceSuccess, homeServiceError);
+    };
+    
+    var uploader = $scope.uploader = new FileUploader({
+        url: SRIUnsaConfig.SRIUnsaUrlServicio + '/files/subirArchivos'
+    });
+    
+    uploader.filters.push({
+        name: 'customFilter',
+        fn: function(item , options) {
+            return this.queue.length < 10;
+        }
+    });
 
+    $scope.uploadAll = function(){
+        addPlanificacion();
+        uploader.uploadAll();
+    };
+    
+    $scope.irBandeja = function(){
+        $scope.loader = true;
+        $location.path("/actividad/Generadas");
+    };
+    
     var scrollTop = function(){
         $('html,body').animate({
             scrollTop: $("#container").offset().top - 100

@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -27,6 +26,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.logging.Logger;
 
 /**
  *
@@ -71,9 +71,21 @@ public class UsuarioRestServices {
     @Path("/registrarUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int saveUsuario(SRIUsuario usuario) {
-        System.out.println("USUARIO :: " + usuario);
-        return usuarioBusiness.Insertar(usuario);
+    public Response saveUsuario(SRIUsuario usuario) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> response = new HashMap<>();
+        int respuesta = -1;
+        try{
+            respuesta = usuarioBusiness.Insertar(usuario);
+            response.put("body", respuesta);
+            builder = Response.status(Response.Status.OK).entity(response);
+            log.log(Level.INFO, "Registrar Usuario : {0}", usuario.toString());
+        }catch(Exception ex){
+            log.log(Level.INFO, "Registrar Usuario : {0}{1}", new Object[]{ex.getMessage(), usuario.toString()});
+            response.put("body", ex.getMessage());
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response);
+        }
+        return builder.build();
     }
     
     @PUT
@@ -84,49 +96,43 @@ public class UsuarioRestServices {
         return usuarioBusiness.Update(usuario);
     }
     
-    @POST
-    @Path("/autenticarUsuarios")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public SRIUsuarioRolUtil autenticarUsuario(SRIUsuario usuario) {        
-//        usuarioBusiness.Autenticar(usuario);
-       String temporal ="";
-       SRIUsuarioRolUtil objeto = null; 
-       try{
-            objeto = usuarioBusiness.AutenticarUsuario(usuario);
-           log.info("holaaa  eee como estas "+ usuario.toString());
-       }
-       catch(Exception ex){
-           log.info("holaaa como estas " + ex.getMessage() + " "+ usuario.toString());
-       }
-
-                
-        return objeto;
-    }
-    
     @PUT
     @Path("/deleteUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean deleteUsuario(SRIUsuario usuario) {
-        return usuarioBusiness.Delete(usuario);
-    }
-    
-    @GET
-    @Path("/listarPrueba")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response autenticarUsuario() {
-        
-        
-        List<SRIUsuario> lista = usuarioBusiness.GetAll();
-        
+    public Response deleteUsuario(SRIUsuario usuario) {
         Response.ResponseBuilder builder = null;
+        Map<String, Object> response = new HashMap<>();
+        try{
+            boolean respuesta = usuarioBusiness.Delete(usuario);
+            response.put("body", respuesta);
+            builder = Response.status(Response.Status.OK).entity(response);
+            log.log(Level.INFO, "Eliminar Usuario : {0}", usuario.toString());
+        } catch(Exception ex) {
+            response.put("body", ex.getMessage());
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response);
+            log.log(Level.INFO, "Eliminar Usuario : {0}{1}", new Object[]{ex.getMessage(), usuario.toString()});
+        }
+        return builder.build();
+    }
         
-        Map<String, Object> responseObj = new HashMap<>();
-        responseObj.put("Total", 11);
-        responseObj.put("lista", lista);
-        builder = Response.status(Response.Status.OK).entity(responseObj);
-        
+    @POST
+    @Path("/autenticarUsuarios")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response autenticarUsuario(SRIUsuario usuario) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> response = new HashMap<>();
+        try {
+            SRIUsuarioRolUtil respuesta = usuarioBusiness.AutenticarUsuario(usuario);
+            response.put("body", respuesta);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "Autenticar Usuario : {0}", usuario.toString());
+        } catch(Exception ex) {
+            response.put("body", ex.getMessage());
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response);
+            log.log(Level.INFO, "Autenticar Usuario : {0}{1}", new Object[]{ex.getMessage(), usuario.toString()});
+        }
         return builder.build();
     }
     

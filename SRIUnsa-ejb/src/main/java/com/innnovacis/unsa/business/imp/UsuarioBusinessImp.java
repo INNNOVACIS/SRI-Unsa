@@ -11,7 +11,6 @@ import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 
 
@@ -21,9 +20,6 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
 
     @Inject
     private IUsuarioDao usuarioDao;
-    
-    @Inject
-    private Logger log;
 
     @Override
     public int Insertar(SRIUsuario entidad) {
@@ -31,10 +27,9 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         try{
             entidad = usuarioDao.Insert(entidad);
             id = entidad.getNIdUsuario();
-                    
         }
         catch(Exception ex){
-            System.out.println("error =========> " + ex.getMessage());
+            throw ex;
         }
         return id;
     }
@@ -42,12 +37,12 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
     @Override
     public boolean Update(SRIUsuario entidad) {
         boolean respuesta = false;
-         try{
+        try{
             usuarioDao.Update(entidad);
             respuesta = true;
         }
         catch(Exception ex){
-            
+            throw ex;
         }
          return respuesta;
         
@@ -56,12 +51,12 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
     @Override
     public boolean Delete(SRIUsuario entidad) {
         boolean respuesta = false;
-         try{
+        try{
             usuarioDao.Delete(entidad);
             respuesta = true;
         }
         catch(Exception ex){
-            System.out.println("Error ===> " + ex.getMessage());
+            throw ex;
         }
          return respuesta;
     }
@@ -69,37 +64,27 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
     @Override
     public SRIUsuario Get(int idEntidad) {
         SRIUsuario respuesta = null;
-         try{
+        try{
             respuesta = usuarioDao.GetById(idEntidad);
         }
         catch(Exception ex){
+            throw ex;
         }
          return respuesta;
     }
 
     @Override
     public List<SRIUsuario> GetAll() {
-        log.info("PRUEBAAAA LOGGGG");
-         List<SRIUsuario> respuesta = null;
+        List<SRIUsuario> respuesta = null;
          try{
             respuesta = usuarioDao.GetAll();
         }
         catch(Exception ex){
+            throw ex;
         }
          return respuesta;
     }
 
-    @Override
-    public SRIUsuario Autenticar(SRIUsuario entidad) {
-        SRIUsuario respuesta = new SRIUsuario();
-         try{
-            respuesta = usuarioDao.Autenticar(entidad);
-        }
-        catch(Exception ex){
-            log.fine("Error Autenticar " + entidad.toString());
-        }
-         return respuesta;
-    }
 
     @Override
     public List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad) {
@@ -108,7 +93,7 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
             respuesta = usuarioDao.GetPagina(entidad);
         }
         catch(Exception ex){
-            System.out.println("Error =========> " + ex.getMessage());
+            throw ex;
         }
         return respuesta;
     }
@@ -120,7 +105,7 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
             respuesta = usuarioDao.GetTotalPaginacion(entidad);
         }
         catch(Exception ex){
-            System.out.println("Error =========> " + ex.getMessage());
+            throw ex;
         }
         return respuesta;
     }
@@ -128,11 +113,10 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
     @Override
     public SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad) {
         SRIUsuarioRolUtil respuesta = null;
-         try{
+        try{
             respuesta = usuarioDao.AutenticarUsuario(entidad);
         }
         catch(Exception ex){
-            
             throw  ex;
         }
         return respuesta;

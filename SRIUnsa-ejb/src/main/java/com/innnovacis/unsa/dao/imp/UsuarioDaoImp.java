@@ -22,101 +22,118 @@ public class UsuarioDaoImp implements IUsuarioDao {
     @Inject
     private EntityManager em;
     
-    
     @Override
     @Transactional
     public SRIUsuario  Insert(SRIUsuario entidad) {
-        entidad.setDFechaCreacion(new Date());
-        em.persist(entidad);
+        try{
+            entidad.setDFechaCreacion(new Date());
+            em.persist(entidad);
+        } catch(Exception ex){
+            throw ex;
+        }
         return entidad;
     }
 
     @Override
     @Transactional
     public SRIUsuario Update(SRIUsuario entidad) {
-        entidad.setDFechaModificacion(new Date());
-        em.merge(entidad);
+        try{
+            entidad.setDFechaModificacion(new Date());
+            em.merge(entidad);
+        } catch(Exception ex) {
+            throw ex;
+        }
         return entidad;
     }
 
     @Override
     @Transactional
     public boolean Delete(SRIUsuario entidad) {
-        entidad.setDFechaModificacion(new Date());
-        entidad.setSEstado("I");
-        em.merge(entidad);
+        try{
+            entidad.setDFechaModificacion(new Date());
+            entidad.setSEstado("I");
+            em.merge(entidad);
+        } catch(Exception ex) {
+            throw ex;
+        }
         return true;
     }
 
     @Override
     public SRIUsuario GetById(int idEntidad) {
-        SRIUsuario entidad = em.createNamedQuery("SRIUsuario.GetById", SRIUsuario.class).setParameter("idEntidad", idEntidad).getSingleResult();
+        SRIUsuario entidad = null;
+        try{
+            entidad = em.createNamedQuery("SRIUsuario.GetById", SRIUsuario.class).setParameter("idEntidad", idEntidad).getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
         return entidad;
     }
 
     @Override
     public List<SRIUsuario> GetAll() {
-        List<SRIUsuario> olistaRespuesta = em.createNamedQuery("SRIUsuario.GetAll",SRIUsuario.class).getResultList();
+        List<SRIUsuario> olistaRespuesta = null;
+        try {
+            olistaRespuesta = em.createNamedQuery("SRIUsuario.GetAll",SRIUsuario.class).getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
         return olistaRespuesta;
     }
 
-    @Override
-    public SRIUsuario Autenticar(SRIUsuario entidad) {
-         SRIUsuario usuario = null;
-        try{
-            usuario = em.createNamedQuery("SRIUsuario.Autenticar", SRIUsuario.class)
-                .setParameter("usuario", entidad.getSUsuarioLogin())
-                .setParameter("password", entidad.getSUsuarioPassword())
-                .getSingleResult();
-        }
-        catch(Exception ex){
-            throw  ex;
-        }
-        return usuario;
-    }
     
     @Override
     public List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad) {
-        Query query = em.createNativeQuery("{call usuarioPaginacion(?1,?2,?3)}", SRIUsuario.class)
+        List<SRIUsuario> listUsuarios = null;
+        try {
+            Query query = em.createNativeQuery("{call usuarioPaginacion(?1,?2,?3)}", SRIUsuario.class)
                         .setParameter(1, entidad.getFiltro().getSUsuarioLogin())
                         .setParameter(2, entidad.getRango())
                         .setParameter(3, entidad.getCurrentPage());
-        List<SRIUsuario> listUsuarios = query.getResultList();
+            listUsuarios = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
         return listUsuarios;
     }
 
     @Override
     public int GetTotalPaginacion(SRIUsuariosPaginacion entidad) {
-        Query query = em.createNativeQuery("{call total_usuarios(?1)}")
+        BigInteger total = null;
+        try {
+            Query query = em.createNativeQuery("{call total_usuarios(?1)}")
                         .setParameter(1, entidad.getFiltro().getSUsuarioLogin());
-        BigInteger total = (BigInteger) query.getSingleResult();
+            total = (BigInteger) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
         return total.intValue();
     }
 
     @Override
     public SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad) {
-       SRIUsuarioRolUtil objUsuarioRol = null;
-       try
-       {
+        SRIUsuarioRolUtil objUsuarioRol = null;
+        try {
             Query query = em.createNativeQuery("{call AutenticarUsuario(?1,?2)}", SRIUsuarioRolUtil.class)
                         .setParameter(1, entidad.getSUsuarioLogin())
                         .setParameter(2, entidad.getSUsuarioPassword());
             objUsuarioRol = (SRIUsuarioRolUtil)query.getSingleResult();
-       }
-       catch(Exception ex)
-       {
-           throw ex;
-       }
-        
-        
+        } catch(Exception ex) {
+            throw ex;
+        }
         return objUsuarioRol;
     }
 
     @Override
     public List<SRIUsuario> GetByIdActorDestino(int idActorDestino) {
-        Query query = em.createNativeQuery("{call GetByIdActorDestino(?1)}", SRIUsuario.class)
-                        .setParameter(1, idActorDestino);
-        List<SRIUsuario> listUsuarios = query.getResultList();
+        List<SRIUsuario> listUsuarios = null;
+        try {
+            Query query = em.createNativeQuery("{call GetByIdActorDestino(?1)}", SRIUsuario.class)
+                .setParameter(1, idActorDestino);
+            listUsuarios = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
         return listUsuarios;
     }
 

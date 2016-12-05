@@ -69,13 +69,10 @@ public class SRIEntidad implements Serializable {
     public String toString() {
         StringBuilder result = new StringBuilder();
         String newLine = System.getProperty("line.separator");
-
         result.append(getClass().getSimpleName());
         result.append( " {" );
         result.append(newLine);
-
         List<Field> fields = getAllModelFields(getClass());
-
         for (Field field : fields) {
             result.append("  ");
             try {
@@ -83,7 +80,6 @@ public class SRIEntidad implements Serializable {
                 result.append(": ");
                 field.setAccessible(true);
                 result.append(field.get(this));
-
             } catch ( IllegalAccessException ex ) {
     //                System.err.println(ex);
             }
@@ -91,7 +87,6 @@ public class SRIEntidad implements Serializable {
         }
         result.append("}");
         result.append(newLine);
-
         return result.toString();
     }
 

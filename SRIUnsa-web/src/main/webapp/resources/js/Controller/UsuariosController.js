@@ -7,7 +7,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
 
     var registrarUsuarioSuccess = function(response){
     	$log.debug("Registrar Usuario - Success");
-        console.log("Respuesta :: ", response);
+        console.log("Respuesta :: ", response.body);
     	$scope.usuario = {};
         $scope.getUsuariosByPagina();
     };
@@ -18,7 +18,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
 
     var updateUsuarioSuccess = function(response){
     	$log.debug("UpdateUsuario - Success");
-    	console.log("Respuesta :: ", response);
+    	console.log("Respuesta :: ", response.body);
     	$scope.getUsuariosByPagina();
     };
     var updateUsuarioError = function(response){
@@ -28,7 +28,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
 
     var deleteUsuarioSuccess = function(response){
     	$log.debug("DeleteUsuario - Success");
-        console.log("Respuesta :: ", response);
+        console.log("Respuesta :: ", response.body);
     	$scope.getUsuariosByPagina();
     };
     var deleteUsuarioError = function(response){
@@ -42,6 +42,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
         var usuario = {
             susuarioLogin : $scope.usuario.susuarioLogin,
             susuarioPassword : $scope.usuario.susuarioPassword,
+            susuarioEmail : $scope.usuario.susuarioEmail,
             suserCreacion : $scope.sharedService.nombreUsuario,
             sestado : 'A'
         };
@@ -52,6 +53,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
         var usuario = {
             nidUsuario : $scope.usuario.nidUsuario,
             susuarioLogin : $scope.usuario.susuarioLogin,
+            susuarioEmail : $scope.usuario.susuarioEmail,
             susuarioPassword : $scope.usuario.susuarioPassword,
             suserCreacion : $scope.usuario.suserCreacion,
             dfechaCreacion : $scope.usuario.dfechaCreacion,

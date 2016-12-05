@@ -22,18 +22,33 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     
     /******************* Servicios Callback *******************/
     
+    var getTipoInvestigacionSuccess = function(response){
+        $log.debug("GetTipoInvestigacion - Success");
+        console.log("Respuesta :: ", response);
+        $scope.tipoInvestigaciones = response;
+        BuscarTipoInvestigacion($scope.actividadGeneradaVista.nidTipoActividadInvestigacion);
+    };
+    var getTipoInvestigacionError = function(response){
+        $log.debug("GetTipoInvestigacion - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     var getInvestigacionByIdSuccess = function(response){
-        console.log("getInvestigacionByIdSuccess :: ", response);
+        $log.debug("GetInvestigacionById - Success");
+        console.log("Respuesta :: ", response);
         $scope.actividadGeneradaVista = response;
+        $scope.getTipoInvestigacion();
         $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
     };
     var getInvestigacionByIdError = function(response){
-        console.log("getInvestigacionByIdError :: ", response);
+        $log.debug("GetInvestigacionById - Error");
+        console.log("Respuesta :: ", response);
         $scope.loader = false;  
     };
     
     var getArchivoByIdActividadSuccess = function(response){
-        console.log("getArchivoByIdActividadSuccess :: ", response);
+        $log.debug("getArchivoByIdActividad - Success");
+        console.log("Respuesta :: ", response);
         $scope.archivos = response;
         setTimeout(function(){
             $scope.$apply(function(){
@@ -42,16 +57,18 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
         }, 1000);
     };
     var getArchivoByIdActividadError = function(response){
-        console.log("getArchivoByIdActividadError :: ", response);
+        $log.debug("getArchivoByIdActividad - Success");
+        console.log("Respuesta :: ", response);
         $scope.loader = false;  
     };
     
     var descargarArchivoSuccess = function(response){
-        $log.debug("Descargar Archivo - Success");
+        $log.debug("descargarArchivo - Success");
+        console.log("Respuesta :: ", response);
     };
     var descargarArchivoError = function(response){
-        $log.debug("Descargar Archivo - Error");
-        console.log("Descargar Archivo :: ", response);
+        $log.debug("descargarArchivo - Error");
+        console.log("Respuesta :: ", response);
     };
     
     var AprobarActividadSuccess = function(response){
@@ -88,9 +105,9 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
         TipoInvestigacionService.getInvestigacionesById(idActividad).then(getInvestigacionByIdSuccess, getInvestigacionByIdError);
     };
     
-//    $scope.getTipoInvestigacion = function(){
-//      	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
-//    };
+    $scope.getTipoInvestigacion = function(){
+      	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
+    };
     
     $scope.getArchivosByIdActividad = function(idActividad){
         $scope.loader = true;
@@ -116,6 +133,14 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     };
     
     /************ Funciones Utilitarias ************/
+    var BuscarTipoInvestigacion = function(idTipoInvestigacion){
+        angular.forEach($scope.tipoInvestigaciones, function(valor, key){
+            if(valor.nidTipoActividadInvestigacion === idTipoInvestigacion){
+                $scope.nombreTipoActividad = valor.snombreActividadInvestigacion;
+            }
+        });
+    };
+    
     $scope.irBandejaRevisados = function(){
         $scope.loader = true;
         if($scope.generado){ $location.path("/actividad/Generadas"); }
