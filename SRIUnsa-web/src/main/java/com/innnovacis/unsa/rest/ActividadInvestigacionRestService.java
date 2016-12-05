@@ -80,7 +80,7 @@ public class ActividadInvestigacionRestService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad){
-        
+        /*Registrar Actividad*/
         return investigacionBusiness.RegistrarActividad(entidad);
     }
     
