@@ -95,10 +95,20 @@ public class UsuarioDaoImp implements IUsuarioDao {
 
     @Override
     public SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad) {
-        Query query = em.createNativeQuery("{call AutenticarUsuario(?1,?2)}", SRIUsuarioRolUtil.class)
+       SRIUsuarioRolUtil objUsuarioRol = null;
+       try
+       {
+            Query query = em.createNativeQuery("{call AutenticarUsuario(?1,?2)}", SRIUsuarioRolUtil.class)
                         .setParameter(1, entidad.getSUsuarioLogin())
                         .setParameter(2, entidad.getSUsuarioPassword());
-        SRIUsuarioRolUtil objUsuarioRol = (SRIUsuarioRolUtil)query.getSingleResult();
+            objUsuarioRol = (SRIUsuarioRolUtil)query.getSingleResult();
+       }
+       catch(Exception ex)
+       {
+           throw ex;
+       }
+        
+        
         return objUsuarioRol;
     }
 
