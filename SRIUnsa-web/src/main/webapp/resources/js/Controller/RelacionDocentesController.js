@@ -1,5 +1,6 @@
 investigacionApp.controller('RelacionDocentesController', function($log, $scope, SharedService, FondoConcursableService, 
-    SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService) {	
+    SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService,
+    RelacionDocentesService) {	
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -79,6 +80,24 @@ investigacionApp.controller('RelacionDocentesController', function($log, $scope,
         console.log("Respuesta :: ", response);
     };
     
+    var descargarPDFSuccess = function(response){
+        $log.debug("descargarPDF - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarPDFError = function(response){
+        $log.debug("descargarPDF - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var descargarExcelSuccess = function(response){
+        $log.debug("descargarExcel - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarExcelError = function(response){
+        $log.debug("descargarExcel - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     /******************* Servicios *******************/
     
     $scope.getListaTipoNivel = function(){
@@ -98,6 +117,12 @@ investigacionApp.controller('RelacionDocentesController', function($log, $scope,
     };
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
+    };
+    $scope.descargarPDF = function(){
+        RelacionDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
+    };
+    $scope.descargarExcel = function(){
+        RelacionDocentesService.descargarExcel().then(descargarExcelSuccess, descargarExcelError);
     };
     
     $scope.facultadChange = function(){
