@@ -31,6 +31,8 @@ import java.util.HashMap;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 
 
@@ -38,6 +40,9 @@ import javax.enterprise.context.Dependent;
 @Dependent
 public class ActividadInvestigacionBusinessImp implements IActividadInvestigacionBusiness {
 
+    @Inject
+    private Logger log;
+    
     @Inject
     private IActividadInvestigacionDao actividadInvestigacionDao;
     
@@ -305,10 +310,54 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             for(int i = 0 ; i < usuariosDestino.size(); i++){
                 to.add(usuariosDestino.get(i).getSUsuarioEmail());
             }
+            
+            log.log(Level.INFO, "Email enable : {0}", email.recuperar());
+            log.log(Level.INFO, "Email enable : {0}", to);
             email.initGmail(to,actividadInvestigacion);
+            
+            
             respuesta = true;
         } catch(Exception ex) {
-            
+            respuesta = false;
+            try {
+                throw ex;
+            } catch (Exception ex1) {
+                Logger.getLogger(ActividadInvestigacionBusinessImp.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        return respuesta;
+    }
+
+    @Override
+    public Map<String, Object> GetActividadesByDocente(SRIPaginacion entidad) {
+        
+        int total = -1;
+        List<SRIActividadGeneralPaginacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            lstActividadGeneral = actividadInvestigacionDao.GetActividadesByDocente(entidad);
+            total = actividadInvestigacionDao.GetTotalActividadesByDocente(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public Map<String, Object> GetActividadesByDocenteDetalle(SRIPaginacion entidad) {
+        
+        int total = -1;
+        List<SRIActividadInvestigacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            lstActividadGeneral = actividadInvestigacionDao.GetActividadesByDocenteDetalle(entidad);
+            total = actividadInvestigacionDao.GetTotalActividadesByDocenteDetalle(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
         }
         return respuesta;
     }

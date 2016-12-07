@@ -3,8 +3,9 @@ package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
-import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.inject.Inject;
@@ -83,11 +84,11 @@ public class UsuarioDaoImp implements IUsuarioDao {
 
     
     @Override
-    public List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad) {
-        List<SRIUsuario> listUsuarios = null;
+    public List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad) {
+        List<SRIUsuarioPersona> listUsuarios = null;
         try {
-            Query query = em.createNativeQuery("{call usuarioPaginacion(?1,?2,?3)}", SRIUsuario.class)
-                        .setParameter(1, entidad.getFiltro().getSUsuarioLogin())
+            Query query = em.createNativeQuery("{call GetUsuarioPersona(?1,?2,?3)}", SRIUsuarioPersona.class)
+                        .setParameter(1, entidad.getFiltro())
                         .setParameter(2, entidad.getRango())
                         .setParameter(3, entidad.getCurrentPage());
             listUsuarios = query.getResultList();
@@ -98,11 +99,11 @@ public class UsuarioDaoImp implements IUsuarioDao {
     }
 
     @Override
-    public int GetTotalPaginacion(SRIUsuariosPaginacion entidad) {
+    public int GetTotalPaginacion(SRIPaginacionObject entidad) {
         BigInteger total = null;
         try {
-            Query query = em.createNativeQuery("{call total_usuarios(?1)}")
-                        .setParameter(1, entidad.getFiltro().getSUsuarioLogin());
+            Query query = em.createNativeQuery("{call GetTotalUsuarioPersona(?1)}")
+                        .setParameter(1, entidad.getFiltro());
             total = (BigInteger) query.getSingleResult();
         } catch(Exception ex) {
             throw ex;

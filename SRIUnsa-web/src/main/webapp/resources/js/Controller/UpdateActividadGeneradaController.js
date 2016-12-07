@@ -75,8 +75,8 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
     var getInvestigacionByIdSuccess = function(response){
         $log.debug("GetInvestigacionById - Success");
         console.log("Respuesta :: ", response);
-        $scope.actividadGeneradaVista = response;
-        editarActividad(response);
+        $scope.actividadGeneradaVista = response.body;
+        editarActividad(response.body);
         $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
     };
     var getInvestigacionByIdError = function(response){

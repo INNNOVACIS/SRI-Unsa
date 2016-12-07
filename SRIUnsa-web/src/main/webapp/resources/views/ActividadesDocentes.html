@@ -67,7 +67,7 @@
         </div>
         
         <div class="panel panel-primary">
-            <div class="panel-heading" style="line-height: 2;">Relación de Docentes 
+            <div class="panel-heading" style="line-height: 2;">Actividades por Docente
                 <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
                     <span class="glyphicon glyphicon-cloud-download"></span>
                     Descargar PDF
@@ -86,7 +86,6 @@
                                 <th>Nombre del Docente</th>
                                 <th>DNI</th>
                                 <th>Total Duraci&oacute;n</th>
-                                <th>N&uacute;mero Actividades</th>
                                 <th>Con Actividad</th>
                             </tr>
                         </thead>
@@ -94,7 +93,6 @@
                             <tr ng-repeat="actividadDocente in actividadesDocentes">
                                 <td>{{ actividadDocente.idactividadinvestigacion }}</td>
                                 <td><strong>{{ actividadDocente.nombreactividad }}</strong></td>
-                                <td>{{ actividadDocente.dni }}</td>
                                 <td>{{ actividadDocente.horas }}</td>
                                 <td width="8%">{{ actividadDocente.cantidad }}</td>
                                 <td width="8%">Si</td>

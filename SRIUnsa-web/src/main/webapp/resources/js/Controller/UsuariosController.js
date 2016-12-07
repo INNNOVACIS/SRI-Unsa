@@ -39,14 +39,17 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     /********** CRUD USUARIOS ***********/
 
     $scope.registrarUsuario = function(){
-        var usuario = {
+        var usuariopersona = {
             susuarioLogin : $scope.usuario.susuarioLogin,
             susuarioPassword : $scope.usuario.susuarioPassword,
             susuarioEmail : $scope.usuario.susuarioEmail,
+            snombre : $scope.usuario.snombre,
+            sapellido : $scope.usuario.sapellido,
+            ndni : $scope.usuario.ndni,
             suserCreacion : $scope.sharedService.nombreUsuario,
             sestado : 'A'
         };
-	UsuariosService.registrarUsuario(usuario).then(registrarUsuarioSuccess, registrarUsuarioError);
+	UsuariosService.registrarUsuario(usuariopersona).then(registrarUsuarioSuccess, registrarUsuarioError);
     };
 
     $scope.updateUsuario = function(){

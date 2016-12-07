@@ -6,8 +6,9 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
-import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -24,8 +25,9 @@ public interface IUsuarioBusiness {
     SRIUsuario Get(int idEntidad);
     List<SRIUsuario> GetAll();
     SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad);
+    int InsertarUsuarioPersona(SRIUsuarioPersona usuariopersona);
     
-    int GetTotalPaginacion(SRIUsuariosPaginacion entidad);
-    List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad);
+    int GetTotalPaginacion(SRIPaginacionObject entidad);
+    List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad);
     
 }

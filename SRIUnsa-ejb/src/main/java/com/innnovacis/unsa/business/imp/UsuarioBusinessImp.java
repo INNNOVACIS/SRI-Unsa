@@ -3,11 +3,14 @@ package com.innnovacis.unsa.business.imp;
 
 
 import com.innnovacis.unsa.business.IUsuarioBusiness;
+import com.innnovacis.unsa.dao.IPersonaDao;
 
 import com.innnovacis.unsa.dao.IUsuarioDao;
+import com.innnovacis.unsa.model.SRIPersona;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
-import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -20,6 +23,9 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
 
     @Inject
     private IUsuarioDao usuarioDao;
+    
+    @Inject
+    private IPersonaDao personaDao;
 
     @Override
     public int Insertar(SRIUsuario entidad) {
@@ -87,8 +93,8 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
 
 
     @Override
-    public List<SRIUsuario> GetPagina(SRIUsuariosPaginacion entidad) {
-        List<SRIUsuario> respuesta = null;
+    public List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad) {
+        List<SRIUsuarioPersona> respuesta = null;
          try{
             respuesta = usuarioDao.GetPagina(entidad);
         }
@@ -99,7 +105,7 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
     }
 
     @Override
-    public int GetTotalPaginacion(SRIUsuariosPaginacion entidad) {
+    public int GetTotalPaginacion(SRIPaginacionObject entidad) {
         int respuesta = -1;
         try{
             respuesta = usuarioDao.GetTotalPaginacion(entidad);
@@ -118,6 +124,37 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         }
         catch(Exception ex){
             throw  ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public int InsertarUsuarioPersona(SRIUsuarioPersona usuariopersona) {
+        int respuesta = -1;
+        SRIUsuario usuario = new SRIUsuario();
+        SRIPersona persona = new SRIPersona();
+        try{
+            persona.setSNombre(usuariopersona.getSNombre());
+            persona.setSApellido(usuariopersona.getSApellido());
+            persona.setNDni(usuariopersona.getNDni());
+            persona.setSEmail(usuariopersona.getSUsuarioEmail());
+            persona.setSUserCreacion(usuariopersona.getSUserCreacion());
+            persona.setSEstado(usuariopersona.getSEstado());
+            
+            usuario.setSUsuarioLogin(usuariopersona.getSUsuarioLogin());
+            usuario.setSUsuarioPassword(usuariopersona.getSUsuarioPassword());
+            usuario.setSUsuarioEmail(usuariopersona.getSUsuarioEmail());
+            usuario.setSUserCreacion(usuariopersona.getSUserCreacion());
+            usuario.setSEstado(usuariopersona.getSEstado());
+            
+            persona = personaDao.Insert(persona);
+            usuario.setNIdPersona(persona.getNIdPersona());
+            usuario = usuarioDao.Insert(usuario);
+            
+            respuesta = usuario.getNIdUsuario();
+        }
+        catch(Exception ex){
+            throw ex;
         }
         return respuesta;
     }

@@ -26,10 +26,14 @@ public interface IActividadInvestigacionDao {
     List<SRIActividadGeneralPaginacion> GetPagina(SRIPaginacion pagina, String idActividades);
     int GetTotalPagina(SRIPaginacion pagina, String idActividades);
     
-    int GetTotalActividadesGeneradas(SRIPaginacion entidad);
+    int GetTotalActividadesGeneradas (SRIPaginacion entidad);
     int GetTotalActividadesPendientes(SRIPaginacion entidad);
-    int GetTotalActividadesRevisadas(SRIPaginacion entidad);
-    List<SRIActividadGeneralPaginacion> GetActividadesGeneradas(SRIPaginacion entidad);
+    int GetTotalActividadesRevisadas (SRIPaginacion entidad);
+    int GetTotalActividadesByDocente (SRIPaginacion entidad);
+    int GetTotalActividadesByDocenteDetalle (SRIPaginacion entidad);
+    List<SRIActividadGeneralPaginacion> GetActividadesGeneradas (SRIPaginacion entidad);
     List<SRIActividadGeneralPaginacion> GetActividadesPendientes(SRIPaginacion entidad);
-    List<SRIActividadGeneralPaginacion> GetActividadesRevisadas(SRIPaginacion entidad);
+    List<SRIActividadGeneralPaginacion> GetActividadesRevisadas (SRIPaginacion entidad);
+    List<SRIActividadGeneralPaginacion> GetActividadesByDocente (SRIPaginacion entidad);
+    List<SRIActividadInvestigacion> GetActividadesByDocenteDetalle (SRIPaginacion entidad);
 }

@@ -36,6 +36,12 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
     @Column(name = "idusuario" )
     private int NIdUsuario;
     
+    @Column(name = "idpersona" )
+    private int NIdPersona;
+    
+    @Column(name = "idestructuraorganizacion" )
+    private int NIdEstructuraOrganizacion;
+    
     @Column(name = "usuariologin")
     private String SUsuarioLogin;
 
@@ -44,6 +50,22 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
 
     @Column(name = "usuarioemail")
     private String SUsuarioEmail;
+
+    public int getNIdPersona() {
+        return NIdPersona;
+    }
+
+    public void setNIdPersona(int NIdPersona) {
+        this.NIdPersona = NIdPersona;
+    }
+
+    public int getNIdEstructuraOrganizacion() {
+        return NIdEstructuraOrganizacion;
+    }
+
+    public void setNIdEstructuraOrganizacion(int NIdEstructuraOrganizacion) {
+        this.NIdEstructuraOrganizacion = NIdEstructuraOrganizacion;
+    }
 
     public String getSUsuarioEmail() {
         return SUsuarioEmail;
@@ -77,6 +99,5 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
         this.SUsuarioPassword = SUsuarioPassword;
     }
     
-  
 }
 

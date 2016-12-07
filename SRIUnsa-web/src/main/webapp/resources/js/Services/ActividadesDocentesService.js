@@ -1,7 +1,7 @@
 /**
- * RelacionDocentesService
+ * ActividadesDocentesService
  */
-investigacionApp.service("RelacionDocentesService", function(SRIUnsaConfig, $log, $http, $q) {
+investigacionApp.service("ActividadesDocentesService", function(SRIUnsaConfig, $log, $http, $q) {
 	
     this.GetActividadesByDocente = function(request) {
         $log.debug("RelacionDocentesService - GetDocentes");
@@ -20,12 +20,12 @@ investigacionApp.service("RelacionDocentesService", function(SRIUnsaConfig, $log
     };
     
     this.GetActividadesByDocentesDetalle = function() {
-        $log.debug("RelacionDocentesService - GetDocentesDetalle");
+        $log.debug("RelacionDocentesService - GetActividadesByDocentesDetalle");
 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/getDocentesActividadesDetalle'
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/reportes/getActividadesDocentesDetalle'
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			

@@ -32,6 +32,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/ActividadesPendientes.html',
 		controller : 'ActividadesPendientesController'
 	})
+        .when('/actividadesDocentes',{
+		templateUrl : 'resources/views/ActividadesDocentes.html',
+		controller : 'ActividadesDocentesController'
+	})
 	.when('/relacionDocentes',{
 		templateUrl : 'resources/views/RelacionDocentes.html',
 		controller : 'RelacionDocentesController'

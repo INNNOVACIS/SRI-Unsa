@@ -1,6 +1,6 @@
-investigacionApp.controller('RelacionDocentesController', function($log, $scope, SharedService, FondoConcursableService, 
+investigacionApp.controller('ActividadesDocentesController', function($log, $scope, SharedService, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService,
-    RelacionDocentesService, SRIUnsaConfig) {	
+    ActividadesDocentesService, SRIUnsaConfig) {	
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -119,10 +119,10 @@ investigacionApp.controller('RelacionDocentesController', function($log, $scope,
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
     };
     $scope.descargarPDF = function(){
-        RelacionDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
+        ActividadesDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
     };
     $scope.descargarExcel = function(){
-        RelacionDocentesService.descargarExcel().then(descargarExcelSuccess, descargarExcelError);
+        ActividadesDocentesService.descargarExcel().then(descargarExcelSuccess, descargarExcelError);
     };
     
     $scope.facultadChange = function(){
@@ -162,22 +162,22 @@ investigacionApp.controller('RelacionDocentesController', function($log, $scope,
         return filtro;
     };
     
-    var GetActividadesByDocenteSuccess = function(response){
-        $log.debug("GetActividadByDocente - Success");
+    var GetActividadesByDocentesDetalleSuccess = function(response){
+        $log.debug("GetActividadByDocentesDetalle - Success");
         console.log("Respuesta :: ", response);
         $scope.actividadesDocentes = response.lista;
         $scope.total = response.total;
     };
-    var GetActividadesByDocenteError = function(response){
-        $log.debug("GetActividadByDocente - Error");
+    var GetActividadesByDocentesDetalleError = function(response){
+        $log.debug("GetActividadByDocentesDetalle - Error");
         console.log("Respuesta :: ", response);
     };
     
-    $scope.GetActividadesByDocente = function(){
+    $scope.GetActividadesByDocentesDetalle = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
-        RelacionDocentesService.GetActividadesByDocente(objPagina).then(GetActividadesByDocenteSuccess, GetActividadesByDocenteError);
+        ActividadesDocentesService.GetActividadesByDocentesDetalle(objPagina).then(GetActividadesByDocentesDetalleSuccess, GetActividadesByDocentesDetalleError);
     };
     
     $scope.filtrar = function() {
@@ -190,6 +190,6 @@ investigacionApp.controller('RelacionDocentesController', function($log, $scope,
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
     $scope.getAreaInvestigaciones();
-    $scope.GetActividadesByDocente();
+    $scope.GetActividadesByDocentesDetalle();
     
 });

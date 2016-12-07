@@ -18,9 +18,12 @@ import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
+import javax.inject.Inject;
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -34,7 +37,12 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Email {
 
+        
+    @Inject
+    private Logger log;
+    
     private static String RECIPIENT = "ali.arapa@gmail.com";
+    public String info;
 
     public String GetEmail(SRIActividadInvestigacion data) {
         String table = "<html>"
@@ -159,6 +167,7 @@ public class Email {
         URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
         String path = url.getPath();
         String nombrearchivo = "config.properties";
+        
         Properties prop = new Properties();
 
         File temp = new File(path, nombrearchivo);
@@ -180,26 +189,48 @@ public class Email {
         String auth = email.readProperties("auth");
         String enable = email.readProperties("enable");
         List<String> to = destinatarios;
+        this.info = from + " : " + pass + " : " + host + " : " + pass + " : " + port + " : " + auth + " : " + enable;
         String subject = "SRI UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
         String body = GetEmail(data);
-
-        sendFromGMail(enable, auth, port, host, from, pass, to, subject, body);
+        
+        
+        sendFromGMail("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, body);
+    }
+    public String recuperar() throws IOException, GeneralSecurityException{
+        Email email = new Email();
+        String fileName = System.getProperty("jboss.server.config.dir");
+        URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
+        String path = url.getPath();
+        String from = email.readProperties("user");
+        String pass = MD5.decrypt(email.readProperties("password"));
+        String host = email.readProperties("host");
+        String port = email.readProperties("port");
+        String auth = email.readProperties("auth");
+        String enable = email.readProperties("enable");
+        this.info = "PATH : " + path + " DIR_Wildfly: " + fileName + " : " + from + " : " + pass + " : " + host + " : " + pass + " : " + port + " : " + auth + " : " + enable;
+       return this.info;
     }
 
-    private void sendFromGMail(String enable, String auth, String port, String host, String from, String pass, List<String> to, String subject, String body) {
+    public void sendFromGMail(String enable, String auth, String port, String host, String from, String pass, List<String> to, String subject, String body) {
         Properties props = System.getProperties();
-        props.put("mail.smtp.starttls.enable", enable);
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", port);
-        props.put("mail.smtp.auth", auth);
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.user", "innnovacisaqp");
+        props.put("mail.smtp.password", "innnovacis.");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
 
-        Session session = Session.getDefaultInstance(props);
+//        Session session = Session.getDefaultInstance(props);
+        Session session = Session.getInstance(props, new GMailAuthenticator(from, pass));
         MimeMessage message = new MimeMessage(session);
 
         MimeMultipart multipart = new MimeMultipart("related");
-
+//        log.log(Level.INFO, "Email enable : {0}", enable);
+//        log.log(Level.INFO, "Email host   : {0}", host);
+//        log.log(Level.INFO, "Email user   : {0}", from);
+//        log.log(Level.INFO, "Email password : {0}", pass);
+//        log.log(Level.INFO, "Email port : {0}", port);
+//        log.log(Level.INFO, "Email auth : {0}", auth);
         // first part (the html)
         BodyPart messageBodyPart = new MimeBodyPart();
         String htmlText = body;
@@ -207,9 +238,7 @@ public class Email {
             messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
-            URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
-            String path = url.getPath();
-            DataSource fds = new FileDataSource(path + "/logo-unsa-2.jpg");
+            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);
@@ -236,5 +265,20 @@ public class Email {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+}
+
+class GMailAuthenticator extends Authenticator {
+     String user;
+     String pw;
+     public GMailAuthenticator (String username, String password)
+     {
+        super();
+        this.user = username;
+        this.pw = password;
+     }
+    public PasswordAuthentication getPasswordAuthentication()
+    {
+       return new PasswordAuthentication(user, pw);
     }
 }

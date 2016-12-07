@@ -243,5 +243,81 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
         }
         return listActividades;
     }
-    
+
+    @Override
+    public int GetTotalActividadesByDocente(SRIPaginacion entidad) {
+        BigInteger total = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalActividadesByDocente(?1,?2,?3,?4,?5,?6)}")
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable());
+            total = (BigInteger) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return total.intValue();
+    }
+
+    @Override
+    public List<SRIActividadGeneralPaginacion> GetActividadesByDocente(SRIPaginacion entidad) {
+        
+        List<SRIActividadGeneralPaginacion> listActividades = null;
+        try {
+             Query query = em.createNativeQuery("{call GetActividadesByDocente(?1,?2,?3,?4,?5,?6,?7,?8)}", SRIActividadGeneralPaginacion.class)
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable())
+                        .setParameter(7, entidad.getRango())
+                        .setParameter(8, entidad.getCurrentPage());
+            listActividades = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return listActividades;
+    }
+
+    @Override
+    public int GetTotalActividadesByDocenteDetalle(SRIPaginacion entidad) {
+        BigInteger total = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalActividadesDocenteDetalle(?1,?2,?3,?4,?5,?6)}")
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable());
+            total = (BigInteger) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return total.intValue();
+    }
+
+    @Override
+    public List<SRIActividadInvestigacion> GetActividadesByDocenteDetalle(SRIPaginacion entidad) {
+        List<SRIActividadInvestigacion> listActividades = null;
+        try {
+             Query query = em.createNativeQuery("{call GetActividadesDocenteDetalle(?1,?2,?3,?4,?5,?6,?7,?8)}", SRIActividadInvestigacion.class)
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable())
+                        .setParameter(7, entidad.getRango())
+                        .setParameter(8, entidad.getCurrentPage());
+            listActividades = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return listActividades;
+    }
 }

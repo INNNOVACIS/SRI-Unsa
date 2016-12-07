@@ -8,8 +8,9 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
-import com.innnovacis.unsa.util.SRIUsuariosPaginacion;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
@@ -46,10 +47,10 @@ public class UsuarioRestServices {
     @Path("/paginacionUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response paginacionUsuario(SRIUsuariosPaginacion usuario) {
+    public Response paginacionUsuario(SRIPaginacionObject entidad) {
         
-        int total = usuarioBusiness.GetTotalPaginacion(usuario);
-        List<SRIUsuario> lista = usuarioBusiness.GetPagina(usuario);
+        int total = usuarioBusiness.GetTotalPaginacion(entidad);
+        List<SRIUsuarioPersona> lista = usuarioBusiness.GetPagina(entidad);
 
         Map<String, Object> responseObj = new HashMap<>();
         responseObj.put("total", total);
@@ -67,21 +68,32 @@ public class UsuarioRestServices {
         return usuarioBusiness.GetAll();
     }
     
+//    @POST
+//    @Path("/registrarUsuarios")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Response saveUsuario(Map<String, Object> entidad) {
+//        System.out.println(entidad);
+//        SRIUsuario usuario = (SRIUsuario) entidad.get("usuario");
+//        SRIPersona persona = (SRIPersona) entidad.get("persona");
+//        return null;
+//    }
+    
     @POST
     @Path("/registrarUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response saveUsuario(SRIUsuario usuario) {
+    public Response saveUsuario(SRIUsuarioPersona usuarioPersona) {
         Response.ResponseBuilder builder = null;
         Map<String, Object> response = new HashMap<>();
         int respuesta = -1;
         try{
-            respuesta = usuarioBusiness.Insertar(usuario);
+            respuesta = usuarioBusiness.InsertarUsuarioPersona(usuarioPersona);
             response.put("body", respuesta);
             builder = Response.status(Response.Status.OK).entity(response);
-            log.log(Level.INFO, "Registrar Usuario : {0}", usuario.toString());
+            log.log(Level.INFO, "Registrar Usuario : {0}", usuarioPersona.toString());
         }catch(Exception ex){
-            log.log(Level.INFO, "Registrar Usuario : {0}{1}", new Object[]{ex.getMessage(), usuario.toString()});
+            log.log(Level.INFO, "Registrar Usuario : {0}{1}", new Object[]{ex.getMessage(), usuarioPersona.toString()});
             response.put("body", ex.getMessage());
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response);
         }
