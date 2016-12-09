@@ -1,3 +1,18 @@
+<style>
+    fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+    legend.scheduler-border {
+         width: auto !important;
+    border: none;
+    font-size: 14px;}
+
+</style>
 <div ng-show="loader" class="SRI-loader-open">
     <div class="SRI-loader"></div>
 </div>
@@ -9,6 +24,15 @@
                 <div class="panel-body">
                     <form name="actividadForm" novalidate class="form-horizontal">
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" >Responsable</label>
+                                    <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine }">
+                                        <input type="text" ng-model="responsable" uib-typeahead="opt as opt.susuarioLogin for opt in usuarios | filter:$viewValue | limitTo:8" class="form-control">
+                                        <p ng-show="actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine" class="help-block">El responsable es requerido.</p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-2" >Nombre</label>
@@ -34,7 +58,7 @@
                                         <select name="facultadValidacion" ng-model="facultad"                
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
                                             class="form-control"
-                                            ng-change="facultadChange()"
+                                            ng-change="facultadChange(facultad)"
                                             ng-init="facultad=''"
                                             required>
                                         </select>
@@ -185,9 +209,24 @@
                             </div>
                         </div>
                     </form>
+                    
+                    <!-- Formulario Dinamico -->
+                    
+                    <fieldset >
+                        <legend >{{ facultad.snombreEstructuraOrganizacion }}</legend>
+                    </fieldset>
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div ng-bind-html="campos" compila-plantilla></div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-md-2"> Descripción de la Actividad</label>
+                            <label class="control-label col-md-2"> Descripción breve del problema</label>
                             <div class="col-md-10">
                                 <textarea ng-model="descripcion" style="margin-bottom: 4px;" class="form-control" rows="5" placeholder="descripcion del proyecto"></textarea> 
                             </div>

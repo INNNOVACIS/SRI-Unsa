@@ -1,7 +1,7 @@
     investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService,
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService,
-    UsuariosService, ActividadesGeneradasService, FileUploader) {
+    UsuariosService, ActividadesGeneradasService, FileUploader, $sce) {
     
     $scope.sharedService = SharedService;
     $scope.tipoInvestigaciones = [];
@@ -30,6 +30,7 @@
     
     var GetEstructuraOrganizacionesSuccess = function(response){
         $log.debug("GetEstructuraOrganizaciones - Success");
+        console.log("Respuesta :: ", response);
         
         angular.forEach(response, function(superior, key) {
             angular.forEach(response, function(value, key) {
@@ -188,6 +189,33 @@
             }
         });
         $scope.colaboradores.splice(index, 1);
+    };
+    $scope.facultadChange = function(facultad){
+        var buildCampos = "";
+        $scope.campos = "";
+        if(facultad.nidEstructuraOrganizacion === 1) {
+            buildCampos = '<div class="form-group"> <label class="control-label col-md-2" >Campo</label> <div class="col-md-4" > '
+                                 +'       <input ng-model="campo" type="text" class="form-control" placeholder="campo dinamico">'
+                                 +'   </div>'
+                                 + '<label class="control-label col-md-2" >Campo 2</label>'
+                                    +'<div class="col-md-4" >'
+                                        +'<input ng-model="campo2" type="text" class="form-control" placeholder="campo dinamico">'
+                                    +'</div></div>';
+                                
+        }
+        if(facultad.nidEstructuraOrganizacion === 41) {
+            buildCampos = '<div class="form-group">'
+                                  +  '<label class="control-label col-md-2" >Campo</label>'
+                                   + '<div class="col-md-4" >'
+                                    +    '<input ng-model="campo" type="text" class="form-control" placeholder="campo dinamico">'
+                                  +  '</div>'
+                                 +  ' <label class="control-label col-md-2" >Campo</label>'
+                               +    ' <div class="col-md-4" >'
+                              +        '  <input ng-model="campo" type="text" class="form-control" placeholder="campo dinamico">'
+                                +    '</div>'
+                             +  ' </div>';
+        }
+        $scope.campos = $sce.trustAsHtml(buildCampos);
     };
     var isRepetido = function(lista, objeto){
         var repetido = false;

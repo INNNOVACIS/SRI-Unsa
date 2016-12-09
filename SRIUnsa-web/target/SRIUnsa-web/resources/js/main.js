@@ -116,6 +116,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/FlujoArista.html',
 		controller : 'FlujoAristaController'
 	})
+        .when('/generarCampos',{
+		templateUrl : 'resources/views/GenerarCampos.html',
+		controller : 'GenerarCamposController'
+	})
 	.when('/',{
 		templateUrl : 'resources/views/Login.html',
 		controller : 'LoginController'

@@ -132,6 +132,28 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
         ActividadesPendientesService.AprobarActividad(actividadGeneral).then(AprobarActividadSuccess, AprobarActividadError);
     };
     
+    $scope.RechazarActividad = function(){
+        $scope.loader = true;
+        scrollTop();
+        setTimeout(function(){
+            $scope.$apply(function(){ 
+                var popUp = SharedService.popUp;
+                var titulo = "La Actividad se Rechazo con Éxito!";
+                var mensaje = "La Actividad paso a estado de revisión.";
+                var url = "";
+                if($scope.revisado) { url = "/actividad/Revisadas"; }
+                if($scope.generado) { url = "/actividad/Generadas"; }
+                if($scope.pendiente){ url = "/actividad/Pendientes"; }
+                
+                var op1 = {open:true, txt:'Ir a Bandeja', fun:function(){
+                    popUp.irPopUp();
+                }};
+                popUp.showPopUp(titulo, mensaje, url, op1);
+                $scope.loader = false;
+            });
+        }, 1000);
+    };
+    
     /************ Funciones Utilitarias ************/
     var BuscarTipoInvestigacion = function(idTipoInvestigacion){
         angular.forEach($scope.tipoInvestigaciones, function(valor, key){

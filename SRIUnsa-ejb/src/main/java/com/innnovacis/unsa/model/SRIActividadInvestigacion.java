@@ -33,6 +33,9 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
 
     @Column(name = "idtipoactividadinvestigacion")
     private int NIdTipoActividadInvestigacion;
+    
+    @Column(name = "idresponsable")
+    private int NIdResponsable;
 
     @Column(name = "horas")
     private int NHoras;
