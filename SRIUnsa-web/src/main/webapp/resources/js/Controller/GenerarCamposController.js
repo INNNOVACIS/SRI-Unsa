@@ -55,6 +55,7 @@ investigacionApp.controller('GenerarCamposController', function($log, $scope, Us
             tipo : $scope.tipo,
             facultad : $scope.facultad.snombreEstructuraOrganizacion,
             plantilla : generarPlantilla($scope.tipo, $scope.modelo, $scope.etiqueta),
+            opciones : $scope.opciones.split(/\n/),
             suserCreacion : $scope.sharedService.nombreUsuario,
             sestado : 'A'
         };
@@ -93,10 +94,12 @@ investigacionApp.controller('GenerarCamposController', function($log, $scope, Us
         $scope.usuario = {};
     };
     
-    var changeTipo = function(tipo){
-//        if(tipo === "combobox"){
-//            
-//        }
+    $scope.changeTipo = function(tipo){
+        if(tipo === "combobox"){
+            $scope.textArea = true;
+        } else {
+            $scope.textArea = false;
+        }
     };
     
     var generarPlantilla = function(tipo, ngModel, etiqueta){
