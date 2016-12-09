@@ -64,7 +64,6 @@ public class UsuarioRestServices {
     @Path("/listarUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     public List<SRIUsuario> getUsuarios() {
-        
         return usuarioBusiness.GetAll();
     }
     

@@ -1,73 +1,78 @@
 investigacionApp.controller('EstructuraOrganizacionController', function($log, $scope, $location, $rootScope, $filter, 
     EstructuraOrganizacionService, TipoNivelService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.estructuraOrganizaciones = [];
     $scope.estructuraOrganizacion = {};
 	
     /********** Servicios Callback **********/
 
     var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("Get tipoNivel - Success");
-    	console.log("Success :: ", response);
+    	$log.debug("GetTipoNivel - Success");
+    	console.log("Respuesta :: ", response);
     	$scope.niveles = response;
     };
 
     var getTipoNivelServiceError = function(response){
-     	$log.debug("Get TipoNivel - Error"); 
+     	$log.debug("GetTipoNivel - Error");
+    	console.log("Respuesta :: ", response);
     };
 
     var getEstructuraOrganizacionServiceSuccess = function(response){
-    	$log.debug("Get EstructuraOrganizacion - Success");
+    	$log.debug("GetEstructuraOrganizacion - Success");
+    	console.log("Respuesta :: ", response);
         
-        angular.forEach(response, function(superior, key) {
-            angular.forEach(response, function(value, key) {
-                if(superior.nidPadre == value.nidEstructuraOrganizacion){
-                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
-                }
-            });
-            angular.forEach($scope.niveles, function(nivel, key) {
-                if(superior.nidTipoNivel == nivel.nidTipoNivel){
-                    superior.nombreNivel = nivel.snombreTipoNivel;
-                }
-            });
-        });
+//        angular.forEach(response, function(superior, key) {
+//            angular.forEach(response, function(value, key) {
+//                if(superior.nidPadre == value.nidEstructuraOrganizacion){
+//                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
+//                }
+//            });
+//            angular.forEach($scope.niveles, function(nivel, key) {
+//                if(superior.nidTipoNivel == nivel.nidTipoNivel){
+//                    superior.nombreNivel = nivel.snombreTipoNivel;
+//                }
+//            });
+//        });
         
-    	$scope.estructuraOrganizaciones = response;
+    	$scope.organizaciones = response;
     };
-
     var getEstructuraOrganizacionServiceError = function(response){
-     	$log.debug("Get EstructuraOrganizacion - Error"); 
+     	$log.debug("GetEstructuraOrganizacion - Error"); 
+    	console.log("Respuesta :: ", response);
     };
 
-    var registrarEstructuraOrganizacionSuccess = function(response){
-        
-    	$log.debug("Registrar EstructuraOrganizacion - Success");
+    var registrarEstructuraOrganizacionSuccess = function(response){   
+    	$log.debug("RegistrarEstructuraOrganizacion - Success");
+    	console.log("Respuesta :: ", response);
     	$scope.estructuraOrganizaciones.push($scope.estructuraOrganizacion);
     	$scope.estructuraOrganizacion = {};
+        $scope.getEstructuraOrganizacionByPagina();
     };
-
     var registrarEstructuraOrganizacionError = function(response){
-        $log.debug("Registrar EstructuraOrganizacion - Error");
+        $log.debug("RegistrarEstructuraOrganizacion - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var updateEstructuraOrganizacionSuccess = function(response){
-    	$log.debug("Update EstructuraOrganizacion - Success");
-    	console.log("success :: ", response);
+    	$log.debug("UpdateEstructuraOrganizacion - Success");
+        console.log("Respuesta :: ", response);
     	$scope.estructuraOrganizacion = response;
     };
-
     var updateEstructuraOrganizacionError = function(response){
-        $log.debug("Update EstructuraOrganizacion - Error");
+        $log.debug("UpdateEstructuraOrganizacion - Error");
+        console.log("Respuesta :: ", response);
     };
-
+    
     var deleteEstructuraOrganizacionSuccess = function(response){
-    	$log.debug("Delete EstructuraOrganizacion - Success");
-    	console.log("success :: ", response);
-    	$scope.estructuraOrganizacion = response;
+    	$log.debug("DeleteEstructuraOrganizacion - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.getEstructuraOrganizacionByPagina();
     };
 
     var deleteEstructuraOrganizacionError = function(response){
-
+        $log.debug("DeleteEstructuraOrganizacion - Error");
+    	console.log("Respuesta :: ", response);
     };
 
     /********** CRUD EstructuraOrganizaciones ***********/
@@ -81,28 +86,86 @@ investigacionApp.controller('EstructuraOrganizacionController', function($log, $
     };
 
     $scope.registrarEstructuraOrganizacion = function(){
-
-        $scope.estructuraOrganizacion.nidPadre = $scope.superior.nidEstructuraOrganizacion;
-        $scope.estructuraOrganizacion.nidTipoNivel = $scope.nivel.nidTipoNivel;
+        var estructura = {
+            nidPadre : $scope.dependencia === {} ? 0 : $scope.dependencia.nidEstructuraOrganizacion,
+            nidTipoNivel : $scope.nivel.nidTipoNivel,
+            snivel : $scope.nivel.snombreTipoNivel.toUpperCase(),
+            snombreEstructuraOrganizacion : $scope.nombre,
+            suserCreacion : $scope.sharedService.nombreUsuario,
+            sestado : "A"
+        };
         
-	EstructuraOrganizacionService.registrarEstructuraOrganizacion($scope.estructuraOrganizacion).then(registrarEstructuraOrganizacionSuccess, registrarEstructuraOrganizacionError);
+	EstructuraOrganizacionService.registrarEstructuraOrganizacion(estructura).then(registrarEstructuraOrganizacionSuccess, registrarEstructuraOrganizacionError);
     };
 
     $scope.updateEstructuraOrganizacion = function(){
     	
-    	EstructuraOrganizacionService.updateEstructuraOrganizacion($scope.estructuraOrganizacion).then(updateEstructuraOrganizacionSuccess, updateAreaInvestigacionError);
+    	EstructuraOrganizacionService.updateEstructuraOrganizacion($scope.estructuraOrganizacion).then(updateEstructuraOrganizacionSuccess, updateEstructuraOrganizacionError);
     };
 
     $scope.deleteEstructuraOrganizacion = function(estructuraOrganizacion){
-    	$scope.estructuraOrganizacion = estructuraOrganizacion;
-    	EstructuraOrganizacionService.deleteEstructuraOrganizacion ($scope.estructuraOrganizacion).then(deleteEstructuraOrganizacionSuccess. deleteAreaInvestigacionError);
+        delete estructuraOrganizacion.dependencia;
+        console.log(estructuraOrganizacion);
+    	EstructuraOrganizacionService.deleteEstructuraOrganizacion ($scope.estructuraOrganizacion).then(deleteEstructuraOrganizacionSuccess, deleteEstructuraOrganizacionError);
     };
 
     $scope.update = function(estructuraOrganizacion){
     	$scope.estructuraOrganizacion = estructuraOrganizacion;
+        $scope.nivel = getNivel($scope.estructuraOrganizacion.nidTipoNivel);
+        $scope.changeNivel($scope.nivel);
+        $scope.dependencia = getDependencia($scope.estructuraOrganizacion.nidPadre);
+        $scope.nombre = estructuraOrganizacion.snombreEstructuraOrganizacion;
     };
 
     $scope.getListaTipoNivel();
+    
+    var getNivel = function(valor){
+        var nivel = {};
+        angular.forEach($scope.niveles, function(value, key){
+            if(value.nidTipoNivel === valor){
+                nivel = value;
+            }
+        });
+        return nivel;
+    };
+    
+    var getDependencia = function(valor){
+        var dependencia = {};
+        angular.forEach($scope.organizaciones, function(value, key){
+            if(value.nidEstructuraOrganizacion === valor){
+                dependencia = value;
+            }
+        });
+        return dependencia;
+    };
+    
+    var getNombreDependecia = function(estructura){
+        var nombre = "";
+        angular.forEach($scope.organizaciones, function(value, key){
+            if(estructura.nidPadre === value.nidEstructuraOrganizacion){
+                nombre = value.snombreEstructuraOrganizacion;
+            }
+        });
+        if(nombre === ""){ nombre = "Facultad" }
+        return nombre;
+    };
+    
+    $scope.changeNivel = function(nivel){
+        console.log("changeNivel :: ", nivel)
+        $scope.dependencia = {};
+        if(nivel.snombreTipoNivel.toUpperCase() !== "FACULTAD"){
+            $scope.showDependencia = true;
+            $scope.dependencias = [];
+            angular.forEach($scope.organizaciones, function(value, key){
+                if(value.snivel === 'FACULTAD'){
+                    $scope.dependencias.push(value);
+                }
+            });
+        } else {
+            $scope.dependencias = [];
+            $scope.showDependencia = false;
+        }
+    };
     
      /**************** PAGINACION *****************/
     
@@ -124,12 +187,18 @@ investigacionApp.controller('EstructuraOrganizacionController', function($log, $
     
     var getEstructuraOrganizacionByPaginaSuccess = function(response){
         $log.debug("getEstructuraOrganizacionByPaginaSuccess - Success");
+        console.log("Respuestas :: ", response);
+        $scope.estructuraOrganizaciones = [];
+        angular.forEach(response.lista, function(value, key){
+            value.dependencia = getNombreDependecia(value);
+        });
         $scope.estructuraOrganizaciones = response.lista;
         $scope.total = response.total;
     };
     
     var getEstructuraOrganizacionByPaginaError = function(response){
-        console.log(" getEstructuraOrganizacionByPaginaError :: ", response);
+        $log.debug("getEstructuraOrganizacionByPaginaSuccess - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getEstructuraOrganizacionByPagina = function(){
@@ -141,5 +210,6 @@ investigacionApp.controller('EstructuraOrganizacionController', function($log, $
         $scope.getEstructuraOrganizacionByPagina();
     };
     
+    $scope.getEstructuraOrganizaciones();
     $scope.getEstructuraOrganizacionByPagina();
 });

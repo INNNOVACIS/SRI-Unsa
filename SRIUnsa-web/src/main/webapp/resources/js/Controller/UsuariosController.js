@@ -111,7 +111,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     };
     
     $scope.getUsuariosByPagina = function(){
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : {susuarioLogin : $scope.buscar}};
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
         UsuariosService.paginacionUsuario(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     

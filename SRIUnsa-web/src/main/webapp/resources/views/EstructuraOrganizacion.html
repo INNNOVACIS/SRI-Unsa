@@ -5,7 +5,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading" style="padding-bottom:19px;">
                         Administración de las Estructuras de Organización
-                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoEstructuraOrganizacion">
+                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#modalNuevo">
                             <span class="glyphicon glyphicon-plus"></span>
                             Nuevo
                         </button>	
@@ -26,10 +26,10 @@
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th width="40%">Nombre</th>
-                                    <th>Superior</th>
-                                    <!-- <th>Nivel</th>
-                                    <th>Tipo Nivel</th> -->
+                                    <th width="35%">Nombre</th>
+                                    <th>Nivel</th>
+                                    <th>Dependencia</th>
+                                    <th>Estado</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
@@ -37,10 +37,10 @@
                                 <tr ng-repeat="estructuraOrganizacion in estructuraOrganizaciones">
                                     
                                     <td>{{ estructuraOrganizacion.nidEstructuraOrganizacion }}</td>
-                                    <td><strong>{{ estructuraOrganizacion.snombreEstructuraOrganizacion }}</strong></td>
-                                    <td>{{ estructuraOrganizacion.nidPadre }}</td>
-                                    <!-- <td>{{ estructuraOrganizacion.snivel }}</td>
-                                    <td>{{ estructuraOrganizacion.nidTipoNivel }}</td> -->
+                                    <td>{{ estructuraOrganizacion.snombreEstructuraOrganizacion }}</td>
+                                    <td>{{ estructuraOrganizacion.snivel }}</td>
+                                    <td>{{ estructuraOrganizacion.dependencia }}</td>
+                                    <td>{{ estructuraOrganizacion.sestado }}</td>
                                     <td nowrap>
                                         <button type="button" class="btn btn-primary btn-xs" ng-click="update(estructuraOrganizacion)" data-toggle="modal" data-target="#popUpdateEstructuraOrganizacion">
                                             <span class="glyphicon glyphicon-edit"></span> Editar
@@ -67,7 +67,7 @@
 </div>-->
 
 <!-- Nuevo Tipo de EstructuraOrganizacion -->
-<div id="popNuevoEstructuraOrganizacion" class="modal fade" role="dialog">
+<div id="modalNuevo" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -80,21 +80,24 @@
                         <div class="col-md-12">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Nombre</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="estructuraOrganizacion.snombreEstructuraOrganizacion" type="text" class="form-control" placeholder="Nombre de la Estructura de la Organizacion">
+                                    <label class="control-label col-md-3" style="">Tipo Nivel</label>
+                                    <div class="col-md-9">
+                                            <select class="form-control" ng-model="nivel" ng-options="opt as opt.snombreTipoNivel for opt in niveles" ng-change="changeNivel(nivel)"></select>
                                     </div>
-                                    <label class="control-label col-md-2" style="">Superior</label>
-                                    <div class="col-md-10">
-                                        <select class="form-control" style="margin:2px;" ng-model="superior" ng-options="opt as opt.snombreEstructuraOrganizacion for opt in estructuraOrganizaciones" ng-init="superior=''" ></select>
+                                </div>
+                                <div class="form-group" ng-show="showDependencia">
+                                    <label class="control-label col-md-3" style="">Dependencia</label>
+                                    <div class="col-md-9">
+                                        <select  ng-model="dependencia"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in dependencias"
+                                            class="form-control">
+                                        </select>
                                     </div>
-                                    <label class="control-label col-md-2" style="">Nivel</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="estructuraOrganizacion.snivel" type="text" class="form-control" placeholder="Nombre del nivel">
-                                    </div>
-                                    <label class="control-label col-md-2" style="">Tipo Nivel</label>
-                                    <div class="col-md-10">
-                                        <select class="form-control" style="margin:2px;" ng-model="nivel" ng-options="opt as opt.snombreTipoNivel for opt in niveles" ng-init="nivel=''" ></select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="">Nombre</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" ng-model="nombre" type="text"/>
                                     </div>
                                 </div>
                             </form>
@@ -104,7 +107,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarEstructuraOrganizacion()">
-                    <span class="glyphicon glyphicon-save"></span>
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
                     Registrar
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -130,17 +133,24 @@
                         <div class="col-md-12">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Nombre</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="estructuraOrganizacion.snombreEstructuraOrganizacion" type="text" class="form-control" placeholder="Nombre de la Estructura de la Organización">
+                                    <label class="control-label col-md-3" style="">Tipo Nivel</label>
+                                    <div class="col-md-9">
+                                            <select class="form-control" ng-model="nivel" ng-options="opt as opt.snombreTipoNivel for opt in niveles" ng-change="changeNivel(nivel)"></select>
                                     </div>
-                                    <label class="control-label col-md-2" style="">idPadre</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="estructuraOrganizacion.nIdPadre" type="text" class="form-control" placeholder="id del padre">
+                                </div>
+                                <div class="form-group" ng-show="showDependencia">
+                                    <label class="control-label col-md-3" style="">Dependencia</label>
+                                    <div class="col-md-9">
+                                        <select  ng-model="dependencia"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in dependencias"
+                                            class="form-control">
+                                        </select>
                                     </div>
-                                    <label class="control-label col-md-2" style="">Nivel</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="estructuraOrganizacion.sNivel" type="text" class="form-control" placeholder="Facultad , Departamento, Escuela">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="">Nombre</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" ng-model="nombre" type="text"/>
                                     </div>
                                 </div>
                             </form>
@@ -149,11 +159,11 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-sm btn-primary" data-dismiss="modal" ng-click="updateEstructuraOrganizacion()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateEstructuraOrganizacion()">
                     <span class="glyphicon glyphicon-refresh"></span>
                     Actualizar
                 </button>
-                <button type="button" class="btn-sm btn-default" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>

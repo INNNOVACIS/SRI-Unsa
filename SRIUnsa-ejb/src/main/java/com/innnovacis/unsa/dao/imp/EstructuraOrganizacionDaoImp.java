@@ -60,7 +60,7 @@ public class EstructuraOrganizacionDaoImp implements IEstructuraOrganizacionDao 
 
     @Override
     public int GetTotalPaginacion(SRIPaginacionObject object) {
-        Query query = em.createNativeQuery("{call estructuraOrganizacionTotalPaginacion(?1)}")
+        Query query = em.createNativeQuery("{call GetTotalEstructuraOrganizacion(?1)}")
                         .setParameter(1, object.getFiltro());
         BigInteger total = (BigInteger) query.getSingleResult();
         return total.intValue();
@@ -68,7 +68,7 @@ public class EstructuraOrganizacionDaoImp implements IEstructuraOrganizacionDao 
 
     @Override
     public List<SRIEstructuraOrganizacion> GetPagina(SRIPaginacionObject object) {
-        Query query = em.createNativeQuery("{call estructuraOrganizacionPaginacion(?1,?2,?3)}", SRIEstructuraOrganizacion.class)
+        Query query = em.createNativeQuery("{call GetEstructuraOrganizacion(?1,?2,?3)}", SRIEstructuraOrganizacion.class)
                         .setParameter(1, object.getFiltro())
                         .setParameter(2, object.getRango())
                         .setParameter(3, object.getCurrentPage());
