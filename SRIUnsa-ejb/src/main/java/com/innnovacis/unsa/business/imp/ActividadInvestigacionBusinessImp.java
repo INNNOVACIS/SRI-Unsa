@@ -10,6 +10,7 @@ import com.innnovacis.unsa.dao.IFlujoActorDao;
 import com.innnovacis.unsa.dao.IFlujoAristaDao;
 import com.innnovacis.unsa.dao.IPersonaColaboradorDao;
 import com.innnovacis.unsa.dao.IPlanificacionActividadDao;
+import com.innnovacis.unsa.dao.IPlantillaDocumentoActividadDao;
 import com.innnovacis.unsa.dao.IProcesoFlujoDao;
 import com.innnovacis.unsa.dao.IProcesoFlujoDestinoDao;
 import com.innnovacis.unsa.dao.IUsuarioDao;
@@ -20,6 +21,7 @@ import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIFlujoArista;
 import com.innnovacis.unsa.model.SRIPersonaColaborador;
 import com.innnovacis.unsa.model.SRIPlanificacionActividad;
+import com.innnovacis.unsa.model.SRIPlantillaDocumentoActividad;
 import com.innnovacis.unsa.model.SRIProcesoFlujo;
 import com.innnovacis.unsa.model.SRIProcesoFlujoDestino;
 import com.innnovacis.unsa.model.SRIUsuario;
@@ -77,6 +79,9 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     
     @Inject
     private IPersonaColaboradorDao personaColaboradorDao;
+    
+    @Inject
+    private IPlantillaDocumentoActividadDao plantillaDocumentoActividadDao;
 
     @Override
     public int Insertar(SRIActividadInvestigacion entidad) {
@@ -213,6 +218,18 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 personaColaborador.setSEstado("A");
                 personaColaborador = personaColaboradorDao.Insert(personaColaborador);
             }
+            
+            /*Insertar PlantillaDocumentoActividades*/
+            for(int i = 0; i < entidad.getPlantillaDocumentoActividad().size(); i++){
+                SRIPlantillaDocumentoActividad plantillaDocumentoActividad = new SRIPlantillaDocumentoActividad();
+                plantillaDocumentoActividad.setNIdPlantillaDocumento(entidad.getPlantillaDocumentoActividad().get(i).getNIdPlantillaDocumento());
+                plantillaDocumentoActividad.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+                plantillaDocumentoActividad.setSValor(entidad.getPlantillaDocumentoActividad().get(i).getSValor());
+                plantillaDocumentoActividad.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                plantillaDocumentoActividad.setSEstado("A");
+                plantillaDocumentoActividad = plantillaDocumentoActividadDao.Insert(plantillaDocumentoActividad);
+            }
+            
         } catch(Exception ex) {
             throw ex;
         }

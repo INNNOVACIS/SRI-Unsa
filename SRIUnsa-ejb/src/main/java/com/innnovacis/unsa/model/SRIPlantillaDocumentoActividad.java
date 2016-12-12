@@ -38,7 +38,7 @@ public class SRIPlantillaDocumentoActividad  extends SRIEntidad implements Seria
     private int NIdPlantillaDocumento;
     
     @Column(name = "valor" )
-    private String SIdActividadInvestigacion;
+    private String SValor;
 
     public int getNIdPlantillaDocumentoActividad() {
         return NIdPlantillaDocumentoActividad;
@@ -64,14 +64,13 @@ public class SRIPlantillaDocumentoActividad  extends SRIEntidad implements Seria
         this.NIdPlantillaDocumento = NIdPlantillaDocumento;
     }
 
-    public String getSIdActividadInvestigacion() {
-        return SIdActividadInvestigacion;
+    public String getSValor() {
+        return SValor;
     }
 
-    public void setSIdActividadInvestigacion(String SIdActividadInvestigacion) {
-        this.SIdActividadInvestigacion = SIdActividadInvestigacion;
+    public void setSValor(String SValor) {
+        this.SValor = SValor;
     }
-
     
 }
 

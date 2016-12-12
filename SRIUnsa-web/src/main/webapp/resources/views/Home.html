@@ -286,17 +286,6 @@
     </div>
 </div>
 
-
-<!-- Mensajes de Confirmacion -->
-<div ng-show="mensajeSuccess" class="alert alert-success fade in">
-    <a class="close" data-dismiss="alert">&times;</a>
-    <strong>Correcto! </strong> {{ message }}
-</div>
-<div ng-show="mensajeError" class="alert alert-error fade in">
-    <a class="close" data-dismiss="alert">&times;</a>
-    <strong>Error! </strong> {{ message }}
-</div>
-
 <div ng-class="{'SRI-modal-open': modal.open, 'SRI-modal-close': modal.close}" >
     <div class="SRI-modal">
         <a ng-click="openCloseModal(false, true)" class="SRIModal-cerrar" >Cerrar</a>

@@ -7,6 +7,7 @@ package com.innnovacis.unsa.util;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.model.SRIPersona;
+import com.innnovacis.unsa.model.SRIPlantillaDocumentoActividad;
 import java.util.List;
 
 
@@ -27,6 +28,8 @@ public class SRIActividadGeneral {
     private SRIActividadInvestigacion actividadInvestigacion;
     
     private List<SRIPersona> colaboradores;
+    
+    private List<SRIPlantillaDocumentoActividad> plantillaDocumentoActividad;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -74,6 +77,14 @@ public class SRIActividadGeneral {
 
     public void setColaboradores(List<SRIPersona> colaboradores) {
         this.colaboradores = colaboradores;
+    }
+
+    public List<SRIPlantillaDocumentoActividad> getPlantillaDocumentoActividad() {
+        return plantillaDocumentoActividad;
+    }
+
+    public void setPlantillaDocumentoActividad(List<SRIPlantillaDocumentoActividad> plantillaDocumentoActividad) {
+        this.plantillaDocumentoActividad = plantillaDocumentoActividad;
     }
     
 }

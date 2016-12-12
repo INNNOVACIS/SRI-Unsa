@@ -118,7 +118,12 @@
         $log.debug("RegistrarInvestigacion - Success");
         console.log("Respuesta :: ", response);
         addPlanificacion(response.body.idPlanificacion);
-        uploader.uploadAll();
+        if(uploader.queue.length === 0){            
+            $scope.loader = false;
+            $scope.openCloseModal(true,false);
+        } else {
+            uploader.uploadAll();  
+        }
         $scope.EnviarEmail(response.body.actividadInvestigacion.nidActividadInvestigacion);
     };
     var RegistrarInvestigacionError = function(response){
@@ -165,7 +170,7 @@
     var GetPlantillaDocumentoByFacultadSuccess = function(response){
         $log.debug("GetPlantillaDocumentoByFacultad - Success");
         console.log("Respuesta :: ", response);
-        $scope.platillaDocumento = response.body;
+        $scope.plantillaDocumento = response.body;
         $scope.campos = "";
         var buildCampos = "";
         var formGroupInicio = '<div class="form-group">';
@@ -277,6 +282,7 @@
                 idEstado : SRIUnsaConfig.CREADO,
                 idPlanificacion : -1,
                 colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
+                plantillaDocumentoActividad : getValoresPlantilla(),
                 actividadInvestigacion : {
                     nidResponsable : $scope.responsable.nidPersona,
                     nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
@@ -303,12 +309,24 @@
             scrollTop();
 //            $scope.openCloseModal(true,false);
             $scope.submitted = true;
-            angular.forEach($scope.platillaDocumento, function(value,key){
+            angular.forEach($scope.plantillaDocumento, function(value,key){
                 console.log($scope[value.smodel]);
             });
             
             console.log("campos por validar");
         }
+    };
+    
+    var getValoresPlantilla = function(){
+        var plantillaDocumentoActividades = [];
+        angular.forEach($scope.plantillaDocumento, function(value, key){
+            var plantillaDocumentoActividad = {
+                nidPlantillaDocumento : value.nidPlantillaDocumento,
+                svalor : $scope[value.smodel]
+            };
+            plantillaDocumentoActividades.push(plantillaDocumentoActividad);
+        });
+        return plantillaDocumentoActividades;
     };
     
     $scope.EnviarEmail = function(idActividadGenerada){   
@@ -317,7 +335,8 @@
             idFlujoActorOrigen : SRIUnsaConfig.DOCE,
             idEstado : SRIUnsaConfig.CREADO,
             idPlanificacion : -1,
-            colaboradores : {},
+            colaboradores : [],
+            plantillaDocumentoActividad : [],
             actividadInvestigacion : {
                 nidActividadInvestigacion : idActividadGenerada
             }

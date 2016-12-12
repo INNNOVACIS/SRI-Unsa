@@ -183,6 +183,7 @@ z-index: 999;
 
 /* Modal de Confirmacion */
 .SRI-modal {
+    
     font: 14px/22px 'Open Sans', Arial, sans-serif;
     width:45%;
     padding: 25px 35px;
@@ -194,7 +195,7 @@ z-index: 999;
 }
 
 .SRI-modal-open {
-    visibility:visible;
+    display:block;
     opacity: 1;
     z-index: 999;
     top:0;
@@ -210,7 +211,7 @@ z-index: 999;
     transition:all 1s;
 }
 .SRI-modal-close {
-    visibility: hidden;
+    display: none;
     opacity: 0;
     margin-top: -300px;
 }
@@ -297,7 +298,7 @@ z-index: 999;
     position: absolute;
     top: 53px;
     width: 220px;
-    height: 150%;
+    height: 100%;
     background-color: #f8f8f8;
     border-right: 1px solid #e7e7e7;
 }
