@@ -68,7 +68,7 @@
                                     <label class="control-label col-md-4">Escuela</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && submitted }">
                                         <select name="escuelaValidacion" ng-model="escuela"
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: facultad.nidEstructuraOrganizacion}"
                                             class="form-control"
                                             ng-init="escuela=''"
                                             required>
