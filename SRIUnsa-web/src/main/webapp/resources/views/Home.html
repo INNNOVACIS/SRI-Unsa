@@ -1,18 +1,4 @@
-<style>
-    fieldset.scheduler-border {
-    border: 1px groove #ddd !important;
-    padding: 0 1.4em 1.4em 1.4em !important;
-    margin: 0 0 1.5em 0 !important;
-    -webkit-box-shadow:  0px 0px 0px 0px #000;
-            box-shadow:  0px 0px 0px 0px #000;
-}
 
-    legend.scheduler-border {
-         width: auto !important;
-    border: none;
-    font-size: 14px;}
-
-</style>
 <div ng-show="loader" class="SRI-loader-open">
     <div class="SRI-loader"></div>
 </div>
@@ -27,18 +13,18 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-2" >Responsable</label>
-                                    <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine }">
-                                        <input type="text" ng-model="responsable" uib-typeahead="opt as opt.susuarioLogin for opt in usuarios | filter:$viewValue | limitTo:8" class="form-control">
-                                        <p ng-show="actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine" class="help-block">El responsable es requerido.</p>
+                                    <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.responsableValidacion.$invalid && submitted }">
+                                        <input name="responsableValidacion" type="text" ng-model="responsable" uib-typeahead='opt as (opt.snombre + " " + opt.sapellido ) for opt in personas | filter:$viewValue | limitTo:8' class="form-control" required>
+                                        <p ng-show="actividadForm.responsableValidacion.$invalid && submitted" class="help-block">El responsable es requerido.</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-2" >Nombre</label>
-                                    <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine }">
+                                    <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && submitted }">
                                         <input name="nombre" ng-model="nombreInvestigacion" type="text" class="form-control" placeholder="Nombre de la investigación" required>
-                                        <p ng-show="actividadForm.nombre.$invalid && !actividadForm.nombre.$pristine" class="help-block">El nombre es Requerido.</p>
+                                        <p ng-show="actividadForm.nombre.$invalid && submitted" class="help-block">El nombre es Requerido.</p>
                                     </div>
                                 </div>
                             </div>
@@ -47,14 +33,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4" >Tipo Actividad</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && !actividadForm.investigacion.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && submitted }">
                                         <select name="investigacion" class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion) required></select>
-                                        <p ng-show="actividadForm.investigacion.$invalid && !actividadForm.investigacion.$pristine" class="help-block">El Tipo de Investigacion es Requerido.</p>
+                                        <p ng-show="actividadForm.investigacion.$invalid && submitted" class="help-block">El Tipo de Investigacion es Requerido.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Facultad</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && !actividadForm.facultadValidacion.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && submitted }">
                                         <select name="facultadValidacion" ng-model="facultad"                
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
                                             class="form-control"
@@ -62,12 +48,12 @@
                                             ng-init="facultad=''"
                                             required>
                                         </select>
-                                        <p ng-show="actividadForm.facultadValidacion.$invalid && !actividadForm.facultadValidacion.$pristine" class="help-block">La Facultad es Requerida.</p>
+                                        <p ng-show="actividadForm.facultadValidacion.$invalid && submitted" class="help-block">La Facultad es Requerida.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Departamento</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.departamentoValidacion.$invalid && !actividadForm.departamentoValidacion.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.departamentoValidacion.$invalid && submitted }">
                                         <select  name="departamentoValidacion" ng-model="departamento"
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
                                             class="form-control"
@@ -75,64 +61,64 @@
                                             ng-init="departamento=''"
                                             required>
                                         </select>
-                                        <p ng-show="actividadForm.departamentoValidacion.$invalid && !actividadForm.departamentoValidacion.$pristine" class="help-block">El Departamento es Requerida.</p>
+                                        <p ng-show="actividadForm.departamentoValidacion.$invalid && submitted" class="help-block">El Departamento es Requerida.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Escuela</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && !actividadForm.escuelaValidacion.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && submitted }">
                                         <select name="escuelaValidacion" ng-model="escuela"
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
                                             class="form-control"
                                             ng-init="escuela=''"
                                             required>
                                         </select>
-                                        <p ng-show="actividadForm.escuelaValidacion.$invalid && !actividadForm.escuelaValidacion.$pristine" class="help-block">La Escuela es Requerida.</p>
+                                        <p ng-show="actividadForm.escuelaValidacion.$invalid && submitted" class="help-block">La Escuela es Requerida.</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Duraci&oacute;n </label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && !actividadForm.duracion.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && submitted }">
                                         <input name="duracion" class="form-control" type="number" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación" required>
-                                        <p ng-show="actividadForm.duracion.$invalid && !actividadForm.duracion.$pristine" class="help-block">La duración es Requerida.</p>
+                                        <p ng-show="actividadForm.duracion.$invalid && submitted" class="help-block">La duración es Requerida.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Area </label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.area.$invalid && !actividadForm.area.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.area.$invalid && submitted }">
                                         <select name="area" ng-model="areaInvestigacion"                
                                             ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: '0'}"
                                             class="form-control"
                                             ng-init="areaInvestigacion=''"
                                             required>
                                         </select>
-                                        <p ng-show="actividadForm.area.$invalid && !actividadForm.area.$pristine" class="help-block">El area es Requerida.</p>
+                                        <p ng-show="actividadForm.area.$invalid && submitted" class="help-block">El area es Requerida.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Sub-Area</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.subarea.$invalid && !actividadForm.subarea.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.subarea.$invalid && submitted }">
                                         <select name="subarea" ng-model="subareaInvestigacion"
                                             ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: areaInvestigacion.nidEstructura}"
                                             class="form-control"
                                             ng-init="subareaInvestigacion=''"
                                             required>
                                         </select>
-                                        <p ng-show="actividadForm.subarea.$invalid && !actividadForm.subarea.$pristine" class="help-block">La subArea es Requerida.</p>
+                                        <p ng-show="actividadForm.subarea.$invalid && submitted" class="help-block">La subArea es Requerida.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Disciplina</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.disciplina.$invalid && !actividadForm.disciplina.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.disciplina.$invalid && submitted }">
                                         <select name="disciplina" ng-model="disciplinaInvestigacion" 
                                             ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: subareaInvestigacion.nidEstructura}"
                                             class="form-control"
                                             ng-init="disciplinaInvestigacion=''"
                                             required>
                                         </select>
-                                        <p ng-show="actividadForm.disciplina.$invalid && !actividadForm.disciplina.$pristine" class="help-block">La Disciplina es Requerida.</p>
+                                        <p ng-show="actividadForm.disciplina.$invalid && submitted" class="help-block">La Disciplina es Requerida.</p>
                                     </div>
                                 </div>
                             </div>
@@ -141,9 +127,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Semestre</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.escuela.$invalid && !actividadForm.escuela.$pristine }">
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
                                         <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
-                                        <p ng-show="actividadForm.semestre.$invalid && !actividadForm.semestre.$pristine" class="help-block">El Semestre es Requerido.</p>
+                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +137,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Colaboradores</label>
                                     <div class="col-md-6">
-                                        <input ng-model="colaborador.nombre" type="text" class="form-control" placeholder="Seleccione los alumnos">
+                                        <p>{{ totalColaboradores() }} seleccionados </p>
                                     </div>
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalColaborador">
@@ -225,68 +211,72 @@
                     
                     
                     <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-md-2"> Descripción breve del problema</label>
-                            <div class="col-md-10">
-                                <textarea ng-model="descripcion" style="margin-bottom: 4px;" class="form-control" rows="5" placeholder="descripcion del proyecto"></textarea> 
-                            </div>
-                            <label for="inpFile" class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
-                                <div class="col-md-10">
-                                    <div class="panel panel-default" >
-                                        <div class="panel-body">
-                                            <label for="fileUpload" class="SRI-button"> Seleccionar Archivos </label>
-                                            <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
-                                            <p>Número de Archivos: {{ uploader.queue.length }}</p>
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th width="50%">Nombre</th>
-                                                        <th>Tamaño</th>
-                                                        <th>Progreso</th>
-                                                        <th>Acción</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr ng-repeat="item in uploader.queue">
-                                                        <td><strong>{{ item.file.name }}</strong></td>
-                                                        <td nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                                        <td>
-                                                            <div class="progress" style="margin-bottom: 0;">
-                                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"> Descripción breve del problema</label>
+                                    <div class="col-md-10">
+                                        <textarea ng-model="descripcion" style="margin-bottom: 4px;" class="form-control" rows="5" placeholder="Descripcion breve del problema"></textarea> 
+                                    </div>
+                                    <label for="inpFile" class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
+                                        <div class="col-md-10">
+                                            <div class="panel panel-default" >
+                                                <div class="panel-body">
+                                                    <label for="fileUpload" class="SRI-button"> Seleccionar Archivos </label>
+                                                    <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+                                                    <p>Número de Archivos: {{ uploader.queue.length }}</p>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="50%">Nombre</th>
+                                                                <th>Tamaño</th>
+                                                                <th>Progreso</th>
+                                                                <th>Acción</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in uploader.queue">
+                                                                <td><strong>{{ item.file.name }}</strong></td>
+                                                                <td nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                                <td>
+                                                                    <div class="progress" style="margin-bottom: 0;">
+                                                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td nowrap>
+                                                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div>
+                                                        <div>
+                                                            Progreso:
+                                                            <div class="progress" style="">
+                                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
                                                             </div>
-                                                        </td>
-                                                        <td nowrap>
-                                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                                <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div>
-                                                <div>
-                                                    Progreso:
-                                                    <div class="progress" style="">
-                                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                                        </div>
+        <!--                                            <button type="button" class="btn btn-success btn-s" ng-click="uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                                            <span class="glyphicon glyphicon-upload"></span> Subir todo
+                                                        </button>
+                                                        <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                                                            <span class="glyphicon glyphicon-ban-circle"></span> Cancelar todo
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                                            <span class="glyphicon glyphicon-trash"></span> Eliminar todo
+                                                        </button>-->
                                                     </div>
                                                 </div>
-<!--                                            <button type="button" class="btn btn-success btn-s" ng-click="uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                                                    <span class="glyphicon glyphicon-upload"></span> Subir todo
-                                                </button>
-                                                <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-                                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancelar todo
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar todo
-                                                </button>-->
                                             </div>
                                         </div>
+                                    <div class="col-md-12" style="margin-top:10px;">
+                                        <button type="submit" ng-click="registrarInvestigacion(actividadForm.$valid)" class="btn btn-primary pull-right"> 
+                                            <span class="glyphicon glyphicon-floppy-disk"></span> Registrar
+                                        </button>
                                     </div>
                                 </div>
-                            <div class="col-md-12" style="margin-top:10px;">
-                                <button type="submit" ng-click="registrarInvestigacion(actividadForm.$valid)" class="btn btn-primary pull-right"> 
-                                    <span class="glyphicon glyphicon-floppy-disk"></span> Registrar
-                                </button>
                             </div>
                         </div>
                     </form>
@@ -344,7 +334,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Usuarios</label>
                                     <div class="col-md-8">
-                                        <input type="text" ng-model="usuario" uib-typeahead="opt as opt.susuarioLogin for opt in usuarios | filter:$viewValue | limitTo:8" class="form-control">
+                                        <input type="text" ng-model="persona" uib-typeahead='opt as (opt.snombre + " " + opt.sapellido) for opt in personas | filter:$viewValue | limitTo:8' class="form-control">
                                     </div>
                                     <div class="col-md-2">
                                         <button type="button" class="btn btn-primary" ng-click="AgregarColaborador()">
@@ -362,7 +352,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="colaborador in colaboradores">                   
-                                            <td>{{ colaborador.susuarioLogin }}</td>
+                                            <td>{{ colaborador.snombre }} {{colaborador.sapellido}}</td>
                                             <td nowrap>
                                                 <button type="button" class="btn btn-default btn-xs" ng-click="DeleteColaborador(colaborador)">
                                                     <span class="glyphicon glyphicon-trash"></span> Eliminar

@@ -6,6 +6,9 @@
 package com.innnovacis.unsa.util;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import com.innnovacis.unsa.model.SRIPersona;
+import java.util.List;
+
 
 /**
  *
@@ -22,6 +25,8 @@ public class SRIActividadGeneral {
     private int idPlanificacion;
     
     private SRIActividadInvestigacion actividadInvestigacion;
+    
+    private List<SRIPersona> colaboradores;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -61,6 +66,14 @@ public class SRIActividadGeneral {
 
     public void setIdPlanificacion(int idPlanificacion) {
         this.idPlanificacion = idPlanificacion;
+    }
+
+    public List<SRIPersona> getColaboradores() {
+        return colaboradores;
+    }
+
+    public void setColaboradores(List<SRIPersona> colaboradores) {
+        this.colaboradores = colaboradores;
     }
     
 }

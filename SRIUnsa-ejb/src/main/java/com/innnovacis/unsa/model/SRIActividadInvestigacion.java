@@ -207,8 +207,14 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     public void setSDescripcionActividad(String SDescripcionActividad) {
         this.SDescripcionActividad = SDescripcionActividad;
     }
-    
-    
+
+    public int getNIdResponsable() {
+        return NIdResponsable;
+    }
+
+    public void setNIdResponsable(int NIdResponsable) {
+        this.NIdResponsable = NIdResponsable;
+    }
 
 }
 

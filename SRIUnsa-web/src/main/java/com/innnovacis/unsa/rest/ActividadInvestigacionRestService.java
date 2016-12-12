@@ -59,25 +59,25 @@ public class ActividadInvestigacionRestService {
         return builder.build();
     }
     
-    @POST
-    @Path("/registrarActividadInvestigacion")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response SaveActividadInvestigacion(SRIActividadInvestigacion investigacion){
-        Response.ResponseBuilder builder = null;
-        Map<String, Object> respuesta = new HashMap<>();
-        int body = -1;
-        try {
-            body = investigacionBusiness.Insertar(investigacion);
-            respuesta.put("body", body);
-            builder = Response.status(Response.Status.OK).entity(respuesta);
-            log.log(Level.INFO, "ActividadInvestigacionSave - Success : {0}", investigacion.toString());
-        } catch(Exception ex) {
-            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
-            log.log(Level.INFO, "ActividadInvestigacionSave - Error : {0}", ex.getMessage());
-        }
-        return builder.build();
-    }
+//    @POST
+//    @Path("/registrarActividadInvestigacion")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response SaveActividadInvestigacion(SRIActividadInvestigacion investigacion){
+//        Response.ResponseBuilder builder = null;
+//        Map<String, Object> respuesta = new HashMap<>();
+//        int body = -1;
+//        try {
+//            body = investigacionBusiness.Insertar(investigacion);
+//            respuesta.put("body", body);
+//            builder = Response.status(Response.Status.OK).entity(respuesta);
+//            log.log(Level.INFO, "ActividadInvestigacionSave - Success : {0}", investigacion.toString());
+//        } catch(Exception ex) {
+//            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+//            log.log(Level.INFO, "ActividadInvestigacionSave - Error : {0}", ex.getMessage());
+//        }
+//        return builder.build();
+//    }
     
     @PUT
     @Path("/updateActividadInvestigacion")

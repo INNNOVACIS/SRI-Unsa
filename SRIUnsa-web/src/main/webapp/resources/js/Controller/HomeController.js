@@ -1,7 +1,7 @@
     investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService,
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService,
-    UsuariosService, ActividadesGeneradasService, FileUploader, $sce) {
+    UsuariosService, PersonasService, ActividadesGeneradasService, PlantillaDocumentoService, FileUploader, $sce) {
     
     $scope.sharedService = SharedService;
     $scope.tipoInvestigaciones = [];
@@ -13,8 +13,9 @@
     $scope.mensajeError = false;
     $scope.descripcion = "";
     $scope.nombreInvestigacion = "";
-    $scope.duracionInvestigacion = 0;
+//    $scope.duracionInvestigacion = 0;
     $scope.colaboradores = [];
+    $scope.submitted = false;
 
     /***************** CallBack *******************/
     
@@ -137,12 +138,59 @@
         console.log("Respuesta :: ", response);
     };
     
+    var GetPersonasSuccess = function(response){
+        $log.debug("GetPersonas - Success");
+        console.log("Respuesta :: ", response);
+        $scope.personas = response;
+        angular.forEach($scope.personas, function(value, key){
+            if(value.nidPersona === $scope.sharedService.idPersona){
+                $scope.responsable = value;
+            }
+        });
+    };
+    var GetPersonasError = function(response){
+        $log.debug("GetPersonas - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     var EnviarEmailSuccess = function(response){
         $log.debug("EnviarEmail - Success");
         console.log("Respuesta :: ", response);
     };
     var EnviarEmailError = function(response){
         $log.debug("EnviarEmail - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var GetPlantillaDocumentoByFacultadSuccess = function(response){
+        $log.debug("GetPlantillaDocumentoByFacultad - Success");
+        console.log("Respuesta :: ", response);
+        $scope.platillaDocumento = response.body;
+        $scope.campos = "";
+        var buildCampos = "";
+        var formGroupInicio = '<div class="form-group">';
+        var formGroupFin = '</div>';
+        angular.forEach(response.body, function(value, key){
+            if((key) % 2 === 0 ){
+                if(buildCampos === ""){
+                    buildCampos = formGroupInicio + value.splantilla;
+                } else {
+                    buildCampos = buildCampos + formGroupFin + formGroupInicio + value.splantilla;
+                }
+            } else {
+                buildCampos = buildCampos + value.splantilla;
+            }
+            if(value.stipo === "combobox"){
+                generarOpciones(value);
+            }
+        });
+        
+        buildCampos = buildCampos + formGroupFin;
+        
+        $scope.campos = $sce.trustAsHtml(buildCampos);
+    };
+    var GetPlantillaDocumentoByFacultadError = function(response){
+        $log.debug("GetPlantillaDocumentoByFacultad - Error");
         console.log("Respuesta :: ", response);
     };
     
@@ -175,52 +223,42 @@
     $scope.GetUsuarios = function(){
       	UsuariosService.getUsuarios().then(GetUsuariosSuccess, GetUsuariosError);
     };
+    $scope.GetPersonas = function(){
+      	PersonasService.getPersonas().then(GetPersonasSuccess, GetPersonasError);
+    };
     
     $scope.AgregarColaborador = function(){
-        if(!isRepetido($scope.colaboradores, $scope.usuario)){
-            $scope.colaboradores.push($scope.usuario);
+        if(!isRepetido($scope.colaboradores, $scope.persona)){
+            $scope.colaboradores.push($scope.persona);
+            $scope.colaborador = {};
         }
     };
     $scope.DeleteColaborador = function(colaborador){
         var index = -1;
         angular.forEach($scope.colaboradores, function(valor, key){
-            if(valor.nidUsuario === colaborador.nidUsuario){
+            if(valor.nidPersona === colaborador.nidPersona){
                 index = key;
             }
         });
         $scope.colaboradores.splice(index, 1);
     };
     $scope.facultadChange = function(facultad){
-        var buildCampos = "";
-        $scope.campos = "";
-        if(facultad.nidEstructuraOrganizacion === 1) {
-            buildCampos = '<div class="form-group"> <label class="control-label col-md-2" >Campo</label> <div class="col-md-4" > '
-                                 +'       <input ng-model="campo" type="text" class="form-control" placeholder="campo dinamico">'
-                                 +'   </div>'
-                                 + '<label class="control-label col-md-2" >Campo 2</label>'
-                                    +'<div class="col-md-4" >'
-                                        +'<input ng-model="campo2" type="text" class="form-control" placeholder="campo dinamico">'
-                                    +'</div></div>';
-                                
-        }
-        if(facultad.nidEstructuraOrganizacion === 41) {
-            buildCampos = '<div class="form-group">'
-                                  +  '<label class="control-label col-md-2" >Campo</label>'
-                                   + '<div class="col-md-4" >'
-                                    +    '<input ng-model="campo" type="text" class="form-control" placeholder="campo dinamico">'
-                                  +  '</div>'
-                                 +  ' <label class="control-label col-md-2" >Campo</label>'
-                               +    ' <div class="col-md-4" >'
-                              +        '  <input ng-model="campo" type="text" class="form-control" placeholder="campo dinamico">'
-                                +    '</div>'
-                             +  ' </div>';
-        }
-        $scope.campos = $sce.trustAsHtml(buildCampos);
+        var estructuraOrganizacion = {
+            nidEstructuraOrganizacion : facultad.nidEstructuraOrganizacion,
+            nidTipoNivel : facultad.nidTipoNivel,
+            snombreEstructuraOrganizacion : facultad.snombreEstructuraOrganizacion,
+            nidPadre : facultad.nidPadre,
+            snivel : facultad.snivel
+        };
+        PlantillaDocumentoService.GetPlantillaDocumentoByFacultad(estructuraOrganizacion).then(GetPlantillaDocumentoByFacultadSuccess, GetPlantillaDocumentoByFacultadError);
+    };
+    var generarOpciones = function(value){
+        $scope[value.sopciones] = value.sdata.split(",");
     };
     var isRepetido = function(lista, objeto){
         var repetido = false;
         angular.forEach(lista, function(valor, key){
-            if(valor.nidUsuario === objeto.nidUsuario){
+            if(valor.nidPersona === objeto.nidPersona){
                 repetido = true;
             }
         });
@@ -238,7 +276,9 @@
                 idFlujoActorOrigen : SRIUnsaConfig.DOCE,
                 idEstado : SRIUnsaConfig.CREADO,
                 idPlanificacion : -1,
+                colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
                 actividadInvestigacion : {
+                    nidResponsable : $scope.responsable.nidPersona,
                     nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
                     nhoras : $scope.duracionInvestigacion,
                     sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,
@@ -260,8 +300,13 @@
             };
             HomeService.registrarInvestigacion(actividadGeneral).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
         } else {
-//            scrollTop();
+            scrollTop();
 //            $scope.openCloseModal(true,false);
+            $scope.submitted = true;
+            angular.forEach($scope.platillaDocumento, function(value,key){
+                console.log($scope[value.smodel]);
+            });
+            
             console.log("campos por validar");
         }
     };
@@ -272,6 +317,7 @@
             idFlujoActorOrigen : SRIUnsaConfig.DOCE,
             idEstado : SRIUnsaConfig.CREADO,
             idPlanificacion : -1,
+            colaboradores : {},
             actividadInvestigacion : {
                 nidActividadInvestigacion : idActividadGenerada
             }
@@ -288,6 +334,7 @@
     $scope.GetTipoAsesorias();
     $scope.GetTipoProducciones();
     $scope.GetUsuarios();
+    $scope.GetPersonas();
     
     /*********** Funciones Utilitarias ************/
     
@@ -320,6 +367,10 @@
         $location.path("/actividad/Generadas");
     };
     
+    $scope.totalColaboradores = function(){
+        return $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
+    };
+    
     $scope.openCloseModal = function(open, close) {
         $scope.modal = { open: open, close: close };
     };
@@ -346,6 +397,10 @@
         $scope.tipoLabor = {};
         $scope.nombreInvestigacion = " ";
         $scope.descripcion = "";
+        $scope.campos = "";
+        $scope.colaboradores = [];
+        $scope.colaborador = {};
+        $scope.submitted = false;
         uploader.clearQueue();
     };
     

@@ -12,6 +12,7 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
             sessvars.idUsuario = response.idUsuario;
             sessvars.idRol = response.idRol;
             sessvars.autenticado = true;
+            sessvars.idPersona = response.idPersona;
             
             $scope.sharedService.nombreUsuario = response.nombreUsuario;
             $scope.sharedService.nombreRol = response.nombreRol;

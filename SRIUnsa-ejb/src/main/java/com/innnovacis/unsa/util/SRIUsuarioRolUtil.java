@@ -29,6 +29,9 @@ public class SRIUsuarioRolUtil implements Serializable{
     @Column(name = "idUsuario" )
     private int idUsuario;
     
+    @Column(name = "idPersona" )
+    private int idPersona;
+    
     @Column(name = "idRol" )
     private int idRol;
     
@@ -37,6 +40,14 @@ public class SRIUsuarioRolUtil implements Serializable{
     
     @Column(name = "nombreRol" )
     private String nombreRol;
+
+    public int getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
+    }
 
     public int getNIdUsuarioRol() {
         return NIdUsuarioRol;

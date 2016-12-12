@@ -8,6 +8,7 @@ import com.innnovacis.unsa.dao.IDetalleInvestigacionFlujoDao;
 import com.innnovacis.unsa.dao.IEstadoDao;
 import com.innnovacis.unsa.dao.IFlujoActorDao;
 import com.innnovacis.unsa.dao.IFlujoAristaDao;
+import com.innnovacis.unsa.dao.IPersonaColaboradorDao;
 import com.innnovacis.unsa.dao.IPlanificacionActividadDao;
 import com.innnovacis.unsa.dao.IProcesoFlujoDao;
 import com.innnovacis.unsa.dao.IProcesoFlujoDestinoDao;
@@ -17,6 +18,7 @@ import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.model.SRIDetalleInvestigacionFlujo;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIFlujoArista;
+import com.innnovacis.unsa.model.SRIPersonaColaborador;
 import com.innnovacis.unsa.model.SRIPlanificacionActividad;
 import com.innnovacis.unsa.model.SRIProcesoFlujo;
 import com.innnovacis.unsa.model.SRIProcesoFlujoDestino;
@@ -72,6 +74,9 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     
     @Inject
     private IFlujoActorDao flujoActorDao;
+    
+    @Inject
+    private IPersonaColaboradorDao personaColaboradorDao;
 
     @Override
     public int Insertar(SRIActividadInvestigacion entidad) {
@@ -197,6 +202,16 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 procesoFlujoDestino.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
                 procesoFlujoDestino.setSEstado("A");
                 procesoFlujoDestino = procesoFlujoDestinoDao.Insert(procesoFlujoDestino);
+            }
+            
+            /*Insertar Colaboradores*/
+            for(int i = 0; i < entidad.getColaboradores().size(); i++){
+                SRIPersonaColaborador personaColaborador = new SRIPersonaColaborador();
+                personaColaborador.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+                personaColaborador.setNIdPersona(entidad.getColaboradores().get(i).getNIdPersona());
+                personaColaborador.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                personaColaborador.setSEstado("A");
+                personaColaborador = personaColaboradorDao.Insert(personaColaborador);
             }
         } catch(Exception ex) {
             throw ex;
