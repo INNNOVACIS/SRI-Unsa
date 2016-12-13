@@ -28,6 +28,7 @@ public interface IActividadInvestigacionBusiness {
     
     SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad);
     SRIActividadGeneral AprobarActividadInvestigacion(SRIActividadGeneral entidad);
+    List<SRIActividadGeneral> AprobarActividadInvestigacionMasivo(List<SRIActividadGeneral> entidad);
     Map<String, Object> GetActividadesPendientes(SRIPaginacion entidad);
     Map<String, Object> GetActividadesGeneradas(SRIPaginacion entidad);
     Map<String, Object> GetActividadesRevisadas(SRIPaginacion entidad);

@@ -6,8 +6,10 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
+import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +50,26 @@ public class ActividadInvestigacionRevisadaRestService {
         } catch(Exception ex) {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
             log.log(Level.INFO, "GetActividadesRevisadas - Error : {0}", ex.getMessage());
+        }
+        return builder.build();
+    }
+    
+    @POST
+    @Path("/aprobarActividades")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response AprobarActividadesInvestigacion(List<SRIActividadGeneral> entidad) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        List<SRIActividadGeneral> actividadesGenerales= null;
+        try {
+            actividadesGenerales = actividadInvestigacionBusiness.AprobarActividadInvestigacionMasivo(entidad);
+            respuesta.put("body", actividadesGenerales);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "Aprobar Actividad de Investigacion : {0}", actividadesGenerales.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "Aprobar Actividad de Investigacion : {0}{1}", new Object[]{ex.getMessage(), entidad.toString()});
         }
         return builder.build();
     }

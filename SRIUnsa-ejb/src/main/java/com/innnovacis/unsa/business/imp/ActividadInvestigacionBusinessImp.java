@@ -417,4 +417,44 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         return respuesta;
     }
 
+    @Override
+    public List<SRIActividadGeneral> AprobarActividadInvestigacionMasivo(List<SRIActividadGeneral> entidad) {
+        for(int i = 0; i < entidad.size(); i++){
+            
+            int idUsuarioFlujoOrigen = -1;
+            SRIUsuarioFlujo usuarioFlujoOrigen = new SRIUsuarioFlujo();
+            SRIFlujoArista flujoArista = new SRIFlujoArista();
+            SRIUsuario usuarioOrigen = new SRIUsuario();
+            SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
+            SRIDetalleInvestigacionFlujo detalleInvestigacionFlujo =  new SRIDetalleInvestigacionFlujo();
+
+            try{
+                /*Get o crear UsuarioFlujo*/
+                usuarioFlujoOrigen.setNIdFlujoActor(entidad.get(i).getIdFlujoActorOrigen());
+                usuarioFlujoOrigen.setNIdUsuario(entidad.get(i).getIdUsuario());
+                idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
+                /*Get FlujoArista*/
+                flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.get(i).getIdFlujoActorOrigen(), entidad.get(i).getIdEstado());
+                usuarioOrigen = usuarioDao.GetById(entidad.get(i).getIdUsuario());
+
+                procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
+                procesoFlujo.setNIdArista(flujoArista.getNIdArista());
+                procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
+                procesoFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                procesoFlujo.setSEstado("A");
+                procesoFlujo = procesoFlujoDao.Insert(procesoFlujo);
+
+                detalleInvestigacionFlujo.setNIdProcesoFlujo(procesoFlujo.getNIdProcesoFlujo());
+                detalleInvestigacionFlujo.setNIdActividadInvestigacion(entidad.get(i).getActividadInvestigacion().getNIdActividadInvestigacion());
+                detalleInvestigacionFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                detalleInvestigacionFlujo.setSEstado("A");
+                detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
+            } catch(Exception ex) {
+                throw ex;
+            }
+            
+        }
+        return entidad;
+    }
+
 }

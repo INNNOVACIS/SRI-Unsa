@@ -93,15 +93,9 @@
                                 <td width="8%">{{ actividadGenerada.horas }}</td>
                                 <td width="8%">{{ actividadGenerada.cantidad }}</td>
                                 <td nowrap>
-                                    <button ng-click="verActividadById(actividadGenerada)" type="submit" class="btn btn-primary btn-xs">
-                                        <span class="glyphicon glyphicon-ok"></span>  Ver
-                                    </button>
-                                    <button ng-click="updateActividadById(actividadGenerada)" type="submit" class="btn btn-default btn-xs">
-                                        <span class="glyphicon glyphicon-edit"></span> Editar
-                                    </button>
-                                    <button ng-click="EnviarEmail(actividadGenerada)" class="btn btn-default btn-xs">
-                                        <span class="glyphicon glyphicon-send"></span> Enviar Recordatorio
-                                    </button>
+                                    <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/ver.png">
+                                    <img style="width:30px; cursor: pointer" ng-click="updateActividadById(actividadGenerada)" src="resources/images/iconos/editar.png">
+                                    <img style="width:30px; cursor: pointer" ng-click="EnviarEmail(actividadGenerada)" src="resources/images/iconos/enviar.png">
                                 </td>
                             </tr>
                         </tbody>

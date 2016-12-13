@@ -120,6 +120,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/PlantillaDocumento.html',
 		controller : 'PlantillaDocumentoController'
 	})
+        .when('/actividadesRevisadasMasivas',{
+		templateUrl : 'resources/views/ActividadesRevisadasMasivas.html',
+		controller : 'ActividadesRevisadasMasivasController'
+	})
 	.when('/',{
 		templateUrl : 'resources/views/Login.html',
 		controller : 'LoginController'
