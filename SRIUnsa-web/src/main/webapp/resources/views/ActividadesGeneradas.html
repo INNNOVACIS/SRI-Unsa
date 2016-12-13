@@ -81,17 +81,17 @@
                                 <th>Nombre del Proyecto</th>
                                 <th>Tipo</th>
                                 <th>Duración</th>
-                                <th># Archivos</th>
-                                <th>Acción</th>
+                                <th width="10%">Archivos</th>
+                                <th width="10%">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="actividadGenerada in actividadesGeneradas">
-                                <td>{{ actividadGenerada.id }}</td>
-                                <td><strong>{{ actividadGenerada.nombreactividad }}</strong></td>
-                                <td>{{ actividadGenerada.tipoactividad }}</td>
-                                <td width="8%">{{ actividadGenerada.horas }}</td>
-                                <td width="8%">{{ actividadGenerada.cantidad }}</td>
+                                <td >{{ actividadGenerada.id }}</td>
+                                <td ><strong>{{ actividadGenerada.nombreactividad }}</strong></td>
+                                <td >{{ actividadGenerada.tipoactividad }}</td>
+                                <td >{{ actividadGenerada.horas }}</td>
+                                <td >{{ actividadGenerada.cantidad }}</td>
                                 <td nowrap>
                                     <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/ver.png">
                                     <img style="width:30px; cursor: pointer" ng-click="updateActividadById(actividadGenerada)" src="resources/images/iconos/editar.png">
@@ -105,7 +105,8 @@
                         current-rango="currentRango"
                         num-pages="numPages()" 
                         current-page="currentPage"
-                        max-size="maxSize" >    
+                        max-size="maxSize"
+                        total="total">    
                     </pagination>
                 </div>
             </div>

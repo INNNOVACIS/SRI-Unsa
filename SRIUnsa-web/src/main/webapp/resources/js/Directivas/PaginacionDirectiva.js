@@ -6,12 +6,15 @@ investigacionApp.directive('pagination', ['$parse', function ($parse) {
                         +'    <select style="width: 120%; padding: 6px 3px;" class="form-control" ng-model="rango" ng-options="opt as opt for opt in rangoPaginas" ng-init="rango=rangoPaginas[0]" ng-change=changeRango(rango)>'
                         +'    </select>'
                         +'</div>'
-                        +'<div class="col-md-6">'
-                        +'<ul class="pagination">'
+                        +'<div class="col-md-6 col-sm-5">'
+                        +'  <ul class="pagination">'
                         +'    <li ng-class="{active: page.activo}" ng-repeat="page in paginas track by $index">'
                         +'        <a ng-click="selectPage(page.numero, $event)">{{page.texto}}</a>'
                         +'    </li>'
-                        +'</ul>'
+                        +'  </ul>'
+                        +'</div>'
+                        +'<div class="col-md-5 col-sm-5" style="margin-top:25px;">'
+                        +'  <p style="text-align:right;">{{inicio}} - {{fin}} de {{total}} Actividades<p>'
                         +'</div>'
                     +'</nav>',
         scope: { 
@@ -20,10 +23,13 @@ investigacionApp.directive('pagination', ['$parse', function ($parse) {
             numPages: "=",
             currentPage: "=",
             maxSize: "=",
+            total: "=",
             onSelectPage: "&"
         },
         link: function(scope, element, attrs) {
             scope.$watch("numPages + currentPage + maxSize", function(){
+                scope.inicio = (scope.currentPage - 1) * scope.currentRango + 1;
+                scope.fin = (scope.currentRango * scope.currentPage) <= scope.total ? (scope.currentRango * scope.currentPage) : scope.total;
                 var asignar = function(numero, texto, activo, inactivo) {
                     return {
                         numero: numero,
