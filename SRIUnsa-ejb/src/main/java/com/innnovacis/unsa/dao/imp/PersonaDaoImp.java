@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
@@ -75,5 +76,16 @@ public class PersonaDaoImp implements IPersonaDao {
         return olistaRespuesta;
     }
 
-
+    @Override
+    public List<SRIPersona> GetPersonasByIdActividadInvestigacion(int idActividadInvestigacion) {
+        List<SRIPersona> olistaRespuesta = null;
+        try {
+            Query query = em.createNativeQuery("{call GetPersonasByIdActividadInvestigacion(?1)}", SRIPersona.class)
+                        .setParameter(1, idActividadInvestigacion);
+            olistaRespuesta = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return olistaRespuesta;
+    }
 }

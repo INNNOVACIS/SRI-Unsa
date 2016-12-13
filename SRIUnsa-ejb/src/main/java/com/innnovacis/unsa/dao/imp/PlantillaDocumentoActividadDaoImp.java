@@ -4,9 +4,11 @@ package com.innnovacis.unsa.dao.imp;
 import com.innnovacis.unsa.dao.IPlantillaDocumentoActividadDao;
 import com.innnovacis.unsa.model.SRIPlantillaDocumentoActividad;
 import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.enterprise.context.Dependent;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
@@ -40,6 +42,19 @@ public class PlantillaDocumentoActividadDaoImp implements IPlantillaDocumentoAct
         entidad.setSEstado("I");
         em.merge(entidad);
         return true;
+    }
+
+    @Override
+    public List<SRIPlantillaDocumentoActividad> GetPlantillaDocumentoActividadByIdActividad(int idActividadInvestigacion) {
+        List<SRIPlantillaDocumentoActividad> olistaRespuesta = null;
+        try {
+            Query query = em.createNativeQuery("select * from dbunsa.plantilladocumentoactividad where idactividadinvestigacion = ?", SRIPlantillaDocumentoActividad.class)
+                        .setParameter(1, idActividadInvestigacion);
+            olistaRespuesta = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return olistaRespuesta;
     }
 
 }

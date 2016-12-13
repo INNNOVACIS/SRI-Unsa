@@ -21,9 +21,9 @@ import javax.enterprise.context.ApplicationScoped;
 public interface IActividadInvestigacionBusiness {
     
     int Insertar(SRIActividadInvestigacion entidad);
-    boolean Update(SRIActividadInvestigacion entidad);
+    boolean Update(SRIActividadGeneral entidad);
     boolean Delete(SRIActividadInvestigacion entidad);
-    SRIActividadInvestigacion Get(int idEntidad);
+    SRIActividadGeneral Get(int idEntidad);
     List<SRIActividadInvestigacion> GetAll();
     
     SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad);

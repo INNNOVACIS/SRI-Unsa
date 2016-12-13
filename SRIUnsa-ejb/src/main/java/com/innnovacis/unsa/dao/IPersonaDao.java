@@ -21,4 +21,5 @@ public interface IPersonaDao {
     boolean Delete(SRIPersona entidad);
     SRIPersona GetById(int idEntidad);
     List<SRIPersona> GetAll();
+    List<SRIPersona> GetPersonasByIdActividadInvestigacion(int idActividadInvestigacion);
 }

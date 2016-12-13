@@ -9,6 +9,7 @@ import com.innnovacis.unsa.dao.IEstadoDao;
 import com.innnovacis.unsa.dao.IFlujoActorDao;
 import com.innnovacis.unsa.dao.IFlujoAristaDao;
 import com.innnovacis.unsa.dao.IPersonaColaboradorDao;
+import com.innnovacis.unsa.dao.IPersonaDao;
 import com.innnovacis.unsa.dao.IPlanificacionActividadDao;
 import com.innnovacis.unsa.dao.IPlantillaDocumentoActividadDao;
 import com.innnovacis.unsa.dao.IProcesoFlujoDao;
@@ -19,6 +20,7 @@ import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.model.SRIDetalleInvestigacionFlujo;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIFlujoArista;
+import com.innnovacis.unsa.model.SRIPersona;
 import com.innnovacis.unsa.model.SRIPersonaColaborador;
 import com.innnovacis.unsa.model.SRIPlanificacionActividad;
 import com.innnovacis.unsa.model.SRIPlantillaDocumentoActividad;
@@ -82,6 +84,9 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     
     @Inject
     private IPlantillaDocumentoActividadDao plantillaDocumentoActividadDao;
+    
+    @Inject
+    private IPersonaDao personaDao;
 
     @Override
     public int Insertar(SRIActividadInvestigacion entidad) {
@@ -97,10 +102,19 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public boolean Update(SRIActividadInvestigacion entidad) {
+    public boolean Update(SRIActividadGeneral entidad) {
         boolean respuesta = false;
+        SRIActividadInvestigacion actividadInvestigacion = entidad.getActividadInvestigacion();
+        List<SRIPersona> persona = entidad.getColaboradores();
+        List<SRIPlantillaDocumentoActividad> plantillaDocumentoActividad = entidad.getPlantillaDocumentoActividad();
         try{
-            actividadInvestigacionDao.Update(entidad);
+            actividadInvestigacionDao.Update(actividadInvestigacion);
+            for(int i = 0; i < plantillaDocumentoActividad.size(); i++){
+                plantillaDocumentoActividadDao.Update(plantillaDocumentoActividad.get(i));
+            }
+//            for(int i = 0; i < persona.size(); i++){
+//                personaDao.Update(persona.get(i));
+//            }
             respuesta = true;
         }
         catch(Exception ex){
@@ -124,10 +138,19 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public SRIActividadInvestigacion Get(int idEntidad) {
-        SRIActividadInvestigacion respuesta = null;
+    public SRIActividadGeneral Get(int idEntidad) {
+        SRIActividadGeneral respuesta = new SRIActividadGeneral();
+        SRIActividadInvestigacion actividadInvestigacion = null;
+        List<SRIPersona> persona = null;
+        List<SRIPlantillaDocumentoActividad> plantillaDocumentoActividad = null;
         try{
-            respuesta = actividadInvestigacionDao.GetById(idEntidad);
+            actividadInvestigacion = actividadInvestigacionDao.GetById(idEntidad);
+            persona = personaDao.GetPersonasByIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+            plantillaDocumentoActividad = plantillaDocumentoActividadDao.GetPlantillaDocumentoActividadByIdActividad(actividadInvestigacion.getNIdActividadInvestigacion());
+            
+            respuesta.setPlantillaDocumentoActividad(plantillaDocumentoActividad);
+            respuesta.setColaboradores(persona);
+            respuesta.setActividadInvestigacion(actividadInvestigacion);
         }
         catch(Exception ex){
             throw ex;

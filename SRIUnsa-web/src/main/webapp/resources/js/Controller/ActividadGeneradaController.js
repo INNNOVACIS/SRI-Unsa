@@ -36,7 +36,7 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     var getInvestigacionByIdSuccess = function(response){
         $log.debug("GetInvestigacionById - Success");
         console.log("Respuesta :: ", response);
-        $scope.actividadGeneradaVista = response.body;
+        $scope.actividadGeneradaVista = response.body.actividadInvestigacion;
         $scope.getTipoInvestigacion();
         $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
     };

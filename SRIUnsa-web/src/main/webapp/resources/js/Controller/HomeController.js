@@ -366,10 +366,10 @@
             case "ASESORIA DE TESIS":
                 $scope.mostrarActividad = [false, true, false, false];
                 break;
-            case "INVESTIGACIONES BÁSICAS Y APLICADAS":
+            case "INVESTIGACIONES BASICAS Y APLICADAS":
                 $scope.mostrarActividad = [false, false, true, false];
                 break;
-            case "PRODUCCIÓN INTELECTUAL":
+            case "PRODUCCION INTELECTUAL":
                 $scope.mostrarActividad = [false, false, false, true];
                 break;
             default:

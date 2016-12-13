@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIPlantillaDocumentoActividad;
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
 /**
@@ -17,4 +18,5 @@ public interface IPlantillaDocumentoActividadDao {
     SRIPlantillaDocumentoActividad Insert(SRIPlantillaDocumentoActividad entidad);
     SRIPlantillaDocumentoActividad Update(SRIPlantillaDocumentoActividad entidad);
     boolean Delete(SRIPlantillaDocumentoActividad entidad);
+    List<SRIPlantillaDocumentoActividad> GetPlantillaDocumentoActividadByIdActividad(int idActividadInvestigacion);
 }
