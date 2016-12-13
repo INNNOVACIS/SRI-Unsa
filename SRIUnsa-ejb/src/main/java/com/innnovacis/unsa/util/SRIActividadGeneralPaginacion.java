@@ -25,6 +25,11 @@ public class SRIActividadGeneralPaginacion implements Serializable {
     @Column(name = "idactividadinvestigacion" )
     private int idactividadinvestigacion;
     
+    @Column(name = "id" )
+    private int id;
+
+ 
+    
     @Column(name = "nombreactividad" )
     private String nombreactividad;
     
@@ -37,6 +42,14 @@ public class SRIActividadGeneralPaginacion implements Serializable {
     @Column(name = "cantidad" )
     private int cantidad;
 
+    
+     public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getTipoactividad() {
         return tipoactividad;
     }
