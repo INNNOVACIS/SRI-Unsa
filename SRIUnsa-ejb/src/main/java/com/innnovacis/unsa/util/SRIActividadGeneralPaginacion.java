@@ -29,9 +29,31 @@ public class SRIActividadGeneralPaginacion implements Serializable {
     private int id;
 
  
-    
     @Column(name = "nombreactividad" )
     private String nombreactividad;
+    
+    
+    @Column(name = "facultad" )
+    private String facultad;
+
+    
+    
+    
+    @Column(name = "departamento" )
+    private String departamento;
+    
+    
+    @Column(name = "escuela" )
+    private String escuela;
+    
+    
+    
+    @Column(name = "semestre" )
+    private String semestre;
+    
+    @Column(name = "fondoconcursable" )
+    private String fondoconcursable;
+    
     
     @Column(name = "tipoactividad" )
     private String tipoactividad;
@@ -88,6 +110,47 @@ public class SRIActividadGeneralPaginacion implements Serializable {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+    
+    
+    public String getFacultad() {
+        return facultad;
+    }
+
+    public void setFacultad(String facultad) {
+        this.facultad = facultad;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+    public String getEscuela() {
+        return escuela;
+    }
+
+    public void setEscuela(String escuela) {
+        this.escuela = escuela;
+    }
+
+    public String getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(String semestre) {
+        this.semestre = semestre;
+    }
+
+    public String getFondoconcursable() {
+        return fondoconcursable;
+    }
+
+    public void setFondoconcursable(String fondoconcursable) {
+        this.fondoconcursable = fondoconcursable;
     }
     
 }
