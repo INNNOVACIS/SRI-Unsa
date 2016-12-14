@@ -157,6 +157,12 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
         ActividadesRevisadasMasivasService.AprobarActividades(actividadesGenerales).then(aprobarActividadesSuccess, aprobarActividadesError);
     };
     
+    $scope.seleccionadorTodo = function(){
+        angular.forEach($scope.actividadesRevisadas, function(){
+            
+        });
+    };
+    
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];
