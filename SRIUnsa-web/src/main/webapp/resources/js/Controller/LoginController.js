@@ -36,12 +36,15 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         $log.debug("getPrivilegiosByIdRolSuccess");        
         sessvars.privilegios = response;
         $scope.sharedService.privilegios = sessvars.privilegios;
-        sessvars.stringMenu = buildMenu($scope.sharedService.privilegios);
-        sessvars.htmlMenu = $sce.trustAsHtml(sessvars.stringMenu);
         
+        sessvars.stringMenu = CrearMenu($scope.sharedService.privilegios);
+        sessvars.htmlMenu = $sce.trustAsHtml(sessvars.stringMenu);
         $scope.sharedService.htmlMenu = sessvars.htmlMenu;
-        console.log("htmlMenu :: ", sessvars.htmlMenu);
-        console.log("stringMenu :: ", sessvars.stringMenu);
+        
+        sessvars.stringMenuVertical = CrearMenuVertical($scope.sharedService.privilegios);
+        sessvars.htmlMenuVertical = $sce.trustAsHtml(sessvars.stringMenuVertical);
+        $scope.sharedService.htmlMenuVertical = sessvars.htmlMenuVertical;
+        
         $location.path("/home");
     };
     var getPrivilegiosByIdRolError = function(response){
@@ -57,43 +60,63 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         PrivilegioService.getPrivilegiosByIdRol(id).then(getPrivilegiosByIdRolSuccess, getPrivilegiosByIdRolError);
     };
     
-    var buildMenu = function(privilegios){
-        
-        angular.forEach(privilegios, function(privilegio, key) {
-            //privilegio.dropdown = 0;
-            if(privilegio.nidPadre !== 0){
-                angular.forEach(privilegios, function(valor, key){
-                     if(valor.nidPrivilegio === privilegio.nidPadre){
-                         valor.dropdown = 1;
-                     }
+    var CrearMenu = function(privilegios){
+        var menuHorizontal = "";
+        angular.forEach(privilegios, function(value,key){
+            var item = "";
+            var subItem = "";
+            // Item padre sin DropDown
+            if(value.nidPadre === 0 && value.surlPrivilegio !== null){ //or ""
+                item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
+            }
+            // Item padre con DropDown
+            if(value.nidPadre === 0 && value.surlPrivilegio === null && value.sNombrePrivilegio !== "Permisos"){
+                item = '<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-o fa-fw"></i> ' + value.sNombrePrivilegio + ' <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user">';
+                angular.forEach(privilegios, function(subValue, key){
+                    if(subValue.nidPadre !== 0 &&  subValue.nidPadre === value.nidPrivilegio){
+                        subItem = subItem + GetItemHtml(subValue.surlPrivilegio, subValue.sNombrePrivilegio);
+                        subItem = subItem + '<li class="divider"></li>';
+                    }
                 });
+                item = item + subItem + '</ul></li>';
             }
+            menuHorizontal = menuHorizontal + item;
         });
-        console.log("dropdown :: ", privilegios);
-        var menu = "";
-        angular.forEach(privilegios, function(privilegio, key) {
-            if(privilegio.nidPadre === 0 && privilegio.dropdown === undefined){
-                var inicio = '<li ng-class="{active: isActivo == '+ "'" + privilegio.sNombrePrivilegio + "'" + '}"><a href="' + privilegio.surlPrivilegio + '" ng-click="setMenuTab($event)">';
-                var fin = privilegio.sNombrePrivilegio + '</a></li>';
-                menu = menu + inicio + fin;
-            }
-            if(privilegio.nidPadre === 0 && privilegio.dropdown === 1) {
-                var inicio = '<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">' + privilegio.sNombrePrivilegio + '<span class="caret"></span></a><ul class="dropdown-menu">';
-                var contenido = getDropDown(privilegios, privilegio.nidPrivilegio);
-                var fin = '</ul></li>';
-                menu = menu + inicio + contenido + fin;
-            }
-        });
-        return menu;
+        menuHorizontal = menuHorizontal + '<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown"   > <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user"><li><a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li> </ul> </li>'
+        return menuHorizontal;
     };
-    var getDropDown = function(privilegios, padre){
-        var menuDropDown = "";
-        angular.forEach(privilegios, function(valor, key){
-            if(valor.nidPadre === padre){
-                var contenido = '<li ng-class="{active: isActivo == ' + "'" + valor.sNombrePrivilegio + "'" + '}"><a href="' + valor.surlPrivilegio + '" ng-click="setMenuTab($event)">' + valor.sNombrePrivilegio + '</a></li>';
-                menuDropDown = menuDropDown + contenido;
+    
+    var CrearMenuVertical = function(privilegios){
+        var menuVertical = '<li class="sidebar-search"><a href="#home"><button class="btn btn-primary" type="button"><i class="fa fa-edit fa-fw"></i>  Crear Actividad</button></a></li>';
+        /* Un primer for para mantener el orden*/
+        angular.forEach(privilegios, function(value, key){
+            var item = "";
+            var subItem = "";
+            //Item padre sin Dropdown
+            if(value.sNombrePrivilegio === "Actividades Generadas" || value.sNombrePrivilegio === "Actividades Pendientes" || value.sNombrePrivilegio === "Actividades Revisadas"){
+                item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
+                menuVertical = menuVertical + item;
             }
         });
-        return menuDropDown;
+        angular.forEach(privilegios, function(value, key){
+            var item = "";
+            var subItem = "";
+            // Item padre con DropDown
+            if(value.nidPadre === 0 && value.surlPrivilegio === null && value.sNombrePrivilegio !== "Actividades"){
+                item = '<li> <a ><i class="fa fa-files-o fa-fw"></i> ' + value.sNombrePrivilegio + '<span class="fa arrow"></span></a><ul class="nav nav-second-level">';
+                angular.forEach(privilegios, function(subValue, key){
+                    if(subValue.nidPadre !== 0 &&  subValue.nidPadre === value.nidPrivilegio){
+                        subItem = subItem + GetItemHtml(subValue.surlPrivilegio, subValue.sNombrePrivilegio);
+                    }
+                });
+                item = item + subItem + '</ul></li>';
+            }
+            menuVertical = menuVertical + item;
+        });
+        return menuVertical;
+    };
+    
+    var GetItemHtml = function(url, nombre){
+        return '<li><a href="' + url + '">' + nombre + '</a></li>';
     };
 });

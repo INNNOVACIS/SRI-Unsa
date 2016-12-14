@@ -10,6 +10,8 @@ investigacionApp.factory('SharedService', function($location) {
         privilegios : sessvars.privilegios,
         htmlMenu : sessvars.htmlMenu,
         stringMenu : sessvars.stringMenu,
+        htmlMenuVertical : sessvars.htmlMenuVertical,
+        stringMenuVertical : sessvars.stringMenuVertical,
         popUp : {
             open:false,
             close:true,

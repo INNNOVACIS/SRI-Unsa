@@ -3,6 +3,7 @@ investigacionApp.controller('HeaderController', function($scope, $sce, $location
     $scope.sharedService = SharedService;
     $scope.isActivo = "Actividades de Investigacion";
     $scope.sharedService.htmlMenu = $sce.trustAsHtml($scope.sharedService.stringMenu);
+    $scope.sharedService.htmlMenuVertical = $sce.trustAsHtml($scope.sharedService.stringMenuVertical);
 
     $scope.message = $scope.sharedService.nombreUsuario;
 

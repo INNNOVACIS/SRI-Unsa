@@ -2,7 +2,7 @@
     <div class="SRI-loader"></div>
 </div>
 <div id="container" class="container">
-      <div class="col-lg-offset-2 col-md-10">
+    <div class="col-lg-offset-2 col-md-10">
         <div class="panel panel-primary">
 
             <div class="panel-body">
@@ -70,50 +70,49 @@
             </div>
         </div>
             
-            <div class="panel panel-primary">
-                <div class="panel-heading">Actividades de Investigación Pendientes</div>
-                <div class="panel-body">
-                    <div class="dataTable_wrapper">
-                        <table width="100%" class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                  <th>#</th>
-                                  <th>Nombre de la Actividad</th>
-                                  <th>Docente</th>
-                                  <th>N° DNI</th>
-                                  <th>Tipo de Actividad de Investigación</th>
-                                  <th width="10%">Duración</th>
-                                  <th width="10%">Archivos subidos</th>
-                                  <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="actividadPendiente in actividadesPendientes">
-                                    <td>{{ actividadPendiente.idactividadinvestigacion }}</td>
-                                    <td><strong>{{ actividadPendiente.nombreactividad }}</strong></td>
-                                    <td>{{ actividadPendiente.docente.nombre }}</td>
-                                    <td>{{ actividadPendiente.docente.dni }}</td>
-                                    <td>{{ actividadPendiente.tipoactividad }}</td>
-                                    <td>{{ actividadPendiente.horas }}</td>
-                                    <td>{{ actividadPendiente.cantidad }}</td>
-                                    <td>
-                                        <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadPendiente)" src="resources/images/iconos/ver.png">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                        <pagination
-                            rango-paginas="rangoPaginas"
-                            current-rango="currentRango"
-                            num-pages="numPages()" 
-                            current-page="currentPage"
-                            max-size="maxSize"
-                            total="total">
-                        </pagination>
-                    </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Actividades de Investigación Pendientes</div>
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table width="100%" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Nombre de la Actividad</th>
+                              <th>Docente</th>
+                              <th>N° DNI</th>
+                              <th>Tipo de Actividad de Investigación</th>
+                              <th width="10%">Duración</th>
+                              <th width="10%">Archivos subidos</th>
+                              <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="actividadPendiente in actividadesPendientes">
+                                <td>{{ actividadPendiente.idactividadinvestigacion }}</td>
+                                <td><strong>{{ actividadPendiente.nombreactividad }}</strong></td>
+                                <td>{{ actividadPendiente.docente.nombre }}</td>
+                                <td>{{ actividadPendiente.docente.dni }}</td>
+                                <td>{{ actividadPendiente.tipoactividad }}</td>
+                                <td>{{ actividadPendiente.horas }}</td>
+                                <td>{{ actividadPendiente.cantidad }}</td>
+                                <td>
+                                    <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadPendiente)" src="resources/images/iconos/ver.png">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <pagination
+                        rango-paginas="rangoPaginas"
+                        current-rango="currentRango"
+                        num-pages="numPages()" 
+                        current-page="currentPage"
+                        max-size="maxSize"
+                        total="total">
+                    </pagination>
                 </div>
             </div>
         </div>
-
+    </div>
 </div>
