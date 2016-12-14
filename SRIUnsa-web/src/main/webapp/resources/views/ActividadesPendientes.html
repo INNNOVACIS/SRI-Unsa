@@ -75,29 +75,70 @@
             <div class="panel-body">
                 <div class="dataTable_wrapper" ng-class="{'SRI-load-table-container': loadTable}">
                     <div ng-class="{'SRI-load-table': loadTable}"></div>
-                    <table width="100%" class="table table-bordered table-hover">
+                    <table width="100%" class="table table-bordered table-hover" style="font-size:9.5pt;">
                         <thead>
                             <tr>
-                              <th>#</th>
-                              <th>Nombre de la Actividad</th>
-                              <th>Docente</th>
-                              <th>N° DNI</th>
-                              <th>Tipo de Actividad de Investigación</th>
-                              <th width="10%">Duración</th>
-                              <th width="10%">Archivos subidos</th>
-                              <th>Acción</th>
+                                <th ng-click="sortType = 'id'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    #
+                                    <span ng-show="sortType === 'id' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'id' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+<!--                                <th>Nombre de la Actividad</th>
+                                <th>Docente</th>-->
+                                <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Facultad
+                                    <span ng-show="sortType === 'facultad' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'facultad' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+                                <th ng-click="sortType = 'escuela'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Escuela
+                                    <span ng-show="sortType === 'escuela' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'escuela' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+                                <th ng-click="sortType = 'departamento'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Departamento
+                                    <span ng-show="sortType === 'departamento' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'departamento' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+                                <th ng-click="sortType = 'semestre'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Semestre
+                                    <span ng-show="sortType === 'semestre' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'semestre' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+<!--                                <th>Nombre del Proyecto</th>-->
+                                <th ng-click="sortType = 'nombreactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Nombre del Proyecto
+                                    <span ng-show="sortType === 'nombreactividad' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'nombreactividad' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+                                <th ng-click="sortType = 'tipoactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Tipo
+                                    <span ng-show="sortType === 'tipoactividad' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'tipoactividad' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+                                <th>Fondo</th>
+                                <th ng-click="sortType = 'horas'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Duración
+                                    <span ng-show="sortType === 'horas' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'horas' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+                                <th width="6%">Archivos</th>
+                                <th width="8%">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="actividadPendiente in actividadesPendientes">
-                                <td>{{ actividadPendiente.idactividadinvestigacion }}</td>
-                                <td><strong>{{ actividadPendiente.nombreactividad }}</strong></td>
-                                <td>{{ actividadPendiente.docente.nombre }}</td>
-                                <td>{{ actividadPendiente.docente.dni }}</td>
-                                <td>{{ actividadPendiente.tipoactividad }}</td>
-                                <td>{{ actividadPendiente.horas }}</td>
-                                <td>{{ actividadPendiente.cantidad }}</td>
-                                <td>
+                            <tr ng-repeat="actividadPendiente in actividadesPendientes | orderBy:sortType:sortReverse">
+                                <td >{{ actividadPendiente.id }}</td>
+                                <td >{{ actividadPendiente.facultad }}</td>
+                                <td >{{ actividadPendiente.escuela }}</td>
+                                <td >{{ actividadPendiente.departamento }}</td>   
+                                <td >{{ actividadPendiente.semestre }}</td>
+                                <td >{{ actividadPendiente.nombreactividad }}</td>
+                                <td >{{ actividadPendiente.tipoactividad }}</td>
+                                    <td >{{ actividadPendiente.fondoconcursable }}</td>
+                                <td >{{ actividadPendiente.horas }}</td>
+                                <td >{{ actividadPendiente.cantidad }}</td>
+                                <td nowrap>
                                     <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadPendiente)" src="resources/images/iconos/ver.png">
                                 </td>
                             </tr>

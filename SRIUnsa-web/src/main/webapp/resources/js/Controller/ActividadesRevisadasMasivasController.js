@@ -157,9 +157,13 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
         ActividadesRevisadasMasivasService.AprobarActividades(actividadesGenerales).then(aprobarActividadesSuccess, aprobarActividadesError);
     };
     
-    $scope.seleccionadorTodo = function(){
-        angular.forEach($scope.actividadesRevisadas, function(){
-            
+    $scope.seleccionarTodo = function(seleccionar){
+        angular.forEach($scope.actividadesRevisadas, function(value, key){
+            if(seleccionar === true){
+                value.seleccionado = true;
+            } else {
+                value.seleccionado = false;
+            }
         });
     };
     

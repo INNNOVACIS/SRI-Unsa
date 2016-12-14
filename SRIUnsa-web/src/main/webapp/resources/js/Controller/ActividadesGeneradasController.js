@@ -6,7 +6,7 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     $scope.loader = false;
     $scope.loadTable = false;
     
-    $scope.sortType     = 'nombreactividad'; // set the default sort type
+    $scope.sortType     = 'id'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
     
     /******************* Servicios Callback *******************/
