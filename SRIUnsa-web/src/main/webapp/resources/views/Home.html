@@ -88,27 +88,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Area </label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.area.$invalid && submitted }">
-                                        <select name="area" ng-model="areaInvestigacion"                
-                                            ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: '0'}"
-                                            class="form-control"
-                                            ng-init="areaInvestigacion=''"
-                                            required>
-                                        </select>
-                                        <p ng-show="actividadForm.area.$invalid && submitted" class="help-block">El area es Requerida.</p>
+                                    <label class="control-label col-md-4">Semestre</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
+                                        <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
+                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Sub-Area</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.subarea.$invalid && submitted }">
-                                        <select name="subarea" ng-model="subareaInvestigacion"
-                                            ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: areaInvestigacion.nidEstructura}"
-                                            class="form-control"
-                                            ng-init="subareaInvestigacion=''"
-                                            required>
-                                        </select>
-                                        <p ng-show="actividadForm.subarea.$invalid && submitted" class="help-block">La subArea es Requerida.</p>
+                                    <label class="control-label col-md-4"> Linea de Investigacion</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.linea.$invalid && submitted }">
+                                        <input name="linea" ng-model="lineaInvestigacion" class="form-control" required/>
+                                        <p ng-show="actividadForm.linea.$invalid && submitted" class="help-block">La Linea de Investigacion es Requerida.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -126,16 +116,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Semestre</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
-                                        <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
-                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="float: right;">
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Colaboradores</label>
                                     <div class="col-md-6">

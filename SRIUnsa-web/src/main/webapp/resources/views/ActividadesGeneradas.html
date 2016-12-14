@@ -60,19 +60,26 @@
                             <option></option>
                         </select>
                     </div>
-                     <label class="control-label col-md-2">Responsable</label>
-                    <div class="col-md-4">
-                        <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
-                            <option></option>
-                        </select>
-                    </div>
-                    <label class="control-label col-md-2"> Parametro</label>
-                    <div class="col-md-4">
-                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
-                            <option></option>
-                        </select>
-                    </div>
-                    
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Responsable</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-md-2"> Parametro</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-primary" ng-click="filtrar()" >
