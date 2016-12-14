@@ -5,7 +5,7 @@
     <div class="col-lg-12" style="margin-top:20px;">
             
         <div class="panel panel-primary">
-            <div class="panel-heading">Actividades de Investigación Revisadas
+            <div class="panel-heading">Actividades de Investigaci&oacute;n
                 <button class="btn btn-primary btn-sm pull-right" ng-click="aprobarActividades()">
                     <span class="glyphicon glyphicon-ok"></span> Aprobar
                 </button>
@@ -22,7 +22,7 @@
                               <th>Tipo de Actividad de Investigación</th>
                               <th>Duración</th>
                               <th>Archivos subidos</th>
-                              <th><input type="checkbox" ng-model="seleccionar" ng-click="seleccionarTodo(seleccionar)">Revisar</th>
+                              <th width="15%"><input type="checkbox" ng-model="seleccionar" ng-click="seleccionarTodo(seleccionar)"> Revisar</th>
                               <th>Acción</th>
                             </tr>
                         </thead>
@@ -37,7 +37,6 @@
                                 <td>{{ actividadRevisada.cantidad }}</td>
                                 <td><input type="checkbox" ng-model="actividadRevisada.seleccionado"> </td>
                                 <td nowrap>
-                                    <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadRevisada)" src="resources/images/iconos/ver.png">
                                     <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadRevisada)" src="resources/images/iconos/ver.png">
                                 </td>
                             </tr>

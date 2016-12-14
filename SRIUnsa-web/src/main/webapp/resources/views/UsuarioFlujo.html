@@ -34,9 +34,7 @@
                             <td>{{ usuarioActor.snombreUsuario }}</td>
                             <td>{{ usuarioActor.nactores }}</td>
                             <td nowrap>
-                                <button type="button" class="btn btn-primary btn-xs" ng-click="update(usuarioActor)" data-toggle="modal" data-target="#popUpdateUsuarioActor">
-                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                </button>
+                                <img style="width:30px; cursor: pointer" ng-click="update(usuarioActor)" data-toggle="modal" data-target="#popUpdateUsuarioActor" src="resources/images/iconos/editar.png">
                             </td>
                         </tr>
                     </tbody>
@@ -97,9 +95,7 @@
                                         <tr ng-repeat="listaActor in listaActores track by $index">                   
                                             <td>{{ listaActor.snombreActor }}</td>
                                             <td nowrap>
-                                                <button type="button" class="btn btn-default btn-xs" ng-click="eliminarUsuarioActorLista(listaActor)">
-                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                                </button>
+                                                <img style="width:30px; cursor: pointer" ng-click="eliminarUsuarioActorLista(listaActor)" src="resources/images/iconos/eliminar.png">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -148,7 +144,7 @@
                                         <select class="form-control" ng-model="actor" ng-options="opt as opt.snombreActor for opt in actores"></select>
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="button" class="btn btn-primary" ng-click="registrarUsuarioActor()">
+                                        <button type="button" class="btn btn-primary" ng-click="actualizarUsuarioActor()">
                                             <span class="glyphicon glyphicon-plus"></span>
                                         </button>
                                     </div>
@@ -166,34 +162,12 @@
                                         <tr ng-repeat="actorById in actoresById track by $index">                   
                                             <td>{{ actorById.snombreActor }}</td>
                                             <td nowrap>
-                                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioFlujo(actorById)">
-                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                                </button>
+                                                <img style="width:30px; cursor: pointer" ng-click="deleteUsuarioFlujo(actorById)" src="resources/images/iconos/eliminar.png">
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-<!--                            <div class="col-md-6">
-                                <table width="100%" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th width="70%">Roles Asignados</th>
-                                            <th>Acci&oacute;n</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="rolById in rolesById track by $index">                   
-                                            <td>{{ rolById.snombreRol }}</td>
-                                            <td nowrap>
-                                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioRol(rolById)">
-                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>-->
                             
                         </div>   
                     </div>

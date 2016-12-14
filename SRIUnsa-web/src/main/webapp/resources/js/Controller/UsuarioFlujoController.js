@@ -17,7 +17,8 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     	$log.debug("Registrar Usuario Actor - Success");
         console.log("Respuesta :: ", response);
         $scope.getUsuarioFlujoByPagina();
-        UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario($scope.usuario.nidUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
+        var idUsuario = $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario;
+        UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario(idUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
     };
     var registrarUsuarioActorError = function(response){
         $log.debug("Registrar Usuario Actor - Error");
@@ -62,7 +63,8 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     	$log.debug("Delete Usuario Actor - Success");
     	$scope.usuarioActor = response;
         $scope.getUsuarioFlujoByPagina();
-        UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario($scope.usuario.nidUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
+        var user = $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario;
+        UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario(user.nidUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
     };
     var deleteUsuarioActorError = function(response){
         $log.debug("Delete Usuario Actor - Error");
@@ -158,6 +160,18 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
         UsuarioFlujoService.registrarUsuarioActor(usuarioFlujos).then(registrarUsuarioActorSuccess, registrarUsuarioActorError);
     };
     
+    $scope.actualizarUsuarioActor = function(){
+        var usuarioFlujos = [];
+        var usuarioFlujo = {
+            nidFlujoActor : $scope.actor.nidFlujoActor,
+            nidUsuario : $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario,
+            suserCreacion : $scope.sharedService.nombreUsuario,
+            sestado : 'A'
+        };
+        usuarioFlujos.push(usuarioFlujo);
+        UsuarioFlujoService.registrarUsuarioActor(usuarioFlujos).then(registrarUsuarioActorSuccess, registrarUsuarioActorError);
+    };
+    
     $scope.agregarUsuarioActorLista = function(){
         $scope.listaActores.push($scope.actor);
         console.log("Agregar :: ", $scope.listaActores);
@@ -210,7 +224,6 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
 
     $scope.update = function(usuarioActor){
     	$scope.usuarioActor = usuarioActor;
-        UsuarioRolService.getUsuarioRolByIdUsuario(usuarioActor.nidUsuario).then(getUsuarioRolByIdUsuarioSuccess, getUsuarioRolByIdUsuarioError);
         UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario(usuarioActor.nidUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
     };
     
