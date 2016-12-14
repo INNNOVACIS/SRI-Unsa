@@ -27,15 +27,17 @@ public class UsuarioFlujoBusinessImp implements IUsuarioFlujoBusiness {
     private Logger log;
 
     @Override
-    public int Insertar(SRIUsuarioFlujo entidad) {
+    public int Insertar(List<SRIUsuarioFlujo> entidad) {
         int id = -1;
+        SRIUsuarioFlujo usuarioFlujo = null;
         try{
-            entidad = usuarioFlujoDao.Insert(entidad);
-            id = entidad.getNIdUsuarioFlujo();
-                    
+            for(int i = 0; i < entidad.size(); i++){
+                usuarioFlujo = usuarioFlujoDao.Insert(entidad.get(i));
+                id = usuarioFlujo.getNIdUsuarioFlujo();
+            }  
         }
         catch(Exception ex){
-            
+            throw ex;
         }
         return id;
     }

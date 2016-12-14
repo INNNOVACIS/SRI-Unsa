@@ -18,7 +18,7 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public interface IUsuarioFlujoBusiness {
-    int Insertar(SRIUsuarioFlujo entidad);
+    int Insertar(List<SRIUsuarioFlujo> entidad);
     boolean Update(SRIUsuarioFlujo entidad);
     boolean Delete(SRIUsuarioFlujo entidad);
     SRIUsuarioFlujo Get(int idEntidad);

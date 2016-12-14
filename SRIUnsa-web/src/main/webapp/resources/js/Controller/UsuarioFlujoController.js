@@ -10,6 +10,8 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     $scope.actorById = {};
     $scope.rolesById = [];
     $scope.rolById = {};
+    
+    $scope.listaActores = [];
 
     var registrarUsuarioActorSuccess = function(response){
     	$log.debug("Registrar Usuario Actor - Success");
@@ -143,13 +145,28 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     };
 
     $scope.registrarUsuarioActor = function(){
-        var usuarioFlujo = {
-            nidFlujoActor : $scope.actor.nidFlujoActor,
-            nidUsuario : $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario,
-            suserCreacion : $scope.sharedService.nombreUsuario,
-            sestado : 'A'
-        };
-	UsuarioFlujoService.registrarUsuarioActor(usuarioFlujo).then(registrarUsuarioActorSuccess, registrarUsuarioActorError);
+        var usuarioFlujos = [];
+        angular.forEach($scope.listaActores, function(value, key){
+            var usuarioFlujo = {
+                nidFlujoActor : value.nidFlujoActor,
+                nidUsuario : $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario,
+                suserCreacion : $scope.sharedService.nombreUsuario,
+                sestado : 'A'
+            };
+            usuarioFlujos.push(usuarioFlujo);
+        });
+        UsuarioFlujoService.registrarUsuarioActor(usuarioFlujos).then(registrarUsuarioActorSuccess, registrarUsuarioActorError);
+    };
+    
+    $scope.agregarUsuarioActorLista = function(){
+        $scope.listaActores.push($scope.actor);
+        console.log("Agregar :: ", $scope.listaActores);
+    };
+    
+    $scope.eliminarUsuarioActorLista = function(actor){
+        var indice = $scope.listaActores.indexOf(actor);
+        $scope.listaActores.splice( indice, 1 );
+        console.log("Eliminar :: ", $scope.listaActores);
     };
     
     $scope.registrarUsuarioRol = function(){

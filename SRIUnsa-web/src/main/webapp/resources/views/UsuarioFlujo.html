@@ -56,11 +56,11 @@
 
 <!-- Nuevo Flujo Actor -->
 <div id="popNuevoUsuarioActor" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Asignar Actor </h4>
+                <h4 class="modal-title">Asignar Actor</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -74,29 +74,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Roles</label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" ng-model="rol" ng-options="opt as opt.snombreRol for opt in roles"></select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-primary" ng-click="registrarUsuarioRol()">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="control-label col-md-2">Actores</label>
                                     <div class="col-md-8">
                                         <select class="form-control" ng-model="actor" ng-options="opt as opt.snombreActor for opt in actores"></select>
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="button" class="btn btn-primary" ng-click="registrarUsuarioActor()">
+                                        <button type="button" class="btn btn-primary" ng-click="agregarUsuarioActorLista()">
                                             <span class="glyphicon glyphicon-plus"></span>
                                         </button>
                                     </div>
                                 </div>
                             </form>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -105,30 +94,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="actorById in actoresById track by $index">                   
-                                            <td>{{ actorById.snombreActor }}</td>
+                                        <tr ng-repeat="listaActor in listaActores track by $index">                   
+                                            <td>{{ listaActor.snombreActor }}</td>
                                             <td nowrap>
-                                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioFlujo(actorById)">
-                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-6">
-                                <table width="100%" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th width="70%">Roles Asignados</th>
-                                            <th>Acci&oacute;n</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="rolById in rolesById track by $index">                   
-                                            <td>{{ rolById.snombreRol }}</td>
-                                            <td nowrap>
-                                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuarioRol(rolById)">
+                                                <button type="button" class="btn btn-default btn-xs" ng-click="eliminarUsuarioActorLista(listaActor)">
                                                     <span class="glyphicon glyphicon-trash"></span> Eliminar
                                                 </button>
                                             </td>
@@ -156,7 +125,7 @@
 
 <!-- Actualizar Actor -->
 <div id="popUpdateUsuarioActor" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" ng-click="updatePaginacion()">&times;</button>
@@ -185,7 +154,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -205,7 +174,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-md-6">
+<!--                            <div class="col-md-6">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -224,7 +193,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div>-->
                             
                         </div>   
                     </div>

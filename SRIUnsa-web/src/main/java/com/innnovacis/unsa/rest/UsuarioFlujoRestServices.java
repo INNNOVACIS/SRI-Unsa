@@ -86,8 +86,8 @@ public class UsuarioFlujoRestServices {
     @Path("/registrarUsuarioFlujo")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int saveUsuarioFlujo(SRIUsuarioFlujo object) {        
-        return usuarioFlujoBusiness.Insertar(object);
+    public int registrarUsuarioFlujo(List<SRIUsuarioFlujo> entidad) {        
+        return usuarioFlujoBusiness.Insertar(entidad);
     }
     
     @PUT
