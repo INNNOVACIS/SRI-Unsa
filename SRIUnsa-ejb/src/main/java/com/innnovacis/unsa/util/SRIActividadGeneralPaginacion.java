@@ -36,7 +36,7 @@ public class SRIActividadGeneralPaginacion implements Serializable {
     @Column(name = "facultad" )
     private String facultad;
 
-    
+    /////
     
     
     @Column(name = "departamento" )
