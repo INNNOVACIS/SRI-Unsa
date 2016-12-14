@@ -80,17 +80,30 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nombre del Proyecto</th>
-                                <th>Tipo</th>
-                                <th>Duración</th>
+<!--                                <th>Nombre del Proyecto</th>-->
+                                <th ng-click="sortType = 'nombreactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Nombre del Proyecto
+                                    <span ng-show="sortType === 'nombreactividad' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'nombreactividad' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+                                <th ng-click="sortType = 'tipoactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Tipo
+                                    <span ng-show="sortType === 'tipoactividad' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'tipoactividad' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
+                                <th ng-click="sortType = 'horas'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                    Duración
+                                    <span ng-show="sortType === 'horas' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType === 'horas' && sortReverse" class="fa fa-caret-up"></span>
+                                </th>
                                 <th width="10%">Archivos</th>
                                 <th width="10%">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="actividadGenerada in actividadesGeneradas">
+                            <tr ng-repeat="actividadGenerada in actividadesGeneradas | orderBy:sortType:sortReverse">
                                 <td >{{ actividadGenerada.id }}</td>
-                                <td ><strong>{{ actividadGenerada.nombreactividad }}</strong></td>
+                                <td >{{ actividadGenerada.nombreactividad }}</td>
                                 <td >{{ actividadGenerada.tipoactividad }}</td>
                                 <td >{{ actividadGenerada.horas }}</td>
                                 <td >{{ actividadGenerada.cantidad }}</td>

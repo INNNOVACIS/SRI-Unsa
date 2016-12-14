@@ -4,9 +4,6 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
 
     $scope.sharedService = SharedService;
     $scope.loader = false;
-    $scope.actividadesRevisadas = [
-        {nombreactividad: "juan" }
-    ];
     
     /*********** Servicios Callback ***********/  
     
