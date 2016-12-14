@@ -1,6 +1,9 @@
 .nav>li>a{
     color: #777 !important;
 }
+.navbar-default{
+    z-index: 1;
+}
 .fondo_login{
     background: #EFEFE7;
 }
@@ -154,7 +157,7 @@
     margin:20% auto;
     border: 12px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 12px solid #3498db;
+    border-top: 12px solid #951f1f;
     width: 80px;
     height: 80px;
     -webkit-animation: spin 2s linear infinite;
