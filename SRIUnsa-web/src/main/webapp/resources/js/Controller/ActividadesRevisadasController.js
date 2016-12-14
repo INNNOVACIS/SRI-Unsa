@@ -4,6 +4,7 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
 
     $scope.sharedService = SharedService;
     $scope.loader = false;
+    $scope.loadTable = false;
     
     /*********** Servicios Callback ***********/  
     
@@ -148,6 +149,7 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
         console.log("Respuesta :: ", response);
         $scope.actividadesRevisadas = response.lista;
         $scope.total = response.total;
+        $scope.loadTable = false;
     };
     var GetActividadesRevisadasError = function(response){
         $log.debug("GetActividadesRevisadas - Error");
@@ -162,7 +164,10 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     };
     
     $scope.filtrar = function() {
-        $scope.getActividades();
+        $scope.loadTable = true;
+        setTimeout(function(){
+            $scope.getActividades();
+        }, 500);
     };
         
     $scope.getListaTipoNivel();

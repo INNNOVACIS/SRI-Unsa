@@ -4,6 +4,7 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
+    $scope.loadTable = false;
     
     /******************* Servicios Callback *******************/
     
@@ -160,6 +161,7 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     var paginacionActividadesSuccess = function(response){
         $scope.actividadesPendientes = response.lista;
         $scope.total = response.total;
+        $scope.loadTable = false;
     };
     var paginacionActividadesError = function(response){
         console.log("error :: ", response);
@@ -173,7 +175,10 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
     };
     
     $scope.filtrar = function() {
-        $scope.getActividades();
+        $scope.loadTable = true;
+        setTimeout(function(){
+            $scope.getActividades();
+        }, 500);
     };
     
     $scope.getListaTipoNivel();

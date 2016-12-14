@@ -4,6 +4,7 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
+    $scope.loadTable = false;
     
     /******************* Servicios Callback *******************/
     
@@ -166,10 +167,12 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         console.log("Respuesta :: ", response);
         $scope.actividadesGeneradas = response.lista;
         $scope.total = response.total;
+        $scope.loadTable = false;
     };
     var GetActividadesGeneradasError = function(response){
         $log.debug("GetActividadesGeneradas - Error");
         console.log("Respuesta :: ", response);
+        $scope.loadTable = false;
     };
     
     $scope.getActividades = function(){
@@ -180,7 +183,10 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     };
     
     $scope.filtrar = function() {
-        $scope.getActividades();
+        $scope.loadTable = true;
+        setTimeout(function(){
+            $scope.getActividades();
+        }, 500);
     };
      
     $scope.getListaTipoNivel();
