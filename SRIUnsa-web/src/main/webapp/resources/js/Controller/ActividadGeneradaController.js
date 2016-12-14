@@ -74,7 +74,7 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     var AprobarActividadSuccess = function(response){
         $log.debug("AprobarActividad - Success");
         console.log("Respuesta :: ", response.body);
-        scrollTop();
+        $scope.sharedService.scrollTop();
         setTimeout(function(){
             $scope.$apply(function(){ 
                 var popUp = SharedService.popUp;
@@ -134,7 +134,7 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     
     $scope.RechazarActividad = function(){
         $scope.loader = true;
-        scrollTop();
+        $scope.sharedService.scrollTop();
         setTimeout(function(){
             $scope.$apply(function(){ 
                 var popUp = SharedService.popUp;
@@ -167,12 +167,6 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
         $scope.loader = true;
         if($scope.generado){ $location.path("/actividad/Generadas"); }
         if($scope.revisado){ $location.path("/actividad/Revisadas"); }
-    };
-    
-    var scrollTop = function(){
-        $('html,body').animate({
-            scrollTop: $("#container").offset().top - 100
-        }, 800);
     };
     
     $scope.getActividadById($scope.idActividad);

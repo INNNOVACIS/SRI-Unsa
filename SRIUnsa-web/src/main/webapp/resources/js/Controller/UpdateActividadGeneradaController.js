@@ -126,7 +126,7 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
     var actualizarActividadInvestigacionSuccess = function(response){
         $log.debug("ActualizarActividadInvestigacion - Success");
         console.log("Respuesta :: ", response);
-        scrollTop();
+        $scope.sharedService.scrollTop();
         setTimeout(function(){
             $scope.$apply(function(){ 
                 var popUp = SharedService.popUp;
@@ -370,7 +370,7 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
     
     $scope.actualizarActividadInvestigacion = function() {
         $scope.loader = true;
-        scrollTop();
+        $scope.sharedService.scrollTop();
         var actividadGeneral = {
             idUsuario : $scope.sharedService.idUsuario,
             idFlujoActorOrigen : SRIUnsaConfig.DOCE,
@@ -435,13 +435,7 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
         $scope.loader = true;
         $location.path("/actividad/Generadas");
     };
-    
-    var scrollTop = function(){
-        $('html,body').animate({
-            scrollTop: $("#container").offset().top - 100
-        }, 800);
-    };
-    
+
     $scope.totalColaboradores = function(){
         return $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
     };

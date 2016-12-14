@@ -275,7 +275,7 @@
     $scope.registrarInvestigacion = function(isValid){
         if(isValid){
             $scope.loader = true;
-            scrollTop();
+            $scope.sharedService.scrollTop();
             var actividadGeneral = {
                 idUsuario : $scope.sharedService.idUsuario,
                 idFlujoActorOrigen : SRIUnsaConfig.DOCE,
@@ -306,7 +306,7 @@
             };
             HomeService.registrarInvestigacion(actividadGeneral).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
         } else {
-            scrollTop();
+            $scope.sharedService.scrollTop();
 //            $scope.openCloseModal(true,false);
             $scope.submitted = true;
             angular.forEach($scope.plantillaDocumento, function(value,key){
@@ -392,12 +392,6 @@
     
     $scope.openCloseModal = function(open, close) {
         $scope.modal = { open: open, close: close };
-    };
-    
-    var scrollTop = function(){
-        $('html,body').animate({
-            scrollTop: $("#container").offset().top - 100
-        }, 800);
     };
     
     var limpiarCampos = function(){

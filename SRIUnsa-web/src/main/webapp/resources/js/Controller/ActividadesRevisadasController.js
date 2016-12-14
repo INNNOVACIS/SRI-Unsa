@@ -5,6 +5,7 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
     $scope.sharedService = SharedService;
     $scope.loader = false;
     $scope.loadTable = false;
+    $scope.sharedService.scrollTop();
     
     /*********** Servicios Callback ***********/  
     

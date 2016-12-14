@@ -12,6 +12,11 @@ investigacionApp.factory('SharedService', function($location) {
         stringMenu : sessvars.stringMenu,
         htmlMenuVertical : sessvars.htmlMenuVertical,
         stringMenuVertical : sessvars.stringMenuVertical,
+        scrollTop : function(){
+            $('html,body').animate({
+            scrollTop: $("#page-wrapper").offset().top - 100
+        }, 800);
+        },
         popUp : {
             open:false,
             close:true,
