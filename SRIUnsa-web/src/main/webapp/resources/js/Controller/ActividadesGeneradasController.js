@@ -202,6 +202,7 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
     $scope.getActividades();
     
     $scope.verActividadById = function(actividadGenerada){
+        $scope.sharedService.scrollTop();
         $scope.loader = true;
         $location.path("/actividad/Generadas/" + actividadGenerada.idactividadinvestigacion);
     };
