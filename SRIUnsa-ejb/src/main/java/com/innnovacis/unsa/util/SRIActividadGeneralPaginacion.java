@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.util;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -61,6 +62,22 @@ public class SRIActividadGeneralPaginacion implements Serializable {
     @Column(name = "horas" )
     private int horas;
     
+    
+    @Column(name = "fechacreacion" )
+    private String fechacreacion;
+    
+    
+    @Column(name = "ultimafecha" )
+    private String ultimafecha;
+    
+     @Column(name = "ultimoaprobador" )
+    private String ultimoaprobador;
+     
+      @Column(name = "pendiente" )
+    private String pendiente;
+
+    
+
     @Column(name = "cantidad" )
     private int cantidad;
 
@@ -151,6 +168,39 @@ public class SRIActividadGeneralPaginacion implements Serializable {
 
     public void setFondoconcursable(String fondoconcursable) {
         this.fondoconcursable = fondoconcursable;
+    }
+    
+    
+    public String getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(String fechacreacion) {
+        this.fechacreacion = fechacreacion;
+    }
+
+    public String getUltimafecha() {
+        return ultimafecha;
+    }
+
+    public void setUltimafecha(String ultimafecha) {
+        this.ultimafecha = ultimafecha;
+    }
+
+    public String getUltimoaprobador() {
+        return ultimoaprobador;
+    }
+    
+    public void setUltimoaprobador(String ultimoaprobador) {
+        this.ultimoaprobador = ultimoaprobador;
+    }
+
+    public String getPendiente() {
+        return pendiente;
+    }
+
+    public void setPendiente(String pendiente) {
+        this.pendiente = pendiente;
     }
     
 }
