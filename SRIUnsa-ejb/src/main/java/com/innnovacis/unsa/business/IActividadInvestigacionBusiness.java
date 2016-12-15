@@ -7,6 +7,7 @@ package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
+import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
 import com.innnovacis.unsa.util.SRIPaginacion;
 
 import java.util.List;
@@ -35,4 +36,7 @@ public interface IActividadInvestigacionBusiness {
     Map<String, Object> GetActividadesByDocente(SRIPaginacion entidad);
     Map<String, Object> GetActividadesByDocenteDetalle(SRIPaginacion entidad);
     boolean EnviarEmail(SRIActividadGeneral entidad);
+    
+    List<SRICabeceraDetalleMasiva> GetCabeceraMasiva(int idUsuarioFlujo);
+    Map<String, Object> GetDetalleMasiva(SRIPaginacion entidad);
 }

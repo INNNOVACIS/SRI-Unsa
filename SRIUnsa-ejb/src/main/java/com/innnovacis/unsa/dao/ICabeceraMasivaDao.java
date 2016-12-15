@@ -6,6 +6,11 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRICabeceraMasiva;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
+import com.innnovacis.unsa.util.SRIPaginacion;
+import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 
 /**
@@ -19,4 +24,8 @@ public interface ICabeceraMasivaDao {
     SRICabeceraMasiva Update(SRICabeceraMasiva entidad);
     SRICabeceraMasiva GetById(int idEntidad);
     boolean Delete(SRICabeceraMasiva entidad);
+    
+    List<SRICabeceraDetalleMasiva> GetCabeceraMasiva(int idUsuarioFlujo);
+    List<SRIActividadGeneralPaginacion> GetDetalleMasiva(SRIPaginacion entidad);
+    int GetTotalDetalleMasiva(SRIPaginacion entidad);
 }

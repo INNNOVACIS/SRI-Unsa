@@ -4,6 +4,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
 
     $scope.sharedService = SharedService;
     $scope.loader = false;
+    $scope.showDetalle = false;
     
     /*********** Servicios Callback ***********/  
     
@@ -83,7 +84,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     var aprobarActividadesSuccess = function(response){
         $log.debug("AprobarActividades - Success");
         console.log("Respuesta :: ", response);
-        scrollTop();
+        $scope.sharedService.scrollTop();
         setTimeout(function(){
             $scope.$apply(function(){ 
                 var popUp = SharedService.popUp;
@@ -101,6 +102,16 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     };
     var aprobarActividadesError = function(response){
         $log.debug("AprobarActividades - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var GetCabeceraMasivaSuccess = function(response){
+        $log.debug("GetCabeceraMasiva - success");
+        console.log("Respuesta :: ", response);
+        $scope.cabeceras = response.body;
+    };
+    var GetCabeceraMasivaError = function(response){
+        $log.debug("GetCabeceraMasiva - Error");
         console.log("Respuesta :: ", response);
     };
     
@@ -165,6 +176,11 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
                 value.seleccionado = false;
             }
         });
+    };
+    
+    $scope.GetCabeceraMasiva = function(){
+        var id = $scope.sharedService.idUsuario;
+        ActividadesRevisadasMasivasService.GetCabeceraMasiva(id).then(GetCabeceraMasivaSuccess, GetCabeceraMasivaError);
     };
     
     /**************** PAGINACION *****************/
@@ -232,10 +248,35 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
         $location.path("/actividad/Revisadas/"+ actividadRevisada.idactividadinvestigacion);
     };
     
-    var scrollTop = function(){
-        $('html,body').animate({
-            scrollTop: $("#container").offset().top - 100
-        }, 800);
-    }
     
+    /********** Paginacion DetalleMasiva **********/
+    
+    /**************** PAGINACION *****************/  
+    
+    $scope.showDetalle = false;
+    
+    var GetDetalleMasivaSuccess = function(response){
+        $log.debug("GetDetalleMasiva - Success");
+        console.log("Respuesta :: ", response);
+        $scope.detalleMasivas = response.lista;
+        $scope.showDetalle = true;
+//        $scope.total = response.total;
+        
+    };
+    var GetDetalleMasivaError = function(response){
+        $log.debug("GetDetalleMasiva - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.GetDetalleMasiva = function(id){
+        $scope.detalleMasivas = [];
+        var filtro = {
+            nidTipoActividadInvestigacion : id
+        };
+        var paginaDetalle = { currentPage : 1, rango : 100, total : 100,
+                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
+                          filtro : filtro};
+        ActividadesRevisadasMasivasService.GetDetalleMasiva(paginaDetalle).then(GetDetalleMasivaSuccess, GetDetalleMasivaError);
+    };
+
 });

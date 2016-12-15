@@ -35,6 +35,7 @@ import com.innnovacis.unsa.model.SRIUsuarioFlujo;
 import com.innnovacis.unsa.util.Email;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -480,6 +481,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 detalleMasiva.setNIdDetalleInvestigacionFlujo(detalleInvestigacionFlujo.getNIdDetalleInvestigacionFlujo());
                 detalleMasiva.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
                 detalleMasiva.setSEstado("A");
+                detalleMasiva = detalleMasivaDao.Insert(detalleMasiva);
                 
             } catch(Exception ex) {
                 throw ex;
@@ -489,4 +491,33 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         return entidad;
     }
 
+    @Override
+    public List<SRICabeceraDetalleMasiva> GetCabeceraMasiva(int idUsuario) {
+        List<SRICabeceraDetalleMasiva> respuesta = null;
+        try {
+            respuesta = cabeceraMasivaDao.GetCabeceraMasiva(idUsuario);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+    
+    @Override
+    public  Map<String, Object> GetDetalleMasiva(SRIPaginacion entidad) {
+        int total = -1;
+        List<SRIActividadGeneralPaginacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try{
+            
+            lstActividadGeneral = cabeceraMasivaDao.GetDetalleMasiva(entidad);
+            total = 100;//cabeceraMasivaDao.GetTotalDetalleMasiva(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+    
 }
