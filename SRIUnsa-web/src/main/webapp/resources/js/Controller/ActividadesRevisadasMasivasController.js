@@ -250,8 +250,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     
     
     /********** Paginacion DetalleMasiva **********/
-    
-    /**************** PAGINACION *****************/  
+   
     
     $scope.showDetalle = false;
     
