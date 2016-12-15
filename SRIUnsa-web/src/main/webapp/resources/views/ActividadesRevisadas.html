@@ -71,7 +71,16 @@
             </div>
 
             <div class="panel panel-primary">
-                <div class="panel-heading">Actividades de Investigación Revisadas</div>
+                   <div class="panel-heading" style="line-height: 2;">Actividades de Investigación Revisadas
+                    <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
+                        <span class="glyphicon glyphicon-cloud-download"></span>
+                        Descargar PDF
+                    </button>
+                    <button class="btn btn-success btn-sm pull-right" ng-click="descargarExcel()" style="margin-right: 6px;">
+                        <span class="glyphicon glyphicon-cloud-download"></span>
+                        Descargar Excel
+                    </button>
+                </div>
                 <div class="panel-body">
                     <div class="dataTable_wrapper" ng-class="{'SRI-load-table-container': loadTable}">
                         <div ng-class="{'SRI-load-table': loadTable}"></div>
