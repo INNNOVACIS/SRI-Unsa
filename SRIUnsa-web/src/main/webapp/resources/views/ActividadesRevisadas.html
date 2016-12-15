@@ -116,6 +116,38 @@
                                         <span ng-show="sortType === 'tipoactividad' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'tipoactividad' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
+                                    
+                                    
+                                     <th ng-click="sortType = 'fechacreacion'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                        Fecha Creación
+                                        <span ng-show="sortType === 'fechacreacion' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType === 'fechacreacion' && sortReverse" class="fa fa-caret-up"></span>
+                                    </th>
+                                    
+                                    
+                                     <th ng-click="sortType = 'ultimafecha'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                        Fecha Ultima Revisión
+                                        <span ng-show="sortType === 'ultimafecha' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType === 'ultimafecha' && sortReverse" class="fa fa-caret-up"></span>
+                                    </th>
+                                    
+                                    
+                                    
+                                     <th ng-click="sortType = 'ultimoaprobador'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                        Ultima Revisión
+                                        <span ng-show="sortType === 'ultimoaprobador' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType === 'ultimoaprobador' && sortReverse" class="fa fa-caret-up"></span>
+                                    </th>
+                                    
+                                    
+                                    
+                                     <th ng-click="sortType = 'pendiente'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                        Pendiente
+                                        <span ng-show="sortType === 'pendiente' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType === 'pendiente' && sortReverse" class="fa fa-caret-up"></span>
+                                    </th>
+                                    
+                                    
                                     <th>Fondo</th>
                                     <th ng-click="sortType = 'horas'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Duración
@@ -135,6 +167,13 @@
                                     <td >{{ actividadRevisada.semestre }}</td>
                                     <td >{{ actividadRevisada.nombreactividad }}</td>
                                     <td >{{ actividadRevisada.tipoactividad }}</td>
+                                    
+                                      
+                                    <td >{{ actividadRevisada.fechacreacion }}</td>
+                                    <td >{{ actividadRevisada.ultimafecha }}</td>
+                                    <td >{{ actividadRevisada.ultimoaprobador }}</td>
+                                    <td >{{ actividadRevisada.pendiente }}</td>
+                                    
                                     <td >{{ actividadRevisada.fondoconcursable }}</td>
                                     <td >{{ actividadRevisada.horas }}</td>
                                     <td >{{ actividadRevisada.cantidad }}</td>
