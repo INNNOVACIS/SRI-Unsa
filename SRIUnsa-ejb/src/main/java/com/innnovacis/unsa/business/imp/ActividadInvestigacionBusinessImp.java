@@ -4,7 +4,9 @@ package com.innnovacis.unsa.business.imp;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
+import com.innnovacis.unsa.dao.ICabeceraMasivaDao;
 import com.innnovacis.unsa.dao.IDetalleInvestigacionFlujoDao;
+import com.innnovacis.unsa.dao.IDetalleMasivaDao;
 import com.innnovacis.unsa.dao.IEstadoDao;
 import com.innnovacis.unsa.dao.IFlujoActorDao;
 import com.innnovacis.unsa.dao.IFlujoAristaDao;
@@ -17,7 +19,9 @@ import com.innnovacis.unsa.dao.IProcesoFlujoDestinoDao;
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.dao.IUsuarioFlujoDao;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
+import com.innnovacis.unsa.model.SRICabeceraMasiva;
 import com.innnovacis.unsa.model.SRIDetalleInvestigacionFlujo;
+import com.innnovacis.unsa.model.SRIDetalleMasiva;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIFlujoArista;
 import com.innnovacis.unsa.model.SRIPersona;
@@ -87,6 +91,12 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     
     @Inject
     private IPersonaDao personaDao;
+    
+    @Inject
+    private ICabeceraMasivaDao cabeceraMasivaDao;
+    
+    @Inject
+    private IDetalleMasivaDao detalleMasivaDao;
 
     @Override
     public int Insertar(SRIActividadInvestigacion entidad) {
@@ -419,6 +429,9 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
 
     @Override
     public List<SRIActividadGeneral> AprobarActividadInvestigacionMasivo(List<SRIActividadGeneral> entidad) {
+        
+        SRICabeceraMasiva cabeceraMasiva = new SRICabeceraMasiva();
+        int cabecera = 0;
         for(int i = 0; i < entidad.size(); i++){
             
             int idUsuarioFlujoOrigen = -1;
@@ -437,6 +450,16 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.get(i).getIdFlujoActorOrigen(), entidad.get(i).getIdEstado());
                 usuarioOrigen = usuarioDao.GetById(entidad.get(i).getIdUsuario());
 
+                /* Insertar CabeceraMasiva */
+                if(cabecera == 0){
+                    cabeceraMasiva.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
+                    cabeceraMasiva.setFlujo(flujoArista.getSFlujo());
+                    cabeceraMasiva.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                    cabeceraMasiva.setSEstado("A");
+                    cabeceraMasiva = cabeceraMasivaDao.Insert(cabeceraMasiva);
+                    cabecera = 1;
+                }
+                
                 procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
                 procesoFlujo.setNIdArista(flujoArista.getNIdArista());
                 procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
@@ -449,11 +472,20 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 detalleInvestigacionFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
                 detalleInvestigacionFlujo.setSEstado("A");
                 detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
+                
+                /*Insertar DetalleMasiva*/
+                SRIDetalleMasiva detalleMasiva = new SRIDetalleMasiva();
+                detalleMasiva.setNIdCabeceraMasiva(cabeceraMasiva.getNIdCabeceraMasiva());
+                detalleMasiva.setNIdActividadInvestigacion(entidad.get(i).getActividadInvestigacion().getNIdActividadInvestigacion());
+                detalleMasiva.setNIdDetalleInvestigacionFlujo(detalleInvestigacionFlujo.getNIdDetalleInvestigacionFlujo());
+                detalleMasiva.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                detalleMasiva.setSEstado("A");
+                
             } catch(Exception ex) {
                 throw ex;
             }
-            
         }
+        
         return entidad;
     }
 
