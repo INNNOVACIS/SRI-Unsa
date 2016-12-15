@@ -34,6 +34,7 @@ public interface IActividadInvestigacionDao {
     List<SRIActividadGeneralPaginacion> GetActividadesGeneradas (SRIPaginacion entidad);
     List<SRIActividadGeneralPaginacion> GetActividadesPendientes(SRIPaginacion entidad);
     List<SRIActividadGeneralPaginacion> GetActividadesRevisadas (SRIPaginacion entidad);
+    List<SRIActividadGeneralPaginacion> GetActividadesRevisadasMasivas (SRIPaginacion entidad);
     List<SRIActividadGeneralPaginacion> GetActividadesByDocente (SRIPaginacion entidad);
     List<SRIActividadInvestigacion> GetActividadesByDocenteDetalle (SRIPaginacion entidad);
 }

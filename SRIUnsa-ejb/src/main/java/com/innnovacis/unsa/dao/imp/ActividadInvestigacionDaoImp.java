@@ -243,6 +243,28 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
         }
         return listActividades;
     }
+    
+    @Override
+    public List<SRIActividadGeneralPaginacion> GetActividadesRevisadasMasivas(SRIPaginacion entidad) {
+        List<SRIActividadGeneralPaginacion> listActividades = null;
+        try {
+             Query query = em.createNativeQuery("{call GetActividadesRevisadasMasivas(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10)}", SRIActividadGeneralPaginacion.class)
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable())
+                        .setParameter(7, entidad.getRango())
+                        .setParameter(8, entidad.getCurrentPage())
+                        .setParameter(9, entidad.getIdUsuario())
+                        .setParameter(10, entidad.getCodigoActor());
+            listActividades = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return listActividades;
+    }
 
     @Override
     public int GetTotalActividadesByDocente(SRIPaginacion entidad) {

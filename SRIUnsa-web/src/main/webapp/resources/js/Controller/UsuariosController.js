@@ -1,10 +1,20 @@
-investigacionApp.controller('UsuariosController', function($log, $scope, UsuariosService, SharedService) {
+investigacionApp.controller('UsuariosController', function($log, $scope, UsuariosService, EstructuraOrganizacionService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
     $scope.usuario = {};
     $scope.estados = ['A','I'];
-
+    
+    var getEstructuraOrganizacionServiceSuccess = function(response){
+    	$log.debug("GetEstructuraOrganizacion - Success");
+    	console.log("Respuesta :: ", response);
+    	$scope.organizaciones = response;
+    };
+    var getEstructuraOrganizacionServiceError = function(response){
+     	$log.debug("GetEstructuraOrganizacion - Error"); 
+    	console.log("Respuesta :: ", response);
+    };
+    
     var registrarUsuarioSuccess = function(response){
     	$log.debug("Registrar Usuario - Success");
         console.log("Respuesta :: ", response.body);
@@ -46,6 +56,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
             snombre : $scope.usuario.snombre,
             sapellido : $scope.usuario.sapellido,
             ndni : $scope.usuario.ndni,
+            nidEstructuraOrganizacion : $scope.organizacion.nidEstructuraOrganizacion,
             suserCreacion : $scope.sharedService.nombreUsuario,
             sestado : 'A'
         };
@@ -53,30 +64,54 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     };
 
     $scope.updateUsuario = function(){
-        var usuario = {
+        var usuariopersona = {
             nidUsuario : $scope.usuario.nidUsuario,
+            nidPersona : $scope.usuario.nidPersona,
+            nidEstructuraOrganizacion : $scope.usuario.nidEstructuraOrganizacion,
             susuarioLogin : $scope.usuario.susuarioLogin,
-            susuarioEmail : $scope.usuario.susuarioEmail,
             susuarioPassword : $scope.usuario.susuarioPassword,
+            susuarioEmail : $scope.usuario.susuarioEmail,
+            ndni : $scope.usuario.ndni,
+            snombre : $scope.usuario.snombre,
+            sapellido : $scope.usuario.sapellido,
             suserCreacion : $scope.usuario.suserCreacion,
             dfechaCreacion : $scope.usuario.dfechaCreacion,
             suserModificacion : $scope.sharedService.nombreUsuario,
             sestado : $scope.usuario.sestado
         };
-    	UsuariosService.updateUsuario(usuario).then(updateUsuarioSuccess, updateUsuarioError);
+    	UsuariosService.updateUsuario(usuariopersona).then(updateUsuarioSuccess, updateUsuarioError);
     };
 
-    $scope.deleteUsuario = function(user){
-    	$scope.usuario = user;
-    	UsuariosService.deleteUsuario($scope.usuario).then(deleteUsuarioSuccess, deleteUsuarioError);
+    $scope.deleteUsuario = function(deleteUsuario){
+        $scope.usuario = deleteUsuario;
+    	var usuariopersona = {
+            nidUsuario : $scope.usuario.nidUsuario,
+            nidPersona : $scope.usuario.nidPersona,
+            nidEstructuraOrganizacion : $scope.usuario.nidEstructuraOrganizacion,
+            susuarioLogin : $scope.usuario.susuarioLogin,
+            susuarioPassword : $scope.usuario.susuarioPassword,
+            susuarioEmail : $scope.usuario.susuarioEmail,
+            ndni : $scope.usuario.ndni,
+            snombre : $scope.usuario.snombre,
+            sapellido : $scope.usuario.sapellido,
+            suserCreacion : $scope.usuario.suserCreacion,
+            dfechaCreacion : $scope.usuario.dfechaCreacion,
+            suserModificacion : $scope.sharedService.nombreUsuario,
+            sestado : $scope.usuario.sestado
+        };
+    	UsuariosService.deleteUsuario(usuariopersona).then(deleteUsuarioSuccess, deleteUsuarioError);
     };
 
-    $scope.update = function(user){
-    	$scope.usuario = user;
+    $scope.update = function(updateUsuario){
+    	$scope.usuario = updateUsuario;
     };
     
     $scope.Cerrar = function(){
         $scope.usuario = {};
+    };
+    
+    $scope.getEstructuraOrganizaciones = function(){
+      	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
     };
     
     /**************** PAGINACION *****************/
@@ -119,6 +154,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
         $scope.getUsuariosByPagina();
     };
     
+    $scope.getEstructuraOrganizaciones();
     $scope.getUsuariosByPagina();
  
 });

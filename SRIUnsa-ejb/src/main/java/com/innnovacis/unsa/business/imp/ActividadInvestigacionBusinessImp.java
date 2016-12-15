@@ -360,6 +360,25 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         }
         return respuesta;
     }
+    
+    @Override
+    public Map<String, Object> GetActividadesRevisadasMasivas(SRIPaginacion entidad) {
+        int total = -1;
+        List<SRIActividadGeneralPaginacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIFlujoActor flujoActor = null; 
+        try{
+            flujoActor = flujoActorDao.GetById(entidad.getIdFlujoActor());
+            entidad.setCodigoActor(flujoActor.getSCodigo());
+            lstActividadGeneral = actividadInvestigacionDao.GetActividadesRevisadasMasivas(entidad);
+            total = actividadInvestigacionDao.GetTotalActividadesRevisadas(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
 
     @Override
     public boolean EnviarEmail(SRIActividadGeneral entidad) {

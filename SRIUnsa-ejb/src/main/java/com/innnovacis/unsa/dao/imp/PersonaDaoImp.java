@@ -32,6 +32,7 @@ public class PersonaDaoImp implements IPersonaDao {
     }
 
     @Override
+    @Transactional
     public SRIPersona Update(SRIPersona entidad) {
         try{
             entidad.setDFechaModificacion(new Date());
@@ -43,6 +44,7 @@ public class PersonaDaoImp implements IPersonaDao {
     }
 
     @Override
+    @Transactional
     public boolean Delete(SRIPersona entidad) {
         try{
             entidad.setDFechaModificacion(new Date());

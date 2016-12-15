@@ -49,5 +49,21 @@ investigacionApp.service("ActividadesRevisadasMasivasService", function(SRIUnsaC
         });
         return deferred.promise;
     };
+    
+    this.GetActividadesRevisadasMasivas = function(request) {
+        $log.debug("ActividadesRevisadasService - GetActividadesRevisadasMasivas");
+
+        var deferred = $q.defer();
+        $http({
+            method : 'POST',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionRevisada/getActividadesRevisadasMasivas',
+            data : request
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {			
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
 
 });

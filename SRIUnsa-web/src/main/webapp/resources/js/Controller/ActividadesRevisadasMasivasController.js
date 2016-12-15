@@ -84,6 +84,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     var aprobarActividadesSuccess = function(response){
         $log.debug("AprobarActividades - Success");
         console.log("Respuesta :: ", response);
+        $scope.GetActividadesRevisadasMasivas();
         $scope.sharedService.scrollTop();
         setTimeout(function(){
             $scope.$apply(function(){ 
@@ -196,7 +197,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     };
 
     $scope.$watch('currentPage + currentRango', function() {
-        $scope.getActividades();
+        $scope.GetActividadesRevisadasMasivas();
     });
     
     /*********************************************/
@@ -216,6 +217,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     var GetActividadesRevisadasSuccess = function(response){
         $log.debug("GetActividadesRevisadas - Success");
         console.log("Respuesta :: ", response);
+        $scope.actividadesRevisadas = [];
         $scope.actividadesRevisadas = response.lista;
         $scope.total = response.total;
     };
@@ -224,15 +226,15 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
         console.log("Respuesta :: ", response);
     };
     
-    $scope.getActividades = function(){
+    $scope.GetActividadesRevisadasMasivas = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
                           filtro : getFiltros()};
-        ActividadesRevisadasService.GetActividadesRevisadas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
+        ActividadesRevisadasMasivasService.GetActividadesRevisadasMasivas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
     };
     
     $scope.filtrar = function() {
-        $scope.getActividades();
+        $scope.GetActividadesRevisadasMasivas();
     };
         
     $scope.getListaTipoNivel();

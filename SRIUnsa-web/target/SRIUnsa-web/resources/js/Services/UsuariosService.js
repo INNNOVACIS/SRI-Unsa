@@ -56,7 +56,7 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/updateUsuarios',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/updateUsuarioPersona',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -72,7 +72,7 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/deleteUsuarios',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/deleteUsuarioPersona',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);

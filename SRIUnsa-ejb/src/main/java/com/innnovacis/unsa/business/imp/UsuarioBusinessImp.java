@@ -159,5 +159,75 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         return respuesta;
     }
 
+    @Override
+    public int UpdateUsuarioPersona(SRIUsuarioPersona usuariopersona) {
+        int respuesta = -1;
+        SRIUsuario usuario = new SRIUsuario();
+        SRIPersona persona = new SRIPersona();
+        try{
+            persona.setNIdPersona(usuariopersona.getNIdPersona());
+            persona.setSNombre(usuariopersona.getSNombre());
+            persona.setSApellido(usuariopersona.getSApellido());
+            persona.setNDni(usuariopersona.getNDni());
+            persona.setSEmail(usuariopersona.getSUsuarioEmail());
+            persona.setSUserCreacion(usuariopersona.getSUserCreacion());
+            persona.setSEstado(usuariopersona.getSEstado());
+            
+            usuario.setNIdUsuario(usuariopersona.getNIdUsuario());
+            usuario.setNIdPersona(usuariopersona.getNIdPersona());
+            usuario.setNIdEstructuraOrganizacion(usuariopersona.getNIdEstructuraOrganizacion());
+            usuario.setSUsuarioLogin(usuariopersona.getSUsuarioLogin());
+            usuario.setSUsuarioPassword(usuariopersona.getSUsuarioPassword());
+            usuario.setSUsuarioEmail(usuariopersona.getSUsuarioEmail());
+            usuario.setSUserCreacion(usuariopersona.getSUserCreacion());
+            usuario.setSEstado(usuariopersona.getSEstado());
+            
+            persona = personaDao.Update(persona);
+            usuario = usuarioDao.Update(usuario);
+            
+            respuesta = persona.getNIdPersona();
+            respuesta = usuario.getNIdUsuario();
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public int DeleteUsuarioPersona(SRIUsuarioPersona usuariopersona) {
+        int respuesta = -1;
+        SRIUsuario usuario = new SRIUsuario();
+        SRIPersona persona = new SRIPersona();
+        try{
+            persona.setNIdPersona(usuariopersona.getNIdPersona());
+            persona.setSNombre(usuariopersona.getSNombre());
+            persona.setSApellido(usuariopersona.getSApellido());
+            persona.setNDni(usuariopersona.getNDni());
+            persona.setSEmail(usuariopersona.getSUsuarioEmail());
+            persona.setSUserCreacion(usuariopersona.getSUserCreacion());
+            persona.setSEstado(usuariopersona.getSEstado());
+            
+            usuario.setNIdUsuario(usuariopersona.getNIdUsuario());
+            usuario.setNIdPersona(usuariopersona.getNIdPersona());
+            usuario.setNIdEstructuraOrganizacion(usuariopersona.getNIdEstructuraOrganizacion());
+            usuario.setSUsuarioLogin(usuariopersona.getSUsuarioLogin());
+            usuario.setSUsuarioPassword(usuariopersona.getSUsuarioPassword());
+            usuario.setSUsuarioEmail(usuariopersona.getSUsuarioEmail());
+            usuario.setSUserCreacion(usuariopersona.getSUserCreacion());
+            usuario.setSEstado(usuariopersona.getSEstado());
+            
+            personaDao.Delete(persona);
+            usuarioDao.Delete(usuario);
+            
+            respuesta = persona.getNIdPersona();
+            respuesta = usuario.getNIdUsuario();
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
     
 }

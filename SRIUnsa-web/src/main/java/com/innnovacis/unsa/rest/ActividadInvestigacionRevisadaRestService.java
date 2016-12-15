@@ -58,6 +58,24 @@ public class ActividadInvestigacionRevisadaRestService {
     }
     
     @POST
+    @Path("/getActividadesRevisadasMasivas")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetActividadesRevisadasMasivas(SRIPaginacion entidad) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetActividadesRevisadasMasivas(entidad);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "getActividadesRevisadasMasivas : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "getActividadesRevisadasMasivas - Error : {0}", ex.getMessage());
+        }
+        return builder.build();
+    }
+    
+    @POST
     @Path("/aprobarActividades")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

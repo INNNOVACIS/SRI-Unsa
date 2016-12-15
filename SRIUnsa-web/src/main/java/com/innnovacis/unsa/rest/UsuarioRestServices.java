@@ -67,17 +67,6 @@ public class UsuarioRestServices {
         return usuarioBusiness.GetAll();
     }
     
-//    @POST
-//    @Path("/registrarUsuarios")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response saveUsuario(Map<String, Object> entidad) {
-//        System.out.println(entidad);
-//        SRIUsuario usuario = (SRIUsuario) entidad.get("usuario");
-//        SRIPersona persona = (SRIPersona) entidad.get("persona");
-//        return null;
-//    }
-    
     @POST
     @Path("/registrarUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
@@ -98,6 +87,49 @@ public class UsuarioRestServices {
         }
         return builder.build();
     }
+    
+    @PUT
+    @Path("/updateUsuarioPersona")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUsuarioPersona(SRIUsuarioPersona usuarioPersona) throws GeneralSecurityException, IOException {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> response = new HashMap<>();
+        int respuesta = -1;
+        try{
+            respuesta = usuarioBusiness.UpdateUsuarioPersona(usuarioPersona);
+            response.put("body", respuesta);
+            builder = Response.status(Response.Status.OK).entity(response);
+            log.log(Level.INFO, "Registrar Usuario : {0}", usuarioPersona.toString());
+        }catch(Exception ex){
+            log.log(Level.INFO, "Registrar Usuario : {0}{1}", new Object[]{ex.getMessage(), usuarioPersona.toString()});
+            response.put("body", ex.getMessage());
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response);
+        }
+        return builder.build();        
+    }
+    
+    @PUT
+    @Path("/deleteUsuarioPersona")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteUsuarioPersona(SRIUsuarioPersona usuarioPersona) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> response = new HashMap<>();
+        int respuesta = -1;
+        try{
+            respuesta = usuarioBusiness.DeleteUsuarioPersona(usuarioPersona);
+            response.put("body", respuesta);
+            builder = Response.status(Response.Status.OK).entity(response);
+            log.log(Level.INFO, "Registrar Usuario : {0}", usuarioPersona.toString());
+        }catch(Exception ex){
+            log.log(Level.INFO, "Registrar Usuario : {0}{1}", new Object[]{ex.getMessage(), usuarioPersona.toString()});
+            response.put("body", ex.getMessage());
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response);
+        }
+        return builder.build();         
+    }
+    
     
     @PUT
     @Path("/updateUsuarios")

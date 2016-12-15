@@ -60,7 +60,8 @@
                     current-rango="currentRango"
                     num-pages="numPages()" 
                     current-page="currentPage"
-                    max-size="maxSize" >    
+                    max-size="maxSize"
+                    total="total" >    
                 </pagination>
             </div>
         </div>
@@ -101,7 +102,11 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4" style="">Facultad</label>
                                     <div class="col-md-8">
-                                        <input ng-model="usuario.nidEstructuraOrganizacion" class="form-control" placeholder="Ingrese su clave de usuario">
+                                        <select ng-model="organizacion"                
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in organizaciones | filter : { snivel: 'FACULTAD'}"
+                                            class="form-control"
+                                            required>
+                                        </select>
                                     </div>
                                 </div>
                             </form>

@@ -33,6 +33,7 @@ public interface IActividadInvestigacionBusiness {
     Map<String, Object> GetActividadesPendientes(SRIPaginacion entidad);
     Map<String, Object> GetActividadesGeneradas(SRIPaginacion entidad);
     Map<String, Object> GetActividadesRevisadas(SRIPaginacion entidad);
+    Map<String, Object> GetActividadesRevisadasMasivas(SRIPaginacion entidad);
     Map<String, Object> GetActividadesByDocente(SRIPaginacion entidad);
     Map<String, Object> GetActividadesByDocenteDetalle(SRIPaginacion entidad);
     boolean EnviarEmail(SRIActividadGeneral entidad);

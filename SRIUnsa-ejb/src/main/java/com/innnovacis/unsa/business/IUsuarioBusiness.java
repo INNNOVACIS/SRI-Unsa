@@ -23,9 +23,13 @@ public interface IUsuarioBusiness {
     boolean Update(SRIUsuario entidad);
     boolean Delete(SRIUsuario entidad);
     SRIUsuario Get(int idEntidad);
+    
     List<SRIUsuario> GetAll();
     SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad);
+    
     int InsertarUsuarioPersona(SRIUsuarioPersona usuariopersona);
+    int UpdateUsuarioPersona(SRIUsuarioPersona usuariopersona);
+    int DeleteUsuarioPersona(SRIUsuarioPersona usuariopersona);
     
     int GetTotalPaginacion(SRIPaginacionObject entidad);
     List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad);
