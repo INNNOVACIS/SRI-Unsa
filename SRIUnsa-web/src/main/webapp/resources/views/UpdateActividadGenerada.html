@@ -2,247 +2,248 @@
     <div class="SRI-loader"></div>
 </div>
 <div id="page-wrapper">
-    <div class="col-lg-12" style="margin-top:20px;">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><strong>{{actividadGeneradaVista.snombreActividadInvestigacion}}</strong></div>
-            <div class="panel-body">
-                <form name="actividadForm" novalidate  class="form-horizontal">
-                    
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label col-md-2" >Responsable</label>
-                                <div class="col-md-10" >
-                                    <input readonly="readonly" ng-model="actividadGeneradaVista.responsable" class="form-control">
+    <div class="row">
+        <div class="col-lg-12" style="margin-top:20px;">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><strong>{{actividadGeneradaVista.snombreActividadInvestigacion}}</strong></div>
+                <div class="panel-body">
+                    <form name="actividadForm" novalidate  class="form-horizontal">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" >Responsable</label>
+                                    <div class="col-md-10" >
+                                        <input readonly="readonly" ng-model="actividadGeneradaVista.responsable" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" >Nombre</label>
+                                    <div class="col-md-10" >
+                                        <input readonly="readonly" ng-model="actividadGeneradaVista.snombreActividadInvestigacion" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label col-md-2" >Nombre</label>
-                                <div class="col-md-10" >
-                                    <input readonly="readonly" ng-model="actividadGeneradaVista.snombreActividadInvestigacion" class="form-control">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4" >Tipo Actividad</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && submitted }">
+                                        <select name="investigacion" class="form-control" ng-model="actividadGeneradaVista.tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(actividadGeneradaVista.tipoInvestigacion.snombreActividadInvestigacion) required></select>
+                                        <p ng-show="actividadForm.investigacion.$invalid && submitted" class="help-block">El Tipo de Investigacion es Requerido.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Facultad</label>
+                                    <div class="col-md-8" >
+                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sfacultad">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Departamento</label>
+                                    <div class="col-md-8">
+                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sdepartamento">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Escuela</label>
+                                    <div class="col-md-8">
+                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sescuela">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Duraci&oacute;n </label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && submitted }">
+                                        <input name="duracion" class="form-control" type="number" ng-model="actividadGeneradaVista.nhoras" required>
+                                        <p ng-show="actividadForm.duracion.$invalid && submitted" class="help-block">La duración es Requerida.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Semestre </label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
+                                        <select name="semestre" class="form-control" ng-model="actividadGeneradaVista.semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" required></select>
+                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El area es Requerida.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Linea de Investigacion</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.linea.$invalid && submitted }">
+                                        <input name="linea" ng-model="lineaInvestigacion" class="form-control" required/>
+                                        <p ng-show="actividadForm.linea.$invalid && submitted" class="help-block">La Linea de Investigacion es Requerida.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Disciplina</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.disciplina.$invalid && submitted }">
+                                        <select name="disciplina" ng-model="actividadGeneradaVista.disciplinaInvestigacion" ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: actividadGeneradaVista.subareaInvestigacion.nidEstructura}" class="form-control" required></select> 
+                                        <p ng-show="actividadForm.disciplina.$invalid && submitted" class="help-block">La Disciplina es Requerida.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4" >Tipo Actividad</label>
-                                <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && submitted }">
-                                    <select name="investigacion" class="form-control" ng-model="actividadGeneradaVista.tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(actividadGeneradaVista.tipoInvestigacion.snombreActividadInvestigacion) required></select>
-                                    <p ng-show="actividadForm.investigacion.$invalid && submitted" class="help-block">El Tipo de Investigacion es Requerido.</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Facultad</label>
-                                <div class="col-md-8" >
-                                    <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sfacultad">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Departamento</label>
-                                <div class="col-md-8">
-                                    <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sdepartamento">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Escuela</label>
-                                <div class="col-md-8">
-                                    <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sescuela">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Colaboradores</label>
+                                    <div class="col-md-6">
+                                        <p>{{ totalColaboradores() }} seleccionados </p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalColaborador">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4"> Duraci&oacute;n </label>
-                                <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && submitted }">
-                                    <input name="duracion" class="form-control" type="number" ng-model="actividadGeneradaVista.nhoras" required>
-                                    <p ng-show="actividadForm.duracion.$invalid && submitted" class="help-block">La duración es Requerida.</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4"> Semestre </label>
-                                <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
-                                    <select name="semestre" class="form-control" ng-model="actividadGeneradaVista.semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" required></select>
-                                    <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El area es Requerida.</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4"> Linea de Investigacion</label>
-                                <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.linea.$invalid && submitted }">
-                                    <input name="linea" ng-model="lineaInvestigacion" class="form-control" required/>
-                                    <p ng-show="actividadForm.linea.$invalid && submitted" class="help-block">La Linea de Investigacion es Requerida.</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4"> Disciplina</label>
-                                <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.disciplina.$invalid && submitted }">
-                                    <select name="disciplina" ng-model="actividadGeneradaVista.disciplinaInvestigacion" ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: actividadGeneradaVista.subareaInvestigacion.nidEstructura}" class="form-control" required></select> 
-                                    <p ng-show="actividadForm.disciplina.$invalid && submitted" class="help-block">La Disciplina es Requerida.</p>
+
+                        <div class="row" ng-show="mostrarActividad[1]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Tipo de Asesoria</label>
+                                    <div class="col-md-8">
+    <!--                                    <select class="form-control" ng-model="tipoAsesoria" ng-options="opt as opt.snombreTipoAsesoria for opt in tipoAsesorias" ng-init="tipoAsesoria=''"></select>-->
+                                        <input class="form-control" ng-model="actividadGeneradaVista.stipoAsesoria">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4"> Colaboradores</label>
-                                <div class="col-md-6">
-                                    <p>{{ totalColaboradores() }} seleccionados </p>
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalColaborador">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                    </button>
+                        <div class="row" ng-show="mostrarActividad[3]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Tipo de Producción</label>
+                                    <div class="col-md-8">
+    <!--                                    <select class="form-control" ng-model="tipoProduccion" ng-options="opt as opt.snombreTipoProduccion for opt in tipoProducciones" ng-init="tipoProduccion=''"></select>-->
+                                        <input class="form-control" ng-model="actividadGeneradaVista.sritipoProduccion">
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="row" ng-show="mostrarActividad[1]">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4"> Tipo de Asesoria</label>
-                                <div class="col-md-8">
-<!--                                    <select class="form-control" ng-model="tipoAsesoria" ng-options="opt as opt.snombreTipoAsesoria for opt in tipoAsesorias" ng-init="tipoAsesoria=''"></select>-->
-                                    <input class="form-control" ng-model="actividadGeneradaVista.stipoAsesoria">
+                        <div class="row" ng-show="mostrarActividad[2]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Investigador</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Fondo Concursable</label>
+                                    <div class="col-md-8">
+    <!--                                    <select class="form-control" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>-->
+                                        <input class="form-control" ng-model="actividadGeneradaVista.sfondoConcursable">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row" ng-show="mostrarActividad[3]">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4"> Tipo de Producción</label>
-                                <div class="col-md-8">
-<!--                                    <select class="form-control" ng-model="tipoProduccion" ng-options="opt as opt.snombreTipoProduccion for opt in tipoProducciones" ng-init="tipoProduccion=''"></select>-->
-                                    <input class="form-control" ng-model="actividadGeneradaVista.sritipoProduccion">
-                                </div>                                    
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" ng-show="mostrarActividad[2]">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Investigador</label>
-                                <div class="col-md-8">
-                                    <select class="form-control" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
+                        <div class="row" ng-show="mostrarActividad[0]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Tipo de Labor</label>
+                                    <div class="col-md-8">
+    <!--                                    <select class="form-control" ng-model="tipoLabor" ng-options="opt as opt.nombre for opt in tipoLabores" ng-init="tipoLabor=''"></select>-->
+                                        <input class="form-control" ng-model="actividadGeneradaVista.stipoLabor">
+                                    </div>                            
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4"> Fondo Concursable</label>
-                                <div class="col-md-8">
-<!--                                    <select class="form-control" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>-->
-                                    <input class="form-control" ng-model="actividadGeneradaVista.sfondoConcursable">
-                                </div>
+                    </form>
+
+                    <fieldset >
+                        <legend >{{ facultad.snombreEstructuraOrganizacion }}</legend>
+                    </fieldset>
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div ng-bind-html="campos" compila-plantilla></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row" ng-show="mostrarActividad[0]">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Tipo de Labor</label>
-                                <div class="col-md-8">
-<!--                                    <select class="form-control" ng-model="tipoLabor" ng-options="opt as opt.nombre for opt in tipoLabores" ng-init="tipoLabor=''"></select>-->
-                                    <input class="form-control" ng-model="actividadGeneradaVista.stipoLabor">
-                                </div>                            
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                
-                <fieldset >
-                    <legend >{{ facultad.snombreEstructuraOrganizacion }}</legend>
-                </fieldset>
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div ng-bind-html="campos" compila-plantilla></div>
-                        </div>
-                    </div>
-                </form>
-                
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label col-md-2"> Descripción breve del problema</label>
-                                <div class="col-md-10">
-                                    <textarea ng-model="actividadGeneradaVista.sdescripcionActividad" style="margin-bottom: 4px;" class="form-control" rows="5" placeholder="Descripcion breve del problema"></textarea> 
-                                </div>
-                                <label for="inpFile" class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
-                                <div class="col-md-10">
-                                    <div class="panel panel-default" >
-                                        <div class="panel-body">
-                                            <label for="fileUpload" class="SRI-button"> Seleccionar Archivos </label>
-                                            <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
-                                            <p>Número de Archivos: {{ uploader.queue.length }}</p>
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th width="50%">Nombre</th>
-                                                        <th>Tamaño</th>
-                                                        <th>Progreso</th>
-                                                        <th>Acción</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr ng-repeat="item in uploader.queue">
-                                                        <td><strong>{{ item.file.name }}</strong></td>
-                                                        <td nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                                        <td>
-                                                            <div class="progress" style="margin-bottom: 0;">
-                                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td nowrap>
-                                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                                <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div>
+                    </form>
+
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"> Descripción breve del problema</label>
+                                    <div class="col-md-10">
+                                        <textarea ng-model="actividadGeneradaVista.sdescripcionActividad" style="margin-bottom: 4px;" class="form-control" rows="5" placeholder="Descripcion breve del problema"></textarea> 
+                                    </div>
+                                    <label for="inpFile" class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
+                                    <div class="col-md-10">
+                                        <div class="panel panel-default" >
+                                            <div class="panel-body">
+                                                <label for="fileUpload" class="SRI-button"> Seleccionar Archivos </label>
+                                                <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+                                                <p>Número de Archivos: {{ uploader.queue.length }}</p>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="50%">Nombre</th>
+                                                            <th>Tamaño</th>
+                                                            <th>Progreso</th>
+                                                            <th>Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in uploader.queue">
+                                                            <td><strong>{{ item.file.name }}</strong></td>
+                                                            <td nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                            <td>
+                                                                <div class="progress" style="margin-bottom: 0;">
+                                                                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td nowrap>
+                                                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                                 <div>
-                                                    Progreso:
-                                                    <div class="progress" style="">
-                                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                                    <div>
+                                                        Progreso:
+                                                        <div class="progress" style="">
+                                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                                        </div>
                                                     </div>
+    <!--                                            <button type="button" class="btn btn-success btn-s" ng-click="uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                                        <span class="glyphicon glyphicon-upload"></span> Subir todo
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancelar todo
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                                        <span class="glyphicon glyphicon-trash"></span> Eliminar todo
+                                                    </button>-->
                                                 </div>
-<!--                                            <button type="button" class="btn btn-success btn-s" ng-click="uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                                                    <span class="glyphicon glyphicon-upload"></span> Subir todo
-                                                </button>
-                                                <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-                                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancelar todo
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar todo
-                                                </button>-->
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12" style="margin-top:10px;">
-                                    <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="actualizarActividadInvestigacion()">
-                                        <span class="glyphicon glyphicon-refresh"></span> Actualizar
-                                    </button>
-                                    <button class="btn btn-default" type="button" ng-click="irBandeja()">
-                                        <span class="glyphicon glyphicon-arrow-right"></span> Ir a Bandeja
-                                    </button>
+                                    <div class="col-md-12" style="margin-top:10px;">
+                                        <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="actualizarActividadInvestigacion()">
+                                            <span class="glyphicon glyphicon-refresh"></span> Actualizar
+                                        </button>
+                                        <button class="btn btn-default" type="button" ng-click="irBandeja()">
+                                            <span class="glyphicon glyphicon-arrow-right"></span> Ir a Bandeja
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>  
-    </div><!-- END EDITAR -->
-            
+                    </form>
+                </div>
+            </div>  
+        </div><!-- END EDITAR -->
+    </div>
 </div>
 
 <div id="modalColaborador" class="modal fade" role="dialog">

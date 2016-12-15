@@ -2,6 +2,7 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     ArchivosService, ActividadesPendientesService, SharedService, SRIUnsaConfig) {
     
     $scope.sharedService = SharedService;
+    $scope.sharedService.scrollTop();
     $scope.loader = false;
     $scope.idActividad = $routeParams.ID;
     $scope.revisado = false;
