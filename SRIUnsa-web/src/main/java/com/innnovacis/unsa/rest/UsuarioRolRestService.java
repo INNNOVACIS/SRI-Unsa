@@ -70,7 +70,7 @@ public class UsuarioRolRestService {
     @Path("/registrarUsuarioRol")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public int SaveUsuarioRol(SRIUsuarioRol usuarioRol){
+    public int RegistrarUsuarioRol(SRIUsuarioRol usuarioRol){
         return usuarioRolBusiness.Insertar(usuarioRol);
     }
     

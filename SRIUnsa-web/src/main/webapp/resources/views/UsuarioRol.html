@@ -51,7 +51,8 @@
                     current-rango="currentRango"
                     num-pages="numPages()" 
                     current-page="currentPage"
-                    max-size="maxSize" >    
+                    max-size="maxSize"
+                    total="total">    
                 </pagination>
             </div>
         </div>
@@ -75,7 +76,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2" >Usuario</label>
                                     <div class="col-md-10">
-                                        <input ng-model="usuario" type="text" class="form-control" placeholder="Nombre de Usuario">
+                                        <input type="text" ng-model="usuario" uib-typeahead="opt as opt.susuarioLogin for opt in usuarios | filter:$viewValue | limitTo:8" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -90,7 +91,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarUsuario()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarUsuarioRol()">
                     <span class="glyphicon glyphicon-floppy-disk"></span>
                     Registrar
                 </button>

@@ -1,5 +1,7 @@
-investigacionApp.controller('UsuarioRolController', function($log, $scope, UsuarioRolService, RolService) {
+investigacionApp.controller('UsuarioRolController', function($log, $scope, UsuarioRolService, RolService, UsuariosService,
+        SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.usuarioRoles = [];
     $scope.usuarioRol = {};
     $scope.roles = [];
@@ -14,6 +16,7 @@ investigacionApp.controller('UsuarioRolController', function($log, $scope, Usuar
     var getRolServiceError = function(response){
         console.log("GetRol - Error :: ", response);
     };
+    
     var updateUsuarioRolSuccess = function(response){
         $log.debug("Update UsuarioRol - Success");
         actualizarVista();
@@ -23,13 +26,36 @@ investigacionApp.controller('UsuarioRolController', function($log, $scope, Usuar
         $log.debug("Update UsuarioRol - Error");
         console.log(response);
     };
+    
+    var getUsuariosServiceSuccess = function(response){
+        $log.debug("GetUsuarios - Success");
+        console.log("Respuesta :: ", response);
+        $scope.usuarios = response;
+    };
+    var getUsuariosServiceError = function(response){
+        $log.debug("GetUsuarios - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var registrarUsuarioRolSuccess = function(response){
+        $log.debug("registrarUsuarioRol - Success");
+        console.log("Respuesta :: ", response);
+        $scope.getUsuariosRolByPagina();
+    };
+    var registrarUsuarioRolError = function(response){
+        $log.debug("registrarUsuarioRol - Error");
+        console.log("Respuesta :: ", response);
+    };
 
     /********** CRUD USUARIOS ***********/
 
+    $scope.getUsuarios = function(){
+        UsuariosService.getUsuarios().then(getUsuariosServiceSuccess, getUsuariosServiceError);
+    };
+    
     $scope.getRoles = function(){
       	RolService.getRoles().then(getRolServiceSuccess, getRolServiceError);
     };
-
     $scope.update = function(usuarioRol){
     	$scope.usuarioRol = usuarioRol;
         $scope.rol = seleccionarRol(usuarioRol.idRol);
@@ -54,6 +80,16 @@ investigacionApp.controller('UsuarioRolController', function($log, $scope, Usuar
         return respuesta;
     };
     
+    $scope.registrarUsuarioRol = function(){
+        var usuarioRol = {
+            nidUsuario : $scope.usuario.nidUsuario,
+            nidRol : $scope.rol.nidRol,
+            suserCreacion : $scope.sharedService.nombreUsuario,
+            sestado : 'A'
+        };
+        UsuarioRolService.registrarUsuarioRol(usuarioRol).then(registrarUsuarioRolSuccess, registrarUsuarioRolError);
+    };
+    
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];
@@ -74,13 +110,15 @@ investigacionApp.controller('UsuarioRolController', function($log, $scope, Usuar
     /*********************************************/
     
     var getUsuariosRolByPaginaSuccess = function(response){
-        $log.debug("Get UsuariosRol - Success");
+        $log.debug("GetUsuariosRol - Success");
+        console.log("Respuesta :: ", response);
         $scope.usuarioRoles = response.lista;
         $scope.total = response.total;
     };
     
     var getUsuariosRolByPaginaError = function(response){
-        console.log("Get UsuariosRol - Error :: ", response);
+        $log.debug("GetUsuariosRol - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getUsuariosRolByPagina = function(){
@@ -92,6 +130,7 @@ investigacionApp.controller('UsuarioRolController', function($log, $scope, Usuar
         $scope.getUsuariosRolByPagina();
     };
     
+    $scope.getUsuarios();
     $scope.getRoles();
     $scope.getUsuariosRolByPagina();
  

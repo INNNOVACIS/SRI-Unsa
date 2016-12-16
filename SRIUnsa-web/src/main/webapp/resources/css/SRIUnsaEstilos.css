@@ -1,9 +1,14 @@
 .nav>li>a{
     color: #777 !important;
 }
+/**/
 .navbar-default{
     z-index: 1;
 }
+.filaSeleccionada{
+    background: #BBB;
+}
+
 .fondo_login{
     background: #EFEFE7;
 }

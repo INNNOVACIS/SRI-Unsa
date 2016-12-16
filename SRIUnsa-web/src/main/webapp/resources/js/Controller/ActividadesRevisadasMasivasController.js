@@ -243,7 +243,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     $scope.getTipoInvestigacion();
     $scope.CrearOrActualizarUsuarioFlujo();
     
-    $scope.getActividades();
+    $scope.GetActividadesRevisadasMasivas();
     
     $scope.verActividadById = function(actividadRevisada){
         $scope.loader = true;

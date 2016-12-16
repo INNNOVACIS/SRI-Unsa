@@ -33,21 +33,6 @@ investigacionApp.service("UsuarioRolService", function(SRIUnsaConfig, $log, $htt
 		});
 		return deferred.promise;
 	};
-        
-	this.getUsuarios = function() {
-//		$log.debug("Usuario Service - get Usuarios");
-//		
-//		var deferred = $q.defer();
-//		$http({
-//			method : 'GET',
-//			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/listarUsuarios',
-//		}).success(function(response) {
-//			deferred.resolve(response);
-//		}).error(function(response) {			
-//			deferred.reject(response);
-//		});
-//		return deferred.promise;
-	};
 
 	this.registrarUsuarioRol = function(request) {
 		$log.debug("UsuarioRol Service - Registrar UsuarioRol");

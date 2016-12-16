@@ -84,7 +84,7 @@
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                               <th>#</th>
@@ -99,7 +99,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="actividadRevisada in actividadesRevisadas">
+                                            <tr ng-repeat="actividadRevisada in actividadesRevisadas" ng-class="{'filaSeleccionada': actividadRevisada.seleccionado}">
                                                 <td>{{ $index + 1 }}</td> <!-- $index + 1 -->
                                                 <td><strong>{{ actividadRevisada.nombreactividad }}</strong></td>
                                                 <td>{{ actividadRevisada.docente.nombre }}</td>
@@ -169,7 +169,7 @@
                         <div class="panel panel-primary" ng-show="showDetalle">
                             <div class="panel-heading">Informes Generados</div>
                             <div class="panel-body">
-                                <div class="dataTable_wrapper" ng-class="{'SRI-load-table-container': loadTable}">
+                                <div class="table-responsive dataTable_wrapper" ng-class="{'SRI-load-table-container': loadTable}">
                                     <div ng-class="{'SRI-load-table': loadTable}"></div>
                                     <table width="100%" class="table table-bordered table-hover" style="font-size:9.5pt;">
                                         <thead>
