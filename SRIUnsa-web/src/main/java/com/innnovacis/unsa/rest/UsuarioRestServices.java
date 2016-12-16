@@ -28,6 +28,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.logging.Logger;
+import javax.ws.rs.PathParam;
 
 /**
  *
@@ -175,6 +176,30 @@ public class UsuarioRestServices {
             response.put("body", ex.getMessage());
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response);
             log.log(Level.INFO, "Autenticar Usuario : {0}{1}", new Object[]{ex.getMessage(), usuario.toString()});
+        }
+        return builder.build();
+    }
+    
+    @GET
+    @Path("getByIdUsuario/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetByIdUsuario(@PathParam("id") int id) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIUsuario body = null;
+        try {
+            body = usuarioBusiness.GetByIdUsuario(id);
+            respuesta.put("body", body);
+            if (body == null) {
+                builder = Response.status(Response.Status.NOT_FOUND).entity(respuesta);
+                log.log(Level.INFO, "getUsuarioById - Nulo : {0}");
+            } else {
+                builder = Response.status(Response.Status.OK).entity(respuesta);
+                log.log(Level.INFO, "getUsuarioById - Success : {0}", body.toString());
+            }
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetUsuarioById - Error : {0}", ex.getMessage());
         }
         return builder.build();
     }

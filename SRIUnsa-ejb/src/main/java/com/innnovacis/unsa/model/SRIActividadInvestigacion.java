@@ -7,6 +7,7 @@ package com.innnovacis.unsa.model;
  */
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -78,6 +79,18 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     
     @Column(name = "descripcionactividad")
     private String SDescripcionActividad;
+    
+    @Column(name = "avance")
+    private int NAvance;
+    
+    @Column(name = "fecharegistro")
+    private Date DFechaRegistro;
+    
+    @Column(name = "fechainicio")
+    private Date DFechaInicio;
+    
+    @Column(name = "fechafin")
+    private Date DFechaFin;
     
     
     public int getNIdActividadInvestigacion() {
@@ -214,6 +227,38 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
 
     public void setNIdResponsable(int NIdResponsable) {
         this.NIdResponsable = NIdResponsable;
+    }
+
+    public int getNAvance() {
+        return NAvance;
+    }
+
+    public void setNAvance(int NAvance) {
+        this.NAvance = NAvance;
+    }
+
+    public Date getDFechaRegistro() {
+        return DFechaRegistro;
+    }
+
+    public void setDFechaRegistro(Date DFechaRegistro) {
+        this.DFechaRegistro = DFechaRegistro;
+    }
+
+    public Date getDFechaInicio() {
+        return DFechaInicio;
+    }
+
+    public void setDFechaInicio(Date DFechaInicio) {
+        this.DFechaInicio = DFechaInicio;
+    }
+
+    public Date getDFechaFin() {
+        return DFechaFin;
+    }
+
+    public void setDFechaFin(Date DFechaFin) {
+        this.DFechaFin = DFechaFin;
     }
 
 }

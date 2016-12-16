@@ -10,12 +10,25 @@
                 <div class="panel-body">
                     <form name="actividadForm" novalidate class="form-horizontal">
                         <div class="row">
-                            <div class="col-md-6" style="float: right">
+                            <div class="col-md-6" >
                                 <div class="form-group">
                                     <label class="control-label col-md-4" >Responsable</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.responsableValidacion.$invalid && submitted }">
                                         <input name="responsableValidacion" type="text" ng-model="responsable" uib-typeahead='opt as (opt.snombre + " " + opt.sapellido ) for opt in personas | filter:$viewValue | limitTo:8' class="form-control" style="background-color:#f0f0f0;" required>
                                         <p ng-show="actividadForm.responsableValidacion.$invalid && submitted" class="help-block">El responsable es requerido.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha Registro</label>
+                                    <div class="col-md-8">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-model="fechaRegistro" is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open3()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -78,10 +91,30 @@
                                         <p ng-show="actividadForm.escuelaValidacion.$invalid && submitted" class="help-block">La Escuela es Requerida.</p>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha Inicio</label>
+                                    <div class="col-md-8">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaInicio" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Avance (%) </label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && submitted }">
+                                        <input name="duracion" class="form-control" type="number" ng-model="avance" placeholder="Avance de la Actividad en porcentaje" required>
+                                        <p ng-show="actividadForm.duracion.$invalid && submitted" class="help-block">La duración es Requerida.</p>
+                                    </div>
+                                </div>
                             </div>
+                            
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" >Tipo Actividad</label>
+                                    <label class="control-label col-md-4" >Tipo Actividad de Investigaci&oacute;n</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && submitted }">
                                         <select name="investigacion" class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion) required></select>
                                         <p ng-show="actividadForm.investigacion.$invalid && submitted" class="help-block">El Tipo de Investigacion es Requerido.</p>
@@ -113,18 +146,26 @@
                                         <p ng-show="actividadForm.duracion.$invalid && submitted" class="help-block">La duración es Requerida.</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6" style="float: right;">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha Fin</label>
+                                    <div class="col-md-8">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaFin" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Colaboradores</label>
-                                    <div class="col-md-6">
-                                        <p>{{ totalColaboradores() }} seleccionados </p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalColaborador">
-                                            <span class="glyphicon glyphicon-user"></span></button>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input readonly="readonly" class="form-control" ng-model="totalColaboradores()">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalColaborador"><i class="glyphicon glyphicon-user"></i></button>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

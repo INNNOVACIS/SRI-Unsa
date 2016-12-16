@@ -79,6 +79,9 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
         
         $scope.plantillaDocumentoActividades = response.body.plantillaDocumentoActividad;
         $scope.actividadGeneradaVista = response.body.actividadInvestigacion;
+        $scope.actividadGeneradaVista.fechaRegistro = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaRegistro);
+        $scope.actividadGeneradaVista.fechaFin = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaFin);
+        $scope.actividadGeneradaVista.fechaInicio = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaInicio);
         $scope.colaboradores = response.body.colaboradores;
         
         editarActividad(response.body.actividadInvestigacion);
@@ -396,6 +399,10 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
                 stipoLabor : $scope.actividadGeneradaVista.stipoLabor === undefined ? "" : $scope.actividadGeneradaVista.stipoLabor,
                 snombreActividadInvestigacion : $scope.actividadGeneradaVista.snombreActividadInvestigacion,
                 sdescripcionActividad : $scope.actividadGeneradaVista.sdescripcionActividad,
+                navance: $scope.actividadGeneradaVista.navance,
+                dfechaRegistro : $scope.actividadGeneradaVista.dfechaRegistro,
+                dfechaInicio : $scope.actividadGeneradaVista.dfechaInicio,
+                dfechaFin : $scope.actividadGeneradaVista.dfechaFin,
                 suserCreacion : $scope.actividadGeneradaVista.suserCreacion,
                 suserModificacion : $scope.sharedService.nombreUsuario,
                 sestado : 'A'
@@ -437,7 +444,8 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
     };
 
     $scope.totalColaboradores = function(){
-        return $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
+        var total = $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
+        return total + " seleccionados";
     };
     
     $scope.changeTipoActividad = function(tipoActividad){

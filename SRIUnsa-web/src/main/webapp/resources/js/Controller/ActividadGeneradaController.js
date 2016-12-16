@@ -38,6 +38,10 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
         $log.debug("GetInvestigacionById - Success");
         console.log("Respuesta :: ", response);
         $scope.actividadGeneradaVista = response.body.actividadInvestigacion;
+        $scope.actividadGeneradaVista.dfechaRegistro = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaRegistro);
+        $scope.actividadGeneradaVista.dfechaFin = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaFin);
+        $scope.actividadGeneradaVista.dfechaInicio = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaInicio);
+        
         $scope.getTipoInvestigacion();
         $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
     };
@@ -156,6 +160,7 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     };
     
     /************ Funciones Utilitarias ************/
+
     var BuscarTipoInvestigacion = function(idTipoInvestigacion){
         angular.forEach($scope.tipoInvestigaciones, function(valor, key){
             if(valor.nidTipoActividadInvestigacion === idTipoInvestigacion){

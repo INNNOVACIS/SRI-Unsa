@@ -24,6 +24,7 @@ public interface IUsuarioDao {
     boolean Delete(SRIUsuario entidad);
     SRIUsuario GetById(int idEntidad);
     List<SRIUsuario> GetAll();
+    SRIUsuario GetByIdUsuario(int idUsuario);
     
     int GetTotalPaginacion(SRIPaginacionObject entidad);
     List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad);

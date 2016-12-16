@@ -23,6 +23,7 @@ public interface IUsuarioBusiness {
     boolean Update(SRIUsuario entidad);
     boolean Delete(SRIUsuario entidad);
     SRIUsuario Get(int idEntidad);
+    SRIUsuario GetByIdUsuario(int idUsuario);
     
     List<SRIUsuario> GetAll();
     SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad);

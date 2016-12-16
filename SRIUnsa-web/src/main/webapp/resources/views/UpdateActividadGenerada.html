@@ -8,19 +8,33 @@
                 <div class="panel-heading"><strong>{{actividadGeneradaVista.snombreActividadInvestigacion}}</strong></div>
                 <div class="panel-body">
                     <form name="actividadForm" novalidate  class="form-horizontal">
-
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" >Responsable</label>
-                                    <div class="col-md-10" >
+                                    <label class="control-label col-md-4" >Responsable</label>
+                                    <div class="col-md-8">
                                         <input readonly="readonly" ng-model="actividadGeneradaVista.responsable" class="form-control">
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha Registro</label>
+                                    <div class="col-md-8">
+                                        <p class="input-group">
+                                            <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.fechaRegistro"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" >Nombre</label>
+                                    <label class="control-label col-md-2" >Nombre Actividad</label>
                                     <div class="col-md-10" >
                                         <input readonly="readonly" ng-model="actividadGeneradaVista.snombreActividadInvestigacion" class="form-control">
                                     </div>
@@ -30,10 +44,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" >Tipo Actividad</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && submitted }">
-                                        <select name="investigacion" class="form-control" ng-model="actividadGeneradaVista.tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(actividadGeneradaVista.tipoInvestigacion.snombreActividadInvestigacion) required></select>
-                                        <p ng-show="actividadForm.investigacion.$invalid && submitted" class="help-block">El Tipo de Investigacion es Requerido.</p>
+                                    <label class="control-label col-md-4"> Linea de Investigacion</label>
+                                    <div class="col-md-8" >
+                                        <input readonly="readonly" ng-model="lineaInvestigacion" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -54,8 +67,46 @@
                                         <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sescuela">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha Inicio</label>
+                                    <div class="col-md-8">
+                                        <p class="input-group">
+                                            <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.fechaInicio"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" ><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Avance (%) </label>
+                                    <div class="col-md-8" >
+                                        <input class="form-control" type="number" ng-model="actividadGeneradaVista.navance">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4" >Tipo Actividad de Investigaci&oacute;n</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && submitted }">
+                                        <select readonly="readonly" name="investigacion" class="form-control" ng-model="actividadGeneradaVista.tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(actividadGeneradaVista.tipoInvestigacion.snombreActividadInvestigacion) required></select>
+                                        <p ng-show="actividadForm.investigacion.$invalid && submitted" class="help-block">El Tipo de Investigacion es Requerido.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Semestre </label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
+                                        <select readonly="readonly" name="semestre" class="form-control" ng-model="actividadGeneradaVista.semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" required></select>
+                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El area es Requerida.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Disciplina</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.disciplina.$invalid && submitted }">
+                                        <select readonly="readonly" name="disciplina" ng-model="actividadGeneradaVista.disciplinaInvestigacion" ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: actividadGeneradaVista.subareaInvestigacion.nidEstructura}" class="form-control" required></select> 
+                                        <p ng-show="actividadForm.disciplina.$invalid && submitted" class="help-block">La Disciplina es Requerida.</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Duraci&oacute;n </label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && submitted }">
@@ -64,39 +115,25 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Semestre </label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
-                                        <select name="semestre" class="form-control" ng-model="actividadGeneradaVista.semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" required></select>
-                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El area es Requerida.</p>
+                                    <label class="control-label col-md-4">Fecha Fin</label>
+                                    <div class="col-md-8">
+                                        <p class="input-group">
+                                            <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.fechaFin" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" ><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4"> Linea de Investigacion</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.linea.$invalid && submitted }">
-                                        <input name="linea" ng-model="lineaInvestigacion" class="form-control" required/>
-                                        <p ng-show="actividadForm.linea.$invalid && submitted" class="help-block">La Linea de Investigacion es Requerida.</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4"> Disciplina</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.disciplina.$invalid && submitted }">
-                                        <select name="disciplina" ng-model="actividadGeneradaVista.disciplinaInvestigacion" ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: actividadGeneradaVista.subareaInvestigacion.nidEstructura}" class="form-control" required></select> 
-                                        <p ng-show="actividadForm.disciplina.$invalid && submitted" class="help-block">La Disciplina es Requerida.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Colaboradores</label>
-                                    <div class="col-md-6">
-                                        <p>{{ totalColaboradores() }} seleccionados </p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalColaborador">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                        </button>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input readonly="readonly" class="form-control" ng-model="totalColaboradores()">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalColaborador"><i class="glyphicon glyphicon-user"></i></button>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

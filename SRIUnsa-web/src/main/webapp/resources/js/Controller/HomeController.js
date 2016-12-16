@@ -147,16 +147,27 @@
         $log.debug("GetPersonas - Success");
         console.log("Respuesta :: ", response);
         $scope.personas = response;
-        angular.forEach($scope.personas, function(value, key){
-            if(value.nidPersona === $scope.sharedService.idPersona){
-                $scope.responsable = value;
-            }
-        });
+        UsuariosService.GetByIdUsuario($scope.sharedService.idUsuario).then(GetByIdUsuarioSuccess, GetByIdUsuarioError);
     };
     var GetPersonasError = function(response){
         $log.debug("GetPersonas - Error");
         console.log("Respuesta :: ", response);
     };
+    
+    var GetByIdUsuarioSuccess = function(response){
+        $log.debug("GetByIdUsuario - Success");
+        console.log("Respuesta :: ", response);
+        angular.forEach($scope.personas, function(value, key){
+            if(value.nidPersona === response.body.nidPersona){
+                $scope.responsable = value;
+            }
+        });
+    };
+    var GetByIdUsuarioError = function(response){
+        $log.debug("GetByIdUsuario - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     
     var EnviarEmailSuccess = function(response){
         $log.debug("EnviarEmail - Success");
@@ -299,6 +310,10 @@
                     sdisciplina : $scope.disciplinaInvestigacion.sNombre,
                     stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
                     snombreActividadInvestigacion : $scope.nombreInvestigacion,
+                    navance: $scope.avance,
+                    dfechaRegistro : $scope.fechaRegistro,
+                    dfechaInicio : $scope.fechaInicio,
+                    dfechaFin : $scope.fechaFin,
                     sdescripcionActividad : $scope.descripcion,
                     suserCreacion : $scope.sharedService.nombreUsuario,
                     sestado : 'A'
@@ -387,7 +402,8 @@
     };
     
     $scope.totalColaboradores = function(){
-        return $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
+        var total = $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
+        return total + " seleccionados";
     };
     
     $scope.openCloseModal = function(open, close) {
@@ -497,5 +513,88 @@
         $scope.loader = false;
         $scope.openCloseModal(true,false);
     };
+    
+    
+    /********** DataPicker ************/
+    
+    $scope.today = function() {
+        $scope.fechaRegistro = new Date();
+    };
+    $scope.today();
+
+    $scope.inlineOptions = {
+      customClass: getDayClass,
+      minDate: new Date()
+    };
+
+    $scope.dateOptions = {
+      dateDisabled: disabled,
+      formatYear: "yy",
+      maxDate: new Date(2020, 5, 22),
+      minDate: new Date(),
+      startingDay: 1,
+      showWeeks:false,
+      showButtonBar:false
+    };
+
+    // Disable weekend selection
+    function disabled(data) {
+      var date = data.date,
+        mode = data.mode;
+      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    }
+
+    $scope.toggleMin = function() {
+      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.toggleMin();
+
+    $scope.open1 = function() {
+      $scope.popup1.opened = true;
+    };
+
+    $scope.open2 = function() {
+      $scope.popup2.opened = true;
+    };
+    $scope.open3 = function() {
+      $scope.popup3.opened = true;
+    };
+
+    $scope.setDate = function(year, month, day) {
+      $scope.dtRegistro = new Date(year, month, day);
+    };
+
+    $scope.formats = ['dd/MMMM/yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.popup1 = {
+      opened: false
+    };
+
+    $scope.popup2 = {
+      opened: false
+    };
+    
+    $scope.popup3 = {
+      opened: false
+    };
+
+    function getDayClass(data) {
+        var date = data.date;
+        var mode = data.mode;
+        if (mode === 'day') {
+            var dayToCheck = new Date(date).setHours(0,0,0,0);
+            for (var i = 0; i < $scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+                if (dayToCheck === currentDay) {
+                    return $scope.events[i].status;
+                }
+            }
+        }
+        return '';
+    }
 
 });

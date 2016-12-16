@@ -12,6 +12,12 @@ investigacionApp.factory('SharedService', function($location) {
         stringMenu : sessvars.stringMenu,
         htmlMenuVertical : sessvars.htmlMenuVertical,
         stringMenuVertical : sessvars.stringMenuVertical,
+        dateToString: function(date){
+            var nDate = Number(date); 
+            var dDate = new Date(nDate);
+            var sDate = ("0" + dDate.getDate()).slice(-2) + "/" + ("0"+(dDate.getMonth()+1)).slice(-2) + "/" + dDate.getFullYear();
+            return sDate;
+        },
         scrollTop : function(){
             $('html,body').animate({
             scrollTop: $("#page-wrapper").offset().top - 100

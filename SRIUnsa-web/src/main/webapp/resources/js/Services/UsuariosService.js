@@ -81,4 +81,19 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
 		});
 		return deferred.promise;
 	};
+        
+        this.GetByIdUsuario = function(idUsuario) {
+		$log.debug("Usuario Service - get Usuarios");
+		
+		var deferred = $q.defer();
+		$http({
+			method : 'GET',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/getByIdUsuario/' + idUsuario
+		}).success(function(response) {
+			deferred.resolve(response);
+		}).error(function(response) {			
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	};
 });

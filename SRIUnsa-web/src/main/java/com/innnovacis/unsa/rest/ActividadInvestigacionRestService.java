@@ -8,7 +8,6 @@ package com.innnovacis.unsa.rest;
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
-import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

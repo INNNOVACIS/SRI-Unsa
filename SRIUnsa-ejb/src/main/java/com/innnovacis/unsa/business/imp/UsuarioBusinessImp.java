@@ -229,5 +229,17 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         return respuesta;
     }
 
+    @Override
+    public SRIUsuario GetByIdUsuario(int idUsuario) {
+        SRIUsuario respuesta = null;
+        try{
+            respuesta = usuarioDao.GetByIdUsuario(idUsuario);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
     
 }
