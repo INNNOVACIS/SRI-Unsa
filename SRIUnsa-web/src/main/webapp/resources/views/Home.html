@@ -59,7 +59,7 @@
                                         <select name="facultadValidacion" ng-model="facultad"                
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
                                             class="form-control"
-                                            ng-change="facultadChange(facultad)"
+                                            ng-change="changeFacultad(facultad)"
                                             ng-init="facultad=''"
                                             required>
                                         </select>
@@ -70,10 +70,8 @@
                                     <label class="control-label col-md-4">Departamento</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.departamentoValidacion.$invalid && submitted }">
                                         <select  name="departamentoValidacion" ng-model="departamento"
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in departamentos | filter : { snivel : 'DEPARTAMENTO'}"
                                             class="form-control"
-                                            ng-change="departamentoChange()"
-                                            ng-init="departamento=''"
                                             required>
                                         </select>
                                         <p ng-show="actividadForm.departamentoValidacion.$invalid && submitted" class="help-block">El Departamento es Requerida.</p>
@@ -83,9 +81,9 @@
                                     <label class="control-label col-md-4">Escuela</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && submitted }">
                                         <select name="escuelaValidacion" ng-model="escuela"
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: facultad.nidEstructuraOrganizacion}"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in escuelas | filter : { snivel : 'ESCUELA'}"
                                             class="form-control"
-                                            ng-init="escuela=''"
+                                            
                                             required>
                                         </select>
                                         <p ng-show="actividadForm.escuelaValidacion.$invalid && submitted" class="help-block">La Escuela es Requerida.</p>
@@ -188,7 +186,7 @@
                                     <label class="control-label col-md-4"> Colaboradores</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
-                                            <input readonly="readonly" class="form-control" ng-model="totalColaboradores()">
+                                            <input readonly="readonly" class="form-control" ng-model="totalColaboradores">
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalColaborador"><i class="glyphicon glyphicon-user"></i></button>
                                             </span>

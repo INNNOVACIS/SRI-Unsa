@@ -31,7 +31,7 @@ public class SRICabeceraMasiva  extends SRIEntidad implements Serializable  {
     @Column(name = "idcabeceramasiva" )
     private int NIdCabeceraMasiva;
     
-    @Column(name = "idusuarioflujo  " )
+    @Column(name = "idusuarioflujo" )
     private int NIdUsuarioFlujo;
     
     @Column(name = "flujo")

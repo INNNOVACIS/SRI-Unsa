@@ -145,7 +145,7 @@ investigacionApp.config(function($routeProvider){
         });
 });
 
-investigacionApp.run(['$rootScope', '$location', 'SharedService', function ($rootScope, $location, $scope, SharedService) {
+investigacionApp.run(['$rootScope', '$location', 'SharedService', function ($rootScope, $location,SharedService) {
     $rootScope.$on('$routeChangeStart', function (event) {
 //        $scope.sharedService = SharedService;
         if (!SharedService.isAutenticado()) {

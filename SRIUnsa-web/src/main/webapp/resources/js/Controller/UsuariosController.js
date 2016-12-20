@@ -56,7 +56,8 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
             snombre : $scope.usuario.snombre,
             sapellido : $scope.usuario.sapellido,
             ndni : $scope.usuario.ndni,
-            nidEstructuraOrganizacion : $scope.organizacion.nidEstructuraOrganizacion,
+            nidEstructuraOrganizacion : $scope.organizacion.nidPadre,
+            nidDepartamento : $scope.organizacion.nidEstructuraOrganizacion,
             suserCreacion : $scope.sharedService.nombreUsuario,
             sestado : 'A'
         };

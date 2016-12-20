@@ -13,7 +13,7 @@
     $scope.mensajeError = false;
     $scope.descripcion = "";
     $scope.nombreInvestigacion = "";
-//    $scope.duracionInvestigacion = 0;
+    $scope.totalColaboradores = "0 seleccionados";
     $scope.colaboradores = [];
     $scope.submitted = false;
 
@@ -53,6 +53,16 @@
             });
         });
         $scope.estructuraOrganizaciones = response;
+        
+        angular.forEach($scope.estructuraOrganizaciones, function(value, key){
+            if(value.nidEstructuraOrganizacion === $scope.sharedService.usuario.nidEstructuraOrganizacion){
+                $scope.facultad = value;
+                $scope.changeFacultad($scope.facultad);
+            }
+            if(value.nidEstructuraOrganizacion === $scope.sharedService.usuario.nidDepartamento){
+                $scope.departamento = value;
+            }
+        });
         console.log("Respuesta :: ", $scope.estructuraOrganizaciones);
     };
     var GetEstructuraOrganizacionesError = function(response){
@@ -260,6 +270,7 @@
         if(!isRepetido($scope.colaboradores, $scope.persona)){
             $scope.colaboradores.push($scope.persona);
             $scope.colaborador = {};
+            getTotalColaboradores();
         }
     };
     $scope.DeleteColaborador = function(colaborador){
@@ -270,16 +281,7 @@
             }
         });
         $scope.colaboradores.splice(index, 1);
-    };
-    $scope.facultadChange = function(facultad){
-        var estructuraOrganizacion = {
-            nidEstructuraOrganizacion : facultad.nidEstructuraOrganizacion,
-            nidTipoNivel : facultad.nidTipoNivel,
-            snombreEstructuraOrganizacion : facultad.snombreEstructuraOrganizacion,
-            nidPadre : facultad.nidPadre,
-            snivel : facultad.snivel
-        };
-        PlantillaDocumentoService.GetPlantillaDocumentoByFacultad(estructuraOrganizacion).then(GetPlantillaDocumentoByFacultadSuccess, GetPlantillaDocumentoByFacultadError);
+        getTotalColaboradores();
     };
     var generarOpciones = function(value){
         $scope[value.sopciones] = value.sdata.split(",");
@@ -293,6 +295,27 @@
         });
         return repetido;
     };
+    
+    $scope.changeFacultad = function(facultad){
+        $scope.departamentos = [];
+        $scope.escuelas = [];
+        angular.forEach($scope.estructuraOrganizaciones, function(value, key){
+            if(value.nidPadre === facultad.nidEstructuraOrganizacion){
+                $scope.departamentos.push(value);
+                $scope.escuelas.push(value);
+            }
+        });
+        
+        var estructuraOrganizacion = {
+            nidEstructuraOrganizacion : facultad.nidEstructuraOrganizacion,
+            nidTipoNivel : facultad.nidTipoNivel,
+            snombreEstructuraOrganizacion : facultad.snombreEstructuraOrganizacion,
+            nidPadre : facultad.nidPadre,
+            snivel : facultad.snivel
+        };
+        PlantillaDocumentoService.GetPlantillaDocumentoByFacultad(estructuraOrganizacion).then(GetPlantillaDocumentoByFacultadSuccess, GetPlantillaDocumentoByFacultadError);
+    };
+    
     
     $scope.changeArea = function(area){
         $scope.subAreaInvestigaciones = [];
@@ -431,9 +454,10 @@
         $location.path("/actividad/Generadas");
     };
     
-    $scope.totalColaboradores = function(){
+    var getTotalColaboradores = function(){
         var total = $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
-        return total + " seleccionados";
+        $scope.totalColaboradores = total + " seleccionados"
+//        return total + " seleccionados";
     };
     
     $scope.openCloseModal = function(open, close) {

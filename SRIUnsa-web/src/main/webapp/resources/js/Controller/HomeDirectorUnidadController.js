@@ -65,7 +65,7 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     
     $scope.getUsuariosByPagina = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : 1, idTipoInvestigacion : $scope.idTipoInvestigacion};
+                          idFacultad : $scope.sharedService.usuario.nidEstructuraOrganizacion, idTipoInvestigacion : $scope.idTipoInvestigacion};
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     

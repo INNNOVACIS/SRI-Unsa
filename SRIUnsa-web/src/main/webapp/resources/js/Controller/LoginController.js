@@ -46,6 +46,7 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         $scope.sharedService.htmlMenuVertical = sessvars.htmlMenuVertical;
         
         $scope.GetActoresByIdUsuario($scope.sharedService.idUsuario);
+        $scope.GetUsuariosByIdUsuario($scope.sharedService.idUsuario);
 //        $location.path("/homeDirectorUnidad");
     };
     var getPrivilegiosByIdRolError = function(response){
@@ -63,6 +64,17 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         $log.debug("GetActoresByIdUsuario - Error");
         console.log("Respuesta :: ", response);
     };
+    
+    var GetUsuariosByIdUsuarioSuccess = function(response){
+        $log.debug("GetUsuariosByIdUsuario - Success");
+        console.log("Respuesta :: ", response);
+        sessvars.usuario = response.body;
+        $scope.sharedService.usuario = response.body;
+    };
+    var GetUsuariosByIdUsuarioError = function(response){
+        $log.debug("GetUsuariosByIdUsuario - Error");
+        console.log("Respuesta :: ", response);
+    };
 
     $scope.login = function(){
         $scope.loader = true;
@@ -75,6 +87,9 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
     
     $scope.GetActoresByIdUsuario = function(idUsuario){
         UsuariosService.GetActoresByIdUsuario(idUsuario).then(GetActoresByIdUsuarioSuccess, GetActoresByIdUsuarioError);
+    };
+    $scope.GetUsuariosByIdUsuario = function(idUsuario){
+        UsuariosService.GetByIdUsuario(idUsuario).then(GetUsuariosByIdUsuarioSuccess, GetUsuariosByIdUsuarioError);
     };
     
     var seleccionarHome = function(actores){
