@@ -6,12 +6,15 @@ investigacionApp.factory('SharedService', function($location) {
         nombreUsuario : sessvars.nombreUsuario,
         idRol : sessvars.idRol,
         idUsuario : sessvars.idUsuario,
+        idDocente : "",
         idPersona : sessvars.idPersona,
         privilegios : sessvars.privilegios,
         htmlMenu : sessvars.htmlMenu,
         stringMenu : sessvars.stringMenu,
         htmlMenuVertical : sessvars.htmlMenuVertical,
         stringMenuVertical : sessvars.stringMenuVertical,
+        locationHome : sessvars.locationHome,
+        tipoInvestigacion : sessvars.tipoInvestigacion,
         dateToString: function(date){
             var nDate = Number(date); 
             var dDate = new Date(nDate);

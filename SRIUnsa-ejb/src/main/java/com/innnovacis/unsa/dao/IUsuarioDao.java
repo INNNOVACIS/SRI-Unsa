@@ -5,8 +5,10 @@
  */
 package com.innnovacis.unsa.dao;
 
+import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.util.List;
@@ -25,6 +27,10 @@ public interface IUsuarioDao {
     SRIUsuario GetById(int idEntidad);
     List<SRIUsuario> GetAll();
     SRIUsuario GetByIdUsuario(int idUsuario);
+    List<SRIFlujoActor> GetActoresByIdUsuario(int idUsuario);
+    
+    List<SRIUsuarioColor> GetUsuariosColor(SRIPaginacionObject entidad);
+    int GetTotalUsuariosColor(SRIPaginacionObject entidad);
     
     int GetTotalPaginacion(SRIPaginacionObject entidad);
     List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad);

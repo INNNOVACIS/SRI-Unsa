@@ -19,6 +19,22 @@ investigacionApp.service("RelacionDocentesService", function(SRIUnsaConfig, $log
         return deferred.promise;
     };
     
+    this.GetActividadesByDocenteColaboradores = function(request) {
+        $log.debug("RelacionDocentesService - GetActividadesByDocenteColaboradores");
+
+        var deferred = $q.defer();
+        $http({
+            method : 'POST',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/reportes/getActividadesDocentesColaboradores',
+            data : request
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {			
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+    
     this.GetActividadesByDocentesDetalle = function() {
         $log.debug("RelacionDocentesService - GetDocentesDetalle");
 

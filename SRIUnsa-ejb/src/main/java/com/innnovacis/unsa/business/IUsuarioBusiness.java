@@ -5,8 +5,10 @@
  */
 package com.innnovacis.unsa.business;
 
+import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.util.List;
@@ -24,6 +26,10 @@ public interface IUsuarioBusiness {
     boolean Delete(SRIUsuario entidad);
     SRIUsuario Get(int idEntidad);
     SRIUsuario GetByIdUsuario(int idUsuario);
+    List<SRIFlujoActor> GetActoresByIdUsuario(int idUsuario);
+    
+    int GetTotalUsuariosColor(SRIPaginacionObject entidad);
+    List<SRIUsuarioColor> GetUsuariosColor(SRIPaginacionObject entidad);
     
     List<SRIUsuario> GetAll();
     SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad);

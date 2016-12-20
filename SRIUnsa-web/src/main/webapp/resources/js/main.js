@@ -12,6 +12,14 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/Home.html',
 		controller : 'HomeController'
 	})
+        .when('/homedocente', {
+		templateUrl : 'resources/views/HomeDocente.html',
+		controller : 'HomeDocenteController'
+	})
+        .when('/homeDirectorUnidad', {
+		templateUrl : 'resources/views/HomeDirectorUnidad.html',
+		controller : 'HomeDirectorUnidadController'
+	})
         .when('/actividad/:ESTADO/:ID',{
 		templateUrl : 'resources/views/ActividadGenerada.html',
 		controller : 'ActividadGeneradaController'
@@ -39,6 +47,10 @@ investigacionApp.config(function($routeProvider){
 	.when('/relacionDocentes',{
 		templateUrl : 'resources/views/RelacionDocentes.html',
 		controller : 'RelacionDocentesController'
+	})
+        .when('/relacionDocentesColaboradores',{
+		templateUrl : 'resources/views/RelacionDocentesColaboradores.html',
+		controller : 'RelacionDocentesColaboradoresController'
 	})
 	.when('/generarDocente',{
 		templateUrl : 'resources/views/GenerarDocente.html',
@@ -129,13 +141,13 @@ investigacionApp.config(function($routeProvider){
 		controller : 'LoginController'
 	})
         .otherwise({
-            redirectTo: '/home'
+            redirectTo: '/homeDirectorUnidad'
         });
 });
 
-investigacionApp.run(['$rootScope', '$location', 'SharedService', function ($rootScope, $location, SharedService) {
+investigacionApp.run(['$rootScope', '$location', 'SharedService', function ($rootScope, $location, $scope, SharedService) {
     $rootScope.$on('$routeChangeStart', function (event) {
-
+//        $scope.sharedService = SharedService;
         if (!SharedService.isAutenticado()) {
             console.log('DENEGADO');
             event.preventDefault();
@@ -145,8 +157,8 @@ investigacionApp.run(['$rootScope', '$location', 'SharedService', function ($roo
             console.log("location ", $location.path());
             var cadena = $location.path();
             if(!SharedService.isPermitido(cadena)){
-//                alert("no tiene permisos para esta pagina");
-//                $location.path('/home');
+                alert("no tiene permisos para esta pagina");
+                $location.path(SharedService.locationHome);
             }
         }
     });

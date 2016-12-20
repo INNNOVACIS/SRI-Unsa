@@ -92,6 +92,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-4">Semestre</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
+                                        <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
+                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-4">Fecha Inicio</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
@@ -121,17 +128,37 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Semestre</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
-                                        <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
-                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
+                                    <label class="control-label col-md-4">&Aacute;rea</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.area.$invalid && submitted }">
+                                        <select name="area" ng-model="areaInvestigacion" 
+                                            ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { sNivel: 'Area'}"
+                                            class="form-control"
+                                            ng-init="disciplinaInvestigacion=''"
+                                            ng-change="changeArea(areaInvestigacion)"
+                                            required>
+                                        </select>
+                                        <p ng-show="actividadForm.area.$invalid && submitted" class="help-block">El &aacute;rea es Requerida.</p>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Sub &aacute;rea</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.subarea.$invalid && submitted }">
+                                        <select name="subarea" ng-model="subAreaInvestigacion" 
+                                            ng-options="obj as obj.sNombre for obj in subAreaInvestigaciones | filter : { sNivel: 'Sub Area'}"
+                                            class="form-control"
+                                            ng-init="disciplinaInvestigacion=''"
+                                            ng-change="changeSubArea(subAreaInvestigacion)"
+                                            required>
+                                        </select>
+                                        <p ng-show="actividadForm.subarea.$invalid && submitted" class="help-block">La Sub &aacute; es Requerida.</p>
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Disciplina</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.disciplina.$invalid && submitted }">
                                         <select name="disciplina" ng-model="disciplinaInvestigacion" 
-                                            ng-options="obj as obj.sNombre for obj in areaInvestigaciones | filter : { nIdPadre: subareaInvestigacion.nidEstructura}"
+                                            ng-options="obj as obj.sNombre for obj in disciplinaInvestigaciones | filter : { sNivel: 'Disciplina'}"
                                             class="form-control"
                                             ng-init="disciplinaInvestigacion=''"
                                             required>

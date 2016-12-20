@@ -7,8 +7,10 @@ package com.innnovacis.unsa.rest;
 
 
 import com.innnovacis.unsa.business.IUsuarioBusiness;
+import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.io.IOException;
@@ -201,6 +203,47 @@ public class UsuarioRestServices {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
             log.log(Level.INFO, "GetUsuarioById - Error : {0}", ex.getMessage());
         }
+        return builder.build();
+    }
+    
+    @GET
+    @Path("GetActoresByIdUsuario/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetActoresByIdUsuario(@PathParam("id") int id) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        List<SRIFlujoActor> body = null;
+        try {
+            body = usuarioBusiness.GetActoresByIdUsuario(id);
+            respuesta.put("body", body);
+            if (body == null) {
+                builder = Response.status(Response.Status.NOT_FOUND).entity(respuesta);
+                log.log(Level.INFO, "GetActoresByIdUsuario - Nulo : {0}");
+            } else {
+                builder = Response.status(Response.Status.OK).entity(respuesta);
+                log.log(Level.INFO, "GetActoresByIdUsuario - Success : {0}", body.toString());
+            }
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetActoresByIdUsuario - Error : {0}", ex.getMessage());
+        }
+        return builder.build();
+    }
+    
+    @POST
+    @Path("/GetUsuariosColor")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetUsuariosColor(SRIPaginacionObject entidad) {
+        
+        int total = usuarioBusiness.GetTotalUsuariosColor(entidad);
+        List<SRIUsuarioColor> lista = usuarioBusiness.GetUsuariosColor(entidad);
+
+        Map<String, Object> responseObj = new HashMap<>();
+        responseObj.put("total", total);
+        responseObj.put("lista", lista);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
+        
         return builder.build();
     }
     

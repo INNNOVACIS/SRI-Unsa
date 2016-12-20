@@ -54,6 +54,25 @@ public class ReportesRestService {
     }
     
     @POST
+    @Path("/getActividadesDocentesColaboradores")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetActividadesByDocenteColaboradores(SRIPaginacion entidad) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetActividadesByDocenteColaboradores(entidad);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetActividadesByDocenteColaboradores - Success : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetActividadesByDocenteColaboradores - Error : {0}", ex.getMessage());
+        }
+        
+        return builder.build();
+    }
+    
+    @POST
     @Path("/getActividadesDocentesDetalle")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

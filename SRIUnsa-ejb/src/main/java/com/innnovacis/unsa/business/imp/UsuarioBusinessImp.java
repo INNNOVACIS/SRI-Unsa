@@ -6,9 +6,11 @@ import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.dao.IPersonaDao;
 
 import com.innnovacis.unsa.dao.IUsuarioDao;
+import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIPersona;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 
@@ -241,5 +243,40 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         return respuesta;
     }
 
+    @Override
+    public List<SRIFlujoActor> GetActoresByIdUsuario(int idUsuario) {
+        List<SRIFlujoActor> respuesta = null;
+        try{
+            respuesta = usuarioDao.GetActoresByIdUsuario(idUsuario);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIUsuarioColor> GetUsuariosColor(SRIPaginacionObject entidad) {
+        List<SRIUsuarioColor> respuesta = null;
+        try{
+            respuesta = usuarioDao.GetUsuariosColor(entidad);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public int GetTotalUsuariosColor(SRIPaginacionObject entidad) {
+        int respuesta = -1;
+        try{
+            respuesta = usuarioDao.GetTotalUsuariosColor(entidad);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
     
 }

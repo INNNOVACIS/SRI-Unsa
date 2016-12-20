@@ -96,4 +96,35 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
 		});
 		return deferred.promise;
 	};
+        
+        this.GetActoresByIdUsuario = function(idUsuario) {
+		$log.debug("Usuario Service - GetActoresByIdUsuario");
+		
+		var deferred = $q.defer();
+		$http({
+			method : 'GET',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetActoresByIdUsuario/' + idUsuario
+		}).success(function(response) {
+			deferred.resolve(response);
+		}).error(function(response) {			
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	};
+        
+        this.GetUsuariosColor = function(request) {
+		$log.debug("UsuarioService - GetUsuariosColor");
+		
+		var deferred = $q.defer();
+		$http({
+			method : 'POST',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetUsuariosColor',
+			data : request
+		}).success(function(response) {
+			deferred.resolve(response);
+		}).error(function(response) {			
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	};
 });

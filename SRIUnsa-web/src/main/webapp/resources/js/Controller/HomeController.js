@@ -23,6 +23,13 @@
         $log.debug("GetTipoInvestigaciones - Success");
         console.log("Respuesta :: ", response);
         $scope.tipoInvestigaciones = response;
+        angular.forEach($scope.tipoInvestigaciones, function(value, key){
+            if(value.nidTipoActividadInvestigacion === $scope.sharedService.tipoInvestigacion.nidTipoActividadInvestigacion){
+                $scope.tipoInvestigacion = value;
+                $scope.changeTipoActividad($scope.tipoInvestigacion.snombreActividadInvestigacion);
+            }
+        });
+//        $scope.tipoInvestigacion = $scope.sharedService.tipoInvestigacion;
     };
     var GetTipoInvestigacionesError = function(response){
         $log.debug("GetTipoInvestigaciones - Error");
@@ -147,7 +154,13 @@
         $log.debug("GetPersonas - Success");
         console.log("Respuesta :: ", response);
         $scope.personas = response;
-        UsuariosService.GetByIdUsuario($scope.sharedService.idUsuario).then(GetByIdUsuarioSuccess, GetByIdUsuarioError);
+        var idUsuario = "";
+        if($scope.sharedService.idDocente === "" ){
+            idUsuario = $scope.sharedService.idUsuario;
+        } else {
+            idUsuario = $scope.sharedService.idDocente;
+        }
+        UsuariosService.GetByIdUsuario(idUsuario).then(GetByIdUsuarioSuccess, GetByIdUsuarioError);
     };
     var GetPersonasError = function(response){
         $log.debug("GetPersonas - Error");
@@ -279,6 +292,23 @@
             }
         });
         return repetido;
+    };
+    
+    $scope.changeArea = function(area){
+        $scope.subAreaInvestigaciones = [];
+        angular.forEach($scope.areaInvestigaciones, function(value, key){
+            if(value.nIdPadre === area.nidEstructura){
+                $scope.subAreaInvestigaciones.push(value);
+            }
+        });
+    };
+    $scope.changeSubArea = function(subArea){
+        $scope.disciplinaInvestigaciones = [];
+        angular.forEach($scope.areaInvestigaciones, function(value, key){
+            if(value.nIdPadre === subArea.nidEstructura){
+                $scope.disciplinaInvestigaciones.push(value);
+            }
+        });
     };
     
     /************ Registrar Actividad de Investigacion ****************/

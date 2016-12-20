@@ -2,8 +2,10 @@
 package com.innnovacis.unsa.dao.imp;
 
 import com.innnovacis.unsa.dao.IUsuarioDao;
+import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.math.BigInteger;
@@ -149,6 +151,50 @@ public class UsuarioDaoImp implements IUsuarioDao {
             throw ex;
         }
         return entidad;
+    }
+
+    @Override
+    public List<SRIFlujoActor> GetActoresByIdUsuario(int idUsuario) {
+        List<SRIFlujoActor> entidad = null;
+        try{
+            Query query = em.createNativeQuery("{call GetActoresByIdUsuario(?1)}", SRIFlujoActor.class)
+                .setParameter(1, idUsuario);
+            entidad = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return entidad;
+    }
+
+    @Override
+    public List<SRIUsuarioColor> GetUsuariosColor(SRIPaginacionObject entidad) {
+        List<SRIUsuarioColor> usuarioColor = null;
+        try{
+            Query query = em.createNativeQuery("{call GetUsuarioColor(?1, ?2, ?3, ?4, ?5)}", SRIUsuarioColor.class)
+                    .setParameter(1, entidad.getIdFacultad())
+                    .setParameter(2, entidad.getFiltro())
+                    .setParameter(3, entidad.getIdTipoInvestigacion())
+                    .setParameter(4, entidad.getRango())
+                    .setParameter(5, entidad.getCurrentPage());
+            usuarioColor = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return usuarioColor;
+    }
+
+    @Override
+    public int GetTotalUsuariosColor(SRIPaginacionObject entidad) {
+        BigInteger total = null;
+        try{
+            Query query = em.createNativeQuery("{call GetTotalUsuarioColor(?1, ?2)}")
+                    .setParameter(1, entidad.getIdFacultad())
+                    .setParameter(2, entidad.getFiltro());
+            total = (BigInteger)query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return total.intValue();
     }
 
 }

@@ -1,5 +1,5 @@
 investigacionApp.controller('LoginController', function($scope, $location, $log, $sce, SharedService, 
-    PrivilegioService, LoginService) {
+    PrivilegioService, LoginService, UsuariosService) {
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -45,10 +45,23 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         sessvars.htmlMenuVertical = $sce.trustAsHtml(sessvars.stringMenuVertical);
         $scope.sharedService.htmlMenuVertical = sessvars.htmlMenuVertical;
         
-        $location.path("/home");
+        $scope.GetActoresByIdUsuario($scope.sharedService.idUsuario);
+//        $location.path("/homeDirectorUnidad");
     };
     var getPrivilegiosByIdRolError = function(response){
         $scope.loader = false;
+    };
+    
+    var GetActoresByIdUsuarioSuccess = function(response){
+        $log.debug("GetActoresByIdUsuario - Success");
+        console.log("Respuesta :: ", response);
+        sessvars.locationHome = seleccionarHome(response.body);
+        $scope.sharedService.locationHome = sessvars.locationHome;
+        $location.path($scope.sharedService.locationHome);
+    };
+    var GetActoresByIdUsuarioError = function(response){
+        $log.debug("GetActoresByIdUsuario - Error");
+        console.log("Respuesta :: ", response);
     };
 
     $scope.login = function(){
@@ -60,13 +73,42 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         PrivilegioService.getPrivilegiosByIdRol(id).then(getPrivilegiosByIdRolSuccess, getPrivilegiosByIdRolError);
     };
     
+    $scope.GetActoresByIdUsuario = function(idUsuario){
+        UsuariosService.GetActoresByIdUsuario(idUsuario).then(GetActoresByIdUsuarioSuccess, GetActoresByIdUsuarioError);
+    };
+    
+    var seleccionarHome = function(actores){
+        var rango = 0;
+        var location = "";
+        angular.forEach(actores, function(value, key){
+            if(value.scodigo === "DOCE" && rango === 0){
+                location = "/homedocente";
+            }
+            if(value.scodigo === "DIUN"){
+                rango = 1;
+                location = "/homeDirectorUnidad";
+            }
+        });
+        return location;
+    };
+    
     var CrearMenu = function(privilegios){
         var menuHorizontal = "";
+        
+        angular.forEach(privilegios, function(value, key){
+            var item = "";
+            if(value.nidPadre === 0 && value.surlPrivilegio !== null && value.surlPrivilegio === '#homeDirectorUnidad'){
+                item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
+                menuHorizontal = menuHorizontal + item;
+            }
+        });
+        
+        
         angular.forEach(privilegios, function(value,key){
             var item = "";
             var subItem = "";
             // Item padre sin DropDown
-            if(value.nidPadre === 0 && value.surlPrivilegio !== null){ //or ""
+            if(value.nidPadre === 0 && value.surlPrivilegio !== null && value.surlPrivilegio !== '#homeDirectorUnidad'){ //or ""
                 item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
             }
             // Item padre con DropDown
@@ -119,4 +161,27 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
     var GetItemHtml = function(url, nombre){
         return '<li><a href="' + url + '">' + nombre + '</a></li>';
     };
+    
+    $scope.ShowMenuVertical = function(tipoActividad){
+        $scope.mostrarActividad = [false, false, false, false]; //case1 , case2, case3, case4
+        switch(tipoActividad.toUpperCase()) {
+            case "INVESTIGACION FORMATIVA":
+                $scope.mostrarActividad = [true, false, false, false];
+                break;
+            case "ASESORIA DE TESIS":
+                $scope.mostrarActividad = [false, true, false, false];
+                break;
+            case "INVESTIGACIONES BASICAS Y APLICADAS":
+                $scope.mostrarActividad = [false, false, true, false];
+                break;
+            case "PRODUCCION INTELECTUAL":
+                $scope.mostrarActividad = [false, false, false, true];
+                break;
+            default:
+                $scope.mostrarActividad = [false, false, false, false];
+        };
+    };
+    
+    
 });
+

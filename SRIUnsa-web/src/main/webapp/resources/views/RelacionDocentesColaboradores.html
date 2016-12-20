@@ -1,0 +1,114 @@
+<div id="page-wrapper">
+    <div class="col-lg-12 changePanel" style="margin-top:20px;">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <div class="col-md-10">
+                    <label class="control-label col-md-2" style="">Investigación</label>
+                    <div class="col-md-4">
+                        <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-init="tipoInvestigacion=''" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)>
+                            <option></option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-2">Facultad</label>
+                    <div class="col-md-4">
+                        <select ng-model="facultad"                
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
+                            class="form-control"
+                            ng-change="facultadChange()"
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="facultad=''">
+                            <option></option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-2">Departamento</label>
+                    <div class="col-md-4">
+                        <select  ng-model="departamento"
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
+                            class="form-control"
+                            ng-change="departamentoChange()"
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="departamento=''">
+                            <option></option>
+                        </select> 
+                    </div>
+                    <label class="control-label col-md-2">Escuela</label>
+                    <div class="col-md-4">
+                        <select  ng-model="escuela"
+                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
+                            class="form-control" 
+                            ng-required="true"
+                            style="margin:2px;"
+                            ng-init="escuela=''">
+                            <option></option>
+                        </select> 
+                    </div>
+                    <label class="control-label col-md-2">Semestre</label>
+                    <div class="col-md-4">
+                        <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
+                            <option></option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-2"> Fondo Concursable</label>
+                    <div class="col-md-4">
+                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary" ng-click="filtrar()" >
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
+                    </a> 
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="line-height: 2;">Relación de Docentes 
+                <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
+                    <span class="glyphicon glyphicon-cloud-download"></span>
+                    Descargar PDF
+                </button>
+                <button class="btn btn-success btn-sm pull-right" ng-click="descargarExcel()" style="margin-right: 6px;">
+                    <span class="glyphicon glyphicon-cloud-download"></span>
+                    Descargar Excel
+                </button>
+            </div>
+              <div class="panel-body">
+                  <div class="dataTable_wrapper">
+                    <table width="100%" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="5%">#</th>
+                                <th>Nombre del Docente</th>
+                                <th>DNI</th>
+                                <th>Total Duraci&oacute;n</th>
+                                <th>N&uacute;mero Actividades</th>
+                                <th>Con Actividad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="actividadDocente in actividadesDocentes">
+                                <td>{{ actividadDocente.idactividadinvestigacion }}</td>
+                                <td><strong>{{ actividadDocente.nombreactividad }}</strong></td>
+                                <td>{{ actividadDocente.dni }}</td>
+                                <td>{{ actividadDocente.horas }}</td>
+                                <td width="8%">{{ actividadDocente.cantidad }}</td>
+                                <td width="8%">Si</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination
+                        rango-paginas="rangoPaginas"
+                        current-rango="currentRango"
+                        num-pages="numPages()" 
+                        current-page="currentPage"
+                        max-size="maxSize" >    
+                    </pagination>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
