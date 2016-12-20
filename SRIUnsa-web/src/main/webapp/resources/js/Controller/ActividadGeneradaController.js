@@ -1,5 +1,5 @@
 investigacionApp.controller('ActividadGeneradaController', function($log, $scope, $routeParams, $location, TipoInvestigacionService, 
-    ArchivosService, ActividadesPendientesService, SharedService, SRIUnsaConfig) {
+    ArchivosService, ActividadesPendientesService, SharedService, ActividadesGeneradasService, SRIUnsaConfig) {
     
     $scope.sharedService = SharedService;
     $scope.sharedService.scrollTop();
@@ -80,6 +80,7 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
         $log.debug("AprobarActividad - Success");
         console.log("Respuesta :: ", response.body);
         $scope.sharedService.scrollTop();
+        $scope.EnviarEmail(response.body.actividadInvestigacion.nidActividadInvestigacion);
         setTimeout(function(){
             $scope.$apply(function(){ 
                 var popUp = SharedService.popUp;
@@ -100,6 +101,15 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     };
     var AprobarActividadError = function(response){
         $log.debug("AprobarActividad - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var EnviarEmailSuccess = function(response){
+        $log.debug("EnviarEmail - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var EnviarEmailError = function(response){
+        $log.debug("EnviarEmail - Error");
         console.log("Respuesta :: ", response);
     };
     
@@ -157,6 +167,21 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
                 $scope.loader = false;
             });
         }, 1000);
+    };
+    
+    $scope.EnviarEmail = function(idActividadGenerada){   
+        var actividadGeneral = {
+            idUsuario : $scope.sharedService.idUsuario,
+            idFlujoActorOrigen : SRIUnsaConfig.DOCE,
+            idEstado : SRIUnsaConfig.CREADO,
+            idPlanificacion : -1,
+            colaboradores : [],
+            plantillaDocumentoActividad : [],
+            actividadInvestigacion : {
+                nidActividadInvestigacion : idActividadGenerada
+            }
+        };
+        ActividadesGeneradasService.EnviarEmail(actividadGeneral).then(EnviarEmailSuccess, EnviarEmailError);
     };
     
     /************ Funciones Utilitarias ************/

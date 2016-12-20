@@ -1,4 +1,4 @@
-investigacionApp.controller('ActividadesRevisadasMasivasController', function($log, $scope, $location, ActividadesRevisadasService, 
+investigacionApp.controller('ActividadesRevisadasMasivasController', function($log, $scope, $location, ActividadesGeneradasService, 
     SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, SharedService,
     SRIUnsaConfig, UsuarioFlujoService, ActividadesRevisadasMasivasService ) {
 
@@ -85,6 +85,9 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
         $log.debug("AprobarActividades - Success");
         console.log("Respuesta :: ", response);
         $scope.GetActividadesRevisadasMasivas();
+        angular.forEach(response.body,function(value, key){
+            $scope.EnviarEmail(value.actividadInvestigacion.nidActividadInvestigacion);
+        });
         $scope.sharedService.scrollTop();
         setTimeout(function(){
             $scope.$apply(function(){ 
@@ -113,6 +116,15 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     };
     var GetCabeceraMasivaError = function(response){
         $log.debug("GetCabeceraMasiva - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var EnviarEmailSuccess = function(response){
+        $log.debug("EnviarEmail - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var EnviarEmailError = function(response){
+        $log.debug("EnviarEmail - Error");
         console.log("Respuesta :: ", response);
     };
     
@@ -182,6 +194,21 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
     $scope.GetCabeceraMasiva = function(){
         var id = $scope.sharedService.idUsuario;
         ActividadesRevisadasMasivasService.GetCabeceraMasiva(id).then(GetCabeceraMasivaSuccess, GetCabeceraMasivaError);
+    };
+    
+    $scope.EnviarEmail = function(idActividadGenerada){   
+        var actividadGeneral = {
+            idUsuario : $scope.sharedService.idUsuario,
+            idFlujoActorOrigen : SRIUnsaConfig.DOCE,
+            idEstado : SRIUnsaConfig.CREADO,
+            idPlanificacion : -1,
+            colaboradores : [],
+            plantillaDocumentoActividad : [],
+            actividadInvestigacion : {
+                nidActividadInvestigacion : idActividadGenerada
+            }
+        };
+        ActividadesGeneradasService.EnviarEmail(actividadGeneral).then(EnviarEmailSuccess, EnviarEmailError);
     };
     
     /**************** PAGINACION *****************/
