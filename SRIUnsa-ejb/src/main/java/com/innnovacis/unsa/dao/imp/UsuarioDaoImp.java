@@ -131,7 +131,7 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public List<SRIUsuarioPersona> GetDestinatariosByCodigoActorDestino(String codigoActorDestino) {
         List<SRIUsuarioPersona> usuariosPersona = null;
         try {
-                Query query = em.createNativeQuery("{call GetDestinatariosByCodigoActorDestino(?1)}", SRIUsuario.class)
+                Query query = em.createNativeQuery("{call GetDestinatariosByCodigoActorDestino(?1)}", SRIUsuarioPersona.class)
                 .setParameter(1, codigoActorDestino);
             usuariosPersona = query.getResultList();
         } catch(Exception ex) {
