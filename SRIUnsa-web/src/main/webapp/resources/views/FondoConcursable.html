@@ -14,20 +14,16 @@
                         <table width="100%" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th width="40%">Fondo</th>
-                                    <th>Accion</th>
+                                    <th >Fondo</th>
+                                    <th width="10%">Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="fondo in fondos">
                                     <td><strong>{{ fondo.snombreFondoConcursable }}</strong></td>
                                     <td nowrap>
-                                        <button type="button" class="btn btn-success btn-xs" ng-click="update(fondo)" data-toggle="modal" data-target="#popUpdateFondo">
-                                            <span class="glyphicon glyphicon-editl"></span> Editar
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteFondo(fondo)">
-                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                        </button>
+                                        <img style="width:30px; cursor: pointer" ng-click="update(fondo)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateFondo">
+                                        <img style="width:30px; cursor: pointer" ng-click="deleteFondo(fondo)" src="resources/images/iconos/eliminar.png">
                                     </td>
                                 </tr>
                             </tbody>

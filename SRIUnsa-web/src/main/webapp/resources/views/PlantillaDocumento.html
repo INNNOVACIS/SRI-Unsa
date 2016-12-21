@@ -29,7 +29,7 @@
                                 <th>Tipo</th>
                                 <th>Facultad</th>
                                 <th>Estado</th>
-                                <th>Acción</th>
+                                <th width="10%">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,12 +40,8 @@
                                 <td>{{ plantillaDocumento.sfacultad }}</td>
                                 <td>{{ plantillaDocumento.sestado }}</td>
                                 <td nowrap>
-                                    <button type="button" class="btn btn-primary btn-xs" ng-click="update(plantillaDocumento)" data-toggle="modal" data-target="#modalUpdate">
-                                        <span class="glyphicon glyphicon-edit"></span> Editar
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-xs" ng-click="EliminarPlantillaDocumento(plantillaDocumento)">
-                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                    </button>
+                                    <img style="width:30px; cursor: pointer" ng-click="update(plantillaDocumento)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#modalUpdate">
+                                    <img style="width:30px; cursor: pointer" ng-click="EliminarPlantillaDocumento(plantillaDocumento)" src="resources/images/iconos/eliminar.png">
                                 </td>
                             </tr>
                         </tbody>
@@ -56,7 +52,8 @@
                     current-rango="currentRango"
                     num-pages="numPages()" 
                     current-page="currentPage"
-                    max-size="maxSize" >    
+                    max-size="maxSize"
+                    total="total">
                 </pagination>
             </div>
         </div>

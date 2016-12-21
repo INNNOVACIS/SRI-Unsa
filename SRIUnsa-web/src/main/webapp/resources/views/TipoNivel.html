@@ -26,7 +26,7 @@
 	                                <!-- <th width="40%">Nombre Completo</th> -->
 	                             
 	                                <th>Tipo Nivel</th>
-	                                <th> </th>
+                                       <th width="10%"> Acci&oacute;</th>
 	                            </tr>
 	                        </thead>
 	                        <tbody>
@@ -35,12 +35,8 @@
 	                               
 
 	                                <td nowrap>
-	                                    <button type="button" class="btn btn-primary btn-xs" ng-click="update(tipoNivel)" data-toggle="modal" data-target="#popUpdateTipoNivel">
-	                                        <span class="glyphicon glyphicon-edit"></span> Editar
-	                                    </button>
-	                                    <button type="button" class="btn btn-default btn-xs" ng-click="deleteTipoNivel(tipoNivel)">
-	                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
-	                                    </button>
+                                            <img style="width:30px; cursor: pointer" ng-click="update(tipoNivel)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateTipoNivel">
+                                            <img style="width:30px; cursor: pointer" ng-click="deleteTipoNivel(tipoNivel)" src="resources/images/iconos/eliminar.png">
 	                                </td>
 	                            </tr>
 	                        </tbody>
@@ -50,7 +46,8 @@
                                 current-rango="currentRango"
                                 num-pages="numPages()" 
                                 current-page="currentPage"
-                                max-size="maxSize" >    
+                                max-size="maxSize"
+                                total="total">
                             </pagination>
                                             
 					</div>

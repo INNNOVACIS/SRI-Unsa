@@ -28,7 +28,7 @@
                                     <th width="25%">Actor Origen</th>
                                     <th width="25%">Actor Destino</th>
                                     <th>Estado</th>
-                                    <th>Acci&oacute;n</th>
+                                    <th width="10%">Acci&oacute;n</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,12 +38,8 @@
                                     <td>{{ flujoArista.sactorDestino }}</td>
                                     <td>{{ flujoArista.snombreEstado }}</td>
                                     <td nowrap>
-                                        <button type="button" class="btn btn-primary btn-xs" ng-click="actualizar(flujoArista)" data-toggle="modal" data-target="#modalActualizar">
-                                            <span class="glyphicon glyphicon-edit"></span> Editar
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-xs" ng-click="EliminarFlujoArista(flujoArista)" >
-                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                        </button>
+                                        <img style="width:30px; cursor: pointer" ng-click="actualizar(flujoArista)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#modalActualizar">
+                                        <img style="width:30px; cursor: pointer" ng-click="EliminarFlujoArista(flujoArista)" src="resources/images/iconos/eliminar.png">
                                     </td>
                                 </tr>
                             </tbody>
@@ -55,7 +51,8 @@
                     current-rango="currentRango"
                     num-pages="numPages()" 
                     current-page="currentPage"
-                    max-size="maxSize" >    
+                    max-size="maxSize"
+                    total="total">
                 </pagination>
             </div>
         </div>

@@ -398,7 +398,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             
             log.log(Level.INFO, "Email enable : {0}", email.recuperar());
             log.log(Level.INFO, "Email enable : {0}", to);
-            email.initGmail(to,actividadInvestigacion);
+            email.initGmail(to,actividadInvestigacion, "DOCE");
             
             
             respuesta = true;

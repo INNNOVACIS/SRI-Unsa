@@ -40,12 +40,8 @@
                                     <td>{{ estructuraOrganizacion.dependencia }}</td>
                                     <td>{{ estructuraOrganizacion.sestado }}</td>
                                     <td nowrap>
-                                        <button type="button" class="btn btn-primary btn-xs" ng-click="update(estructuraOrganizacion)" data-toggle="modal" data-target="#popUpdateEstructuraOrganizacion">
-                                            <span class="glyphicon glyphicon-edit"></span> Editar
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-xs" ng-click="deleteEstructuraOrganizacion(estructuraOrganizacion)">
-                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                        </button>
+                                        <img style="width:30px; cursor: pointer" ng-click="update(estructuraOrganizacion)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateEstructuraOrganizacion">
+                                        <img style="width:30px; cursor: pointer" ng-click="deleteEstructuraOrganizacion(estructuraOrganizacion)" src="resources/images/iconos/eliminar.png">
                                     </td>
                                 </tr>
                             </tbody>
@@ -55,7 +51,8 @@
                             current-rango="currentRango"
                             num-pages="numPages()" 
                             current-page="currentPage"
-                            max-size="maxSize" >    
+                            max-size="maxSize" 
+                            total="total">
                         </pagination>
                     </div>
                 </div>

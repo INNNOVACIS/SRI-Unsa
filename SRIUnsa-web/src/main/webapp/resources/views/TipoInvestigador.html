@@ -17,7 +17,7 @@
 	                                <!-- <th width="40%">Nombre Completo</th> -->
 	                             
 	                                <th>Tipo Investigador</th>
-	                                <th> </th>
+                                       <th width="10%">Acci&oacute;n </th>
 	                            </tr>
 	                        </thead>
 	                        <tbody>
@@ -26,12 +26,8 @@
 	                               
 
 	                                <td nowrap>
-	                                    <button type="button" class="btn btn-success btn-xs" ng-click="update(tipoInvestigador)" data-toggle="modal" data-target="#popUpdateTipoInvestigador">
-	                                        <span class="glyphicon glyphicon-editar"></span> Editar
-	                                    </button>
-	                                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTipoInvestigador(tipoInvestigador)">
-	                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
-	                                    </button>
+                                            <img style="width:30px; cursor: pointer" ng-click="update(tipoInvestigador)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateTipoInvestigador">
+                                            <img style="width:30px; cursor: pointer" ng-click="deleteTipoInvestigador(tipoInvestigador)" src="resources/images/iconos/eliminar.png">
 	                                </td>
 	                            </tr>
 	                        </tbody>

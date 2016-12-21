@@ -44,8 +44,11 @@ public class Email {
     private static String RECIPIENT = "ali.arapa@gmail.com";
     public String info;
 
-    public String GetEmail(SRIActividadInvestigacion data) {
-        String table = "<html>"
+    public String GetEmail(SRIActividadInvestigacion data, String actor) {
+        String table = "";
+        switch(actor){
+            case "DOCE":
+                    table = "<html>"
 +"<head>"
 +"</head>"
 +"<body style='margin: 0; padding: 0;'>"
@@ -159,6 +162,18 @@ public class Email {
 +"	</table>"
 +"</body>"
 +"</html>";
+                break;
+            case "DIDE":
+                break;
+            case "DIUN":
+                break;
+            case "DECA":
+                break;
+            case "DIGE":
+                break;
+        }
+        
+        
         return table;
     }
 
@@ -180,7 +195,7 @@ public class Email {
         return respuesta;
     }
     
-    public void initGmail(List<String> destinatarios, SRIActividadInvestigacion data) throws GeneralSecurityException, IOException{
+    public void initGmail(List<String> destinatarios, SRIActividadInvestigacion data, String actor) throws GeneralSecurityException, IOException{
         Email email = new Email();
         String from = email.readProperties("user");
         String pass = MD5.decrypt(email.readProperties("password"));
@@ -191,7 +206,7 @@ public class Email {
         List<String> to = destinatarios;
         this.info = from + " : " + pass + " : " + host + " : " + pass + " : " + port + " : " + auth + " : " + enable;
         String subject = "SRI UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
-        String body = GetEmail(data);
+        String body = GetEmail(data, actor);
         
         
         sendFromGMail("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, body);

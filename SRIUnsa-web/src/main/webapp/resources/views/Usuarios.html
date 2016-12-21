@@ -31,7 +31,7 @@
                                 <th>DNI</th>
                                 <th>Email</th>
                                 <th>Estado</th>
-                                <th>Acción</th>
+                                <th width="10%">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,12 +44,8 @@
                                 <td>{{ user.susuarioEmail }}</td>
                                 <td>{{ user.sestado }}</td>
                                 <td nowrap>
-                                    <button type="button" class="btn btn-primary btn-xs" ng-click="update(user)" data-toggle="modal" data-target="#popUpdateUsuario">
-                                        <span class="glyphicon glyphicon-edit"></span> Editar
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-xs" ng-click="deleteUsuario(user)">
-                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                    </button>
+                                    <img style="width:30px; cursor: pointer" ng-click="update(user)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateUsuario">
+                                    <img style="width:30px; cursor: pointer" ng-click="deleteUsuario(user)" src="resources/images/iconos/eliminar.png">
                                 </td>
                             </tr>
                         </tbody>

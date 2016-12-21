@@ -27,7 +27,7 @@
                                     <th width="40%">Nombre</th>
                                     <th>Nivel</th>
                                     <th>Padre</th>
-                                    <th>Accion</th>
+                                    <th width="10%">Acci&oacute;n</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,12 +37,8 @@
                                     <td>{{ areaInvestigacion.nIdPadre }}</td>
                                     <td>{{ areaInvestigacion.sNivel }}</td>
                                     <td nowrap>
-                                        <button type="button" class="btn btn-primary btn-xs" ng-click="update(areaInvestigacion)" data-toggle="modal" data-target="#popUpdateAreaInvestigacion">
-                                            <span class="glyphicon glyphicon-edit"></span> Editar
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-xs" ng-click="deleteAreaInvestigacion(areaInvestigacion)">
-                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                        </button>
+                                        <img style="width:30px; cursor: pointer" ng-click="update(areaInvestigacion)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateAreaInvestigacion">
+                                        <img style="width:30px; cursor: pointer" ng-click="deleteAreaInvestigacion(areaInvestigacion)" src="resources/images/iconos/eliminar.png">
                                     </td>
                                 </tr>
                             </tbody>
@@ -52,7 +48,8 @@
                             current-rango="currentRango"
                             num-pages="numPages()" 
                             current-page="currentPage"
-                            max-size="maxSize" >    
+                            max-size="maxSize"
+                            total="total">
                         </pagination>
                     </div>
                 </div>
