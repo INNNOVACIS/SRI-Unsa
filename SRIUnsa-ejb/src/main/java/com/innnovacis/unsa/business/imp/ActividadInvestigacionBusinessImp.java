@@ -37,6 +37,7 @@ import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -187,8 +188,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         int idUsuarioFlujoOrigen = -1;
         int idUsuarioFlujoDestino = -1;
         SRIUsuario usuarioOrigen = null;
-        List<SRIUsuario> usuariosDestino = new ArrayList<SRIUsuario>();
+//        List<SRIUsuario> usuariosDestino = new ArrayList<SRIUsuario>();
+        List<SRIUsuarioPersona> usuariosPersonaDestino = new ArrayList<SRIUsuarioPersona>();
         SRIFlujoArista flujoArista = new SRIFlujoArista();
+        SRIFlujoActor flujoActor = new SRIFlujoActor();
         SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
         
         SRIActividadInvestigacion actividadInvestigacion = new SRIActividadInvestigacion();
@@ -204,9 +207,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             
             idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
             flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
+            flujoActor = flujoActorDao.GetById(flujoArista.getSIdFlujoActorDestino());
          
             usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
-            usuariosDestino = usuarioDao.GetByIdActorDestino(flujoArista.getSIdFlujoActorDestino());
+            usuariosPersonaDestino = usuarioDao.GetDestinatariosByCodigoActorDestino(flujoActor.getSCodigo());
             
             procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
             procesoFlujo.setNIdArista(flujoArista.getNIdArista());
@@ -229,10 +233,11 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             entidad.getActividadInvestigacion().setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
             
             /* Insert ProcesoFlujoDestino*/
-            for(int i = 0; i < usuariosDestino.size(); i++){
+            for(int i = 0; i < usuariosPersonaDestino.size(); i++){
                 SRIProcesoFlujoDestino procesoFlujoDestino = new SRIProcesoFlujoDestino();
                 usuarioFlujoDestino.setNIdFlujoActor(flujoArista.getSIdFlujoActorDestino());
-                usuarioFlujoDestino.setNIdUsuario(usuariosDestino.get(i).getNIdUsuario());
+                int id = usuariosPersonaDestino.get(i).getNIdUsuario();
+                usuarioFlujoDestino.setNIdUsuario(id);
                 idUsuarioFlujoDestino = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoDestino);
                 
                 procesoFlujoDestino.setNIdProcesoFlujo(procesoFlujo.getNIdProcesoFlujo());
@@ -383,22 +388,29 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     @Override
     public boolean EnviarEmail(SRIActividadGeneral entidad) {
         boolean respuesta = false;
-        List<SRIUsuario> usuariosDestino = new ArrayList<SRIUsuario>();
+        List<SRIUsuarioPersona> usuariosPersonaDestino = new ArrayList<SRIUsuarioPersona>();
         SRIFlujoArista flujoArista = new SRIFlujoArista();
         SRIActividadInvestigacion actividadInvestigacion = null;
+        SRIFlujoActor flujoActor = null; 
+        
         try {
+            
             flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
-            usuariosDestino = usuarioDao.GetByIdActorDestino(flujoArista.getSIdFlujoActorDestino());
+            flujoActor = flujoActorDao.GetById(flujoArista.getSIdFlujoActorDestino());
+            usuariosPersonaDestino = usuarioDao.GetDestinatariosByCodigoActorDestino(flujoActor.getSCodigo());
             actividadInvestigacion =  actividadInvestigacionDao.GetById(entidad.getActividadInvestigacion().getNIdActividadInvestigacion());
+            
             Email email = new Email();
-            List<String> to = new ArrayList<String>();
-            for(int i = 0 ; i < usuariosDestino.size(); i++){
-                to.add(usuariosDestino.get(i).getSUsuarioEmail());
-            }
+//            List<String> to = new ArrayList<String>();
+//            List<String> nombre = new ArrayList<String>();
+//            for(int i = 0 ; i < usuariosDestino.size(); i++){
+//                to.add(usuariosDestino.get(i).getSUsuarioEmail());
+//                nombre.add(usuariosDestino.get(i).getSUsuarioLogin());
+//            }
             
             log.log(Level.INFO, "Email enable : {0}", email.recuperar());
-            log.log(Level.INFO, "Email enable : {0}", to);
-            email.initGmail(to,actividadInvestigacion, "DOCE");
+
+            email.initGmail(usuariosPersonaDestino, actividadInvestigacion, flujoActor.getSCodigo());
             
             
             respuesta = true;

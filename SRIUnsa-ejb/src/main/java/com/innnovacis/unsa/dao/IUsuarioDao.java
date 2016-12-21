@@ -35,5 +35,5 @@ public interface IUsuarioDao {
     int GetTotalPaginacion(SRIPaginacionObject entidad);
     List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad);
     SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad);
-    List<SRIUsuario> GetByIdActorDestino(int idActorDestino);
+    List<SRIUsuarioPersona> GetDestinatariosByCodigoActorDestino(String codigoActorDestino);
 }

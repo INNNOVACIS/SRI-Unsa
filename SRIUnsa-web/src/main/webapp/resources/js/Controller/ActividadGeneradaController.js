@@ -172,8 +172,8 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     $scope.EnviarEmail = function(idActividadGenerada){   
         var actividadGeneral = {
             idUsuario : $scope.sharedService.idUsuario,
-            idFlujoActorOrigen : SRIUnsaConfig.DOCE,
-            idEstado : SRIUnsaConfig.CREADO,
+            idFlujoActorOrigen : SRIUnsaConfig.DIDE,
+            idEstado : SRIUnsaConfig.REVISADO,
             idPlanificacion : -1,
             colaboradores : [],
             plantillaDocumentoActividad : [],

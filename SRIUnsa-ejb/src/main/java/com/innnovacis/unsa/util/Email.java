@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -44,7 +45,7 @@ public class Email {
     private static String RECIPIENT = "ali.arapa@gmail.com";
     public String info;
 
-    public String GetEmail(SRIActividadInvestigacion data, String actor) {
+    public String GetEmail(SRIActividadInvestigacion data, String actor, String nombreCompleto) {
         String table = "";
         switch(actor){
             case "DOCE":
@@ -71,7 +72,7 @@ public class Email {
 +"								</tr>"
 +"								<tr>"
 +"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado Ali Arapa se realizo el registro de su Actividad con exito, con Codigo Operacion SRI00005489."
++"										Estimado " + nombreCompleto + " se realizo el registro de su Actividad con exito, con Codigo Operacion SRI00005489."
 +"									</td>"
 +"								</tr>"
 +"								<tr>"
@@ -195,7 +196,7 @@ public class Email {
         return respuesta;
     }
     
-    public void initGmail(List<String> destinatarios, SRIActividadInvestigacion data, String actor) throws GeneralSecurityException, IOException{
+    public void initGmail(List<SRIUsuarioPersona> destinatarios, SRIActividadInvestigacion data, String actor) throws GeneralSecurityException, IOException{
         Email email = new Email();
         String from = email.readProperties("user");
         String pass = MD5.decrypt(email.readProperties("password"));
@@ -203,13 +204,17 @@ public class Email {
         String port = email.readProperties("port");
         String auth = email.readProperties("auth");
         String enable = email.readProperties("enable");
-        List<String> to = destinatarios;
+        
+        for(SRIUsuarioPersona destinatario : destinatarios){
+            List<String> to = new ArrayList<String>();
+            to.add(destinatario.getSUsuarioEmail());
+            String subject = "SRI UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
+            String nombreCompleto = destinatario.getSNombre() + " " + destinatario.getSApellido();
+            String body = GetEmail(data, actor, nombreCompleto);
+            sendFromGMail("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, body);
+        }
+        
         this.info = from + " : " + pass + " : " + host + " : " + pass + " : " + port + " : " + auth + " : " + enable;
-        String subject = "SRI UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
-        String body = GetEmail(data, actor);
-        
-        
-        sendFromGMail("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, body);
     }
     public String recuperar() throws IOException, GeneralSecurityException{
         Email email = new Email();
