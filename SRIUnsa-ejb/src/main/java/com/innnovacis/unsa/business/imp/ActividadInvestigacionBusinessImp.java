@@ -401,17 +401,9 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             actividadInvestigacion =  actividadInvestigacionDao.GetById(entidad.getActividadInvestigacion().getNIdActividadInvestigacion());
             
             Email email = new Email();
-//            List<String> to = new ArrayList<String>();
-//            List<String> nombre = new ArrayList<String>();
-//            for(int i = 0 ; i < usuariosDestino.size(); i++){
-//                to.add(usuariosDestino.get(i).getSUsuarioEmail());
-//                nombre.add(usuariosDestino.get(i).getSUsuarioLogin());
-//            }
-            
             log.log(Level.INFO, "Email enable : {0}", email.recuperar());
 
             email.initGmail(usuariosPersonaDestino, actividadInvestigacion, flujoActor.getSCodigo());
-            
             
             respuesta = true;
         } catch(Exception ex) {
