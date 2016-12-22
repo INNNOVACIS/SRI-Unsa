@@ -57,7 +57,9 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         $log.debug("GetActoresByIdUsuario - Success");
         console.log("Respuesta :: ", response);
         sessvars.locationHome = seleccionarHome(response.body);
+        sessvars.crearActividadHome = sessvars.locationHome.replace("/", "#");
         $scope.sharedService.locationHome = sessvars.locationHome;
+        $scope.sharedService.crearActividadHome = sessvars.crearActividadHome;
         $location.path($scope.sharedService.locationHome);
     };
     var GetActoresByIdUsuarioError = function(response){
