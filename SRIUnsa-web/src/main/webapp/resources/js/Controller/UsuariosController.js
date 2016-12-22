@@ -129,6 +129,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
 
     $scope.$watch('currentPage + currentRango', function() {
         $scope.getUsuariosByPagina();
+        $scope.row = ($scope.currentPage - 1) * $scope.currentRango + 1;
     });
     
     /*********************************************/

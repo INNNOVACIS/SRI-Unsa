@@ -36,6 +36,7 @@
                     <table width="100%" class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th># </th>
                                 <th ng-show="currentTipo != '0'"  width="25%">Tipo Actividad</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
@@ -47,6 +48,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="user in users">
+                                <td>{{ $index + row}}</td>
                                 <td ng-show="currentTipo != '0'">{{ user.snombreActividadInvestigacion }}</td>
                                 <td>{{ user.snombre }}</td>
                                 <td>{{ user.sapellido }}</td>

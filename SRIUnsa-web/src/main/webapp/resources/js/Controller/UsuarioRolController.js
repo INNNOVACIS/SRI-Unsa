@@ -105,6 +105,7 @@ investigacionApp.controller('UsuarioRolController', function($log, $scope, Usuar
 
     $scope.$watch('currentPage + currentRango', function() {
         $scope.getUsuariosRolByPagina();
+        $scope.row = ($scope.currentPage - 1) * $scope.currentRango + 1;
     });
     
     var getUsuariosRolByPaginaSuccess = function(response){
