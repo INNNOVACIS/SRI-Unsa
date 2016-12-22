@@ -84,19 +84,6 @@
                             </div>
                         </form>
 
-
-
-
-    <!--                    <form class="form-horizontal">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </form>-->
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-primary" ng-click="filtrar()" >
@@ -205,7 +192,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="actividadGenerada in actividadesGeneradas | orderBy:sortType:sortReverse">
+                                <tr ng-repeat="actividadGenerada in actividadesGeneradas | orderBy:sortType:sortReverse" class="table-overflow">
                                     <td >{{ actividadGenerada.id }}</td>
                                     <td >{{ actividadGenerada.facultad }}</td>
                                     <td >{{ actividadGenerada.escuela }}</td>

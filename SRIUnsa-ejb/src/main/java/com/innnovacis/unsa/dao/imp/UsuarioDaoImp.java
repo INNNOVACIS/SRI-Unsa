@@ -30,6 +30,7 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public SRIUsuario  Insert(SRIUsuario entidad) {
         try{
             entidad.setDFechaCreacion(new Date());
+            entidad.setDFechaModificacion(new Date());
             em.persist(entidad);
         } catch(Exception ex){
             throw ex;

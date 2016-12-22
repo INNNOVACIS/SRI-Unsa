@@ -170,7 +170,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="actividadPendiente in actividadesPendientes | orderBy:sortType:sortReverse">
+                                <tr ng-repeat="actividadPendiente in actividadesPendientes | orderBy:sortType:sortReverse" class="table-overflow">
                                     <td >{{ actividadPendiente.id }}</td>
                                     <td >{{ actividadPendiente.facultad }}</td>
                                     <td >{{ actividadPendiente.escuela }}</td>

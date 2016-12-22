@@ -99,7 +99,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="actividadRevisada in actividadesRevisadas" ng-class="{'filaSeleccionada': actividadRevisada.seleccionado}">
+                                            <tr ng-repeat="actividadRevisada in actividadesRevisadas" ng-class="{'filaSeleccionada': actividadRevisada.seleccionado}" class="table-overflow">
                                                 <td>{{ $index + 1 }}</td> <!-- $index + 1 -->
                                                 <td><strong>{{ actividadRevisada.nombreactividad }}</strong></td>
                                                 <td>{{ actividadRevisada.docente.nombre }}</td>
@@ -255,7 +255,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="detalleMasiva in detalleMasivas | orderBy:sortType:sortReverse">
+                                            <tr ng-repeat="detalleMasiva in detalleMasivas | orderBy:sortType:sortReverse" class="table-overflow">
                                                 <td >{{ detalleMasiva.id }}</td>
                                                 <td >{{ detalleMasiva.facultad }}</td>
                                                 <td >{{ detalleMasiva.escuela }}</td>
