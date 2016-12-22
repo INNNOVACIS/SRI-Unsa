@@ -25,6 +25,8 @@ public class SRIActividadGeneral {
     
     private int idPlanificacion;
     
+    private String codigoActor;
+    
     private SRIActividadInvestigacion actividadInvestigacion;
     
     private List<SRIPersona> colaboradores;
@@ -69,6 +71,14 @@ public class SRIActividadGeneral {
 
     public void setIdPlanificacion(int idPlanificacion) {
         this.idPlanificacion = idPlanificacion;
+    }
+
+    public String getCodigoActor() {
+        return codigoActor;
+    }
+
+    public void setCodigoActor(String codigoActor) {
+        this.codigoActor = codigoActor;
     }
 
     public List<SRIPersona> getColaboradores() {

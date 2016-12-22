@@ -16,6 +16,12 @@ investigacionApp.factory("SRIUnsaConfig", function() {
         DECA : 4, //Decano
         DIGE : 5, //Director General
         
+        codeDOCE : "DOCE", //Docente Actor
+        codeDIDE : "DIDE", //Director Departamento
+        codeDIUN : "DIUN", //Director Unidad
+        codeDECA : "DECA", //Decano
+        codeDIGE : "DIGE", //Director General
+        
         /*Codigo Estados*/
         CREADO : 1,
         REVISADO : 2

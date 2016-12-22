@@ -171,6 +171,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
                     idFlujoActorOrigen : SRIUnsaConfig.DIUN,
                     idEstado : SRIUnsaConfig.REVISADO,
                     idPlanificacion : -1,
+                    codigoActor : SRIUnsaConfig.codeDIUN,
                     actividadInvestigacion : {
                         nidActividadInvestigacion : value.idactividadinvestigacion
                     }

@@ -345,6 +345,7 @@
                 idFlujoActorOrigen : SRIUnsaConfig.DOCE,
                 idEstado : SRIUnsaConfig.CREADO,
                 idPlanificacion : -1,
+                codigoActor : SRIUnsaConfig.codeDOCE,
                 colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
                 plantillaDocumentoActividad : getValoresPlantilla(),
                 actividadInvestigacion : {
@@ -403,6 +404,7 @@
             idFlujoActorOrigen : SRIUnsaConfig.DOCE,
             idEstado : SRIUnsaConfig.CREADO,
             idPlanificacion : -1,
+            codigoActor : SRIUnsaConfig.codeDOCE,
             colaboradores : [],
             plantillaDocumentoActividad : [],
             actividadInvestigacion : {

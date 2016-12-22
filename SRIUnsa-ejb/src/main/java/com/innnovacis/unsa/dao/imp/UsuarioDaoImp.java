@@ -197,4 +197,17 @@ public class UsuarioDaoImp implements IUsuarioDao {
         return total.intValue();
     }
 
+    @Override
+    public List<SRIUsuarioPersona> GetUsuarioPersonaByIdUsuario(int idUsuario) {
+        List<SRIUsuarioPersona> usuariosPersona = null;
+        try {
+                Query query = em.createNativeQuery("{call GetUsuarioPersonaByIdUsuario(?1)}", SRIUsuarioPersona.class)
+                .setParameter(1, idUsuario);
+            usuariosPersona = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return usuariosPersona;
+    }
+
 }

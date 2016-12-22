@@ -140,6 +140,7 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
             idFlujoActorOrigen : SRIUnsaConfig.DIDE,
             idEstado : SRIUnsaConfig.REVISADO,
             idPlanificacion : -1,
+            codigoActor : SRIUnsaConfig.codeDIDE,
             actividadInvestigacion : {
                 nidActividadInvestigacion : $scope.idActividad
             }

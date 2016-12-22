@@ -388,20 +388,38 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     @Override
     public boolean EnviarEmail(SRIActividadGeneral entidad) {
         boolean respuesta = false;
-        List<SRIUsuarioPersona> usuariosPersonaDestino = new ArrayList<SRIUsuarioPersona>();
-        SRIFlujoArista flujoArista = new SRIFlujoArista();
+        List<SRIUsuarioPersona> usuariosPersonaDestino   = new ArrayList<SRIUsuarioPersona>();
+        List<SRIUsuarioPersona> usuarioPersonaOrigen     = new ArrayList<SRIUsuarioPersona>();
         SRIActividadInvestigacion actividadInvestigacion = null;
-        SRIFlujoActor flujoActor = null; 
+        SRIFlujoArista flujoArista = new SRIFlujoArista();
+        SRIFlujoActor flujoActor   = null;         
         
         try {
             
             flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
-            flujoActor = flujoActorDao.GetById(flujoArista.getSIdFlujoActorDestino());
+            flujoActor  = flujoActorDao.GetById(flujoArista.getSIdFlujoActorDestino());
+            usuarioPersonaOrigen   = usuarioDao.GetUsuarioPersonaByIdUsuario(entidad.getIdUsuario());
             usuariosPersonaDestino = usuarioDao.GetDestinatariosByCodigoActorDestino(flujoActor.getSCodigo());
             actividadInvestigacion =  actividadInvestigacionDao.GetById(entidad.getActividadInvestigacion().getNIdActividadInvestigacion());
             
+            
             Email email = new Email();
             log.log(Level.INFO, "Email enable : {0}", email.recuperar());
+            
+            switch(entidad.getCodigoActor()){
+                case "DOCE":
+                    email.initGmail(usuarioPersonaOrigen, actividadInvestigacion, entidad.getCodigoActor());
+                    break;
+                case "DIDE":
+                    break;
+                case "DIUN":
+                    break;
+                case "DECA":
+                    break;
+                case "DIGE":
+                    break;
+
+            }
 
             email.initGmail(usuariosPersonaDestino, actividadInvestigacion, flujoActor.getSCodigo());
             
