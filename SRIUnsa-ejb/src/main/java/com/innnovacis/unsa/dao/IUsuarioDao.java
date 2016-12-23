@@ -7,6 +7,7 @@ package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
@@ -37,4 +38,7 @@ public interface IUsuarioDao {
     SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad);
     List<SRIUsuarioPersona> GetDestinatariosByCodigoActorDestino(String codigoActorDestino);
     List<SRIUsuarioPersona> GetUsuarioPersonaByIdUsuario(int idUsuario);
+    
+    
+    SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos();
 }

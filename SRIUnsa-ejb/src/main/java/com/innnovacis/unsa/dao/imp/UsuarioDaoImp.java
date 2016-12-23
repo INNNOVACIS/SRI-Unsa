@@ -4,6 +4,7 @@ package com.innnovacis.unsa.dao.imp;
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
@@ -209,6 +210,18 @@ public class UsuarioDaoImp implements IUsuarioDao {
             throw ex;
         }
         return usuariosPersona;
+    }
+
+    @Override
+    public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos() {
+        SRIDocenteActivosInactivos respuesta = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalDocentesActivosInactivos()}", SRIDocenteActivosInactivos.class);
+            respuesta = (SRIDocenteActivosInactivos) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
     }
 
 }

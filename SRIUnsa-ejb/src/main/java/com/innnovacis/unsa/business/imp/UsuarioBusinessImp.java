@@ -9,6 +9,7 @@ import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIPersona;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
@@ -279,6 +280,18 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
             throw ex;
         }
         return respuesta;
+    }
+
+    @Override
+    public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos() {
+        SRIDocenteActivosInactivos respuesta = null;
+         try{
+            respuesta = usuarioDao.GetTotalDocentesActivosInactivos();
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+         return respuesta;
     }
     
 }

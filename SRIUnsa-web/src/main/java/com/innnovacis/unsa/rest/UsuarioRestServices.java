@@ -9,6 +9,7 @@ package com.innnovacis.unsa.rest;
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
@@ -244,6 +245,17 @@ public class UsuarioRestServices {
         responseObj.put("lista", lista);
         Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
         
+        return builder.build();
+    }
+    
+    @GET
+    @Path("/GetTotalDocentesActivosInactivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetTotalDocentesActivosInactivos() {
+        SRIDocenteActivosInactivos docenteActivosInactivos = usuarioBusiness.GetTotalDocentesActivosInactivos();
+        Map<String, Object> response = new HashMap<>();
+        response.put("body", docenteActivosInactivos);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(response);
         return builder.build();
     }
     
