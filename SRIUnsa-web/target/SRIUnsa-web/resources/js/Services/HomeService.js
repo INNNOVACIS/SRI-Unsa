@@ -22,6 +22,22 @@ investigacionApp.service("HomeService", function(SRIUnsaConfig, $log, $http, $q)
         });
         return deferred.promise;
     };
+    
+    this.GuardarInvestigacion = function(request) {
+        $log.debug("HomeService - GuardarInvestigacion");
+        /*registrar-actividad*/
+        var deferred = $q.defer();
+        $http({
+            method : 'POST',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GuardarInvestigacion',
+            data : request
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {			
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
 
     this.registrarInvestigacion = function(request) {
         $log.debug("HomeService - registrarInvestigacion");

@@ -14,7 +14,7 @@ investigacionApp.directive('pagination', ['$parse', function ($parse) {
                         +'  </ul>'
                         +'</div>'
                         +'<div class="col-md-5 col-sm-5" style="margin-top:25px;">'
-                        +'  <p style="text-align:right;">{{inicio}} - {{fin}} de {{total}} Actividades<p>'
+                        +'  <p style="text-align:right;">{{inicio}} - {{fin}} de {{total}} Registros<p>'
                         +'</div>'
                     +'</nav>',
         scope: { 

@@ -144,6 +144,26 @@ public class ActividadInvestigacionRestService {
     }
     
     @POST
+    @Path("/GuardarInvestigacion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GuardarInvestigacion(SRIActividadGeneral entidad){
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIActividadGeneral body = null;
+        try {
+            body = actividadInvestigacionBusiness.GuardarInvestigacion(entidad);
+            respuesta.put("body", body);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GuardarInvestigacion - Success : {0}", body.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GuardarInvestigacion - Error : {0}", ex.getMessage());
+        }
+        return builder.build();        
+    }
+    
+    @POST
     @Path("/enviarEmail")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

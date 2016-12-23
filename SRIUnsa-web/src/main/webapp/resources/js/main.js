@@ -20,6 +20,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/HomeDirectorUnidad.html',
 		controller : 'HomeDirectorUnidadController'
 	})
+//        .when('/homeVicerector', {
+//		templateUrl : 'resources/views/HomeVicerector.html',
+//		controller : 'VicerectorController'
+//	})
         .when('/actividad/:ESTADO/:ID',{
 		templateUrl : 'resources/views/ActividadGenerada.html',
 		controller : 'ActividadGeneradaController'

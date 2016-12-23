@@ -142,6 +142,7 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
 
     $scope.$watch('currentPage + currentRango', function() {
         $scope.getActividades();
+        $scope.row = ($scope.currentPage - 1) * $scope.currentRango + 1;
     });
     
     /*********************************************/

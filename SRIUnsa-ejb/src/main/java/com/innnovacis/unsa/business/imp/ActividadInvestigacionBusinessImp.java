@@ -183,6 +183,100 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
     
     @Override
+    public SRIActividadGeneral GuardarInvestigacion(SRIActividadGeneral entidad) {
+        
+        int idUsuarioFlujoOrigen = -1;
+        int idUsuarioFlujoDestino = -1;
+        SRIUsuario usuarioOrigen = null;
+//        List<SRIUsuario> usuariosDestino = new ArrayList<SRIUsuario>();
+        List<SRIUsuarioPersona> usuariosPersonaDestino = new ArrayList<SRIUsuarioPersona>();
+        SRIFlujoArista flujoArista = new SRIFlujoArista();
+        SRIFlujoActor flujoActor = new SRIFlujoActor();
+        SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
+        
+        SRIActividadInvestigacion actividadInvestigacion = new SRIActividadInvestigacion();
+        SRIPlanificacionActividad planificacionActividad = new SRIPlanificacionActividad(); 
+        SRIDetalleInvestigacionFlujo detalleInvestigacionFlujo =  new SRIDetalleInvestigacionFlujo();
+        
+        SRIUsuarioFlujo usuarioFlujoOrigen = new SRIUsuarioFlujo();
+        SRIUsuarioFlujo usuarioFlujoDestino = new SRIUsuarioFlujo();
+        
+        try{
+            usuarioFlujoOrigen.setNIdFlujoActor(entidad.getIdFlujoActorOrigen());
+            usuarioFlujoOrigen.setNIdUsuario(entidad.getIdUsuario());
+            
+            idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
+            flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
+            flujoActor = flujoActorDao.GetById(flujoArista.getSIdFlujoActorDestino());
+         
+            usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
+            usuariosPersonaDestino = usuarioDao.GetDestinatariosByCodigoActorDestino(flujoActor.getSCodigo());
+            
+            procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
+            procesoFlujo.setNIdArista(flujoArista.getNIdArista());
+            procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
+            procesoFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+            procesoFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
+            procesoFlujo.setSEstado("A");
+            procesoFlujo = procesoFlujoDao.Insert(procesoFlujo);
+            
+            actividadInvestigacion = actividadInvestigacionDao.Insert(entidad.getActividadInvestigacion());
+            planificacionActividad.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+            planificacionActividad = planificacionActividadDao.Insert(planificacionActividad);
+            
+            detalleInvestigacionFlujo.setNIdProcesoFlujo(procesoFlujo.getNIdProcesoFlujo());
+            detalleInvestigacionFlujo.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+            detalleInvestigacionFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+            detalleInvestigacionFlujo.setSEstado("A");
+            detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
+            
+            entidad.setIdPlanificacion(planificacionActividad.getNIdPlanificacionActividad());
+            entidad.getActividadInvestigacion().setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+            
+            /* Insert ProcesoFlujoDestino*/
+            for(int i = 0; i < usuariosPersonaDestino.size(); i++){
+                SRIProcesoFlujoDestino procesoFlujoDestino = new SRIProcesoFlujoDestino();
+                usuarioFlujoDestino.setNIdFlujoActor(flujoArista.getSIdFlujoActorDestino());
+                int id = usuariosPersonaDestino.get(i).getNIdUsuario();
+                usuarioFlujoDestino.setNIdUsuario(id);
+                idUsuarioFlujoDestino = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoDestino);
+                
+                procesoFlujoDestino.setNIdProcesoFlujo(procesoFlujo.getNIdProcesoFlujo());
+                procesoFlujoDestino.setNIdUsuarioFlujo(idUsuarioFlujoDestino);
+                procesoFlujoDestino.setSEstadoEnvio("CREADO");
+                procesoFlujoDestino.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                procesoFlujoDestino.setSEstado("A");
+                procesoFlujoDestino = procesoFlujoDestinoDao.Insert(procesoFlujoDestino);
+            }
+            
+            /*Insertar Colaboradores*/
+            for(int i = 0; i < entidad.getColaboradores().size(); i++){
+                SRIPersonaColaborador personaColaborador = new SRIPersonaColaborador();
+                personaColaborador.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+                personaColaborador.setNIdPersona(entidad.getColaboradores().get(i).getNIdPersona());
+                personaColaborador.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                personaColaborador.setSEstado("A");
+                personaColaborador = personaColaboradorDao.Insert(personaColaborador);
+            }
+            
+            /*Insertar PlantillaDocumentoActividades*/
+            for(int i = 0; i < entidad.getPlantillaDocumentoActividad().size(); i++){
+                SRIPlantillaDocumentoActividad plantillaDocumentoActividad = new SRIPlantillaDocumentoActividad();
+                plantillaDocumentoActividad.setNIdPlantillaDocumento(entidad.getPlantillaDocumentoActividad().get(i).getNIdPlantillaDocumento());
+                plantillaDocumentoActividad.setNIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+                plantillaDocumentoActividad.setSValor(entidad.getPlantillaDocumentoActividad().get(i).getSValor());
+                plantillaDocumentoActividad.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                plantillaDocumentoActividad.setSEstado("A");
+                plantillaDocumentoActividad = plantillaDocumentoActividadDao.Insert(plantillaDocumentoActividad);
+            }
+            
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return entidad;
+    }
+    
+    @Override
     public SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad) {
         
         int idUsuarioFlujoOrigen = -1;
@@ -216,6 +310,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             procesoFlujo.setNIdArista(flujoArista.getNIdArista());
             procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
             procesoFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+            procesoFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
             procesoFlujo.setSEstado("A");
             procesoFlujo = procesoFlujoDao.Insert(procesoFlujo);
             

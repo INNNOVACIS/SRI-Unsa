@@ -91,7 +91,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="actividadDocente in actividadesDocentes">
-                                <td>{{ actividadDocente.idactividadinvestigacion }}</td>
+                                <td>{{ $index + row }}</td>
                                 <td><strong>{{ actividadDocente.nombreactividad }}</strong></td>
                                 <td>{{ actividadDocente.dni }}</td>
                                 <td>{{ actividadDocente.horas }}</td>
@@ -105,7 +105,8 @@
                         current-rango="currentRango"
                         num-pages="numPages()" 
                         current-page="currentPage"
-                        max-size="maxSize" >    
+                        max-size="maxSize"
+                        total="total">
                     </pagination>
                 </div>
               </div>

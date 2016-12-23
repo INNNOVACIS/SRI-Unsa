@@ -23,6 +23,7 @@ investigacionApp.factory("SRIUnsaConfig", function() {
         codeDIGE : "DIGE", //Director General
         
         /*Codigo Estados*/
+        PREVIO : 4,
         CREADO : 1,
         REVISADO : 2
         

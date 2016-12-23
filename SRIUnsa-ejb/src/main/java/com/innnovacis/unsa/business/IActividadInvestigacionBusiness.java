@@ -27,6 +27,7 @@ public interface IActividadInvestigacionBusiness {
     SRIActividadGeneral Get(int idEntidad);
     List<SRIActividadInvestigacion> GetAll();
     
+    SRIActividadGeneral GuardarInvestigacion(SRIActividadGeneral entidad);
     SRIActividadGeneral RegistrarActividad(SRIActividadGeneral entidad);
     SRIActividadGeneral AprobarActividadInvestigacion(SRIActividadGeneral entidad);
     List<SRIActividadGeneral> AprobarActividadInvestigacionMasivo(List<SRIActividadGeneral> entidad);

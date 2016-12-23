@@ -148,6 +148,7 @@ investigacionApp.controller('RelacionDocentesController', function($log, $scope,
 
     $scope.$watch('currentPage + currentRango', function() {
         $scope.GetActividadesByDocente();
+        $scope.row = ($scope.currentPage - 1) * $scope.currentRango + 1;
     });
     
     var getFiltros = function(){
