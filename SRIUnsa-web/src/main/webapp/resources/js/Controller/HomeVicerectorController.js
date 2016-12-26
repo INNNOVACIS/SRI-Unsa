@@ -38,7 +38,7 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
             angular.forEach(response.lista, function(actividad, keyActividades){
                 if(tipoActividad.nidTipoActividadInvestigacion === actividad.nidTipoActividadInvestigacion ){
                     tipoActividad.total = tipoActividad.total + 1;
-                }
+                }//
             });
         });
         
