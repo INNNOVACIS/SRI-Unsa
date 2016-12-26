@@ -1,5 +1,5 @@
 investigacionApp.controller('HomeVicerectorController', function($log, $scope, UsuariosService, $location, 
-    TipoInvestigacionService, SharedService) {
+    TipoInvestigacionService, SharedService, HomeVicerectorService) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
@@ -7,17 +7,6 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     $scope.estados = ['A','I'];
     $scope.idTipoInvestigacion = 0;
     $scope.currentTipo = 0;
-    
-    var GetTipoInvestigacionesSuccess = function(response){
-        $log.debug("GetTipoInvestigaciones - Success");
-        console.log("Respuesta :: ", response);
-        $scope.tipoInvestigaciones = response;
-        $scope.GetTotalDocentesByTipoActividad();
-    };
-    var GetTipoInvestigacionesError = function(response){
-        $log.debug("GetTipoInvestigaciones - Error");
-        console.log("Respuesta :: ", response);
-    };
     
     var GetTotalDocentesActivosInactivosSuccess = function(response){
         $log.debug("GetTotalDocentesActivosInactivos - Success");
@@ -27,39 +16,41 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     };
     var GetTotalDocentesActivosInactivosError = function(response){
         $log.debug("GetTotalDocentesActivosInactivos - Error");
+        console.log("Respuesta :: ", response.body);
+    };
+    
+    var GetTotalActividadesByTipoActividadSuccess = function(response){
+        $log.debug("GetTotalActividadesByTipoActividad - Success");
+        console.log("Respuesta :: ", response);
+        $scope.tipoInvestigaciones = response.body;
+    };
+    var GetTotalActividadesByTipoActividadError = function(response){
+        $log.debug("GetTotalActividadesByTipoActividad - Error");
         console.log("Respuesta :: ", response);
     };
     
-    var GetTotalDocentesByTipoActividadSuccess = function(response){
-        $log.debug("GetTotalDocentesByTipoActividad - Success");
+    var GetActivosInactivosByFacultadSuccess = function(response){
+        $log.debug("GetActivosInactivosByFacultad - Error");
         console.log("Respuesta :: ", response);
-        angular.forEach($scope.tipoInvestigaciones, function(tipoActividad, key){
-            tipoActividad.total = 0;
-            angular.forEach(response.lista, function(actividad, keyActividades){
-                if(tipoActividad.nidTipoActividadInvestigacion === actividad.nidTipoActividadInvestigacion ){
-                    tipoActividad.total = tipoActividad.total + 1;
-                }//
-            });
-        });
-        
-    };
-    var GetTotalDocentesByTipoActividadError = function(response){
-        $log.debug("GetTotalDocentesByTipoActividad - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    
-    $scope.GetTotalDocentesByTipoActividad = function(){
-        angular.forEach($scope.tipoInvestigaciones, function(value, key){
-            var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : 0, idTipoInvestigacion : value.nidTipoActividadInvestigacion}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
-            UsuariosService.GetUsuariosColor(objPagina).then(GetTotalDocentesByTipoActividadSuccess, GetTotalDocentesByTipoActividadError);
+        $scope.docentesFacultades = response.body;
+        angular.forEach($scope.docentesFacultades, function(value, key){
+            value.porcentajeActivo = GetPorcentajeFacultad(value.ntotal, value.nactivos);
+            value.porcentajeInactivo = GetPorcentajeFacultad(value.ntotal, value.ninactivos);
         });
     };
-    
-    $scope.GetTipoInvestigaciones = function(){
-        TipoInvestigacionService.getInvestigaciones().then(GetTipoInvestigacionesSuccess, GetTipoInvestigacionesError);
+    var GetActivosInactivosByFacultadError = function(response){
+        $log.debug("GetActivosInactivosByFacultad - Error");
+        console.log("Respuesta :: ", response);
     };
+    
+    
+    $scope.GetTotalActividadesByTipoActividad = function(){
+        HomeVicerectorService.GetTotalActividadesByTipoActividad().then(GetTotalActividadesByTipoActividadSuccess, GetTotalActividadesByTipoActividadError);
+    };
+    $scope.GetActivosInactivosByFacultad = function(){
+        HomeVicerectorService.GetActivosInactivosByFacultad().then(GetActivosInactivosByFacultadSuccess, GetActivosInactivosByFacultadError);
+    };
+    
     $scope.goHome = function(usuario){
         console.log("USUARIO :: ", usuario);
         $scope.sharedService.idDocente = usuario.nidUsuario;
@@ -73,6 +64,14 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     };
     $scope.GetTotalDocentesActivosInactivos = function(){
         UsuariosService.GetTotalDocentesActivosInactivos().then(GetTotalDocentesActivosInactivosSuccess, GetTotalDocentesActivosInactivosError);
+    };
+    
+    var GetPorcentajeFacultad = function(total, valor){
+        var porcentaje = "50%";
+        if(total !== 0 ){
+            porcentaje = (valor * 100 / total) + "%";
+        }
+        return porcentaje;
     };
     
     var GetPorcentaje = function(docentes){
@@ -123,6 +122,7 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     };
     
     $scope.getUsuariosByPagina();
-    $scope.GetTipoInvestigaciones();
     $scope.GetTotalDocentesActivosInactivos();
+    $scope.GetActivosInactivosByFacultad();
+    $scope.GetTotalActividadesByTipoActividad();
 });

@@ -5,7 +5,9 @@ import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.inject.Inject;
@@ -379,5 +381,29 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
             throw ex;
         }
         return listActividades;
+    }
+
+    @Override
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad() {
+        List<SRITotalTipoActividad> totalTipoActividad = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividad()}", SRITotalTipoActividad.class);
+            totalTipoActividad = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return totalTipoActividad;
+    }
+
+    @Override
+    public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad() {
+        List<SRIDocentesActivosInactivosFacultad> totalTipoActividad = null;
+        try {
+            Query query = em.createNativeQuery("{call GetActivosInactivosByFacultad()}", SRIDocentesActivosInactivosFacultad.class);
+            totalTipoActividad = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return totalTipoActividad;
     }
 }

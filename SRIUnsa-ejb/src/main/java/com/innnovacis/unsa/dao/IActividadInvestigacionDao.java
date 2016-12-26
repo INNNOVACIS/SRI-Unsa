@@ -7,7 +7,9 @@ package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -39,4 +41,7 @@ public interface IActividadInvestigacionDao {
     List<SRIActividadGeneralPaginacion> GetActividadesByDocente (SRIPaginacion entidad);
     List<SRIActividadGeneralPaginacion> GetActividadesByDocenteColaboradores (SRIPaginacion entidad);
     List<SRIActividadInvestigacion> GetActividadesByDocenteDetalle (SRIPaginacion entidad);
+    
+    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad();
+    List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad();
 }

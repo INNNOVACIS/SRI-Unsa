@@ -1,16 +1,25 @@
-/* barra de progreso*/
+/* Barra de Progreso*/
 .progress{
     height: 40px;
 }
 .progress-bar{
     padding: 10px;
 }
-.progess-text{
+.progress-text{
     float: left !important;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
 }
-
+.progress-activo{
+    background-color: #5cb85c !important;
+}
+.progress-inactivo{
+    background-color: #c5c5c5 !important;
+}
+.progress-label{
+    background-color: #951f1f !important;
+}
+/* End Barra de Progreso*/
 
 .table-overflow>td {
     max-width: 200px;

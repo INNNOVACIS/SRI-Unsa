@@ -36,7 +36,9 @@ import com.innnovacis.unsa.util.Email;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
+import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -668,6 +670,30 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             respuesta.put("lista", lstActividadGeneral);
             respuesta.put("total", total);
         } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad() {
+        List<SRITotalTipoActividad> respuesta = null;
+        try{
+            respuesta = actividadInvestigacionDao.GetTotalActividadesByTipoActividad();
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad() {
+        List<SRIDocentesActivosInactivosFacultad> respuesta = null;
+        try{
+            respuesta = actividadInvestigacionDao.GetActivosInactivosByFacultad();
+        }
+        catch(Exception ex){
             throw ex;
         }
         return respuesta;

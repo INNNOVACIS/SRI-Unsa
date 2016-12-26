@@ -8,6 +8,8 @@ package com.innnovacis.unsa.rest;
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
+import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
+import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,6 +181,44 @@ public class ActividadInvestigacionRestService {
         } catch(Exception ex) {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
             log.log(Level.INFO, "EnviarEmail - Error : {0}", ex.getMessage());
+        }
+        return builder.build();
+    }
+    
+    @GET
+    @Path("/GetTotalActividadesByTipoActividad")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetTotalActividadesByTipoActividad(){
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        List<SRITotalTipoActividad>  totalTipoActividades = null;
+        try {
+            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
+            respuesta.put("body", totalTipoActividades);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetTotalActividadesByTipoActividad - GetAll : {0}", totalTipoActividades.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetTotalActividadesByTipoActividad - GetAll - Error : {0}", ex.getMessage());
+        }
+        return builder.build();
+    }
+    
+    @GET
+    @Path("/GetActivosInactivosByFacultad")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetActivosInactivosByFacultad(){
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        List<SRIDocentesActivosInactivosFacultad>  totalTipoActividades = null;
+        try {
+            totalTipoActividades = actividadInvestigacionBusiness.GetActivosInactivosByFacultad();
+            respuesta.put("body", totalTipoActividades);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetActivosInactivosByFacultad  : {0}", totalTipoActividades.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetActivosInactivosByFacultad Error : {0}", ex.getMessage());
         }
         return builder.build();
     }

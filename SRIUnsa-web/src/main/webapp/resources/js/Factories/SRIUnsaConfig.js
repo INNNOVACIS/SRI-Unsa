@@ -7,7 +7,7 @@ investigacionApp.factory("SRIUnsaConfig", function() {
     return {
         //Modo Local
 //        SRIUnsaUrlServicio: 'http://104.131.8.31:8080/SRIUnsa-web/rest',
-//        SRIUnsaUrlServicio: 'http://192.168.1.70:8080/SRIUnsa-web/rest',
+//        SRIUnsaUrlServicio: 'http://192.168.1.80:8080/SRIUnsa-web/rest',
         SRIUnsaUrlServicio: 'http://localhost:8080/SRIUnsa-web/rest',
         /*Codigo Actores*/
         DOCE : 1, //Docente Actor
