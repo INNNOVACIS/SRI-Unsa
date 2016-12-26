@@ -12,6 +12,7 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
         $log.debug("GetTipoInvestigaciones - Success");
         console.log("Respuesta :: ", response);
         $scope.tipoInvestigaciones = response;
+        $scope.GetTotalDocentesByTipoActividad();
     };
     var GetTipoInvestigacionesError = function(response){
         $log.debug("GetTipoInvestigaciones - Error");
@@ -29,7 +30,32 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
         console.log("Respuesta :: ", response);
     };
     
+    var GetTotalDocentesByTipoActividadSuccess = function(response){
+        $log.debug("GetTotalDocentesByTipoActividad - Success");
+        console.log("Respuesta :: ", response);
+        angular.forEach($scope.tipoInvestigaciones, function(tipoActividad, key){
+            tipoActividad.total = 0;
+            angular.forEach(response.lista, function(actividad, keyActividades){
+                if(tipoActividad.nidTipoActividadInvestigacion === actividad.nidTipoActividadInvestigacion ){
+                    tipoActividad.total = tipoActividad.total + 1;
+                }
+            });
+        });
+        
+    };
+    var GetTotalDocentesByTipoActividadError = function(response){
+        $log.debug("GetTotalDocentesByTipoActividad - Error");
+        console.log("Respuesta :: ", response);
+    };
     
+    
+    $scope.GetTotalDocentesByTipoActividad = function(){
+        angular.forEach($scope.tipoInvestigaciones, function(value, key){
+            var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : 0, idTipoInvestigacion : value.nidTipoActividadInvestigacion}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
+            UsuariosService.GetUsuariosColor(objPagina).then(GetTotalDocentesByTipoActividadSuccess, GetTotalDocentesByTipoActividadError);
+        });
+    };
     
     $scope.GetTipoInvestigaciones = function(){
         TipoInvestigacionService.getInvestigaciones().then(GetTipoInvestigacionesSuccess, GetTipoInvestigacionesError);
@@ -53,7 +79,7 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
         var total = docentes.nactivos + docentes.ninactivos;
         $scope.activo = (docentes.nactivos * 100 / total) + "%";
         $scope.inactivo = (docentes.ninactivos * 100 / total) + "%";
-    }
+    };
     
     /**************** PAGINACION *****************/
     
@@ -88,7 +114,7 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     
     $scope.getUsuariosByPagina = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuario.nidEstructuraOrganizacion, idTipoInvestigacion : $scope.idTipoInvestigacion};
+                          idFacultad : 0, idTipoInvestigacion : $scope.idTipoInvestigacion}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     

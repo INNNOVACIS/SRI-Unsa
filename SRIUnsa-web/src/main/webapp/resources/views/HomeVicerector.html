@@ -89,7 +89,7 @@
                         </div>
                         <div class="panel-footer">
                             <span class="pull-left">Actividades</span>
-                            <span class="pull-right">50</span>
+                            <span class="pull-right">{{ tipoInvestigacion.total }}</span>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -120,23 +120,25 @@
                                     <thead>
                                         <tr>
                                             <th># </th>
-                                            <th ng-show="currentTipo != '0'"  width="25%">Tipo Actividad</th>
+                                            <th>Facultad</th>
+                                            <th>Departamento</th>
+                                            <th>Escuela</th>
                                             <th>Nombres</th>
-                                            <th>Apellidos</th>
-                                            <th>DNI</th>
                                             <th>Email</th>
+                                            <th ng-show="currentTipo != '0'"  width="25%">Tipo Actividad</th>
                                             <th>Acción</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="user in users">
+                                        <tr ng-repeat="user in users" class="table-overflow">
                                             <td>{{ $index + row}}</td>
-                                            <td ng-show="currentTipo != '0'">{{ user.snombreActividadInvestigacion }}</td>
-                                            <td>{{ user.snombre }}</td>
-                                            <td>{{ user.sapellido }}</td>
-                                            <td>{{ user.ndni }}</td>
+                                            <td>{{ user.sfacultad }}</td>
+                                            <td>{{ user.sdepartamento }}</td>
+                                            <td>{{ user.sescuela }}</td>
+                                            <td>{{ user.snombre + " " + user.sapellido }} </td>
                                             <td>{{ user.semail }}</td>
+                                            <td ng-show="currentTipo != '0'">{{ user.snombreActividadInvestigacion }}</td>
                                             <td nowrap>
                                                 <button type="button" class="btn btn-primary btn-xs" ng-click="goHome(user)" >
                                                     <span class="glyphicon glyphicon-edit"></span> Registrar
