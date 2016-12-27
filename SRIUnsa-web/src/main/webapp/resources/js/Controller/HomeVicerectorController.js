@@ -1,5 +1,5 @@
 investigacionApp.controller('HomeVicerectorController', function($log, $scope, UsuariosService, $location, 
-    TipoInvestigacionService, SharedService, HomeVicerectorService) {
+    SharedService, HomeVicerectorService) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
@@ -30,7 +30,7 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     };
     
     var GetActivosInactivosByFacultadSuccess = function(response){
-        $log.debug("GetActivosInactivosByFacultad - Error");
+        $log.debug("GetActivosInactivosByFacultad - Success");
         console.log("Respuesta :: ", response);
         $scope.docentesFacultades = response.body;
         angular.forEach($scope.docentesFacultades, function(value, key){
@@ -70,6 +70,8 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
         var porcentaje = "50%";
         if(total !== 0 ){
             porcentaje = (valor * 100 / total) + "%";
+        } else {
+            
         }
         return porcentaje;
     };

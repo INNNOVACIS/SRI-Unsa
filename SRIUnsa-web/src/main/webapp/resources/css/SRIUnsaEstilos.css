@@ -1,8 +1,8 @@
 /* Barra de Progreso*/
-.progress{
+.SRI-progress{
     height: 40px;
 }
-.progress-bar{
+.SRI-progress-bar{
     padding: 10px;
 }
 .progress-text{
@@ -18,6 +18,12 @@
 }
 .progress-label{
     background-color: #951f1f !important;
+}
+.progress-activo-empty{
+    background-color: #d7f5d7 !important;
+}
+.progress-inactivo-empty{
+    background-color: #e7e7e7 !important;
 }
 /* End Barra de Progreso*/
 

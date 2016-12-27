@@ -259,4 +259,15 @@ public class UsuarioRestServices {
         return builder.build();
     }
     
+    @GET
+    @Path("GetTotalActivosInactivosByFacultad/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetTotalActivosInactivosByFacultad(@PathParam("id") int id){
+        SRIDocenteActivosInactivos docenteActivosInactivos = usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(id);
+        Map<String, Object> response = new HashMap<>();
+        response.put("body", docenteActivosInactivos);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(response);
+        return builder.build();
+    }
+    
 }

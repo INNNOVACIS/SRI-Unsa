@@ -93,6 +93,96 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     private Date DFechaFin;
     
     
+    @Column(name = "iddirector")
+    private int NIdDirector;
+    
+    @Column(name = "nombreasesorado")
+    private String SNombreAsesorado;
+    
+    @Column(name = "cuiasesorado")
+    private String SCuiAsesorado;
+    
+    @Column(name = "lineainvestigacion")
+    private String SLineaInvestigacion;
+    
+    @Column(name = "nombrecurso")
+    private String SNombreCurso;
+    
+    @Column(name = "numerocontrato")
+    private String SNumeroContrato;
+    
+    @Column(name = "montofinanciamiento")
+    private String SMontoFinanciamiento;
+    
+    @Column(name = "tipomoneda")
+    private String STipoMoneda;
+
+    public int getNIdDirector() {
+        return NIdDirector;
+    }
+
+    public void setNIdDirector(int NIdDirector) {
+        this.NIdDirector = NIdDirector;
+    }
+
+    public String getSTipoMoneda() {
+        return STipoMoneda;
+    }
+
+    public void setSTipoMoneda(String STipoMoneda) {
+        this.STipoMoneda = STipoMoneda;
+    }
+
+    public String getSNombreAsesorado() {
+        return SNombreAsesorado;
+    }
+
+    public void setSNombreAsesorado(String SNombreAsesorado) {
+        this.SNombreAsesorado = SNombreAsesorado;
+    }
+
+    public String getSCuiAsesorado() {
+        return SCuiAsesorado;
+    }
+
+    public void setSCuiAsesorado(String SCuiAsesorado) {
+        this.SCuiAsesorado = SCuiAsesorado;
+    }
+
+    public String getSLineaInvestigacion() {
+        return SLineaInvestigacion;
+    }
+
+    public void setSLineaInvestigacion(String SLineaInvestigacion) {
+        this.SLineaInvestigacion = SLineaInvestigacion;
+    }
+
+    public String getSNombreCurso() {
+        return SNombreCurso;
+    }
+
+    public void setSNombreCurso(String SNombreCurso) {
+        this.SNombreCurso = SNombreCurso;
+    }
+
+    public String getSNumeroContrato() {
+        return SNumeroContrato;
+    }
+
+    public void setSNumeroContrato(String SNumeroContrato) {
+        this.SNumeroContrato = SNumeroContrato;
+    }
+
+    public String getSMontoFinanciamiento() {
+        return SMontoFinanciamiento;
+    }
+
+    public void setSMontoFinanciamiento(String SMontoFinanciamiento) {
+        this.SMontoFinanciamiento = SMontoFinanciamiento;
+    }
+    
+    
+    
     public int getNIdActividadInvestigacion() {
         return NIdActividadInvestigacion;
     }

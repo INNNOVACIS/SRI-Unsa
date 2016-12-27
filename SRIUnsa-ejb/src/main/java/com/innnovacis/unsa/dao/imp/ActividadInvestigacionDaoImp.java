@@ -406,4 +406,31 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
         }
         return totalTipoActividad;
     }
+
+    @Override
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad) {
+        List<SRITotalTipoActividad> totalTipoActividad = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividadFacultad(?1)}", SRITotalTipoActividad.class)
+                                    .setParameter(1, idFacultad);
+            totalTipoActividad = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return totalTipoActividad;
+    }
+
+    @Override
+    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion) {
+        List<SRIDocentesActivosInactivosFacultad> totalTipoActividad = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalActivosInactivosByDepartamento(?1, ?2)}", SRIDocentesActivosInactivosFacultad.class)
+                                    .setParameter(1, idFacultad)
+                                    .setParameter(2, idTipoInvestigacion);
+            totalTipoActividad = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return totalTipoActividad;
+    }
 }

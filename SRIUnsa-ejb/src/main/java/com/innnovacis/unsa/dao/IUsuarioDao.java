@@ -39,6 +39,6 @@ public interface IUsuarioDao {
     List<SRIUsuarioPersona> GetDestinatariosByCodigoActorDestino(String codigoActorDestino);
     List<SRIUsuarioPersona> GetUsuarioPersonaByIdUsuario(int idUsuario);
     
-    
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos();
+    SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad);
 }

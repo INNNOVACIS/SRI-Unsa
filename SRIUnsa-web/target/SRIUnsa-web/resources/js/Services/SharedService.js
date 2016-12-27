@@ -6,7 +6,7 @@ investigacionApp.factory('SharedService', function($location) {
         nombreUsuario : sessvars.nombreUsuario,
         idRol : sessvars.idRol,
         idUsuario : sessvars.idUsuario,
-        idDocente : "",
+        idDocente : sessvars.idDocente,
         idPersona : sessvars.idPersona,
         privilegios : sessvars.privilegios,
         htmlMenu : sessvars.htmlMenu,
@@ -16,6 +16,7 @@ investigacionApp.factory('SharedService', function($location) {
         locationHome : sessvars.locationHome,
         tipoInvestigacion : sessvars.tipoInvestigacion,
         usuario : sessvars.usuario,
+        docente : sessvars.docente, //almacena el objeto docente del que se registrara las actividad.
         dateToString: function(date){
             var nDate = Number(date); 
             var dDate = new Date(nDate);

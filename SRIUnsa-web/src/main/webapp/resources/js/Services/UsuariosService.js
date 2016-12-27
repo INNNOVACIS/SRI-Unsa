@@ -142,4 +142,19 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
             });
             return deferred.promise;
 	};
+        
+        this.GetTotalActivosInactivosByFacultad = function(idFacultad) {
+            $log.debug("Usuario Service - GetTotalDocentesActivosInactivos");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'GET',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetTotalActivosInactivosByFacultad/' + idFacultad,
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
 });

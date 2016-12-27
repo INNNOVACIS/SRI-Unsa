@@ -16,6 +16,9 @@
     $scope.totalColaboradores = "0 seleccionados";
     $scope.colaboradores = [];
     $scope.submitted = false;
+    $scope.tipoMonedas = ["Soles", "Dolares"];
+    
+    $scope.responsable = $scope.sharedService.docente.snombre + " " + $scope.sharedService.docente.sapellido;
 
     /***************** CallBack *******************/
     
@@ -164,13 +167,13 @@
         $log.debug("GetPersonas - Success");
         console.log("Respuesta :: ", response);
         $scope.personas = response;
-        var idUsuario = "";
-        if($scope.sharedService.idDocente === "" ){
-            idUsuario = $scope.sharedService.idUsuario;
-        } else {
-            idUsuario = $scope.sharedService.idDocente;
-        }
-        UsuariosService.GetByIdUsuario(idUsuario).then(GetByIdUsuarioSuccess, GetByIdUsuarioError);
+//        var idUsuario = "";
+//        if($scope.sharedService.idDocente === "" ){
+//            idUsuario = $scope.sharedService.idUsuario;
+//        } else {
+//            idUsuario = $scope.sharedService.idDocente;
+//        }
+        UsuariosService.GetByIdUsuario($scope.sharedService.idUsuario).then(GetByIdUsuarioSuccess, GetByIdUsuarioError);
     };
     var GetPersonasError = function(response){
         $log.debug("GetPersonas - Error");
@@ -182,7 +185,7 @@
         console.log("Respuesta :: ", response);
         angular.forEach($scope.personas, function(value, key){
             if(value.nidPersona === response.body.nidPersona){
-                $scope.responsable = value;
+                $scope.director = value;/**/
             }
         });
     };
@@ -349,6 +352,7 @@
         if(isValid){
             $scope.loader = true;
             $scope.sharedService.scrollTop();
+            console.log("tipo moneda :::: ", $scope.tipoMoneda);
             var actividadGeneral = {
                 idUsuario : $scope.sharedService.idUsuario,
                 idFlujoActorOrigen : SRIUnsaConfig.DOCE,
@@ -358,7 +362,7 @@
                 colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
                 plantillaDocumentoActividad : getValoresPlantilla(),
                 actividadInvestigacion : {
-                    nidResponsable : $scope.responsable.nidPersona,
+                    nidResponsable : $scope.sharedService.docente.nidPersona ,//$scope.responsable.nidPersona,
                     nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
                     nhoras : $scope.duracionInvestigacion,
                     sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,
@@ -368,8 +372,8 @@
                     sfacultad : $scope.facultad.snombreEstructuraOrganizacion,
                     sescuela : $scope.escuela.snombreEstructuraOrganizacion,
                     sdepartamento : $scope.departamento.snombreEstructuraOrganizacion,
-                    sareaInvestigacion: "",
-                    ssubAreaInvestigacion : "",
+                    sareaInvestigacion: $scope.areaInvestigacion === undefined ? "" : $scope.areaInvestigacion.sNombre,
+                    ssubAreaInvestigacion : $scope.subAreaInvestigacion === undefined ? "" : $scope.subAreaInvestigacion.sNombre,
                     sdisciplina : $scope.disciplinaInvestigacion.sNombre,
                     stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
                     snombreActividadInvestigacion : $scope.nombreInvestigacion,
@@ -378,7 +382,18 @@
                     dfechaInicio : $scope.fechaInicio,
                     dfechaFin : $scope.fechaFin,
                     sdescripcionActividad : $scope.descripcion,
+                    
+                    nidDirector : $scope.director.nidPersona,
+                    snombreAsesorado : $scope.nombreAsesorado,
+                    scuiAsesorado : $scope.cuiAsesorado,
+                    slineaInvestigacion : $scope.lineaInvestigacion,
+                    snombreCurso : $scope.nombreCurso,
+                    snumeroContrato : $scope.numeroContrato,
+                    smontoFinanciamiento : $scope.montoFinanciamiento, //
+                    stipoMoneda : $scope.tipoMoneda,
+                    
                     suserCreacion : $scope.sharedService.nombreUsuario,
+                    suserModificacion : $scope.sharedService.nombreUsuario,
                     sestado : 'A'
                 }
             };
@@ -485,18 +500,28 @@
         switch(tipoActividad.toUpperCase()) {
             case "INVESTIGACION FORMATIVA":
                 $scope.mostrarActividad = [true, false, false, false];
+                $scope.descripcionLabel = "Resumen";
+                $scope.tituloLabel = "Nombre de la Actividad de Investigacion Formativa";
                 break;
             case "ASESORIA DE TESIS":
                 $scope.mostrarActividad = [false, true, false, false];
+                $scope.descripcionLabel = "Resumen de Tesis";
+                $scope.tituloLabel = "Titulo de Tesis";
                 break;
             case "INVESTIGACIONES BASICAS Y APLICADAS":
                 $scope.mostrarActividad = [false, false, true, false];
+                $scope.descripcionLabel = "Resumen de Investigacion";
+                $scope.tituloLabel = "Titulo de la Investigación";
                 break;
             case "PRODUCCION INTELECTUAL":
                 $scope.mostrarActividad = [false, false, false, true];
+                $scope.descripcionLabel = "Resumen";
+                $scope.tituloLabel = "Titulo de la Producción";
                 break;
             default:
                 $scope.mostrarActividad = [false, false, false, false];
+                $scope.descripcionLabel = "Resumen";
+                $scope.tituloLabel = "Nombre";
         };
     };
     
@@ -543,6 +568,13 @@
         $scope.fechaFin = "";
         $scope.avance = "";
         $scope.submitted = false;
+        $scope.nombreAsesorado = "";
+        $scope.cuiAsesorado = "";
+        $scope.lineaInvestigacion = "";
+        $scope.nombreCurso = "";
+        $scope.numeroContrato = "";
+        $scope.montoFinanciamiento = "";
+        
         uploader.clearQueue();
     };
     

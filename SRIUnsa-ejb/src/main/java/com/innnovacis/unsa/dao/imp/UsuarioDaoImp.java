@@ -224,4 +224,17 @@ public class UsuarioDaoImp implements IUsuarioDao {
         return respuesta;
     }
 
+    @Override
+    public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad) {
+        SRIDocenteActivosInactivos respuesta = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalDocentesActivosInactivosByFacultad(?1)}", SRIDocenteActivosInactivos.class)
+                                .setParameter(1, idFacultad);
+            respuesta = (SRIDocenteActivosInactivos) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+
 }

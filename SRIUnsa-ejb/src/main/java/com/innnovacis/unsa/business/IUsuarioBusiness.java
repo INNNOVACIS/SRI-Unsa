@@ -44,5 +44,6 @@ public interface IUsuarioBusiness {
     
     
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos();
+    SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad);
     
 }

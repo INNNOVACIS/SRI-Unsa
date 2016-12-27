@@ -12,10 +12,10 @@
                         <div class="row">
                             <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" >Responsable</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.responsableValidacion.$invalid && submitted }">
-                                        <input name="responsableValidacion" type="text" ng-model="responsable" uib-typeahead='opt as (opt.snombre + " " + opt.sapellido ) for opt in personas | filter:$viewValue | limitTo:8' class="form-control" style="background-color:#f0f0f0;" required>
-                                        <p ng-show="actividadForm.responsableValidacion.$invalid && submitted" class="help-block">El responsable es requerido.</p>
+                                    <label class="control-label col-md-4" >Director de Unidad</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.directorValidacion.$invalid && submitted }">
+                                        <input name="directorValidacion" type="text" ng-model="director" uib-typeahead='opt as (opt.snombre + " " + opt.sapellido ) for opt in personas | filter:$viewValue | limitTo:8' class="form-control" style="background-color:#f0f0f0;" required>
+                                        <p ng-show="actividadForm.directorValidacion.$invalid && submitted" class="help-block">El Director de Unidad es Requerido.</p>
                                     </div>
                                 </div>
                             </div>
@@ -32,27 +32,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" >Nombre</label>
-                                    <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && submitted }">
-                                        <input name="nombre" ng-model="nombreInvestigacion" type="text" class="form-control" placeholder="Nombre de la investigación" required>
-                                        <p ng-show="actividadForm.nombre.$invalid && submitted" class="help-block">El nombre es Requerido.</p>
+                                    <label class="control-label col-md-4" >Nombre Docente</label>
+                                    <div class="col-md-8" >
+                                        <input readonly="readonly" type="text" class="form-control" ng-model="responsable" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4"> Linea de Investigacion</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.linea.$invalid && submitted }">
-                                        <input name="linea" ng-model="lineaInvestigacion" class="form-control" required/>
-                                        <p ng-show="actividadForm.linea.$invalid && submitted" class="help-block">La Linea de Investigacion es Requerida.</p>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Facultad</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && submitted }">
@@ -96,7 +86,7 @@
                                         <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
                                     </div>
                                 </div>
-                                <div class="form-group">
+<!--                                <div class="form-group">
                                     <label class="control-label col-md-4">Fecha Inicio</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
@@ -113,7 +103,7 @@
                                         <input name="avanceValidacion" class="form-control" type="number" ng-model="avance" placeholder="Avance de la Actividad en porcentaje" required>
                                         <p ng-show="actividadForm.avanceValidacion.$invalid && submitted" class="help-block">El avance es requerido.</p>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             
                             
@@ -164,7 +154,7 @@
                                         <p ng-show="actividadForm.disciplina.$invalid && submitted" class="help-block">La Disciplina es Requerida.</p>
                                     </div>
                                 </div>
-                                <div class="form-group">
+<!--                                <div class="form-group">
                                     <label class="control-label col-md-4"> Duraci&oacute;n </label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && submitted }">
                                         <input name="duracion" class="form-control" type="number" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación" required>
@@ -181,8 +171,8 @@
                                             </span>
                                         </p>
                                     </div>
-                                </div>
-                                <div class="form-group">
+                                </div>-->
+<!--                                <div class="form-group">
                                     <label class="control-label col-md-4"> Colaboradores</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
@@ -192,15 +182,50 @@
                                             </span>
                                         </div>
                                     </div>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" >{{ tituloLabel }}</label>
+                                    <div class="col-md-10" ng-class="{ 'has-error' : actividadForm.nombre.$invalid && submitted }">
+                                        <input name="nombre" ng-model="nombreInvestigacion" type="text" class="form-control" required>
+                                        <p ng-show="actividadForm.nombre.$invalid && submitted" class="help-block">El nombre es Requerido.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row" ng-show="mostrarActividad[1]">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Tipo de Asesoria</label>
+                                    <label class="control-label col-md-4">Tipo de Asesoria</label>
                                     <div class="col-md-8">
                                         <select class="form-control" ng-model="tipoAsesoria" ng-options="opt as opt.snombreTipoAsesoria for opt in tipoAsesorias" ng-init="tipoAsesoria=''"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Nombre del Asesorado</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="nombreAsesorado" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">C.U.I del Asesorado</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="cuiAsesorado"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Linea de Investigaci&oacute;n</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="lineaInvestigacion"/>
                                     </div>
                                 </div>
                             </div>
@@ -214,11 +239,19 @@
                                     </div>                                    
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Linea de Investigaci&oacute;n</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="lineaInvestigacion" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row" ng-show="mostrarActividad[2]">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Investigador</label>
+                                    <label class="control-label col-md-4">Funcion</label>
                                     <div class="col-md-8">
                                         <select class="form-control" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
                                     </div>
@@ -226,9 +259,44 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Fondo Concursable</label>
+                                    <label class="control-label col-md-4">Linea de Investigaci&oacute;n</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="lineaInvestigacion" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">N&uacute;mero de Contrato</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="numeroContrato" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Monto de Financiamiento</label>
+                                    <div class="col-md-6">
+                                        <input  class="form-control" ng-model="montoFinanciamiento" />
+                                    </div>
+                                    <div class="col-md-2" style="padding:0;">
+                                        <select class="form-control" ng-model="tipoMoneda" ng-options="opt as opt for opt in tipoMonedas"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Financiamiento</label>
                                     <div class="col-md-8">
                                         <select class="form-control" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Otros</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="otrosFinanciamiento" />
                                     </div>
                                 </div>
                             </div>
@@ -236,16 +304,32 @@
                         <div class="row" ng-show="mostrarActividad[0]">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label class="control-label col-md-4">Nombre del Curso</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="nombreCurso" />
+                                    </div>                            
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Linea de Investigaci&oacute;n</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="lineaInvestigacion"/>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label class="control-label col-md-4">Tipo de Labor</label>
                                     <div class="col-md-8">
                                         <select class="form-control" ng-model="tipoLabor" ng-options="opt as opt.nombre for opt in tipoLabores" ng-init="tipoLabor=''"></select>
                                     </div>                            
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </form>
                     
-                    <!-- Formulario Dinamico -->
+<!--                     Formulario Dinamico 
                     
                     <fieldset >
                         <legend >{{ facultad.snombreEstructuraOrganizacion }}</legend>
@@ -256,82 +340,92 @@
                                 <div ng-bind-html="campos" compila-plantilla></div>
                             </div>
                         </div>
-                    </form>
+                    </form>-->
                     
                     
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2"> Descripción breve del problema</label>
+                                    <label class="control-label col-md-2"> {{ descripcionLabel }}</label>
                                     <div class="col-md-10">
-                                        <textarea ng-model="descripcion" style="margin-bottom: 4px;" class="form-control" rows="5" placeholder="Descripcion breve del problema"></textarea> 
-                                    </div>
-                                    <label for="inpFile" class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
-                                        <div class="col-md-10">
-                                            <div class="panel panel-default" >
-                                                <div class="panel-body">
-                                                    <label for="fileUpload" class="SRI-button"> Seleccionar Archivos </label>
-                                                    <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
-                                                    <p>Número de Archivos: {{ uploader.queue.length }}</p>
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th width="50%">Nombre</th>
-                                                                <th>Tamaño</th>
-                                                                <th>Progreso</th>
-                                                                <th>Acción</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr ng-repeat="item in uploader.queue">
-                                                                <td><strong>{{ item.file.name }}</strong></td>
-                                                                <td nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                                                <td>
-                                                                    <div class="progress" style="margin-bottom: 0;">
-                                                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td nowrap>
-                                                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <div>
-                                                        <div>
-                                                            Progreso:
-                                                            <div class="progress" style="">
-                                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
-                                                            </div>
-                                                        </div>
-        <!--                                            <button type="button" class="btn btn-success btn-s" ng-click="uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                                                            <span class="glyphicon glyphicon-upload"></span> Subir todo
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-                                                            <span class="glyphicon glyphicon-ban-circle"></span> Cancelar todo
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                                            <span class="glyphicon glyphicon-trash"></span> Eliminar todo
-                                                        </button>-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <div class="col-md-12" style="margin-top:10px;">
-                                        <button type="submit" ng-click="guardarInvestigacion()" class="btn btn-default pull-right" style="margin-left:10px;"> 
-                                            <span class="glyphicon glyphicon-floppy-saved"></span> Guardar
-                                        </button>
-                                        <button type="submit" ng-click="registrarInvestigacion(actividadForm.$valid)" class="btn btn-primary pull-right"> 
-                                            <span class="glyphicon glyphicon-saved"></span> Registrar
-                                        </button>
+                                        <textarea ng-model="descripcion" class="form-control" rows="5"></textarea> 
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inpFile" class="control-label col-md-2"> Adjuntar</label>
+                                    <div class="col-md-10">
+                                        <div class="panel panel-default" >
+                                            <div class="panel-body">
+                                                <label for="fileUpload" class="SRI-button"> Seleccionar Archivos </label>
+                                                <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+    <!--                                                    <p>Número de Archivos: {{ uploader.queue.length }}</p>-->
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="50%">Nombre</th>
+                                                            <th>Tamaño</th>
+                                                            <th>Progreso</th>
+                                                            <th>Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in uploader.queue">
+                                                            <td><strong>{{ item.file.name }}</strong></td>
+                                                            <td nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                            <td>
+                                                                <div class="progress" style="margin-bottom: 0;">
+                                                                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td nowrap>
+                                                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div>
+                                                    <div>
+                                                        Progreso:
+                                                        <div class="progress" style="">
+                                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                                        </div>
+                                                    </div>
+    <!--                                            <button type="button" class="btn btn-success btn-s" ng-click="uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                                        <span class="glyphicon glyphicon-upload"></span> Subir todo
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancelar todo
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                                        <span class="glyphicon glyphicon-trash"></span> Eliminar todo
+                                                    </button>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px;">
+                                <button type="submit" ng-click="guardarInvestigacion()" class="btn btn-default pull-right" style="margin-left:10px;"> 
+                                    <span class="glyphicon glyphicon-floppy-saved"></span> Guardar
+                                </button>
+                                <button type="submit" ng-click="registrarInvestigacion(actividadForm.$valid)" class="btn btn-primary pull-right"> 
+                                    <span class="glyphicon glyphicon-saved"></span> Registrar
+                                </button>                                    
+                            </div>
+                        </div>
+                    </form>
+                    
                 </div>
             </div>	
         </div>
