@@ -14,6 +14,7 @@ investigacionApp.factory('SharedService', function($location) {
         htmlMenuVertical : sessvars.htmlMenuVertical,
         stringMenuVertical : sessvars.stringMenuVertical,
         locationHome : sessvars.locationHome,
+        crearActividadHome : sessvars.crearActividadHome,
         tipoInvestigacion : sessvars.tipoInvestigacion,
         usuario : sessvars.usuario,
         docente : sessvars.docente, //almacena el objeto docente del que se registrara las actividad.

@@ -101,9 +101,13 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
             if(value.scodigo === "DOCE" && rango === 0){
                 location = "/homedocente";
             }
-            if(value.scodigo === "DIUN"){
+            if(value.scodigo === "DIUN" && rango === 0){
                 rango = 1;
                 location = "/homeDirectorUnidad";
+            }
+            if(value.scodigo === "VICE"){
+                rango = 2;
+                location = "/homeVicerector";
             }
         });
         return location;
