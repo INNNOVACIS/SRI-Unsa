@@ -189,9 +189,10 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public int GetTotalUsuariosColor(SRIPaginacionObject entidad) {
         BigInteger total = null;
         try{
-            Query query = em.createNativeQuery("{call GetTotalUsuarioColor(?1, ?2)}")
+            Query query = em.createNativeQuery("{call GetTotalUsuarioColor(?1, ?2, ?3)}")
                     .setParameter(1, entidad.getIdFacultad())
-                    .setParameter(2, entidad.getFiltro());
+                    .setParameter(2, entidad.getFiltro())
+                    .setParameter(3, entidad.getIdTipoInvestigacion());
             total = (BigInteger)query.getSingleResult();
         } catch(Exception ex) {
             throw ex;

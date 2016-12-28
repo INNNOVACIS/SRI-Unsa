@@ -57,11 +57,6 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
         HomeVicerectorService.GetActivosInactivosByFacultad(idTipoInvestigacion).then(GetActivosInactivosByFacultadSuccess, GetActivosInactivosByFacultadError);
     };
     
-//    $scope.goHome = function(usuario){
-//        console.log("USUARIO :: ", usuario);
-//        $scope.sharedService.idDocente = usuario.nidUsuario;
-//        $location.path("/home");
-//    };
     $scope.verDetalleDocente = function(usuario){
         console.log("USUARIO :: ", usuario);
         sessvars.docente = usuario;

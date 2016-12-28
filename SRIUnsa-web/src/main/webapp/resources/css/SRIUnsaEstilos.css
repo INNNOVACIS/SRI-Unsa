@@ -3,12 +3,14 @@
     height: 40px;
 }
 .SRI-progress-bar{
-    padding: 10px;
+    /*padding: 10px;*/
 }
 .progress-text{
     float: left !important;
     font-size: 12px;
     font-weight: bold;
+    line-height: 40px;
+    margin-left: 10px;
 }
 .progress-activo{
     background-color: #5cb85c !important;
