@@ -5,9 +5,10 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     $scope.sharedService.scrollTop();
     $scope.loader = false;
     $scope.idActividad = $routeParams.ID;
-    $scope.revisado = false;
-    $scope.generado = false;
-    $scope.pendiente = false;
+    $scope.revisado   = false;
+    $scope.generado   = false;
+    $scope.pendiente  = false;
+    $scope.vicerector = false;
     
     var estado = $routeParams.ESTADO;
     
@@ -19,6 +20,10 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     }
     if(estado === "Pendientes"){
         $scope.pendiente = true;
+    }
+    if($scope.sharedService.locationHome === "/homeVicerector"){
+        $scope.vicerector = true;
+//        $scope.generado = false;
     }
     
     /******************* Servicios Callback *******************/
@@ -87,9 +92,10 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
                 var titulo = "Aprobación Exitosa!";
                 var mensaje = "La Actividad de Investigación se aprobó correctamente.";
                 var url = "";
-                if($scope.revisado) { url = "/actividad/Revisadas"; }
-                if($scope.generado) { url = "/actividad/Generadas"; }
-                if($scope.pendiente){ url = "/actividad/Pendientes"; }
+                if($scope.revisado)  { url = "/actividad/Revisadas"; }
+                if($scope.generado)  { url = "/actividad/Generadas"; }
+                if($scope.pendiente) { url = "/actividad/Pendientes";}
+                if($scope.vicerector){ url = "/actividadesDocente";}
                 
                 var op1 = {open:true, txt:'Ir a Bandeja', fun:function(){
                     popUp.irPopUp();
@@ -197,8 +203,9 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     
     $scope.irBandejaRevisados = function(){
         $scope.loader = true;
-        if($scope.generado){ $location.path("/actividad/Generadas"); }
+        if($scope.generado && !$scope.vicerector){ $location.path("/actividad/Generadas"); }
         if($scope.revisado){ $location.path("/actividad/Revisadas"); }
+        if($scope.vicerector){ $location.path("/actividadesDocente"); }
     };
     
     $scope.getActividadById($scope.idActividad);

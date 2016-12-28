@@ -46,7 +46,7 @@ public interface IActividadInvestigacionBusiness {
     Map<String, Object> GetDetalleMasiva(SRIPaginacion entidad);
     
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad();
-    List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad();
+    List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion);
     List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad);
 }

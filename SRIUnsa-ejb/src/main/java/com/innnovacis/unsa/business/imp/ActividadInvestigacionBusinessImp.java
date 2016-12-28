@@ -688,10 +688,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad() {
+    public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion) {
         List<SRIDocentesActivosInactivosFacultad> respuesta = null;
         try{
-            respuesta = actividadInvestigacionDao.GetActivosInactivosByFacultad();
+            respuesta = actividadInvestigacionDao.GetActivosInactivosByFacultad(idTipoInvestigacion);
         }
         catch(Exception ex){
             throw ex;

@@ -33,13 +33,13 @@ investigacionApp.service("HomeVicerectorService", function(SRIUnsaConfig, $log, 
         return deferred.promise;
     };
     
-    this.GetActivosInactivosByFacultad = function() {
+    this.GetActivosInactivosByFacultad = function(idTipoInvestigacion) {
         $log.debug("HomeVicerectorService - GetActivosInactivosByFacultad");
 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetActivosInactivosByFacultad'
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetActivosInactivosByFacultad/' + idTipoInvestigacion
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			
