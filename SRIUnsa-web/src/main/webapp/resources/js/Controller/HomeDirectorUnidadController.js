@@ -7,6 +7,7 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     $scope.estados = ['A','I'];
     $scope.idTipoInvestigacion = 0;
     $scope.currentTipo = 0;
+     $scope.currentFacultad = false;
     
     var GetTotalActivosInactivosByFacultadSuccess = function(response){
         $log.debug("GetTotalActivosInactivosByFacultad - Success");
@@ -65,9 +66,28 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     };
     
     $scope.setTipoInvestigacion = function(tipoInvestigacion){
-        $scope.currentTipo = tipoInvestigacion.nidTipoActividadInvestigacion;
-        $scope.idTipoInvestigacion = tipoInvestigacion.nidTipoActividadInvestigacion;
+        if($scope.currentTipo === tipoInvestigacion.nidTipoActividadInvestigacion){
+            $scope.currentTipo = 0;
+            $scope.idTipoInvestigacion = 0;
+        } else {
+            $scope.currentTipo = tipoInvestigacion.nidTipoActividadInvestigacion;
+            $scope.idTipoInvestigacion = tipoInvestigacion.nidTipoActividadInvestigacion;
+        }
+        
         $scope.sharedService.tipoInvestigacion = tipoInvestigacion;
+        $scope.getUsuariosByPagina();
+        $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuario.nidEstructuraOrganizacion, $scope.idTipoInvestigacion);//$scope.idTipoInvestigacion
+        
+    };
+    
+    $scope.filtrarFacultad = function(docenteFacultad){
+        if(docenteFacultad.nidEstructuraOrganizacion === $scope.currentFacultad){
+            $scope.currentFacultad = 0;
+            $scope.idFacultad = 0;
+        } else {
+            $scope.currentFacultad = docenteFacultad.nidEstructuraOrganizacion;
+            $scope.idFacultad = docenteFacultad.nidEstructuraOrganizacion;
+        }
         $scope.getUsuariosByPagina();
     };
     

@@ -17,7 +17,7 @@
         
         <div class="row" style="margin-top: 20px;">
             <div class="col-lg-3 col-md-6" ng-repeat="tipoInvestigacion in tipoInvestigaciones">
-                <div class="panel" ng-class="{'panel-primary' : !(tipoInvestigacion.nidTipoActividadInvestigacion == currentTipo), 'panel-success' : (tipoInvestigacion.nidTipoActividadInvestigacion == currentTipo)}"  style="cursor: pointer;" > <!-- ng-click="setTipoInvestigacion(tipoInvestigacion)" -->
+                <div class="panel" ng-click="setTipoInvestigacion(tipoInvestigacion)" ng-class="{'panel-primary' : !(tipoInvestigacion.nidTipoActividadInvestigacion == currentTipo), 'panel-success' : (tipoInvestigacion.nidTipoActividadInvestigacion == currentTipo)}"  style="cursor: pointer;" > <!-- ng-click="setTipoInvestigacion(tipoInvestigacion)" -->
                     <div class="panel-heading" > <!-- style="background-image: url('resources/images/actividad.png')" -->
                         <div class="row">
                             <div class="col-xs-12">
@@ -39,7 +39,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table width="100%" class="table table-striped table-bordered table-hover">
+                            <table width="100%" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th width="4%"># </th>
@@ -49,7 +49,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="docenteDepartamento in docentesDepartamentos">
+                                    <tr ng-repeat="docenteDepartamento in docentesDepartamentos" ng-click="filtrarFacultad(docenteDepartamento)" ng-class="{'filaSeleccionada': (docenteDepartamento.nidEstructuraOrganizacion == currentFacultad)}" style='cursor: pointer'>
                                         <td>{{ $index + row}}</td>
                                         <td>{{ docenteDepartamento.snombreEstructuraOrganizacion }}</td>
                                         <td>{{ docenteDepartamento.ntotal }}</td>

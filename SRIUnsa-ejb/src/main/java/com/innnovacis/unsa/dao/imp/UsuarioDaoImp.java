@@ -146,7 +146,7 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public SRIUsuario GetByIdUsuario(int idUsuario) {
         SRIUsuario entidad = null;
         try{
-            Query query = em.createNativeQuery("select * from dbunsa.Usuario where idusuario = ?", SRIUsuario.class)
+            Query query = em.createNativeQuery("select * from dbunsa.usuario where idusuario = ?", SRIUsuario.class)
                 .setParameter(1, idUsuario);
             entidad = (SRIUsuario) query.getSingleResult();
         } catch(Exception ex) {
