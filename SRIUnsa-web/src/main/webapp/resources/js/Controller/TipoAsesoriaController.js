@@ -1,4 +1,4 @@
-investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $location, $rootScope, $filter, 
+investigacionApp.controller('TipoAsesoriaController', function($log, $scope, ngToast, $location, $rootScope, $filter, 
     TipoAsesoriaService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -10,6 +10,7 @@ investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $lo
     var getAsesoriaServiceSuccess = function(response){
     	$log.debug("Get Asesoria - Success");
         console.log("Respuesta :: ", response);
+        $scope.asesoria = response;
     };
     var getAsesoriaServiceError = function(response){
      	$log.debug("Get Asesoria - Error"); 
@@ -20,31 +21,47 @@ investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $lo
     	$log.debug("Registrar Asesoria - Success");
     	console.log("Respuesta :: ", response);
         $scope.getTipoAsesoriaByPagina();
-    	$scope.asesoria = {};
+    	
+        $scope.cancel();
+        
+        $("#popNuevoAsesoria").modal('toggle');
     };
     var registrarAsesoriaError = function(response){
         $log.debug("Registrar Asesoria - Error");
         console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var updateAsesoriaSuccess = function(response){
     	$log.debug("Update Asesoria - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoAsesoriaByPagina();
+        
+        $scope.cancel();
+        
+        $("#popUpdateAsesoria").modal('toggle');
     };
+    
     var updateAsesoriaError = function(response){
         $log.debug("Update Asesoria - Error");
         console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var deleteAsesoriaSuccess = function(response){
     	$log.debug("Delete Asesoria - Success");
     	console.log("Respuesta :: ", response);
         $scope.getTipoAsesoriaByPagina();
+        
+        $scope.cancel();
     };
     var deleteAsesoriaError = function(response){
         $log.debug("Delete Asesoria - Error");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     /********** CRUD ASESORIAS ***********/
@@ -54,15 +71,32 @@ investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $lo
     };
 
     $scope.registrarAsesoria = function(){
-        $scope.asesoria.suserCreacion = $scope.sharedService.nombreUsuario;
-        $scope.asesoria.sestado = 'A';
-	TipoAsesoriaService.registrarAsesoria($scope.asesoria).then(registrarAsesoriaSuccess, registrarAsesoriaError);
+        $scope.submitted = true;
+        if($scope.formRegistroTipoAsesoria.$valid){
+            $scope.asesoria.suserCreacion = $scope.sharedService.nombreUsuario;
+            $scope.asesoria.sestado = 'A';
+            TipoAsesoriaService.registrarAsesoria($scope.asesoria)
+                .then(registrarAsesoriaSuccess, registrarAsesoriaError);
+            openNotice('Registrado!','success');
+        }else {
+            console.log("No se registro Tipo Asesoria :: ", $scope.semestre);
+            openNotice('Error al registrar!','danger');
+        }
     };
 
     $scope.updateAsesoria = function(){
-    	$scope.asesoria.suserModificacion = $scope.sharedService.nombreUsuario;
-        $scope.asesoria.sestado = 'A';
-    	TipoAsesoriaService.updateAsesoria($scope.asesoria).then(updateAsesoriaSuccess, updateAsesoriaError);
+        $scope.submitted = true;
+        if($scope.formUpdateTipoAsesoria.$valid){
+            $scope.asesoria.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.asesoria.sestado = 'A';
+            TipoAsesoriaService.updateAsesoria($scope.asesoria)
+                .then(updateAsesoriaSuccess, updateAsesoriaError);
+            openNotice('Actualizado!','success');
+        }else {
+            console.log("No se registro Tipo Asesoria :: ", $scope.semestre);
+            openNotice('Error al actualizar!','danger');
+        }
+    	
     };
 
     $scope.deleteAsesoria = function(asesoria){
@@ -72,9 +106,22 @@ investigacionApp.controller('TipoAsesoriaController', function($log, $scope, $lo
     };
 
     $scope.update = function(asesoria){
-    	$scope.asesoria = asesoria;
+        angular.copy(asesoria, $scope.asesoria);
+    	//$scope.asesoria = asesoria;
     };
-
+    
+    $scope.cancel = function(){
+        $scope.asesoria = {};
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
      /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];
