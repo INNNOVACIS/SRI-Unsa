@@ -2,9 +2,16 @@ var investigacionApp = angular.module('investigacionApp', [
 	'ngRoute',
         'ngAnimate',
         'ngSanitize',
+        'ngToast',
 	'ui.bootstrap',
 	'angularFileUpload'
 ]);
+
+investigacionApp.config(['ngToastProvider', function(ngToastProvider) {
+  ngToastProvider.configure({
+    animation: 'slide' // or 'fade'
+  });
+}]);
 
 investigacionApp.config(function($routeProvider){
 	$routeProvider
