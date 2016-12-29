@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "Rol" )
+@Table(name = "rol" )
 @NamedQueries({
     @NamedQuery(name="SRIRol.GetAll",query="SELECT p FROM SRIRol p"),
     @NamedQuery(name="SRIRol.GetById",query="SELECT p FROM SRIRol p WHERE p.NIdRol = :idEntidad")
