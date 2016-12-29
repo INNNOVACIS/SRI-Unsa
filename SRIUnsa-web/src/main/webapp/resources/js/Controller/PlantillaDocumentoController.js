@@ -1,4 +1,4 @@
-investigacionApp.controller('PlantillaDocumentoController', function($log, $scope, EstructuraOrganizacionService, 
+investigacionApp.controller('PlantillaDocumentoController', function($log, $scope, ngToast, EstructuraOrganizacionService, 
     PlantillaDocumentoService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -6,37 +6,6 @@ investigacionApp.controller('PlantillaDocumentoController', function($log, $scop
     $scope.plantillaDocumentos = [];
     $scope.plantillaDocumento = {};
 
-    var RegistrarPlantillaDocumentoSuccess = function(response){
-    	$log.debug("RegistrarPlantillaDocumento - Success");
-        console.log("Respuesta :: ", response.body);
-    	$scope.plantillaDocumento = {};
-        $scope.GetPlantillaDocumento();
-    };
-    var RegistrarPlantillaDocumentoError = function(response){
-        $log.debug("RegistrarPlantillaDocumento - Error");
-        console.log("Respuesta :: ", response);
-    };
-
-    var ActualizarPlantillaDocumentoSuccess = function(response){
-    	$log.debug("ActualizarPlantillaDocumento - Success");
-    	console.log("Respuesta :: ", response.body);
-    	$scope.GetPlantillaDocumento();
-    };
-    var ActualizarPlantillaDocumentoError = function(response){
-        $log.debug("ActualizarPlantillaDocumento - Error");
-    	console.log("Respuesta :: ", response);
-    };
-
-    var EliminarPlantillaDocumentoSuccess = function(response){
-    	$log.debug("EliminarPlantillaDocumento - Success");
-        console.log("Respuesta :: ", response.body);
-    	$scope.GetPlantillaDocumento();
-    };
-    var EliminarPlantillaDocumentoError = function(response){
-        $log.debug("EliminarPlantillaDocumento - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
     var getEstructuraOrganizacionServiceSuccess = function(response){
     	$log.debug("GetEstructuraOrganizacion - Success");
     	console.log("Respuesta :: ", response);
@@ -46,32 +15,87 @@ investigacionApp.controller('PlantillaDocumentoController', function($log, $scop
      	$log.debug("GetEstructuraOrganizacion - Error"); 
     	console.log("Respuesta :: ", response);
     };
+    
+    var RegistrarPlantillaDocumentoSuccess = function(response){
+    	$log.debug("RegistrarPlantillaDocumento - Success");
+        console.log("Respuesta :: ", response.body);
+    	$scope.GetPlantillaDocumento();
+        $scope.plantillaDocumento = {};
+    };
+    var RegistrarPlantillaDocumentoError = function(response){
+        $log.debug("RegistrarPlantillaDocumento - Error");
+        console.log("Respuesta :: ", response);
+        $scope.plantillaDocumento = {};
+    };
+
+    var ActualizarPlantillaDocumentoSuccess = function(response){
+    	$log.debug("ActualizarPlantillaDocumento - Success");
+    	console.log("Respuesta :: ", response.body);
+    	$scope.GetPlantillaDocumento();
+        $scope.plantillaDocumento = {};
+    };
+    var ActualizarPlantillaDocumentoError = function(response){
+        $log.debug("ActualizarPlantillaDocumento - Error");
+    	console.log("Respuesta :: ", response);
+        $scope.plantillaDocumento = {};
+
+    };
+
+    var EliminarPlantillaDocumentoSuccess = function(response){
+    	$log.debug("EliminarPlantillaDocumento - Success");
+        console.log("Respuesta :: ", response.body);
+    	$scope.GetPlantillaDocumento();
+        $scope.plantillaDocumento = {};
+
+    };
+    var EliminarPlantillaDocumentoError = function(response){
+        $log.debug("EliminarPlantillaDocumento - Error");
+        console.log("Respuesta :: ", response);
+        $scope.plantillaDocumento = {};
+    };
 
     /********** CRUD USUARIOS ***********/
-
-    $scope.RegistrarPlantillaDocumento = function(){
-        var plantillaDocumento = {
-            setiqueta : $scope.plantillaDocumento.setiqueta,
-            smodel : $scope.plantillaDocumento.smodel,
-            sopciones : $scope.plantillaDocumento.sopciones === undefined ? "" : $scope.plantillaDocumento.sopciones,
-            stipo : $scope.plantillaDocumento.stipo,
-            sfacultad : $scope.facultad.snombreEstructuraOrganizacion,
-            splantilla : generarPlantilla($scope.plantillaDocumento.stipo, $scope.plantillaDocumento.smodel, $scope.plantillaDocumento.setiqueta, $scope.plantillaDocumento.sopciones),
-            sdata : $scope.plantillaDocumento.sdata === undefined ? "" : $scope.plantillaDocumento.sdata.replace(/\n/g, ","),
-            suserCreacion : $scope.sharedService.nombreUsuario,
-            sestado : 'A'
-        };
-	PlantillaDocumentoService.RegistrarPlantillaDocumento(plantillaDocumento).then(RegistrarPlantillaDocumentoSuccess, RegistrarPlantillaDocumentoError);
-    };
-    
     $scope.getEstructuraOrganizaciones = function(){
       	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
     };
+    
+    $scope.RegistrarPlantillaDocumento = function(){
+        $scope.submitted = true;
+        if($scope.formRegistroSemestre.$valid){
+            var plantillaDocumento = {
+                setiqueta : $scope.plantillaDocumento.setiqueta,
+                smodel : $scope.plantillaDocumento.smodel,
+                sopciones : $scope.plantillaDocumento.sopciones === undefined ? "" : $scope.plantillaDocumento.sopciones,
+                stipo : $scope.plantillaDocumento.stipo,
+                sfacultad : $scope.facultad.snombreEstructuraOrganizacion,
+                splantilla : generarPlantilla($scope.plantillaDocumento.stipo, $scope.plantillaDocumento.smodel, $scope.plantillaDocumento.setiqueta, $scope.plantillaDocumento.sopciones),
+                sdata : $scope.plantillaDocumento.sdata === undefined ? "" : $scope.plantillaDocumento.sdata.replace(/\n/g, ","),
+                suserCreacion : $scope.sharedService.nombreUsuario,
+                sestado : 'A'
+            };
+            PlantillaDocumentoService.RegistrarPlantillaDocumento(plantillaDocumento).then(RegistrarPlantillaDocumentoSuccess,
+                RegistrarPlantillaDocumentoError);
+            openNotice('Registrado!','success');
+        }else {
+            console.log("No se registro Semestre :: ", $scope.semestre);
+            openNotice('Error al registrar!','danger');
+            $scope.cancel();
+        }
+    };
 
     $scope.ActualizarPlantillaDocumento = function(){
-        $scope.plantillaDocumento.sfacultad = $scope.facultad.snombreEstructuraOrganizacion;
-        $scope.plantillaDocumento.suserModificacion = $scope.sharedService.nombreUsuario;
-    	PlantillaDocumentoService.ActualizarPlantillaDocumento($scope.plantillaDocumento).then(ActualizarPlantillaDocumentoSuccess, ActualizarPlantillaDocumentoError);
+        $scope.submitted = true;
+        if($scope.formRegistroSemestre.$valid){
+            $scope.plantillaDocumento.sfacultad = $scope.facultad.snombreEstructuraOrganizacion;
+            $scope.plantillaDocumento.suserModificacion = $scope.sharedService.nombreUsuario;
+            PlantillaDocumentoService.ActualizarPlantillaDocumento($scope.plantillaDocumento).then(ActualizarPlantillaDocumentoSuccess, 
+                ActualizarPlantillaDocumentoError);
+            openNotice('Actualizado!','success');
+        }else {
+            console.log("No se registro Semestre :: ", $scope.semestre);
+            openNotice('Error al actualizar!','danger');
+            $scope.cancel();
+        }
     };
 
     $scope.EliminarPlantillaDocumento = function(plantillaDocumento){
@@ -133,6 +157,19 @@ investigacionApp.controller('PlantillaDocumentoController', function($log, $scop
         return plantillaDocumento;
     };
     
+    // Funcion que limpia el modelo del Semestre, ya que este es usado tanto para crear como para actualizar
+    $scope.cancel = function(){
+        $scope.semestre = {};
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];

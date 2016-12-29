@@ -1,4 +1,4 @@
-investigacionApp.controller('TipoInvestigacionController', function($log, $scope, $location, $rootScope, $filter, 
+investigacionApp.controller('TipoInvestigacionController', function($log, $scope, ngToast, $location, $rootScope, $filter, 
     TipoInvestigacionService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -10,6 +10,7 @@ investigacionApp.controller('TipoInvestigacionController', function($log, $scope
     var getInvestigacionServiceSuccess = function(response){
     	$log.debug("GetInvestigacion - Success");
         console.log("Respuesta :: ", response);
+        $scope.investigacion = response;
     };
     var getInvestigacionServiceError = function(response){
      	$log.debug("GetInvestigacion - Error");
@@ -20,31 +21,45 @@ investigacionApp.controller('TipoInvestigacionController', function($log, $scope
     	$log.debug("Registrar Investigacion - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoInvestigacionByPagina();
-        $scope.investigacion = {};
+        
+        $("#popNuevoInvestigacion").modal('toggle');
+        
+        $scope.cancel();
     };
     var registrarInvestigacionError = function(response){
         $log.debug("RegistrarInvestigacion - Error");
         console.log("Respuesta :: ", response);
+        $scope.investigacion = {};
     };
 
     var updateInvestigacionSuccess = function(response){
     	$log.debug("UpdateInvestigacion - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoInvestigacionByPagina();
+        
+        $("#popUpdateInvestigacion").modal('toggle');
+        
+        $scope.cancel();
     };
     var updateInvestigacionError = function(response){
         $log.debug("UpdateInvestigacion - Error");
         console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var deleteInvestigacionSuccess = function(response){
     	$log.debug("Delete Investigacion - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoInvestigacionByPagina();
+        
+        $scope.cancel();
     };
     var deleteInvestigacionError = function(response){
         $log.debug("DeleteInvestigacion - Success");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     /********** CRUD INVESTIGACIONES ***********/
@@ -54,15 +69,30 @@ investigacionApp.controller('TipoInvestigacionController', function($log, $scope
     };
 
     $scope.registrarInvestigacion = function(){
-        $scope.investigacion.suserCreacion = $scope.sharedService.nombreUsuario;
-        $scope.investigacion.sestado = 'A';
-	TipoInvestigacionService.registrarInvestigacion($scope.investigacion).then(registrarInvestigacionSuccess, registrarInvestigacionError);
+        $scope.submitted = true;
+        if($scope.formRegistroTipoInvestigacion.$valid){
+            $scope.investigacion.suserCreacion = $scope.sharedService.nombreUsuario;
+            $scope.investigacion.sestado = 'A';
+            TipoInvestigacionService.registrarInvestigacion($scope.investigacion).then(registrarInvestigacionSuccess, registrarInvestigacionError);
+            openNotice('Registrado!','success');
+        }else {
+            console.log("No se registro Semestre :: ", $scope.semestre);
+            openNotice('Error al registrar!','danger');
+        }
+        
     };
 
     $scope.updateInvestigacion = function(){
-        $scope.investigacion.suserModificacion = $scope.sharedService.nombreUsuario;
-        $scope.investigacion.sestado = 'A';
-    	TipoInvestigacionService.updateInvestigacion($scope.investigacion).then(updateInvestigacionSuccess, updateInvestigacionError);
+        $scope.submitted = true;
+        if($scope.formUpdateTipoInvestigacion.$valid){
+            $scope.investigacion.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.investigacion.sestado = 'A';
+            TipoInvestigacionService.updateInvestigacion($scope.investigacion).then(updateInvestigacionSuccess, updateInvestigacionError);
+            openNotice('Actualizado!','success');
+        }else {
+            console.log("No se registro el tipo de investigacion :: ", $scope.semestre);
+            openNotice('Error al actualizar!','danger');
+        }
     };
 
     $scope.deleteInvestigacion = function(investigacion){
@@ -71,9 +101,24 @@ investigacionApp.controller('TipoInvestigacionController', function($log, $scope
     };
 
     $scope.update = function(investigacion){
-    	$scope.investigacion = investigacion;
+        angular.copy(investigacion, $scope.investigacion);
+    	//$scope.investigacion = investigacion;
     };
 
+    // Funcion que limpia el modelo del Semestre, ya que este es usado tanto para crear como para actualizar
+    $scope.cancel = function(){
+        $scope.investigacion = {};
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
+    
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];

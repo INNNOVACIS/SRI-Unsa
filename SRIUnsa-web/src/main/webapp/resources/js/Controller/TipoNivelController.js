@@ -1,4 +1,4 @@
-investigacionApp.controller('TipoNivelController', function($log, $scope, TipoNivelService, SharedService) {
+investigacionApp.controller('TipoNivelController', function($log, $scope, ngToast, TipoNivelService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.listarTipoNivel = [];
@@ -8,7 +8,8 @@ investigacionApp.controller('TipoNivelController', function($log, $scope, TipoNi
     
     var getTipoNivelServiceSuccess = function(response){
     	$log.debug("GetTipoNivel - Success");
-    	console.log("Respuesta :: ", response);    	
+    	console.log("Respuesta :: ", response);  
+        $scope.tipoNivel = response;
     };
     var getTipoNivelServiceError = function(response){
      	$log.debug("GetTipoNivel - Error"); 
@@ -19,31 +20,46 @@ investigacionApp.controller('TipoNivelController', function($log, $scope, TipoNi
     	$log.debug("RegistrarTipoNivel - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoNivelByPagina();
-    	$scope.tipoNivel = {};
+    	
+        $scope.cancel();
+        
+        $("#popNuevoTipoNivel").modal('toggle');
     };
     var registrarTipoNivelError = function(response){
         $log.debug("RegistrarTipoNivel - Error");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
     
     var updateTipoNivelSuccess = function(response){
     	$log.debug("UpdateTipoNivel - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoNivelByPagina();
+        
+        $scope.cancel();
+        
+        $("#popUpdateTipoNivel").modal('toggle');
     };
     var updateTipoNivelError = function(response){
         $log.debug("UpdateTipoNivel - Error");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var deleteTipoNivelSuccess = function(response){
     	$log.debug("DeleteTipoNivel - Success");
     	console.log("Respuesta :: ", response);
         $scope.getTipoNivelByPagina();
+        
+        $scope.cancel();
     };
     var deleteTipoNivelError = function(response){
         $log.debug("DeleteTipoNivel - Error");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     /***************** Servicios ****************/
@@ -53,15 +69,32 @@ investigacionApp.controller('TipoNivelController', function($log, $scope, TipoNi
     };
 
     $scope.registrarTipoNivel = function(){
-    	$scope.tipoNivel.suserCreacion = $scope.sharedService.nombreUsuario;
-        $scope.tipoNivel.sestado = 'A';
-        TipoNivelService.registrarTipoNivel($scope.tipoNivel).then(registrarTipoNivelSuccess, registrarTipoNivelError);
+        $scope.submitted = true;
+        if($scope.formRegistroTipoNivel.$valid){
+            $scope.tipoNivel.suserCreacion = $scope.sharedService.nombreUsuario;
+            $scope.tipoNivel.sestado = 'A';
+            TipoNivelService.registrarTipoNivel($scope.tipoNivel).then(registrarTipoNivelSuccess,
+                registrarTipoNivelError);
+            openNotice('Registrado!','success');
+        }else {
+            console.log("No se registro Semestre :: ", $scope.semestre);
+            openNotice('Error al registrar!','danger');
+        }
     };
 
     $scope.updateTipoNivel = function(){
-    	$scope.tipoNivel.suserModificacion = $scope.sharedService.nombreUsuario;
-        $scope.tipoNivel.sestado = 'A';
-    	TipoNivelService.updateTipoNivel($scope.tipoNivel).then(updateTipoNivelSuccess, updateTipoNivelError);
+        $scope.submitted = true;
+        if($scope.formUpdateTipoNivel.$valid){
+            $scope.tipoNivel.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.tipoNivel.sestado = 'A';
+            TipoNivelService.updateTipoNivel($scope.tipoNivel).then(updateTipoNivelSuccess,
+                updateTipoNivelError);
+            openNotice('Actualizado!','success');
+        }else {
+            console.log("No se registro el tipo Nivel :: ", $scope.semestre);
+            openNotice('Error al actualizar!','danger');
+        }
+    	
     };
 
     $scope.deleteTipoNivel = function(tipoNivel){
@@ -71,9 +104,23 @@ investigacionApp.controller('TipoNivelController', function($log, $scope, TipoNi
     };
 
     $scope.update = function(tipoNivel){
-    	$scope.tipoNivel = tipoNivel;
+        angular.copy(tipoNivel, $scope.tipoNivel);
+    	//$scope.tipoNivel = tipoNivel;
     };
 
+    // Funcion que limpia el modelo del Semestre, ya que este es usado tanto para crear como para actualizar
+    $scope.cancel = function(){
+        $scope.tipoNivel = {};
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];

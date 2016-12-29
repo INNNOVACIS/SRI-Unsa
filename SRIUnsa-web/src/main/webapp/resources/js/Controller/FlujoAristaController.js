@@ -1,4 +1,4 @@
-investigacionApp.controller('FlujoAristaController', function($log, $scope, FlujoAristaService, FlujoActorService, EstadoService) {
+investigacionApp.controller('FlujoAristaController', function($log, $scope, ngToast, FlujoAristaService, FlujoActorService, EstadoService) {
 
     $scope.flujoActores = [];
 
@@ -32,11 +32,16 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
         if(response !== -1){
             $scope.getFlujoAristaByPagina(); /*actualizacion la paginacion*/
         }
+        $scope.cancel();
+        
+        // Cerrando el modal con Jquery
+        $("#modalNuevo").modal('toggle');
     };
     
     var RegistrarFlujoAristaError = function(response){
         $log.debug("RegistrarFlujoArista - Error");
         console.log("Respuesta :: ", response);  
+        $scope.cancel();       
     };
     
     var ActualizarFlujoAristaSuccess = function(response){
@@ -45,11 +50,16 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
         if(response === true){
             $scope.getFlujoAristaByPagina(); /*actualizacion la paginacion*/
         }
+        $scope.cancel();
+        
+        // Cerrando el modal con Jquery
+        $("#modalActualizar").modal('toggle');
     };
     
     var ActualizarFlujoAristaError = function(response){
         $log.debug("ActualizarFlujoArista - Success");
         console.log("Respuesta :: ", response);
+        $scope.cancel();
     };
     
     var EliminarFlujoAristaSuccess = function(response){
@@ -58,11 +68,13 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
         if(response === true){
             $scope.getFlujoAristaByPagina(); /*actualizacion la paginacion*/
         }
+        $scope.cancel();
     };
     
     var EliminarFlujoAristaError = function(response){
         $log.debug("EliminarFlujoArista - Error");
         console.log("Respuesta :: ", response); 
+        $scope.cancel();
     };
     
     /************************ Servicios **************************/
@@ -76,28 +88,48 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
     };
     
     $scope.RegistrarFlujoArista = function(){
-        var flujoArista = {
-            sidFlujoActorDestino : $scope.flujoActorDestino.nidFlujoActor,
-            sidFlujoActorOrigen : $scope.flujoActorOrigen.nidFlujoActor,
-            snombreArista : $scope.flujoAristaNombre,
-            nidEstado : $scope.estado.nidEstado, 
-            sflujo : 'SRI',
-            sestado: 'A'
-        };
-        FlujoAristaService.RegistrarFlujoArista(flujoArista).then(RegistrarFlujoAristaSuccess, RegistrarFlujoAristaError);
+        $scope.submitted = true;
+        if($scope.formRegistrarFlujoArista.$valid
+                && $scope.formRegistrarFlujoArista.flujoActorOrigen.$valid
+                && $scope.formRegistrarFlujoArista.flujoActorDestino.$valid
+                && $scope.formRegistrarFlujoArista.estado.$valid) {
+            var flujoArista = {
+                sidFlujoActorDestino : $scope.flujoActorDestino.nidFlujoActor,
+                sidFlujoActorOrigen : $scope.flujoActorOrigen.nidFlujoActor,
+                snombreArista : $scope.flujoAristaNombre,
+                nidEstado : $scope.estado.nidEstado, 
+                sflujo : 'SRI',
+                sestado: 'A'
+            };
+            FlujoAristaService.RegistrarFlujoArista(flujoArista).then(RegistrarFlujoAristaSuccess, RegistrarFlujoAristaError);
+            openNotice('Registrado!','success');
+        }else {
+            console.log("No se registro  :: ", $scope.flujoActores);
+            openNotice('Error al registrar!','danger');
+            //$scope.cancel();
+        }
     };
     
     $scope.ActualizarFlujoArista = function(){
-        var flujoArista = {
-            nidArista : $scope.flujoAristaActor.nidArista,
-            sidFlujoActorDestino : $scope.flujoActorDestino.nidFlujoActor,
-            sidFlujoActorOrigen : $scope.flujoActorOrigen.nidFlujoActor,
-            snombreArista : $scope.flujoAristaActor.snombreArista,
-            nidEstado : $scope.estadoFlujo.nidEstado, 
-            sflujo : 'SRI',
-            sestado: 'A'
-        };
-        FlujoAristaService.ActualizarFlujoArista(flujoArista).then(ActualizarFlujoAristaSuccess, ActualizarFlujoAristaError);
+        $scope.submitted = true;
+        if($scope.formUpdateFlujoArista.$valid) {
+            var flujoArista = {
+                nidArista : $scope.flujoAristaActor.nidArista,
+                sidFlujoActorDestino : $scope.flujoActorDestino.nidFlujoActor,
+                sidFlujoActorOrigen : $scope.flujoActorOrigen.nidFlujoActor,
+                snombreArista : $scope.flujoAristaActor.snombreArista,
+                nidEstado : $scope.estadoFlujo.nidEstado, 
+                sflujo : 'SRI',
+                sestado: 'A'
+            };
+            FlujoAristaService.ActualizarFlujoArista(flujoArista).then(ActualizarFlujoAristaSuccess,
+                ActualizarFlujoAristaError);
+            openNotice('Actualizado!','success');
+        }else {
+            console.log("Error al actualizar Flujo Arista  :: ", $scope.flujoActores);
+            openNotice('Error al actualizar!','danger');
+            //$scope.cancel();
+        }
     };
     
     $scope.EliminarFlujoArista = function(flujoAristaEliminar){
@@ -110,9 +142,12 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
             sflujo : $scope.flujoAristaActor.sflujo,
             sestado: 'I'
         };
-        FlujoAristaService.EliminarFlujoArista(flujoArista).then(EliminarFlujoAristaSuccess, EliminarFlujoAristaError);
+        FlujoAristaService.EliminarFlujoArista(flujoArista).then(EliminarFlujoAristaSuccess,
+            EliminarFlujoAristaError);
     };
     
+    // Establecer los datos del formulario de actualizacion para su visualizacion 
+    // y posterior actualizacion
     $scope.actualizar = function(flujoAristaActor){
         console.log($scope.flujoArista);
     	$scope.flujoAristaActor = flujoAristaActor;
@@ -141,13 +176,23 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, Fluj
         return respuesta;
     };
     
+    // Limpia los datos del formulario de registro y actualizacion
+    // Les ponemos null a los seleccionables porque '{}' cuenta como un objeto seleccionado
+    $scope.cancel = function(){
+        $scope.flujoAristaNombre = null;
+        $scope.flujoActorOrigen = null;
+        $scope.flujoActorDestino = null;
+        $scope.estado = null;
+    };   
     
-    
-    
-    
-    
-    
-    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
     
     /**************** PAGINACION *****************/
     

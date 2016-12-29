@@ -1,4 +1,4 @@
-investigacionApp.controller('RolController', function($log, $scope, RolService, SharedService) {
+investigacionApp.controller('RolController', function($log, $scope, ngToast, RolService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.roles = [];
@@ -7,6 +7,7 @@ investigacionApp.controller('RolController', function($log, $scope, RolService, 
     var getRolServiceSuccess = function(response){
     	$log.debug("GetRol - Success");
     	console.log("Respuesta :: ", response);
+        $scope.rol = response;
     };
     var getRolServiceError = function(response){
      	$log.debug("Get Rol - Error");
@@ -17,35 +18,49 @@ investigacionApp.controller('RolController', function($log, $scope, RolService, 
     	$log.debug("RegistrarRol - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getRolesByPagina();
-    	$scope.rol = {};
+    	
+        $scope.cancel();
+        
+        $("#popNuevoRol").modal('toggle');
     };
 
     var registrarRolError = function(response){
         $log.debug("RegistrarRol - Error");
     	console.log("Respuesta :: ", response);
-        $scope.getRolesByPagina();
+        
+        $scope.cancel();
     };
 
     var updateRolSuccess = function(response){
     	$log.debug("UpdateUser - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getRolesByPagina();
+        
+        $scope.cancel();
+        
+        $("#popUpdateRol").modal('toggle');
     };
 
     var updateRolError = function(response){
         $log.debug("UpdateUser - Error");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var deleteRolSuccess = function(response){
     	$log.debug("DeleteUser - Success");
     	console.log("Respuesta :: ", response);
-    	$scope.rol = response;
+    	$scope.getRolesByPagina();
+        
+        $scope.cancel();
     };
 
     var deleteRolError = function(response){
         $log.debug("DeleteUser - Error");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     /********** CRUD ROLES ***********/
@@ -55,15 +70,31 @@ investigacionApp.controller('RolController', function($log, $scope, RolService, 
     };
 
     $scope.registrarRol = function(){
-        $scope.rol.suserCreacion = $scope.sharedService.nombreUsuario;
-        $scope.rol.sestado = 'A';
-	RolService.registrarRol($scope.rol).then(registrarRolSuccess, registrarRolError);
+        $scope.submitted = true;
+        if($scope.formRegistroRol.$valid){
+            $scope.rol.suserCreacion = $scope.sharedService.nombreUsuario;
+            $scope.rol.sestado = 'A';
+            RolService.registrarRol($scope.rol).then(registrarRolSuccess, registrarRolError);
+            openNotice('Registrado!','success');
+        }else {
+            console.log("No se registro Semestre :: ", $scope.semestre);
+            openNotice('Error al registrar!','danger');
+        }
+        
+        
     };
 
     $scope.updateRol = function(){
-        $scope.rol.suserModificacion = $scope.sharedService.nombreUsuario;
-        $scope.rol.sestado = 'A';
-    	RolService.updateRol($scope.rol).then(updateRolSuccess, updateRolError);
+        $scope.submitted = true;
+        if($scope.formUpdateRol.$valid) {
+            $scope.rol.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.rol.sestado = 'A';
+            RolService.updateRol($scope.rol).then(updateRolSuccess, updateRolError);
+            openNotice('Actualizado!','success');
+        } else {
+            console.log("No se registro el Rol :: ", $scope.semestre);
+            openNotice('Error al actualizar!','danger');
+        }
     };
 
     $scope.deleteRol = function(rol){
@@ -72,7 +103,22 @@ investigacionApp.controller('RolController', function($log, $scope, RolService, 
     };
 
     $scope.update = function(rol){
-    	$scope.rol = rol;
+        angular.copy(rol, $scope.rol);
+    	//$scope.rol = rol;
+    };
+    
+    // Funcion que limpia el modelo del Semestre, ya que este es usado tanto para crear como para actualizar
+    $scope.cancel = function(){
+        $scope.rol = {};
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
     };
     
     /**************** PAGINACION *****************/

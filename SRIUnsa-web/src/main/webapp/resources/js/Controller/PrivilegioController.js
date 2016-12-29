@@ -1,4 +1,4 @@
-investigacionApp.controller('PrivilegioController', function($log, $scope, PrivilegioService, SharedService) {
+investigacionApp.controller('PrivilegioController', function($log, $scope, ngToast, PrivilegioService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.privilegios = [];
@@ -9,7 +9,7 @@ investigacionApp.controller('PrivilegioController', function($log, $scope, Privi
     var getPrivilegioServiceSuccess = function(response){
     	$log.debug("GetPrivilegio - Success");
         console.log("Respuesta :: ", response);
-    	$scope.privilegios = response;
+    	$scope.privilegio = response;
     };
 
     var getPrivilegioServiceError = function(response){
@@ -21,34 +21,49 @@ investigacionApp.controller('PrivilegioController', function($log, $scope, Privi
     	$log.debug("RegistrarPrivilegio - Success");
         console.log("Respuesta :: ", response);
     	$scope.getPrivilegiosByPagina();
-    	$scope.privilegio = {};
+    	
+        $scope.cancel();
+        
+        $("#popNuevoPrivilegio").modal('toggle');
     };
 
     var registrarPrivilegioError = function(response){
         $log.debug("Registrar Privilegio - Error");
         console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var updatePrivilegioSuccess = function(response){
     	$log.debug("UpdatePrivilegio - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getPrivilegiosByPagina();
+        
+        $scope.cancel();
+        
+        $("#popUpdatePrivilegio").modal('toggle');
     };
 
     var updatePrivilegioError = function(response){
         $log.debug("UpdatePrivilegio - Error");
         console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var deletePrivilegioSuccess = function(response){
     	$log.debug("DeletePrivilegio - Success");
     	console.log("Respuesta :: ", response);
-    	$scope.privilegio = response;
+    	$scope.getPrivilegiosByPagina();
+        
+        $scope.cancel();
     };
 
     var deletePrivilegioError = function(response){
         $log.debug("DeletePrivilegio - Success");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     /********** CRUD PRIVILEGIOS ***********/
@@ -57,16 +72,30 @@ investigacionApp.controller('PrivilegioController', function($log, $scope, Privi
       	PrivilegioService.getPrivilegios().then(getPrivilegioServiceSuccess, getPrivilegioServiceError);
     };
 
-    $scope.registrarPrivilegio = function(){
-        $scope.privilegio.suserCreacion = $scope.sharedService.nombreUsuario;
-        $scope.privilegio.sestado = 'A';
-	PrivilegioService.registrarPrivilegio($scope.privilegio).then(registrarPrivilegioSuccess, registrarPrivilegioError);
+    $scope.registrarPrivilegio = function(){        
+        $scope.submitted = true;
+        if($scope.formRegistroPrivilegio.$valid){
+            $scope.privilegio.suserCreacion = $scope.sharedService.nombreUsuario;
+            $scope.privilegio.sestado = 'A';
+            PrivilegioService.registrarPrivilegio($scope.privilegio).then(registrarPrivilegioSuccess, registrarPrivilegioError);
+            openNotice('Registrado!','success');
+        }else {
+            console.log("No se registro Semestre :: ", $scope.semestre);
+            openNotice('Error al registrar!','danger');
+        }
     };
 
     $scope.updatePrivilegio = function(){
-    	$scope.privilegio.suserModificacion = $scope.sharedService.nombreUsuario;
-        $scope.privilegio.sestado = 'A';
-    	PrivilegioService.updatePrivilegio($scope.privilegio).then(updatePrivilegioSuccess, updatePrivilegioError);
+        $scope.submitted = true;
+        if($scope.formUpdatePrivilegio.$valid){
+            $scope.privilegio.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.privilegio.sestado = 'A';
+            PrivilegioService.updatePrivilegio($scope.privilegio).then(updatePrivilegioSuccess, updatePrivilegioError);
+            openNotice('Actualizado!','success');
+        }else {
+            console.log("No se registro Semestre :: ", $scope.semestre);
+            openNotice('Error al actualizar!','danger');
+        }
     };
 
     $scope.deletePrivilegio = function(privilegio){
@@ -75,9 +104,27 @@ investigacionApp.controller('PrivilegioController', function($log, $scope, Privi
     };
 
     $scope.update = function(privilegio){
-    	$scope.privilegio = privilegio;
+        // Se realizo esta modificacion ya que la referencia ocasionaba que se 
+        // cuando modificaba el texto del input tambien se modificara el campo
+        // de la tabla. Esto debido a que se enviaba como referencia
+    	angular.copy(privilegio, $scope.privilegio);
+        //$scope.privilegio = privilegio;
     };
 
+    // Funcion que limpia el modelo del Semestre, ya que este es usado tanto para crear como para actualizar
+    $scope.cancel = function(){
+        $scope.privilegio = {};
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
+    
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];

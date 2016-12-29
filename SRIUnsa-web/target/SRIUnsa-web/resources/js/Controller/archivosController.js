@@ -62,6 +62,19 @@ investigacionApp.controller('archivosController', function($log, $scope, $locati
     	$scope.file = file;
     };
 
+    // Funcion que limpia el modelo del Semestre, ya que este es usado tanto para crear como para actualizar
+    $scope.cancel = function(){
+        $scope.privilegio = {};
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];
