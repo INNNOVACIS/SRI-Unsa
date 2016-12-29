@@ -22,12 +22,16 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     	$log.debug("Registrar Semestre - Success");
         console.log("Respuesta :: ", response);
     	$scope.getSemestresByPagina();
-    	$scope.semestre = {};
+    	
+        $scope.cancel();
+        
+        $("#popNuevoSemestre").modal('toggle');
     };
     var registrarSemestreError = function(response){
         $log.debug("Registrar Semestre - Error");
         console.log("Respuesta :: ", response);
-        $scope.semestre = {};
+        
+        $scope.cancel();
     };
     
     // CallBack Registrar
@@ -35,12 +39,16 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     	$log.debug("Update Semestre - Success");
     	console.log("Respuesta :: ", response);
         $scope.getSemestresByPagina();
-        $scope.semestre = {};
+        
+        $scope.cancel();
+        
+        $("#popUpdateSemestre").modal('toggle');
     };
     var updateSemestreError = function(response){
         $log.debug("Update Semestre - Error");
         console.log("Respuesta :: ", response);
-        $scope.semestre = {};
+        
+        $scope.cancel();
     };
     
     // CallBack Delete
@@ -48,13 +56,15 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     	$log.debug("Delete User - Success");
     	console.log("Respuesta :: ", response);
         $scope.getSemestresByPagina();
-        $scope.semestre = {};
+        
+        $scope.cancel();
 
     };
     var deleteSemestreError = function(response){
         $log.debug("Delete User - Error");
     	console.log("Respuesta :: ", response);
-        $scope.semestre = {};
+        
+        $scope.cancel();
     };
 
     /********** CRUD SEMESTRES ***********/
@@ -100,7 +110,8 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     };
     
     $scope.update = function(semestre){
-    	$scope.semestre = semestre;
+        angular.copy(semestre, $scope.semestre);
+    	//$scope.semestre = semestre;
     };
     
     
