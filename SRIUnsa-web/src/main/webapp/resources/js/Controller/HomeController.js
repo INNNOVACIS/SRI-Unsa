@@ -523,7 +523,7 @@
                 $scope.mostrarActividad = [false, false, false, true];
                 $scope.descripcionLabel = "Resumen";
                 $scope.tituloLabel = "Titulo";
-                $scope.adjuntar = "Adjuntar Planificación o Avance de la producción";
+                $scope.adjuntar = "Adjuntar Planificación";
                 $scope.showDescripcion = false;
                 break;
             default:
@@ -598,6 +598,13 @@
     /********** FILE UPLOAD **********/
     
     $scope.files = [];
+    var uploader = $scope.uploader = new FileUploader({
+        url: SRIUnsaConfig.SRIUnsaUrlServicio + '/files/subirArchivos'
+    });
+    var uploader2 = $scope.uploader2 = new FileUploader({
+        url: SRIUnsaConfig.SRIUnsaUrlServicio + '/files/subirArchivos'
+    });
+
 
     var homeServiceSuccess = function(response) {        
         $log.debug(response);
@@ -614,12 +621,14 @@
         HomeService.sendFile(formData, true).then(homeServiceSuccess, homeServiceError);
     };
     
-    var uploader = $scope.uploader = new FileUploader({
-        url: SRIUnsaConfig.SRIUnsaUrlServicio + '/files/subirArchivos'
-    });
-    
     uploader.filters.push({
         name: 'customFilter',
+        fn: function(item , options) {
+            return this.queue.length < 10;
+        }
+    });
+    uploader2.filters.push({
+        name: 'customFilter2',
         fn: function(item , options) {
             return this.queue.length < 10;
         }
@@ -675,6 +684,15 @@
         $scope.loader = false;
         $scope.openCloseModal(true,false);
     };
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     /********** DataPicker ************/
