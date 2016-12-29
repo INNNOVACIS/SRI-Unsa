@@ -1,55 +1,60 @@
 
 <div id="page-wrapper">
     <div class="col-lg-12" style="margin-top:20px;">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						Administración de Tipo de Producción
-						<button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoTipoProduccion">
-							<span class="glyphicon glyphicon-plus"></span>
-							Nuevo
-						</button>	
-					</div>
-					<div class="panel-body">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-sm-2">
-                                                        <input ng-model="buscar" class="form-control" placeholder="Buscar" >
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <button ng-click="clickBuscar()" class="btn btn-primary">
-                                                            <span class="glyphicon glyphicon-search"></span> Buscar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-						<table width="100%" class="table table-striped table-bordered table-hover">
-	                        <thead>
-	                            <tr>
-	                                <th >Nombre Tipo Produccion</th>
-                                       <th width="10%">Acci&oacute;n</th>
-	                            </tr>
-	                        </thead>
-	                        <tbody>
-	                            <tr ng-repeat="tipoProduccion in tipoProducciones">
-	                                <td><strong>{{ tipoProduccion.snombreTipoProduccion }}</strong></td>
-	                                <td nowrap>
-                                            <img style="width:30px; cursor: pointer" ng-click="update(tipoProduccion)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateTipoProduccion">
-                                            <img style="width:30px; cursor: pointer" ng-click="deleteTipoProduccion(tipoProduccion)" src="resources/images/iconos/eliminar.png">
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-                            <pagination
-                                rango-paginas="rangoPaginas"
-                                current-rango="currentRango"
-                                num-pages="numPages()" 
-                                current-page="currentPage"
-                                max-size="maxSize"
-                                total="total">
-                            </pagination>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Administraci&oacute;n de Tipo de Producci&oacute;n
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal"
+                        data-backdrop="static" data-keyboard="false" 
+                        data-target="#popNuevoTipoProduccion">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Nuevo
+                </button>	
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input ng-model="buscar" class="form-control" placeholder="Buscar" >
+                        </div>
+                        <div class="col-sm-2">
+                            <button ng-click="clickBuscar()" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span> Buscar</button>
+                        </div>
+                    </div>
+                </div>
+                <table width="100%" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="colorTextoGrilla">Nombre Tipo Producci&oacute;n</th>
+                            <th width="10%" class="colorTextoGrilla">Acci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="tipoProduccion in tipoProducciones">
+                            <td class="colorTextoGrilla">{{ tipoProduccion.snombreTipoProduccion}}</td>
+                            <td nowrap>
+                                <img style="width:30px; cursor: pointer" ng-click="update(tipoProduccion)" 
+                                     src="resources/images/iconos/editar.png" data-toggle="modal"
+                                     data-backdrop="static" data-keyboard="false"
+                                     data-target="#popUpdateTipoProduccion">
+                                <img style="width:30px; cursor: pointer" ng-click="deleteTipoProduccion(tipoProduccion)" src="resources/images/iconos/eliminar.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination
+                    rango-paginas="rangoPaginas"
+                    current-rango="currentRango"
+                    num-pages="numPages()" 
+                    current-page="currentPage"
+                    max-size="maxSize"
+                    total="total">
+                </pagination>
+            </div>
+        </div>
+    </div>
+</div>
 <!--	</div>
 </div>-->
 
@@ -57,36 +62,38 @@
 <div id="popNuevoTipoProduccion" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-	        <div class="modal-header">
-	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	          	<h4 class="modal-title">Registrar Tipo Produccion</h4>
-	        </div>
-	        <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                            <label class="control-label col-md-2" style="">Tipo Produccion</label>
-                                            <div class="col-md-10">
-                                                    <input id="inpNombre" ng-model="tipoProduccion.snombreTipoProduccion" type="text" class="form-control" placeholder="Nombre del tipo de Produccion">
-                                            </div>
+            <div class="modal-header">
+                <h4 class="modal-title">Registrar Tipo Produccion</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form name="formRegistroTipoProduccion" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" style="">Tipo Produccion</label>
+                                    <div class="col-md-10">
+                                        <input id="inpNombre" ng-model="tipoProduccion.snombreTipoProduccion" 
+                                               type="text" class="form-control" 
+                                               placeholder="Nombre del tipo de Produccion" 
+                                               required >
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-	        </div>
-	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarTipoProduccion()">
-	        		<span class="glyphicon glyphicon-save"></span>
-	        		Registrar
-	        	</button>
-	          	<button type="button" class="btn btn-default" data-dismiss="modal">
-	          		<span class="glyphicon glyphicon-remove"></span>
-	          		Cerrar
-	          	</button>
-	        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarTipoProduccion()">
+                    <span class="glyphicon glyphicon-save"></span>
+                    Registrar
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -95,36 +102,38 @@
 <div id="popUpdateTipoProduccion" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-	        <div class="modal-header">
-	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	          	<h4 class="modal-title">Actualizar Tipo Produccion</h4>
-	        </div>
-	        <div class="modal-body">
-	        	<div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" style="">Tipo Produccion</label>
-                                            <div class="col-md-10">
-                                                    <input id="inpNombre" ng-model="tipoProduccion.snombreTipoProduccion" type="text" class="form-control" placeholder="Nombre del tipo de Produccion">
-                                            </div>
-                                        </div>
-                                    </form>
+            <div class="modal-header">
+                <h4 class="modal-title">Actualizar Tipo Produccion</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form name="formUpdateTipoProduccion" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" style="">Tipo Produccion</label>
+                                    <div class="col-md-10">
+                                        <input id="inpNombre" ng-model="tipoProduccion.snombreTipoProduccion" 
+                                               type="text" class="form-control" 
+                                               placeholder="Nombre del tipo de Produccion"
+                                               required >
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-	        </div>
-	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateTipoProduccion()">
-	        		<span class="glyphicon glyphicon-refresh"></span>
-	        		Actualizar
-	        	</button>
-	          	<button type="button" class="btn btn-default" data-dismiss="modal">
-	          		<span class="glyphicon glyphicon-remove"></span>
-	          		Cerrar
-	          	</button>
-	        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateTipoProduccion()">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                    Actualizar
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
+                </button>
+            </div>
         </div>
     </div>
 </div>

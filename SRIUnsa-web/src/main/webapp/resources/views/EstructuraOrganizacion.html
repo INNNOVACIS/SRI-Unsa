@@ -3,7 +3,9 @@
                 <div class="panel panel-info">
                     <div class="panel-heading" style="padding-bottom:19px;">
                         Administración de las Estructuras de Organización
-                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#modalNuevo">
+                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal"
+                                data-backdrop="static" data-keyboard="false" 
+                                data-target="#modalNuevo">
                             <span class="glyphicon glyphicon-plus"></span>
                             Nuevo
                         </button>	
@@ -11,7 +13,7 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-sm-4">
                                     <input ng-model="buscar" class="form-control" placeholder="Buscar" >
                                 </div>
                                 <div class="col-sm-2">
@@ -20,27 +22,30 @@
                                 </div>
                             </div>
                         </div>
-                        <table width="100%" class="table table-striped table-bordered table-hover">
+                        <table width="100%" class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>id</th>
-                                    <th width="35%">Nombre</th>
-                                    <th>Nivel</th>
-                                    <th>Dependencia</th>
-                                    <th>Estado</th>
-                                    <th>Accion</th>
+                                    <th class="colorTextoGrilla">Id</th>
+                                    <th width="35%" class="colorTextoGrilla">Nombre</th>
+                                    <th class="colorTextoGrilla">Nivel</th>
+                                    <th class="colorTextoGrilla">Dependencia</th>
+                                    <th class="colorTextoGrilla">Estado</th>
+                                    <th class="colorTextoGrilla">Acci&oacute;n</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="estructuraOrganizacion in estructuraOrganizaciones">
                                     
-                                    <td>{{ estructuraOrganizacion.nidEstructuraOrganizacion }}</td>
-                                    <td>{{ estructuraOrganizacion.snombreEstructuraOrganizacion }}</td>
-                                    <td>{{ estructuraOrganizacion.snivel }}</td>
-                                    <td>{{ estructuraOrganizacion.dependencia }}</td>
-                                    <td>{{ estructuraOrganizacion.sestado }}</td>
+                                    <td class="colorTextoGrilla">{{ estructuraOrganizacion.nidEstructuraOrganizacion }}</td>
+                                    <td class="colorTextoGrilla">{{ estructuraOrganizacion.snombreEstructuraOrganizacion }}</td>
+                                    <td class="colorTextoGrilla">{{ estructuraOrganizacion.snivel }}</td>
+                                    <td class="colorTextoGrilla">{{ estructuraOrganizacion.dependencia }}</td>
+                                    <td class="colorTextoGrilla">{{ estructuraOrganizacion.sestado }}</td>
                                     <td nowrap>
-                                        <img style="width:30px; cursor: pointer" ng-click="update(estructuraOrganizacion)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateEstructuraOrganizacion">
+                                        <img style="width:30px; cursor: pointer" ng-click="update(estructuraOrganizacion)"
+                                             src="resources/images/iconos/editar.png" data-toggle="modal"
+                                             data-backdrop="static" data-keyboard="false"
+                                             data-target="#popUpdateEstructuraOrganizacion">
                                         <img style="width:30px; cursor: pointer" ng-click="deleteEstructuraOrganizacion(estructuraOrganizacion)" src="resources/images/iconos/eliminar.png">
                                     </td>
                                 </tr>
@@ -66,18 +71,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Registrar Estructura Organización</h4>
+                <h4 class="modal-title">Registrar Estructura de la Organizaci&oacute;n</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form name="formRegistroEstructuraOrganizacion" class="form-horizontal">
                                 <div class="form-group">
                                     <label class="control-label col-md-3" style="">Tipo Nivel</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" ng-model="nivel" ng-options="opt as opt.snombreTipoNivel for opt in niveles" ng-change="changeNivel(nivel)"></select>
+                                        <select class="form-control" ng-model="nivel" 
+                                                ng-options="opt as opt.snombreTipoNivel for opt in niveles" 
+                                                ng-change="changeNivel(nivel)"
+                                                required ></select>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="showDependencia">
@@ -85,14 +92,15 @@
                                     <div class="col-md-9">
                                         <select  ng-model="dependencia"
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in dependencias"
-                                            class="form-control">
+                                            class="form-control"
+                                            required >
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3" style="">Nombre</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" ng-model="nombre" type="text"/>
+                                        <input class="form-control" ng-model="nombre" type="text" required />
                                     </div>
                                 </div>
                             </form>
@@ -105,7 +113,7 @@
                     <span class="glyphicon glyphicon-floppy-disk"></span>
                     Registrar
                 </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>
@@ -119,18 +127,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Actualizar Estructura Organizacion</h4>
+                <h4 class="modal-title">Actualizar Estructura Organizaci&oacute;n</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form name="formUpdateEstructuraOrganizacion" class="form-horizontal">
                                 <div class="form-group">
                                     <label class="control-label col-md-3" style="">Tipo Nivel</label>
                                     <div class="col-md-9">
-                                            <select class="form-control" ng-model="nivel" ng-options="opt as opt.snombreTipoNivel for opt in niveles" ng-change="changeNivel(nivel)"></select>
+                                            <select class="form-control" ng-model="nivel" 
+                                                    ng-options="opt as opt.snombreTipoNivel for opt in niveles" 
+                                                    ng-change="changeNivel(nivel)"
+                                                    required ></select>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="showDependencia">
@@ -138,7 +148,8 @@
                                     <div class="col-md-9">
                                         <select  ng-model="dependencia"
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in dependencias"
-                                            class="form-control">
+                                            class="form-control"
+                                            required >
                                         </select>
                                     </div>
                                 </div>
@@ -158,7 +169,7 @@
                     <span class="glyphicon glyphicon-refresh"></span>
                     Actualizar
                 </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>

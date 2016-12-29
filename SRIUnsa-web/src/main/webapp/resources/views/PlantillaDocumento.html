@@ -2,15 +2,17 @@
     <div class="col-lg-12" style="margin-top:20px;">
         <div class="panel panel-info">
             <div class="panel-heading">
-                Usuarios
-                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#modalNuevo">
+                Generar Campos
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal"
+                        data-backdrop="static" data-keyboard="false" 
+                        data-target="#modalNuevo">
                     <span class="glyphicon glyphicon-plus"></span> Nuevo
                 </button>	
             </div>
             <div class="panel-body">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             <input ng-model="buscar" class="form-control" placeholder="Buscar" >
                         </div>
                         <div class="col-sm-2">
@@ -21,7 +23,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table width="100%" class="table table-striped table-bordered table-hover">
+                    <table width="100%" class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th width="30%">Etiqueta</th>
@@ -34,13 +36,16 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="plantillaDocumento in plantillaDocumentos">
-                                <td><strong>{{ plantillaDocumento.setiqueta }}</strong></td>
-                                <td>{{ plantillaDocumento.smodel }}</td>
-                                <td>{{ plantillaDocumento.stipo }}</td>
-                                <td>{{ plantillaDocumento.sfacultad }}</td>
-                                <td>{{ plantillaDocumento.sestado }}</td>
+                                <td class="colorTextoGrilla">{{ plantillaDocumento.setiqueta }}</td>
+                                <td class="colorTextoGrilla">{{ plantillaDocumento.smodel }}</td>
+                                <td class="colorTextoGrilla">{{ plantillaDocumento.stipo }}</td>
+                                <td class="colorTextoGrilla">{{ plantillaDocumento.sfacultad }}</td>
+                                <td class="colorTextoGrilla">{{ plantillaDocumento.sestado }}</td>
                                 <td nowrap>
-                                    <img style="width:30px; cursor: pointer" ng-click="update(plantillaDocumento)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#modalUpdate">
+                                    <img style="width:30px; cursor: pointer" ng-click="update(plantillaDocumento)" 
+                                         src="resources/images/iconos/editar.png" data-toggle="modal" 
+                                         data-backdrop="static" data-keyboard="false"
+                                         data-target="#modalUpdate">
                                     <img style="width:30px; cursor: pointer" ng-click="EliminarPlantillaDocumento(plantillaDocumento)" src="resources/images/iconos/eliminar.png">
                                 </td>
                             </tr>
@@ -65,24 +70,27 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Registrar Nueva Plantilla</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form name="formRegistrarPlantilla" class="form-horizontal">
                                 <div class="form-group">
                                     <label class="control-label col-md-2" style="">Etiqueta</label>
                                     <div class="col-md-10">
-                                        <input ng-model="plantillaDocumento.setiqueta" type="text" class="form-control" placeholder="Etiqueta">
+                                        <input ng-model="plantillaDocumento.setiqueta" type="text" 
+                                               class="form-control" placeholder="Etiqueta"
+                                               required >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-2" style="">Modelo</label>
                                     <div class="col-md-10">
-                                        <input ng-model="plantillaDocumento.smodel" class="form-control" placeholder="ng-model">
+                                        <input ng-model="plantillaDocumento.smodel" class="form-control"
+                                               placeholder="ng-model"
+                                               required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -91,14 +99,16 @@
                                         <select ng-model="plantillaDocumento.stipo"                
                                             ng-options="opt as opt for opt in tipos"
                                             class="form-control"
-                                            ng-change="changeTipo(plantillaDocumento.stipo)">
+                                            ng-change="changeTipo(plantillaDocumento.stipo)" required>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="textArea">
                                     <label class="control-label col-md-2" style="">Opciones</label>
                                     <div class="col-md-10">
-                                        <input ng-model="plantillaDocumento.sopciones" class="form-control" placeholder='ng-options="opt as opt for opt in opciones"'>
+                                        <input ng-model="plantillaDocumento.sopciones" class="form-control" 
+                                               placeholder='ng-options="opt as opt for opt in opciones"'
+                                               required>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="textArea">
@@ -127,7 +137,7 @@
                          <span class="glyphicon glyphicon-floppy-saved"></span>
                          Registrar
                   </button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                          <span class="glyphicon glyphicon-remove"></span>
                          Cerrar
                   </button>
@@ -141,7 +151,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" ng-click="Cerrar()" >&times;</button>
                 <h4 class="modal-title">Actualizar Usuario</h4>
             </div>
             <div class="modal-body">
@@ -152,13 +161,17 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2" style="">Etiqueta</label>
                                     <div class="col-md-10">
-                                        <input ng-model="plantillaDocumento.setiqueta" type="text" class="form-control" placeholder="Etiqueta">
+                                        <input ng-model="plantillaDocumento.setiqueta" type="text" 
+                                               class="form-control" placeholder="Etiqueta"
+                                               required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-2" style="">Modelo</label>
                                     <div class="col-md-10">
-                                        <input ng-model="plantillaDocumento.smodel" class="form-control" placeholder="ng-model">
+                                        <input ng-model="plantillaDocumento.smodel" 
+                                               class="form-control" placeholder="ng-model"
+                                               required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -167,20 +180,24 @@
                                         <select ng-model="plantillaDocumento.stipo"                
                                             ng-options="opt as opt for opt in tipos"
                                             class="form-control"
-                                            ng-change="changeTipo(plantilla.stipo)">
+                                            ng-change="changeTipo(plantilla.stipo)"
+                                            required>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="textArea">
                                     <label class="control-label col-md-2" style="">Opciones</label>
                                     <div class="col-md-10">
-                                        <input ng-model="plantillaDocumento.sopciones" class="form-control" placeholder='ng-options="opt as opt for opt in opciones"'>
+                                        <input ng-model="plantillaDocumento.sopciones" class="form-control" 
+                                               placeholder='ng-options="opt as opt for opt in opciones"'
+                                               required>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="textArea">
                                     <label class="control-label col-md-2" style="">Valores</label>
                                     <div class="col-md-10">
-                                        <textarea ng-model="plantillaDocumento.sdata" class="form-control" rows="5" ></textarea> 
+                                        <textarea ng-model="plantillaDocumento.sdata" class="form-control" rows="5" 
+                                                  required></textarea> 
                                     </div>
                                 </div>
                                 <div class="form-group">

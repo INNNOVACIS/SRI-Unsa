@@ -2,8 +2,10 @@
     <div class="col-lg-12" style="margin-top:20px;">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        Administración de Archivos
-                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoArchivo">
+                        Administración de Archivos - Eliminar este CRUD
+                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" 
+                                data-backdrop="static" data-keyboard="false" 
+                                data-target="#popNuevoArchivo">
                                 <span class="glyphicon glyphicon-plus"></span>
                                 Nuevo
                         </button>	
@@ -11,7 +13,7 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-sm-4">
                                     <input ng-model="buscar" class="form-control" placeholder="Buscar" >
                                 </div>
                                 <div class="col-sm-2">
@@ -20,23 +22,26 @@
                                 </div>
                             </div>
                         </div>
-                        <table width="100%" class="table table-striped table-bordered table-hover">
+                        <table width="100%" class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th width="60%">Nombre Archivo</th>
-                                    <th>Tipo</th>
-                                    <th width="10%">Acción</th>
+                                    <th width="60%" class="colorTextoGrilla">Nombre Archivo</th>
+                                    <th class="colorTextoGrilla">Tipo</th>
+                                    <th width="10%" class="colorTextoGrilla">Acci&oacute;n</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="file in files">
-                                    <td><strong>{{ file.nombre }}</strong></td>
-                                    <td>{{ file.tipo }}</td>
+                                    <td class="colorTextoGrilla">{{ file.nombre }}</td>
+                                    <td class="colorTextoGrilla">{{ file.tipo }}</td>
                                     <td nowrap>
                                         <button type="button" class="btn btn-primary btn-xs" ng-click="descargarArchivo(file)">
                                             <span class="glyphicon glyphicon-save-file"></span> 
                                         </button>
-                                        <img style="width:30px; cursor: pointer" ng-click="copiarArchivo(file)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateArchivo">
+                                        <img style="width:30px; cursor: pointer" ng-click="copiarArchivo(file)" 
+                                             src="resources/images/iconos/editar.png" data-toggle="modal"
+                                             data-backdrop="static" data-keyboard="false"
+                                             data-target="#popUpdateArchivo">
                                         <img style="width:30px; cursor: pointer" ng-click="deleteArchivo(file)" src="resources/images/iconos/eliminar.png">
                                     </td>
                                 </tr>
@@ -62,18 +67,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
 	        <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Subir Archivo</h4>
 	        </div>
 	        <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <form class="form-horizontal">
+                                <form name="formRegistroArchivo" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="control-label col-md-2" style="">Nombre Archivo</label>
                                         <div class="col-md-10">
-                                            <input id="inpNombre" ng-model="archivo.nombre" type="text" class="form-control" placeholder="Nombre Archivo">
+                                            <input id="inpNombre" ng-model="archivo.nombre" type="text" 
+                                                   class="form-control" placeholder="Nombre Archivo"
+                                                   required >
                                         </div>
                                     </div>
                                     <div class="panel panel-info">
@@ -87,11 +93,11 @@
                      </div>
 	        </div>
 	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarUsuario()">
+	        	<button type="button" class="btn btn-primary" data-dismiss="modal">
 	        		<span class="glyphicon glyphicon-open-file"></span>
 	        		Subir
 	        	</button>
-	          	<button type="button" class="btn btn-default" data-dismiss="modal">
+	          	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
 	          		<span class="glyphicon glyphicon-remove"></span>
 	          		Cerrar
 	          	</button>
@@ -105,18 +111,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
 	        <div class="modal-header">
-	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 	          	<h4 class="modal-title">Actualizar Archivo</h4>
 	        </div>
 	        <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <form class="form-horizontal">
+                                <form name="formUpdateArchivo" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="control-label col-md-2" style="">Nombre</label>
                                         <div class="col-md-10">
-                                            <input id="inpNombre" ng-model="file.nombre" type="text" class="form-control" placeholder="Nombre completo">
+                                            <input id="inpNombre" ng-model="file.nombre" type="text" 
+                                                   class="form-control" placeholder="Nombre completo"
+                                                   required >
                                         </div>
                                     </div>
                                     <div class="panel panel-info">
@@ -134,7 +141,7 @@
 	        		<span class="glyphicon glyphicon-refresh"></span>
 	        		Actualizar
 	        	</button>
-	          	<button type="button" class="btn btn-default" data-dismiss="modal">
+	          	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
 	          		<span class="glyphicon glyphicon-remove"></span>
 	          		Cerrar
 	          	</button>

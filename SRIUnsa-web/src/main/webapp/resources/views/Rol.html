@@ -3,7 +3,9 @@
         <div class="panel panel-info">
             <div class="panel-heading">
                 Administración de Roles
-                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoRol">
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" 
+                        data-backdrop="static" data-keyboard="false" 
+                        data-target="#popNuevoRol">
                     <span class="glyphicon glyphicon-plus"></span>
                     Nuevo
                 </button>	
@@ -11,7 +13,7 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             <input ng-model="buscar" class="form-control" placeholder="Buscar" >
                         </div>
                         <div class="col-sm-2">
@@ -20,18 +22,21 @@
                         </div>
                     </div>
                 </div>
-                <table width="100%" class="table table-striped table-bordered table-hover">
+                <table width="100%" class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th >Rol</th>
-                            <th width="10%">Acci&oacute;n </th>
+                            <th class="colorTextoGrilla">Rol</th>
+                            <th width="10%" class="colorTextoGrilla">Acci&oacute;n </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="rol in roles">
-                            <td><strong>{{ rol.snombreRol }}</strong></td>
+                            <td class="colorTextoGrilla">{{ rol.snombreRol }}</td>
                             <td nowrap>
-                                <img style="width:30px; cursor: pointer" ng-click="update(rol)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateRol">
+                                <img style="width:30px; cursor: pointer" ng-click="update(rol)" 
+                                     src="resources/images/iconos/editar.png" data-toggle="modal"
+                                     data-backdrop="static" data-keyboard="false"
+                                     data-target="#popUpdateRol">
                                 <img style="width:30px; cursor: pointer" ng-click="deleteRol(rol)" src="resources/images/iconos/eliminar.png">
                             </td>
                         </tr>
@@ -57,18 +62,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Registrar Rol</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form name="formRegistroRol" class="form-horizontal">
                                 <div class="form-group">
                                     <label class="control-label col-md-2" style="">Rol</label>
                                     <div class="col-md-10">
-                                        <input id="inpRol" ng-model="rol.snombreRol" type="text" class="form-control" placeholder="Rol Nombre">
+                                        <input id="inpRol" ng-model="rol.snombreRol" type="text" 
+                                               class="form-control" placeholder="Rol Nombre"
+                                               required >
                                     </div>
                                 </div>			
                             </form>
@@ -77,11 +83,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarRol()">
+                <button type="button" class="btn btn-primary" ng-click="registrarRol()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Registrar
                 </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>
@@ -95,18 +101,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Actualizar Rol</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form name="formUpdateRol" class="form-horizontal">
                                 <div class="form-group">
                                     <label class="control-label col-md-2" style="">Rol</label>
                                     <div class="col-md-10">
-                                        <input id="inpRol" ng-model="rol.snombreRol" type="text" class="form-control" placeholder="Nombre de Rol">
+                                        <input id="inpRol" ng-model="rol.snombreRol" type="text" 
+                                               class="form-control" placeholder="Nombre de Rol"
+                                               required >
                                     </div>
                                 </div>
                             </form>
@@ -115,11 +122,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-sm btn-primary" data-dismiss="modal" ng-click="updateRol()">
+                <button type="button" class="btn btn-primary" ng-click="updateRol()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Actualizar
                 </button>
-                <button type="button" class="btn-sm btn-default" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>

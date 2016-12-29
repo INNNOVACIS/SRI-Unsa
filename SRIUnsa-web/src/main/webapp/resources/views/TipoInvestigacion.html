@@ -3,7 +3,9 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         Administración de tipos de Investigacion
-                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoInvestigacion">
+                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal"
+                                data-backdrop="static" data-keyboard="false" 
+                                data-target="#popNuevoInvestigacion">
                             <span class="glyphicon glyphicon-plus"></span>
                             Nuevo
                         </button>	
@@ -11,7 +13,7 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-sm-4">
                                     <input ng-model="buscar" class="form-control" placeholder="Buscar" >
                                 </div>
                                 <div class="col-sm-2">
@@ -20,18 +22,21 @@
                                 </div>
                             </div>
                         </div>
-                        <table width="100%" class="table table-striped table-bordered table-hover">
+                        <table width="100%" class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th >Tipo Investigacion</th>
-                                    <th width="10%">Accion</th>
+                                    <th class="colorTextoGrilla">Tipo Investigacion</th>
+                                    <th width="10%" class="colorTextoGrilla">Acci&oacute;n</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="investigacion in investigaciones">
-                                    <td><strong>{{ investigacion.snombreActividadInvestigacion }}</strong></td>
+                                    <td class="colorTextoGrilla">{{ investigacion.snombreActividadInvestigacion }}</td>
                                     <td nowrap>
-                                        <img style="width:30px; cursor: pointer" ng-click="update(investigacion)" src="resources/images/iconos/editar.png" data-toggle="modal" data-target="#popUpdateInvestigacion">
+                                        <img style="width:30px; cursor: pointer" ng-click="update(investigacion)" 
+                                             src="resources/images/iconos/editar.png" data-toggle="modal"
+                                             data-backdrop="static" data-keyboard="false"
+                                             data-target="#popUpdateInvestigacion">
                                         <img style="width:30px; cursor: pointer" ng-click="deleteInvestigacion(investigacion)" src="resources/images/iconos/eliminar.png">
                                     </td>
                                 </tr>
@@ -57,18 +62,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Registrar Tipo de Investigacion</h4>
+                <h4 class="modal-title">Registrar Tipo de Investigaci&oacute;n</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form name="formRegistroTipoInvestigacion" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Tipo Investigacion</label>
+                                    <label class="control-label col-md-2" style="">Tipo Investigaci&oacute;n</label>
                                     <div class="col-md-10">
-                                            <input id="inpRol" ng-model="investigacion.snombreActividadInvestigacion" type="text" class="form-control" placeholder="Nombre del tipo de Investigacion">
+                                            <input id="inpRol" ng-model="investigacion.snombreActividadInvestigacion"
+                                                   type="text" class="form-control" 
+                                                   placeholder="Nombre del tipo de Investigacion" 
+                                                   required >
                                     </div>
                                 </div>
                             </form>
@@ -77,11 +84,11 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarInvestigacion()">
+                <button type="button" class="btn btn-primary" ng-click="registrarInvestigacion()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Registrar
                 </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>
@@ -95,18 +102,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Actualizar Tipo de Investigacion</h4>
+                <h4 class="modal-title">Actualizar Tipo de Investigaci&oacute;n</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form name="formUpdateTipoInvestigacion" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Tipo de Investigacion</label>
+                                    <label class="control-label col-md-2" style="">Tipo de Investigaci&oacute;n</label>
                                     <div class="col-md-10">
-                                        <input id="inpRol" ng-model="investigacion.snombreActividadInvestigacion" type="text" class="form-control" placeholder="Nombre del tipo de investigacion">
+                                        <input id="inpRol" ng-model="investigacion.snombreActividadInvestigacion" 
+                                               type="text" class="form-control" 
+                                               placeholder="Nombre del tipo de investigacion"
+                                               required >
                                     </div>
                                 </div>
                             </form>
@@ -115,11 +124,11 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateInvestigacion()">
+                <button type="button" class="btn btn-primary" ng-click="updateInvestigacion()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Actualizar
                 </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>
