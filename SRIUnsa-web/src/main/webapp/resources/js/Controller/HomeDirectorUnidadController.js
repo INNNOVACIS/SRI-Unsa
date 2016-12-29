@@ -6,8 +6,9 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     $scope.usuario = {};
     $scope.estados = ['A','I'];
     $scope.idTipoInvestigacion = 0;
+    $scope.idDepartamento = 0;
     $scope.currentTipo = 0;
-     $scope.currentDepartamento = false;
+    $scope.currentDepartamento = false;
     
     var GetTotalActivosInactivosByFacultadSuccess = function(response){
         $log.debug("GetTotalActivosInactivosByFacultad - Success");
@@ -83,10 +84,10 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     $scope.filtrarDepartamento = function(docenteDepartamento){
         if(docenteDepartamento.nidEstructuraOrganizacion === $scope.currentDepartamento){
             $scope.currentDepartamento = 0;
-//            $scope.idFacultad = 0;
+            $scope.idDepartamento = 0;
         } else {
             $scope.currentDepartamento = docenteDepartamento.nidEstructuraOrganizacion;
-//            $scope.idFacultad = docenteDepartamento.nidEstructuraOrganizacion;
+            $scope.idDepartamento = docenteDepartamento.nidEstructuraOrganizacion;
         }
         $scope.getUsuariosByPagina();
     };
@@ -139,7 +140,8 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     
     $scope.getUsuariosByPagina = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuario.nidEstructuraOrganizacion, idTipoInvestigacion : $scope.idTipoInvestigacion};
+                          idFacultad : $scope.sharedService.usuario.nidEstructuraOrganizacion, idDepartamento : $scope.idDepartamento, 
+                          idTipoInvestigacion : $scope.idTipoInvestigacion};
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     

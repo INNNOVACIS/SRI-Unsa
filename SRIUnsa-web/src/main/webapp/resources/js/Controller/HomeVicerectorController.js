@@ -7,6 +7,7 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     $scope.estados = ['A','I'];
     $scope.idTipoInvestigacion = 0;
     $scope.idFacultad = 0;
+    $scope.idDepartamento = 0;
     $scope.currentTipo = 0;
     $scope.currentFacultad = false;
     
@@ -151,7 +152,7 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     
     $scope.getUsuariosByPagina = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.idFacultad, idTipoInvestigacion : $scope.idTipoInvestigacion}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
+                          idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     

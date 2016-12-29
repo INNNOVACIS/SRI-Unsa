@@ -172,12 +172,13 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public List<SRIUsuarioColor> GetUsuariosColor(SRIPaginacionObject entidad) {
         List<SRIUsuarioColor> usuarioColor = null;
         try{
-            Query query = em.createNativeQuery("{call GetUsuarioColor(?1, ?2, ?3, ?4, ?5)}", SRIUsuarioColor.class)
+            Query query = em.createNativeQuery("{call GetUsuarioColor(?1, ?2, ?3, ?4, ?5, ?6)}", SRIUsuarioColor.class)
                     .setParameter(1, entidad.getIdFacultad())
-                    .setParameter(2, entidad.getFiltro())
-                    .setParameter(3, entidad.getIdTipoInvestigacion())
-                    .setParameter(4, entidad.getRango())
-                    .setParameter(5, entidad.getCurrentPage());
+                    .setParameter(2, entidad.getIdDepartamento())
+                    .setParameter(3, entidad.getFiltro())
+                    .setParameter(4, entidad.getIdTipoInvestigacion())
+                    .setParameter(5, entidad.getRango())
+                    .setParameter(6, entidad.getCurrentPage());
             usuarioColor = query.getResultList();
         } catch(Exception ex) {
             throw ex;
