@@ -1,4 +1,4 @@
-investigacionApp.controller('TipoProduccionController', function($log, $scope, TipoProduccionService, SharedService) {
+investigacionApp.controller('TipoProduccionController', function($log, $scope, ngToast, TipoProduccionService, SharedService) {
         
     $scope.sharedService = SharedService;
     $scope.tipoProducciones = [];
@@ -6,7 +6,8 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, T
 	
     var getTipoProduccionServiceSuccess = function(response){
     	$log.debug("GetTipoProduccion - Success");
-    	console.log("Respuesta :: ", response);    	
+    	console.log("Respuesta :: ", response);    
+        $scope.tipoProduccion = response;
     };
     var getTipoProduccionServiceError = function(response){
      	$log.debug("GetTipoProduccion - Error"); 
@@ -17,31 +18,45 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, T
     	$log.debug("RegistrarTipoProduccion - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoProduccionByPagina();
-    	$scope.tipoProduccion = {};
+        
+        $scope.cancel();
+        
+        $("#popNuevoTipoProduccion").modal('toggle');
     };
     var registrarTipoProduccionError = function(response){
         $log.debug("RegistrarTipoProduccion - Error");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var updateTipoProduccionSuccess = function(response){
     	$log.debug("UpdateTipoProduccion - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoProduccionByPagina();
+        
+        $scope.cancel();
+        
+        $("#popUpdateTipoProduccion").modal('toggle');
     };
     var updateTipoProduccionError = function(response){
         $log.debug("UpdateTipoProduccion - Error");
     	console.log("Respuesta :: ", response);
+        
+        $scope.cancel();
     };
 
     var deleteTipoProduccionSuccess = function(response){
     	$log.debug("DeleteTipoProduccion - Success");
     	console.log("Respuesta :: ", response);
     	$scope.getTipoProduccionByPagina();
+        
+        $scope.cancel();
     };
     var deleteTipoProduccionError = function(response){
         $log.debug("DeleteTipoProduccion - Error");
     	console.log("Respuesta :: ", response);
+        $scope.cancel();
     };
 
     /********** CRUD TIPO PRODUCCION ***********/
@@ -51,27 +66,58 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, T
     };
 
     $scope.registrarTipoProduccion = function(){
-    	$scope.tipoProduccion.suserCreacion = $scope.sharedService.nombreUsuario;
-        $scope.tipoProduccion.sestado = 'A';
-        TipoProduccionService.registrarTipoProduccion($scope.tipoProduccion).then(registrarTipoProduccionSuccess, registrarTipoProduccionError);
+        $scope.submitted = true;
+        if($scope.formRegistroTipoProduccion.$valid){
+            $scope.tipoProduccion.suserCreacion = $scope.sharedService.nombreUsuario;
+            $scope.tipoProduccion.sestado = 'A';
+            TipoProduccionService.registrarTipoProduccion($scope.tipoProduccion)
+                .then(registrarTipoProduccionSuccess, registrarTipoProduccionError);
+            openNotice('Registrado!','success');
+        }else {
+            console.log("No se registro Tipo Produccion :: ", $scope.semestre);
+            openNotice('Error al registrar!','danger');
+        }
     };
 
     $scope.updateTipoProduccion = function(){
-    	$scope.tipoProduccion.suserModificacion = $scope.sharedService.nombreUsuario;
-        $scope.tipoProduccion.sestado = 'A';
-    	TipoProduccionService.updateTipoProduccion($scope.tipoProduccion).then(updateTipoProduccionSuccess, updateTipoProduccionError);
+        $scope.submitted = true;
+        if($scope.formUpdateTipoProduccion.$valid){
+            $scope.tipoProduccion.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.tipoProduccion.sestado = 'A';
+            TipoProduccionService.updateTipoProduccion($scope.tipoProduccion)
+                .then(updateTipoProduccionSuccess, updateTipoProduccionError);
+            openNotice('Actualizado!','success');
+        }else {
+            console.log("No se registro Tipo Produccion :: ", $scope.semestre);
+            openNotice('Error al actualizar!','danger');
+        }
     };
 
     $scope.deleteTipoProduccion = function(tipoProduccion){
     	$scope.tipoProduccion = tipoProduccion;
         $scope.tipoProduccion.suserModificacion = $scope.sharedService.nombreUsuario;
-    	TipoProduccionService.deleteTipoProduccion($scope.tipoProduccion).then(deleteTipoProduccionSuccess, deleteTipoProduccionError);
+    	TipoProduccionService.deleteTipoProduccion($scope.tipoProduccion)
+                .then(deleteTipoProduccionSuccess, deleteTipoProduccionError);
     };
 
     $scope.update = function(tipoProduccion){
-    	$scope.tipoProduccion = tipoProduccion;
+        angular.copy(tipoProduccion, $scope.tipoProduccion);
+    	//$scope.tipoProduccion = tipoProduccion;
     };
 
+    $scope.cancel = function(){
+        $scope.tipoProduccion = {};
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
+    
    /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];
