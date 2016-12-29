@@ -500,28 +500,38 @@
         switch(tipoActividad.toUpperCase()) {
             case "INVESTIGACION FORMATIVA":
                 $scope.mostrarActividad = [true, false, false, false];
-                $scope.descripcionLabel = "Resumen";
-                $scope.tituloLabel = "Nombre de la Actividad de Investigacion Formativa";
+                $scope.descripcionLabel = "Breve descripcion de la Actividad Formativa";
+                $scope.tituloLabel = "Nombre del curso de la Actividad Formativa";
+                $scope.adjuntar = "Adjuntar Sílabo del Curso";
+                $scope.showDescripcion = true;
                 break;
             case "ASESORIA DE TESIS":
                 $scope.mostrarActividad = [false, true, false, false];
                 $scope.descripcionLabel = "Resumen de Tesis";
                 $scope.tituloLabel = "Titulo de Tesis";
+                $scope.adjuntar = "Adjuntar Resolución";
+                $scope.showDescripcion = false;
                 break;
             case "INVESTIGACIONES BASICAS Y APLICADAS":
                 $scope.mostrarActividad = [false, false, true, false];
                 $scope.descripcionLabel = "Resumen de Investigacion";
-                $scope.tituloLabel = "Titulo de la Investigación";
+                $scope.tituloLabel = "Titulo del Proyecto de Investigacion";
+                $scope.adjuntar = "Adjuntar Contrato y Ficha de Postulación";
+                $scope.showDescripcion = true;
                 break;
             case "PRODUCCION INTELECTUAL":
                 $scope.mostrarActividad = [false, false, false, true];
                 $scope.descripcionLabel = "Resumen";
-                $scope.tituloLabel = "Titulo de la Producción";
+                $scope.tituloLabel = "Titulo";
+                $scope.adjuntar = "Adjuntar Planificación o Avance de la producción";
+                $scope.showDescripcion = false;
                 break;
             default:
                 $scope.mostrarActividad = [false, false, false, false];
                 $scope.descripcionLabel = "Resumen";
                 $scope.tituloLabel = "Nombre";
+                $scope.adjuntar = "Adjuntar";
+                $scope.showDescripcion = true;
         };
     };
     
@@ -533,6 +543,13 @@
         $scope.loader = true;
         $location.path("/actividad/Generadas");
     };
+    $scope.changeTipoProduccion = function(tipoProduccion){
+        if(tipoProduccion.snombreTipoProduccion.toUpperCase() === "ARTICULO"){
+            $scope.fechaTipoProduccion = "Fecha de Aceptacion";
+        } else {
+            $scope.fechaTipoProduccion = "Fecha de Publicacion";
+        }
+    }
     
     var getTotalColaboradores = function(){
         var total = $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
@@ -706,6 +723,12 @@
     $scope.open3 = function() {
       $scope.popup3.opened = true;
     };
+    $scope.openResolucion = function() {
+      $scope.popupResolucion.opened = true;
+    };
+    $scope.openContrato = function() {
+      $scope.popupContrato.opened = true;
+    };
 
     $scope.setDate = function(year, month, day) {
       $scope.dtRegistro = new Date(year, month, day);
@@ -724,6 +747,14 @@
     };
     
     $scope.popup3 = {
+      opened: false
+    };
+    
+    $scope.popupResolucion = {
+      opened: false
+    };
+    
+    $scope.popupContrato = {
       opened: false
     };
 
