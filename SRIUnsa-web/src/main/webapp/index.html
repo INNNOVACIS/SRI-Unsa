@@ -14,7 +14,9 @@
     <link rel="stylesheet" type="text/css" href="resources/css/Menu/metisMenu.css">
     <link rel="stylesheet" type="text/css" href="resources/css/Menu/sb-admin-2.css">
     <link rel="stylesheet" type="text/css" href="resources/css/Menu/font-awesome.min.css">
-
+    <link rel="stylesheet" type="text/css" href="resources/css/ngToast/ngToast.min.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/ngToast/ngToast-animations.min.css">
+    
     <!-- TREEGRID -->
 
     <script type="text/javascript" src="resources/js/jquery.min.js"></script>
@@ -31,6 +33,7 @@
     <script type="text/javascript" src="resources/js/AngularJS/angular-animate.2.js"></script>
     <script type="text/javascript" src="resources/js/AngularJS/angular-sanitize.2.js"></script>
     <script type="text/javascript" src="resources/js/AngularJS/ui-bootstrap-tpls-2.2.0.js"></script>
+    <script type="text/javascript" src="resources/js/ngToast/ngToast.min.js"></script>
     
     <!-- Variables de Sesion -->
     <script type="text/javascript" src="resources/js/Sessvars/sessvars.js"></script>
@@ -143,7 +146,7 @@
 </head>
 
 <body>
-
+    <toast></toast>
     <div ng-include="'resources/views/Header.html'"></div>
     <!-- Add your site or application content here -->
     <div ng-view ></div>
