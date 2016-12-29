@@ -15,6 +15,7 @@ public class SRIPaginacionObject {
     private int rango;
     private int total;
     private int idFacultad;
+    private int idDepartamento;
     private int idTipoInvestigacion;
     private String filtro;
 
@@ -56,6 +57,14 @@ public class SRIPaginacionObject {
 
     public void setIdFacultad(int idFacultad) {
         this.idFacultad = idFacultad;
+    }
+
+    public int getIdDepartamento() {
+        return idDepartamento;
+    }
+
+    public void setIdDepartamento(int idDepartamento) {
+        this.idDepartamento = idDepartamento;
     }
 
     public int getIdTipoInvestigacion() {

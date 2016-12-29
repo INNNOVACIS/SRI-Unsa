@@ -43,18 +43,18 @@
         $log.debug("GetEstructuraOrganizaciones - Success");
         console.log("Respuesta :: ", response);
         
-        angular.forEach(response, function(superior, key) {
-            angular.forEach(response, function(value, key) {
-                if(superior.nidPadre === value.nidEstructuraOrganizacion){
-                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
-                }
-            });
-            angular.forEach($scope.niveles, function(nivel, key) {
-                if(superior.nidTipoNivel === nivel.nidTipoNivel){
-                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
-                }
-            });
-        });
+//        angular.forEach(response, function(superior, key) {
+//            angular.forEach(response, function(value, key) {
+//                if(superior.nidPadre === value.nidEstructuraOrganizacion){
+//                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
+//                }
+//            });
+//            angular.forEach($scope.niveles, function(nivel, key) {
+//                if(superior.nidTipoNivel === nivel.nidTipoNivel){
+//                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
+//                }
+//            });
+//        });
         $scope.estructuraOrganizaciones = response;
         
         angular.forEach($scope.estructuraOrganizaciones, function(value, key){
@@ -66,7 +66,7 @@
                 $scope.departamento = value;
             }
         });
-        console.log("Respuesta :: ", $scope.estructuraOrganizaciones);
+//        console.log("Respuesta :: ", $scope.estructuraOrganizaciones);
     };
     var GetEstructuraOrganizacionesError = function(response){
         $log.debug("GetEstructuraOrganizaciones - Error");
@@ -142,7 +142,8 @@
             $scope.loader = false;
             $scope.openCloseModal(true,false);
         } else {
-            uploader.uploadAll();  
+            uploader.uploadAll();
+            uploader2.uploadAll();
         }
         $scope.EnviarEmail(response.body.actividadInvestigacion.nidActividadInvestigacion);
     };
@@ -352,7 +353,6 @@
         if(isValid){
             $scope.loader = true;
             $scope.sharedService.scrollTop();
-            console.log("tipo moneda :::: ", $scope.tipoMoneda);
             var actividadGeneral = {
                 idUsuario : $scope.sharedService.idUsuario,
                 idFlujoActorOrigen : SRIUnsaConfig.DOCE,
@@ -370,7 +370,7 @@
                     stipoAsesoria : $scope.tipoAsesoria === undefined ? "" : $scope.tipoAsesoria.snombreTipoAsesoria,
                     ssemestre : $scope.semestre.snombreSemestre,
                     sfacultad : $scope.facultad.snombreEstructuraOrganizacion,
-                    sescuela : $scope.escuela.snombreEstructuraOrganizacion,
+                    sescuela : $scope.escuela === undefined ? "" : $scope.escuela.snombreEstructuraOrganizacion,
                     sdepartamento : $scope.departamento.snombreEstructuraOrganizacion,
                     sareaInvestigacion: $scope.areaInvestigacion === undefined ? "" : $scope.areaInvestigacion.sNombre,
                     ssubAreaInvestigacion : $scope.subAreaInvestigacion === undefined ? "" : $scope.subAreaInvestigacion.sNombre,
@@ -562,15 +562,15 @@
     };
     
     var limpiarCampos = function(){
-        $scope.tipoInvestigacion = {};
+//        $scope.tipoInvestigacion = {};
         $scope.duracionInvestigacion = 0;
         $scope.tipoProduccion = {};
         $scope.fondo = {};
         $scope.tipoAsesoria = {};
         $scope.semestre = {};
-        $scope.facultad = {};
+//        $scope.facultad = {};
         $scope.escuela = {};
-        $scope.departamento = {};
+//        $scope.departamento = {};
         $scope.areaInvestigacion = {};
         $scope.subAreaInvestigacion = {};
         $scope.disciplinaInvestigacion = {};
@@ -593,6 +593,7 @@
         $scope.montoFinanciamiento = "";
         
         uploader.clearQueue();
+        uploader2.clearQueue();
     };
     
     /********** FILE UPLOAD **********/
@@ -640,6 +641,12 @@
 //    };
     var addPlanificacion = function(idPlanificacion){
         angular.forEach(uploader.queue, function(value, key) {
+            console.log(value.file.name);
+            value.formData.push({
+                idPlanificacion: idPlanificacion
+            });
+        });
+        angular.forEach(uploader2.queue, function(value, key) {
             console.log(value.file.name);
             value.formData.push({
                 idPlanificacion: idPlanificacion

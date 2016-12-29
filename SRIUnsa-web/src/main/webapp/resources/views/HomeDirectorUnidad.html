@@ -49,7 +49,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="docenteDepartamento in docentesDepartamentos" ng-click="filtrarFacultad(docenteDepartamento)" ng-class="{'filaSeleccionada': (docenteDepartamento.nidEstructuraOrganizacion == currentFacultad)}" style='cursor: pointer'>
+                                    <tr ng-repeat="docenteDepartamento in docentesDepartamentos" ng-click="filtrarDepartamento(docenteDepartamento)" ng-class="{'filaSeleccionada': (docenteDepartamento.nidEstructuraOrganizacion == currentDepartamento)}" style='cursor: pointer'>
                                         <td>{{ $index + row}}</td>
                                         <td>{{ docenteDepartamento.snombreEstructuraOrganizacion }}</td>
                                         <td>{{ docenteDepartamento.ntotal }}</td>
@@ -97,6 +97,7 @@
                                 <thead>
                                     <tr>
                                         <th># </th>
+                                        <th>Departamento</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
                                         <th>DNI</th>
@@ -107,8 +108,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="user in users">
+                                    <tr ng-repeat="user in users" class="table-overflow">
                                         <td>{{ $index + row}}</td>
+                                        <td>{{ user.sdepartamento }}</td>
                                         <td>{{ user.snombre }}</td>
                                         <td>{{ user.sapellido }}</td>
                                         <td>{{ user.ndni }}</td>

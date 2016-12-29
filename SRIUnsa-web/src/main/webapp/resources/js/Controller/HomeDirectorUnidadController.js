@@ -7,7 +7,7 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     $scope.estados = ['A','I'];
     $scope.idTipoInvestigacion = 0;
     $scope.currentTipo = 0;
-     $scope.currentFacultad = false;
+     $scope.currentDepartamento = false;
     
     var GetTotalActivosInactivosByFacultadSuccess = function(response){
         $log.debug("GetTotalActivosInactivosByFacultad - Success");
@@ -80,13 +80,13 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
         
     };
     
-    $scope.filtrarFacultad = function(docenteFacultad){
-        if(docenteFacultad.nidEstructuraOrganizacion === $scope.currentFacultad){
-            $scope.currentFacultad = 0;
-            $scope.idFacultad = 0;
+    $scope.filtrarDepartamento = function(docenteDepartamento){
+        if(docenteDepartamento.nidEstructuraOrganizacion === $scope.currentDepartamento){
+            $scope.currentDepartamento = 0;
+//            $scope.idFacultad = 0;
         } else {
-            $scope.currentFacultad = docenteFacultad.nidEstructuraOrganizacion;
-            $scope.idFacultad = docenteFacultad.nidEstructuraOrganizacion;
+            $scope.currentDepartamento = docenteDepartamento.nidEstructuraOrganizacion;
+//            $scope.idFacultad = docenteDepartamento.nidEstructuraOrganizacion;
         }
         $scope.getUsuariosByPagina();
     };

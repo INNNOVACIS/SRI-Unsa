@@ -56,10 +56,9 @@
                                     <label class="control-label col-md-4">Facultad</label>
                                     <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && submitted }">
                                         <select name="facultadValidacion" ng-model="facultad"                
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { snivel : 'FACULTAD'}"
                                             class="form-control"
                                             ng-change="changeFacultad(facultad)"
-                                            ng-init="facultad=''"
                                             required>
                                         </select>
                                         <p ng-show="actividadForm.facultadValidacion.$invalid && submitted" class="help-block">La Facultad es Requerida.</p>
@@ -78,14 +77,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Escuela</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && submitted }">
+                                    <div class="col-md-8" > <!-- ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && submitted }" -->
                                         <select name="escuelaValidacion" ng-model="escuela"
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in escuelas | filter : { snivel : 'ESCUELA'}"
                                             class="form-control"
-                                            
-                                            required>
+                                            >
                                         </select>
-                                        <p ng-show="actividadForm.escuelaValidacion.$invalid && submitted" class="help-block">La Escuela es Requerida.</p>
+<!--                                        <p ng-show="actividadForm.escuelaValidacion.$invalid && submitted" class="help-block">La Escuela es Requerida.</p>-->
                                     </div>
                                 </div>
 <!--                                <div class="form-group">
@@ -125,7 +123,7 @@
                                             class="form-control"
                                             ng-init="disciplinaInvestigacion=''"
                                             ng-change="changeArea(areaInvestigacion)"
-                                            required>
+                                            >
                                         </select>
 <!--                                        <p ng-show="actividadForm.area.$invalid && submitted" class="help-block">El &aacute;rea es Requerida.</p>-->
                                     </div>
@@ -138,7 +136,7 @@
                                             class="form-control"
                                             ng-init="disciplinaInvestigacion=''"
                                             ng-change="changeSubArea(subAreaInvestigacion)"
-                                            required>
+                                            >
                                         </select>
 <!--                                        <p ng-show="actividadForm.subarea.$invalid && submitted" class="help-block">La Sub &aacute; es Requerida.</p>-->
                                     </div>
@@ -151,7 +149,7 @@
                                             ng-options="obj as obj.sNombre for obj in disciplinaInvestigaciones | filter : { sNivel: 'Disciplina'}"
                                             class="form-control"
                                             ng-init="disciplinaInvestigacion=''"
-                                            required>
+                                            >
                                         </select>
 <!--                                        <p ng-show="actividadForm.disciplina.$invalid && submitted" class="help-block">La Disciplina es Requerida.</p>-->
                                     </div>
@@ -213,7 +211,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Tipo de Asesoria</label>
                                     <div class="col-md-8">
-                                        <select class="form-control" ng-model="tipoAsesoria" ng-options="opt as opt.snombreTipoAsesoria for opt in tipoAsesorias" ng-init="tipoAsesoria=''"></select>
+                                        <select class="form-control" ng-model="tipoAsesoria" ng-options="opt as opt.snombreTipoAsesoria for opt in tipoAsesorias"></select>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +236,7 @@
                                     <label class="control-label col-md-4">Fecha de Resoluci&oacute;n</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaResolucion" is-open="popupResolucion.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaResolucion" is-open="popupResolucion.opened" datepicker-options="dateOptions" close-text="Close" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="openResolucion()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -252,7 +250,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Rol</label>
                                     <div class="col-md-8">
-                                        <select class="form-control" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ng-init="tipoInvestigador=''"></select>
+                                        <select class="form-control" ng-model="tipoInvestigador" ng-options="opt as opt.nombre for opt in tipoInvestigadores" ></select>
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +285,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Financiamiento</label>
                                     <div class="col-md-8">
-                                        <select class="form-control" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''"></select>
+                                        <select class="form-control" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos"></select>
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +294,7 @@
                                     <label class="control-label col-md-4">Fecha de Contrato</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaContrato" is-open="popupContrato.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaContrato" is-open="popupContrato.opened" datepicker-options="dateOptions" close-text="Close" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="openContrato()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -309,7 +307,7 @@
                                     <label class="control-label col-md-4">Fecha Finalizaci&oacute;n del Proyecto</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaFin" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaFin" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -350,7 +348,7 @@
                                     <label class="control-label col-md-4">{{ fechaTipoProduccion }}</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaInicio" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaInicio" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
