@@ -69,11 +69,36 @@
                         <div class="col-md-12">
                             <form name="formRegistroSemestre" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Semestre</label>
-                                    <div class="col-md-10">
+                                    <label class="control-label col-md-3" style="">Semestre</label>
+                                    <div class="col-md-9">
                                             <input id="inpRol" ng-model="semestre.snombreSemestre" 
                                                    type="text" class="form-control" 
                                                    placeholder="Nombre del semestre" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Fecha Inicio</label>
+                                    <div class="col-md-9">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaInicio" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" required/>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Fecha Fin</label>
+                                    <div class="col-md-9">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaFin" ng-change="changeFecha()" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" required/>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-offset-3" ng-class="{ 'has-error' : errorFecha}">
+                                        <p ng-show="errorFecha" class="help-block">La Fecha Fin no puede se menor que Fecha Inicio</p>
                                     </div>
                                 </div>
                             </form>

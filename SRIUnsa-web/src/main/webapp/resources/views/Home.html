@@ -12,11 +12,12 @@
                         <div class="row">
                             <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" >Director de Unidad</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.directorValidacion.$invalid && submitted }">
+                                    <label class="control-label col-md-4" >Director de Unidad : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" style="">{{ director.snombre + " " + director.sapellido}}</label>
+<!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.directorValidacion.$invalid && submitted }">
                                         <input name="directorValidacion" type="text" ng-model="director" uib-typeahead='opt as (opt.snombre + " " + opt.sapellido ) for opt in personas | filter:$viewValue | limitTo:8' class="form-control" style="background-color:#f0f0f0;" required>
                                         <p ng-show="actividadForm.directorValidacion.$invalid && submitted" class="help-block">El Director de Unidad es Requerido.</p>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="col-md-6" >
@@ -34,27 +35,27 @@
                             </div>
                             <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" >Nombre Docente</label>
-                                    <div class="col-md-8" >
-                                        <input readonly="readonly" type="text" class="form-control" ng-model="responsable" required>
-                                    </div>
+                                    <label class="control-label col-md-4" >Nombre Docente : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ responsable }}</label>
                                 </div>
                             </div>
                             <div class="col-md-6" >
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Semestre</label>
-                                <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
-                                    <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
-                                    <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Semestre : </label>
+                                    <label class="control-label col-md-8 SRI-text-default">{{ semestre.snombreSemestre }}</label>
+<!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
+                                        <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
+                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
+                                    </div>-->
                                 </div>
                             </div>
-                                </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Facultad</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && submitted }">
+                                    <label class="control-label col-md-4">Facultad : </label>
+                                    <label class="control-label col-md-8 SRI-text-default">{{ facultad.snombreEstructuraOrganizacion }}</label>
+<!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && submitted }">
                                         <select name="facultadValidacion" ng-model="facultad"                
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { snivel : 'FACULTAD'}"
                                             class="form-control"
@@ -62,30 +63,31 @@
                                             required>
                                         </select>
                                         <p ng-show="actividadForm.facultadValidacion.$invalid && submitted" class="help-block">La Facultad es Requerida.</p>
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Departamento</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.departamentoValidacion.$invalid && submitted }">
+                                    <label class="control-label col-md-4">Departamento : </label>
+                                    <label class="control-label col-md-8 SRI-text-default">{{ departamento.snombreEstructuraOrganizacion     }}</label>
+<!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.departamentoValidacion.$invalid && submitted }">
                                         <select  name="departamentoValidacion" ng-model="departamento"
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in departamentos | filter : { snivel : 'DEPARTAMENTO'}"
                                             class="form-control"
                                             required>
                                         </select>
                                         <p ng-show="actividadForm.departamentoValidacion.$invalid && submitted" class="help-block">El Departamento es Requerida.</p>
-                                    </div>
+                                    </div>-->
                                 </div>
-                                <div class="form-group">
+<!--                                <div class="form-group">
                                     <label class="control-label col-md-4">Escuela</label>
-                                    <div class="col-md-8" > <!-- ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && submitted }" -->
+                                    <div class="col-md-8" >  ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && submitted }" 
                                         <select name="escuelaValidacion" ng-model="escuela"
                                             ng-options="obj as obj.snombreEstructuraOrganizacion for obj in escuelas | filter : { snivel : 'ESCUELA'}"
                                             class="form-control"
                                             >
                                         </select>
-<!--                                        <p ng-show="actividadForm.escuelaValidacion.$invalid && submitted" class="help-block">La Escuela es Requerida.</p>-->
+                                        <p ng-show="actividadForm.escuelaValidacion.$invalid && submitted" class="help-block">La Escuela es Requerida.</p>
                                     </div>
-                                </div>
+                                </div>-->
 <!--                                <div class="form-group">
                                     <label class="control-label col-md-4">Fecha Inicio</label>
                                     <div class="col-md-8">
@@ -209,7 +211,7 @@
                         <div class="row" ng-show="mostrarActividad[1]">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Tipo de Asesoria</label>
+                                    <label class="control-label col-md-4">Grado</label>
                                     <div class="col-md-8">
                                         <select class="form-control" ng-model="tipoAsesoria" ng-options="opt as opt.snombreTipoAsesoria for opt in tipoAsesorias"></select>
                                     </div>
@@ -315,32 +317,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" ng-show="mostrarActividad[0]">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Nombre del Curso</label>
-                                    <div class="col-md-8">
-                                        <input class="form-control" ng-model="nombreCurso" />
-                                    </div>                            
-                                </div>
-                            </div>
-<!--                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Linea de Investigaci&oacute;n</label>
-                                    <div class="col-md-8">
-                                        <input class="form-control" ng-model="lineaInvestigacion"/>
-                                    </div>
-                                </div>
-                            </div>-->
-<!--                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Tipo de Labor</label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" ng-model="tipoLabor" ng-options="opt as opt.nombre for opt in tipoLabores" ng-init="tipoLabor=''"></select>
-                                    </div>                            
-                                </div>
-                            </div>-->
                         </div>
                         <div class="row" ng-show="mostrarActividad[3]">
                             <div class="col-md-6">
@@ -460,7 +436,7 @@
                             
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="inpFile" class="control-label col-md-2"> Adjuntar Avance de la Producci&oacute;n</label>
+                                    <label for="inpFile" class="control-label col-md-2"> {{ adjuntarOtros }}</label>
                                     <div class="col-md-10">
                                         <div class="panel panel-default" >
                                             <div class="panel-body">

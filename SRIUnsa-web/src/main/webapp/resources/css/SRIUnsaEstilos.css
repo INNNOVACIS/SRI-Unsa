@@ -27,6 +27,11 @@
 .progress-inactivo-empty{
     background-color: #e7e7e7 !important;
 }
+
+.SRI-text-default{
+    text-align:left !important;
+    font-weight: lighter;
+}
 /* End Barra de Progreso*/
 
 .table-overflow>td {

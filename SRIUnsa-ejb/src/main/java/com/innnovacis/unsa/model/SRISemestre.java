@@ -7,6 +7,7 @@ package com.innnovacis.unsa.model;
  */
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,27 @@ public class SRISemestre  extends SRIEntidad implements Serializable  {
     @Column(name = "nombresemestre")
     private String SNombreSemestre;
 
+    @Column(name = "iniciosemestre")
+    private Date DInicioSemestre;
+    
+    @Column(name = "finsemestre")
+    private Date DFinSemestre;
+
+    public Date getDInicioSemestre() {
+        return DInicioSemestre;
+    }
+
+    public void setDInicioSemestre(Date DInicioSemestre) {
+        this.DInicioSemestre = DInicioSemestre;
+    }
+
+    public Date getDFinSemestre() {
+        return DFinSemestre;
+    }
+
+    public void setDFinSemestre(Date DFinSemestre) {
+        this.DFinSemestre = DFinSemestre;
+    }
     
     public int getNIdSemestre() {
         return NIdSemestre;

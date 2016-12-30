@@ -3,7 +3,8 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     $scope.sharedService = SharedService;
     $scope.semestres = [];
     $scope.semestre = {};
-	
+    $scope.errorFecha = false;
+    
     /********** Servicios Callback **********/
     
     // CallBack Get
@@ -77,7 +78,10 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
         $scope.submitted = true;
         if($scope.formRegistroSemestre.$valid){
             $scope.semestre.suserCreacion = $scope.sharedService.nombreUsuario;
+            $scope.semestre.suserModificacion = $scope.sharedService.nombreUsuario;
             $scope.semestre.sestado = 'A';
+            $scope.semestre.dinicioSemestre = $scope.fechaInicio;
+            $scope.semestre.dfinSemestre = $scope.fechaFin;
             SemestreService.registrarSemestre($scope.semestre).then(registrarSemestreSuccess, registrarSemestreError);
             openNotice('Registrado!','success');
         }else {
@@ -117,6 +121,16 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     
     $scope.cancel = function(){
         $scope.semestre = {};
+    };
+    
+    $scope.changeFecha = function(){
+        if($scope.fechaFin < $scope.fechaInicio){
+            console.log("Error");
+            $scope.errorFecha = true;
+        } else {
+            console.log("Success");
+            $scope.errorFecha = false;
+        }
     };
     
     /**************** NOTIFICACIONES *****************/
@@ -169,4 +183,83 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     };
     
     $scope.getSemestresByPagina();
+    
+    
+    
+    /********** DataPicker ************/
+    
+    $scope.today = function() {
+        $scope.fechaRegistro = new Date();
+    };
+    $scope.today();
+
+    $scope.inlineOptions = {
+      customClass: getDayClass,
+      minDate: new Date()
+    };
+
+    $scope.dateOptions = {
+      dateDisabled: disabled,
+      formatYear: "yy",
+      maxDate: new Date(2020, 5, 22),
+      minDate: new Date(),
+      startingDay: 1,
+      showWeeks:false,
+      showButtonBar:false
+    };
+
+    // Disable weekend selection
+    function disabled(data) {
+      var date = data.date,
+        mode = data.mode;
+      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    }
+
+    $scope.toggleMin = function() {
+      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.toggleMin();
+
+    $scope.open1 = function() {
+      $scope.popup1.opened = true;
+    };
+
+    $scope.open2 = function() {
+      $scope.popup2.opened = true;
+    };
+
+    $scope.setDate = function(year, month, day) {
+      $scope.dtRegistro = new Date(year, month, day);
+    };
+
+    $scope.formats = ['dd/MMMM/yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.popup1 = {
+      opened: false
+    };
+
+    $scope.popup2 = {
+      opened: false
+    };
+ 
+
+    function getDayClass(data) {
+        var date = data.date;
+        var mode = data.mode;
+        if (mode === 'day') {
+            var dayToCheck = new Date(date).setHours(0,0,0,0);
+            for (var i = 0; i < $scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+                if (dayToCheck === currentDay) {
+                    return $scope.events[i].status;
+                }
+            }
+        }
+        return '';
+    }
+    
 });

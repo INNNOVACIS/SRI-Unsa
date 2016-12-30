@@ -43,18 +43,6 @@
         $log.debug("GetEstructuraOrganizaciones - Success");
         console.log("Respuesta :: ", response);
         
-//        angular.forEach(response, function(superior, key) {
-//            angular.forEach(response, function(value, key) {
-//                if(superior.nidPadre === value.nidEstructuraOrganizacion){
-//                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
-//                }
-//            });
-//            angular.forEach($scope.niveles, function(nivel, key) {
-//                if(superior.nidTipoNivel === nivel.nidTipoNivel){
-//                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
-//                }
-//            });
-//        });
         $scope.estructuraOrganizaciones = response;
         
         angular.forEach($scope.estructuraOrganizaciones, function(value, key){
@@ -66,7 +54,6 @@
                 $scope.departamento = value;
             }
         });
-//        console.log("Respuesta :: ", $scope.estructuraOrganizaciones);
     };
     var GetEstructuraOrganizacionesError = function(response){
         $log.debug("GetEstructuraOrganizaciones - Error");
@@ -88,6 +75,8 @@
         $log.debug("GetSemestres - Success");
         console.log("Respuesta :: ", response);
         $scope.semestres = response;
+        $scope.semestre = verificarSemestre($scope.semestres);
+        console.log(" semestre ============== ::", $scope.semestre);
     };
     var GetSemestresError = function(response){
         $log.debug("GetSemestres - Error");
@@ -347,6 +336,17 @@
         });
     };
     
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
+    };
+    
     /************ Registrar Actividad de Investigacion ****************/
     
     $scope.registrarInvestigacion = function(isValid){
@@ -354,7 +354,7 @@
             $scope.loader = true;
             $scope.sharedService.scrollTop();
             var actividadGeneral = {
-                idUsuario : $scope.sharedService.idUsuario,
+                idUsuario : $scope.sharedService.docente.nidUsuario, //$scope.sharedService.idUsuario = id del Usuario que hace el Registro
                 idFlujoActorOrigen : SRIUnsaConfig.DOCE,
                 idEstado : SRIUnsaConfig.CREADO,
                 idPlanificacion : -1,
@@ -501,8 +501,9 @@
             case "INVESTIGACION FORMATIVA":
                 $scope.mostrarActividad = [true, false, false, false];
                 $scope.descripcionLabel = "Breve descripcion de la Actividad Formativa";
-                $scope.tituloLabel = "Nombre del curso de la Actividad Formativa";
+                $scope.tituloLabel = "Nombre del curso";
                 $scope.adjuntar = "Adjuntar Sílabo del Curso";
+                $scope.adjuntarOtros = "Adjuntar Resultados de Investigación";
                 $scope.showDescripcion = true;
                 break;
             case "ASESORIA DE TESIS":
@@ -510,13 +511,15 @@
                 $scope.descripcionLabel = "Resumen de Tesis";
                 $scope.tituloLabel = "Titulo de Tesis";
                 $scope.adjuntar = "Adjuntar Resolución";
+                $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)";
                 $scope.showDescripcion = false;
                 break;
             case "INVESTIGACIONES BASICAS Y APLICADAS":
                 $scope.mostrarActividad = [false, false, true, false];
                 $scope.descripcionLabel = "Resumen de Investigacion";
                 $scope.tituloLabel = "Titulo del Proyecto de Investigacion";
-                $scope.adjuntar = "Adjuntar Contrato y Ficha de Postulación";
+                $scope.adjuntar = "Adjuntar Contrato";
+                $scope.adjuntarOtros = "Adjuntar Ficha de Postulación";
                 $scope.showDescripcion = true;
                 break;
             case "PRODUCCION INTELECTUAL":
@@ -524,6 +527,7 @@
                 $scope.descripcionLabel = "Resumen";
                 $scope.tituloLabel = "Titulo";
                 $scope.adjuntar = "Adjuntar Planificación";
+                $scope.adjuntarOtros = "Adjuntar Articulo (Opcional)";
                 $scope.showDescripcion = false;
                 break;
             default:
@@ -531,6 +535,7 @@
                 $scope.descripcionLabel = "Resumen";
                 $scope.tituloLabel = "Nombre";
                 $scope.adjuntar = "Adjuntar";
+                $scope.adjuntarOtros = "Adjuntar Otros";
                 $scope.showDescripcion = true;
         };
     };

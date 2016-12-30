@@ -44,10 +44,10 @@ public class ActividadInvestigacionGeneradaRestService {
         try {
             respuesta = actividadInvestigacionBusiness.GetActividadesGeneradas(entidad);
             builder = Response.status(Response.Status.OK).entity(respuesta);
-            log.log(Level.INFO, "GetActividadesGeneradas : {0}", entidad.toString());
+            log.log(Level.INFO, "GetActividadesGeneradas - Success : {0}", entidad.toString());
         } catch(Exception ex) {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
-            log.log(Level.INFO, "Actividades Generadas : {0}", ex.getMessage());
+            log.log(Level.INFO, "GetActividadesGeneradas - Error : {0}", ex.getMessage());
         }
         
         return builder.build();
