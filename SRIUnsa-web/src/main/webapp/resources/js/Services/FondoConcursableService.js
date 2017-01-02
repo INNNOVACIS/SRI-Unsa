@@ -3,6 +3,23 @@
  */
 investigacionApp.service("FondoConcursableService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+        this.getFondosByPagina = function(request) {
+            $log.debug("FondoConcursable Service - getFondosByPagina");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'POST',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/fondo/paginacionFondoConcursable',
+                    data : request
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
+        
 	this.getFondos = function() {
 		$log.debug("Fondo Service - get Fondos");
 		

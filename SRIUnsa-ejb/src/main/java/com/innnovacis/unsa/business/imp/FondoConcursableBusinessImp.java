@@ -5,6 +5,7 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IFondoConcursableBusiness;
 import com.innnovacis.unsa.dao.IFondoConcursableDao;
 import com.innnovacis.unsa.model.SRIFondoConcursable;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -84,6 +85,30 @@ public class FondoConcursableBusinessImp implements IFondoConcursableBusiness {
         catch(Exception ex){
         }
          return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject entidad) {
+       int respuesta = -1;
+         try{
+            respuesta = fondoConcursableDao.GetTotalPaginacion(entidad);
+        }
+        catch(Exception ex){
+            
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRIFondoConcursable> GetPagina(SRIPaginacionObject object) {
+        List<SRIFondoConcursable> respuesta = null;
+         try{
+            respuesta = fondoConcursableDao.GetPagina(object);
+        }
+        catch(Exception ex){
+            
+        }
+        return respuesta;
     }
 
     

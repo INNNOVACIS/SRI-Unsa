@@ -21,10 +21,10 @@ import org.hibernate.annotations.Subselect;
 @Subselect("")
 public class SRIUsuarioRolUtil implements Serializable{
     
-    @Id
     @Column(name = "idUsuarioRol")
     private int NIdUsuarioRol;
     
+    @Id
     @Column(name = "idUsuario" )
     private int idUsuario;
     

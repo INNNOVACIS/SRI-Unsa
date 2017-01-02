@@ -54,7 +54,7 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     
     // CallBack Delete
     var deleteSemestreSuccess = function(response){
-    	$log.debug("Delete User - Success");
+    	$log.debug("DeleteSemestre - Success");
     	console.log("Respuesta :: ", response);
         $scope.getSemestresByPagina();
         
@@ -62,7 +62,7 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
 
     };
     var deleteSemestreError = function(response){
-        $log.debug("Delete User - Error");
+        $log.debug("DeleteSemestre - Error");
     	console.log("Respuesta :: ", response);
         
         $scope.cancel();

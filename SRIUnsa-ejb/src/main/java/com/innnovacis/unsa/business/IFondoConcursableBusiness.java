@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIFondoConcursable;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -21,5 +22,8 @@ public interface IFondoConcursableBusiness {
     boolean Delete(SRIFondoConcursable entidad);
     SRIFondoConcursable Get(int idEntidad);
     List<SRIFondoConcursable> GetAll();
+    
+    int GetTotalPaginacion(SRIPaginacionObject entidad);
+    List<SRIFondoConcursable> GetPagina(SRIPaginacionObject object);
 
 }

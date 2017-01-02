@@ -5,22 +5,11 @@ investigacionApp.controller('FondoConcursableController', function($log, $scope,
     $scope.fondo = {};
 	
     /********** Servicios Callback **********/
-        
-    var getFondoServiceSuccess = function(response){
-    	$log.debug("GetFondo - Success");
-        console.log("Respuesta :: ", response);
-    	$scope.fondos = response;
-    };
-    var getFondoServiceError = function(response){
-     	$log.debug("GetFondo - Error");
-        console.log("Respuesta :: ", response);
-    };
 
     var registrarFondoSuccess = function(response){
     	$log.debug("RegistrarFondo - Success");
         console.log("Respuesta :: ", response);
-    	$scope.fondos.push($scope.fondo);
-    	$scope.fondo = {};
+    	$scope.getFondosByPagina();
     };
     var registrarFondoError = function(response){
         $log.debug("RegistrarFondo - Error");
@@ -47,10 +36,6 @@ investigacionApp.controller('FondoConcursableController', function($log, $scope,
     };
 
     /********** CRUD FONDOS ***********/
-
-    $scope.getFondos = function(){
-      	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
-    };
 
     $scope.registrarFondo = function(){
 	FondoConcursableService.registrarFondo($scope.fondo).then(registrarFondoSuccess, registrarFondoError);
@@ -83,33 +68,31 @@ investigacionApp.controller('FondoConcursableController', function($log, $scope,
     };
 
     $scope.$watch('currentPage + currentRango', function() {
-        $scope.getUsuariosByPagina();
+        $scope.getFondosByPagina();
         $scope.row = ($scope.currentPage - 1) * $scope.currentRango + 1;
     });
     
-    var paginacionUsuarioSuccess = function(response){
-        $log.debug("Get paginacionUsuario - Success");
+    var getFondoServiceSuccess = function(response){
+        $log.debug("getFondoService - Success");
         console.log("Respuesta :: ", response);
-        $scope.users = [];
-        $scope.users = response.lista;
+        $scope.fondos = [];
+        $scope.fondos = response.lista;
         $scope.total = response.total;
     };
     
-    var paginacionUsuarioError = function(response){
-        $log.debug("Get paginacionUsuario - Error");
+    var getFondoServiceError = function(response){
+        $log.debug("getFondoService - Error");
         console.log("Respuesta :: ", response);
     };
     
-    $scope.getUsuariosByPagina = function(){
+    $scope.getFondosByPagina = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
-//        UsuariosService.paginacionUsuario(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
-        FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
+        FondoConcursableService.getFondosByPagina(objPagina).then(getFondoServiceSuccess, getFondoServiceError);
     };
     
     $scope.clickBuscar = function(){
         $scope.getUsuariosByPagina();
     };
 
-
-    $scope.getFondos();
+    $scope.getFondosByPagina();
 });

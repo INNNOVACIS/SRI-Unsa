@@ -111,6 +111,7 @@ investigacionApp.controller('UsuarioRolController', function($log, $scope, Usuar
     var getUsuariosRolByPaginaSuccess = function(response){
         $log.debug("GetUsuariosRol - Success");
         console.log("Respuesta :: ", response);
+        $scope.usuarioRoles = [];
         $scope.usuarioRoles = response.lista;
         $scope.total = response.total;
     };

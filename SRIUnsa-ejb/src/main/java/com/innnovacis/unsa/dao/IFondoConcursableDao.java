@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIFondoConcursable;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -21,5 +22,7 @@ public interface IFondoConcursableDao {
     boolean Delete(SRIFondoConcursable entidad);
     SRIFondoConcursable GetById(int idEntidad);
     List<SRIFondoConcursable> GetAll();
+    int GetTotalPaginacion(SRIPaginacionObject entidad);
+    List<SRIFondoConcursable> GetPagina(SRIPaginacionObject entidad);
     
 }
