@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "semestre" )
 @NamedQueries({
-    @NamedQuery(name="SRISemestre.GetAll",query="SELECT p FROM SRISemestre p"),
+    @NamedQuery(name="SRISemestre.GetAll",query="SELECT p FROM SRISemestre p WHERE p.SEstado = 'A'"),
     @NamedQuery(name="SRISemestre.GetById",query="SELECT p FROM SRISemestre p WHERE p.NIdSemestre = :idEntidad")
 })
 public class SRISemestre  extends SRIEntidad implements Serializable  {

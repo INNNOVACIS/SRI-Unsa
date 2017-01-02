@@ -26,12 +26,16 @@
                             <thead>
                                 <tr>
                                     <th class="colorTextoGrilla">Semestre</th>
+                                    <th class="colorTextoGrilla">Fecha Inicio</th>
+                                    <th class="colorTextoGrilla">Fecha Fin</th>
                                     <th width="10%" class="colorTextoGrilla">Acci&oacute;n</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="semestre in semestres">
                                     <td class="colorTextoGrilla">{{ semestre.snombreSemestre }}</td>
+                                    <td class="colorTextoGrilla">{{ semestre.inicio }}</td>
+                                    <td class="colorTextoGrilla">{{ semestre.fin }}</td>
                                     <td nowrap>
                                         <img style="width:30px; cursor: pointer" ng-click="update(semestre)" src="resources/images/iconos/editar.png" 
                                              data-toggle="modal" data-target="#popUpdateSemestre"
@@ -131,13 +135,39 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form name="formUpdateSemestre" class="form-horizontal">
+                            
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Semestre</label>
-                                    <div class="col-md-10">
+                                    <label class="control-label col-md-3" style="">Semestre</label>
+                                    <div class="col-md-9">
                                         <input id="inpRol" ng-model="semestre.snombreSemestre" 
                                                type="text" class="form-control" 
                                                placeholder="Nombre del semestre" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Fecha Inicio</label>
+                                    <div class="col-md-9">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="semestre.dinicioSemestre" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" required/>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Fecha Fin</label>
+                                    <div class="col-md-9">
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="semestre.dfinSemestre" ng-change="changeFecha()" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" required/>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-offset-3" ng-class="{ 'has-error' : errorFecha}">
+                                        <p ng-show="errorFecha" class="help-block">La Fecha Fin no puede se menor que Fecha Inicio</p>
                                     </div>
                                 </div>
                             </form>
@@ -146,7 +176,7 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" ng-click="updateSemestre()">
+                <button type="button" class="btn btn-primary" ng-click="updateSemestre()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Actualizar
                 </button>

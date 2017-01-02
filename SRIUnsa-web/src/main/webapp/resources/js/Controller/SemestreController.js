@@ -94,9 +94,12 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     // 
     $scope.updateSemestre = function(){
         $scope.submitted = true;
-        if($scope.formRegistroSemestre.$valid){
+        if($scope.formUpdateSemestre.$valid){
+            var semestre = {};
             $scope.semestre.suserModificacion = $scope.sharedService.nombreUsuario;
             $scope.semestre.sestado = 'A';
+            delete $scope.semestre.inicio;
+            delete $scope.semestre.fin;
             SemestreService.updateSemestre($scope.semestre).then(updateSemestreSuccess, updateSemestreError);
             openNotice('Actualizado!','success');
         }else {
@@ -167,6 +170,10 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
         $log.debug("getSemestresByPagina - Success");
         console.log("Respuesta :: ", response);
         $scope.semestres = [];
+        angular.forEach(response.lista, function(value, key){
+            value.inicio = $scope.sharedService.dateToString(value.dinicioSemestre);
+            value.fin = $scope.sharedService.dateToString(value.dfinSemestre);
+        });
         $scope.semestres = response.lista;
         $scope.total = response.total;
     };

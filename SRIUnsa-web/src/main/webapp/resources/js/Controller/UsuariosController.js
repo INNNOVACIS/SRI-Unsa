@@ -69,6 +69,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
             nidUsuario : $scope.usuario.nidUsuario,
             nidPersona : $scope.usuario.nidPersona,
             nidEstructuraOrganizacion : $scope.usuario.nidEstructuraOrganizacion,
+            nidDepartamento : $scope.organizacion.nidEstructuraOrganizacion,
             susuarioLogin : $scope.usuario.susuarioLogin,
             susuarioPassword : $scope.usuario.susuarioPassword,
             susuarioEmail : $scope.usuario.susuarioEmail,
@@ -105,6 +106,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
 
     $scope.update = function(updateUsuario){
     	$scope.usuario = updateUsuario;
+        seleccionarDepartamento($scope.usuario.nidDepartamento);
     };
     
     $scope.Cerrar = function(){
@@ -113,6 +115,14 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     
     $scope.getEstructuraOrganizaciones = function(){
       	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
+    };
+    
+    var seleccionarDepartamento = function(idDepartamento){
+        angular.forEach($scope.organizaciones, function(value, key){
+            if(value.nidEstructuraOrganizacion === idDepartamento){
+                $scope.organizacion = value;
+            }
+        });
     };
     
     /**************** PAGINACION *****************/
