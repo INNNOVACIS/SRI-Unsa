@@ -47,6 +47,8 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         
         sessvars.stringMenuVertical = CrearMenuVertical($scope.sharedService.privilegios);
         sessvars.htmlMenuVertical = $sce.trustAsHtml(sessvars.stringMenuVertical);
+        
+        $scope.ShowMenuVertical($scope.sharedService.privilegios);
         $scope.sharedService.htmlMenuVertical = sessvars.htmlMenuVertical;
         
         $scope.GetActoresByIdUsuario($scope.sharedService.idUsuario);
@@ -188,26 +190,163 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
     var GetItemHtml = function(url, nombre){
         return '<li><a href="' + url + '">' + nombre + '</a></li>';
     };
-    
-    $scope.ShowMenuVertical = function(tipoActividad){
-        $scope.mostrarActividad = [false, false, false, false]; //case1 , case2, case3, case4
-        switch(tipoActividad.toUpperCase()) {
-            case "INVESTIGACION FORMATIVA":
-                $scope.mostrarActividad = [true, false, false, false];
-                break;
-            case "ASESORIA DE TESIS":
-                $scope.mostrarActividad = [false, true, false, false];
-                break;
-            case "INVESTIGACIONES BASICAS Y APLICADAS":
-                $scope.mostrarActividad = [false, false, true, false];
-                break;
-            case "PRODUCCION INTELECTUAL":
-                $scope.mostrarActividad = [false, false, false, true];
-                break;
-            default:
-                $scope.mostrarActividad = [false, false, false, false];
-        };
+   
+    $scope.ShowMenuVertical = function(privilegios){
+        angular.forEach(privilegios, function(value, key){
+            switch(value.snombrePrivilegio.toUpperCase()) {
+                case "VICERECTOR":
+                    sessvars.vicerector = true;
+                    $scope.sharedService.vicerector = sessvars.vicerector;
+                    break;
+                case "HOME DOCENTE":
+                    sessvars.homeDocente = true;
+                    $scope.sharedService.homeDocente = sessvars.homeDocente;
+                    break;
+                case "HOME DIRECTOR UNIDAD":
+                    sessvars.homeDirector = true;
+                    $scope.sharedService.homeDirector = sessvars.homeDirector;
+                    break;
+                case "ACTIVIDAD DE INVESTIGACION":
+                    sessvars.actividadInvestigacion = true;
+                    $scope.sharedService.actividadInvestigacion = sessvars.actividadInvestigacion;
+                    break;
+                case "ACTIVIDAD DOCENTE":
+                    sessvars.actividadDocente = true;
+                    $scope.sharedService.actividadDocente = sessvars.actividadDocente;
+                    break;
+                case "ACTIVIDADES":
+                    sessvars.actividades = true;
+                    $scope.sharedService.actividades = sessvars.actividades;
+                    break;
+                case "REPORTES":
+                    sessvars.reportes = true;
+                    $scope.sharedService.reportes = sessvars.reportes;
+                    break;
+                case "CONFIGURACION":
+                    sessvars.configuracion = true;
+                    $scope.sharedService.configuracion = sessvars.configuracion;
+                    break;
+                case "PERMISOS":
+                    sessvars.permisos = true;
+                    $scope.sharedService.permisos = sessvars.permisos;
+                    break;
+                case "GENERADAS":
+                    sessvars.generadas = true;
+                    $scope.sharedService.generadas = sessvars.generadas;
+                    break;
+                case "PENDIENTES":
+                    sessvars.pendientes = true;
+                    $scope.sharedService.pendientes = sessvars.pendientes;
+                    break;
+                case "REVISADAS":
+                    sessvars.revisadas = true;
+                    $scope.sharedService.revisadas = sessvars.revisadas;
+                    break;
+                case "REVISADAS MASIVAS":
+                    sessvars.revisadasMasivas = true;
+                    $scope.sharedService.revisadasMasivas = sessvars.revisadasMasivas;
+                    break;
+                case "RELACION DOCENTES":
+                    sessvars.relacionDocentes = true;
+                    $scope.sharedService.relacionDocentes = sessvars.relacionDocentes;
+                    break;
+                case "ARCHIVOS":
+                    sessvars.archivos = true;
+                    $scope.sharedService.archivos = sessvars.archivos;
+                    break;
+                case "TIPO INVESTIGACION":
+                    sessvars.showTipoInvestigacion = true;
+                    $scope.sharedService.showTipoInvestigacion = sessvars.showTipoInvestigacion;
+                    break;
+                case "TIPO NIVEL":
+                    sessvars.tipoNivel = true;
+                    $scope.sharedService.tipoNivel = sessvars.tipoNivel;
+                    break;
+                case "TIPO INVESTIGADOR":
+                    sessvars.tipoInvestigador = true;
+                    $scope.sharedService.tipoInvestigador = sessvars.tipoInvestigador;
+                    break;
+                case "TIPO DE PRODUCCION":
+                    sessvars.tipoProduccion = true;
+                    $scope.sharedService.tipoProduccion = sessvars.tipoProduccion;
+                    break;
+                case "TIPO DE ASESORIA":
+                    sessvars.tipoAsesoria = true;
+                    $scope.sharedService.tipoAsesoria = sessvars.tipoAsesoria;
+                    break;
+                case "SEMESTRES ":
+                    sessvars.semestres = true;
+                    $scope.sharedService.semestres = sessvars.semestres;
+                    break;
+                case "ESTRUCTURA DE LA ORGANIZACION":
+                    sessvars.estructuraOrganizacion = true;
+                    $scope.sharedService.estructuraOrganizacion = sessvars.estructuraOrganizacion;
+                    break;
+                case "AREA DE INVESTIGACION":
+                    sessvars.areaInvestigacion = true;
+                    $scope.sharedService.areaInvestigacion = sessvars.areaInvestigacion;
+                    break;
+                case "FLUJO ARISTA":
+                    sessvars.flujoArista = true;
+                    $scope.sharedService.flujoArista = sessvars.flujoArista;
+                    break;
+                case "GENERAR CAMPOS":
+                    sessvars.generarCampos = true;
+                    $scope.sharedService.generarCampos = sessvars.generarCampos;
+                    break;
+                case "FUENTE DE FINANCIAMIENTO":
+                    sessvars.fuenteFinanciamiento = true;
+                    $scope.sharedService.fuenteFinanciamiento = sessvars.fuenteFinanciamiento;
+                    break;
+                case "USUARIOS":
+                    sessvars.usuarios = true;
+                    $scope.sharedService.usuarios = sessvars.usuarios;
+                    break;
+                case "ROLES":
+                    sessvars.roles = true;
+                    $scope.sharedService.roles = sessvars.roles;
+                    break;
+                case "ROL USUARIO":
+                    sessvars.rolUsuario = true;
+                    $scope.sharedService.rolUsuario = sessvars.rolUsuario;
+                    break;
+                case "PRIVILEGIOS":
+                    sessvars.privilegio = true;
+                    $scope.sharedService.privilegio = sessvars.privilegio;
+                    break;
+                case "ACTORES":
+                    sessvars.actores = true;
+                    $scope.sharedService.actores = sessvars.actores;
+                    break;
+                case "USUARIO ACTORES":
+                    sessvars.usuarioActores = true;
+                    $scope.sharedService.usuarioActores = sessvars.usuarioActores;
+                    break;
+                default:
+                    console.log("PRIVILEGIO NO EXISTENTE :: ", value.snombrePrivilegio.toUpperCase());
+            };
+        });
     };
+    
+//    $scope.ShowMenuVertical = function(tipoActividad){
+//        $scope.mostrarActividad = [false, false, false, false]; //case1 , case2, case3, case4
+//        switch(tipoActividad.toUpperCase()) {
+//            case "INVESTIGACION FORMATIVA":
+//                $scope.mostrarActividad = [true, false, false, false];
+//                break;
+//            case "ASESORIA DE TESIS":
+//                $scope.mostrarActividad = [false, true, false, false];
+//                break;
+//            case "INVESTIGACIONES BASICAS Y APLICADAS":
+//                $scope.mostrarActividad = [false, false, true, false];
+//                break;
+//            case "PRODUCCION INTELECTUAL":
+//                $scope.mostrarActividad = [false, false, false, true];
+//                break;
+//            default:
+//                $scope.mostrarActividad = [false, false, false, false];
+//        };
+//    };
     
     
 });

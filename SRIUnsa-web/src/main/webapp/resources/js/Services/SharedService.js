@@ -75,9 +75,39 @@ investigacionApp.factory('SharedService', function($location) {
             });
             return permitido;
         },
-        getRoles : function(privilegios){
-            var privilegio = [];
-        }
+        // Show Menu Vertical
+        vicerector : sessvars.vicerector,
+        homeDocente : sessvars.homeDoce,
+        homeDirector : sessvars.homeDirector,
+        actividadInvestigacion : sessvars.actividadInvestigacion,
+        actividadDocente : sessvars.actividadDocente,
+        actividades : sessvars.actividades,
+        reportes : sessvars.reportes,
+        configuracion : sessvars.configuracion,
+        permisos : sessvars.permisos,
+        generadas : sessvars.generadas,
+        pendientes : sessvars.pendientes,
+        revisadas : sessvars.revisadas,
+        revisadasMasivas : sessvars.revisadasMasivas,
+        relacionDocentes : sessvars.relacionDocentes,
+        archivos : sessvars.archivos,
+        showTipoInvestigacion : sessvars.showTipoInvestigacion,
+        tipoNivel : sessvars.tipoNivel,
+        tipoInvestigador : sessvars.tipoInvestigador,
+        tipoProduccion : sessvars.tipoProduccion,
+        tipoAsesoria : sessvars.tipoAsesoria,
+        semestres : sessvars.semestres,
+        estructuraOrganizacion : sessvars.estructuraOrganizacion,
+        areaInvestigacion : sessvars.areaInvestigacion,
+        flujoArista : sessvars.flujoArista,
+        generarCampos : sessvars.generarCampos,
+        fuenteFinanciamiento : sessvars.fuenteFinanciamiento,
+        usuarios : sessvars.usuarios,
+        roles : sessvars.roles,
+        rolUsuario : sessvars.rolUsuario,
+        privilegio : sessvars.privilegio,
+        actores : sessvars.actores,
+        usuarioActores : sessvars.usuarioActores,    
     };
 });
 
