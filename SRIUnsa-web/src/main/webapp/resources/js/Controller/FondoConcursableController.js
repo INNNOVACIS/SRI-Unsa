@@ -1,5 +1,5 @@
 investigacionApp.controller('FondoConcursableController', function($log, $scope, $location, $rootScope, $filter, 
-    FondoConcursableService, SharedService) {
+    FondoConcursableService) {
 
     $scope.fondos = [];
     $scope.fondo = {};
@@ -7,43 +7,43 @@ investigacionApp.controller('FondoConcursableController', function($log, $scope,
     /********** Servicios Callback **********/
         
     var getFondoServiceSuccess = function(response){
-    	$log.debug("Get Fondo - Success");
+    	$log.debug("GetFondo - Success");
+        console.log("Respuesta :: ", response);
     	$scope.fondos = response;
     };
-
     var getFondoServiceError = function(response){
-     	$log.debug("Get Fondo - Error"); 
+     	$log.debug("GetFondo - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var registrarFondoSuccess = function(response){
-        
-    	$log.debug("Registrar Fondo - Success");
+    	$log.debug("RegistrarFondo - Success");
+        console.log("Respuesta :: ", response);
     	$scope.fondos.push($scope.fondo);
     	$scope.fondo = {};
     };
-
     var registrarFondoError = function(response){
-        $log.debug("Registrar Fondo - Error");
+        $log.debug("RegistrarFondo - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var updateFondoSuccess = function(response){
     	$log.debug("Update Fondo - Success");
-    	console.log("success :: ", response);
+    	console.log("Respuesta :: ", response);
     	$scope.fondo = response;
     };
-
     var updateFondoError = function(response){
-        $log.debug("Update Fondo - Error");
+        $log.debug("UpdateFondo - Error");
     };
 
     var deleteFondoSuccess = function(response){
-    	$log.debug("Delete User - Success");
-    	console.log("success :: ", response);
+    	$log.debug("DeleteFondo - Success");
+    	console.log("Respuesta :: ", response);
     	$scope.fondo = response;
     };
-
     var deleteFondoError = function(response){
-
+        $log.debug("DeleteFondo - Error");
+    	console.log("Respuesta :: ", response);
     };
 
     /********** CRUD FONDOS ***********/
@@ -63,12 +63,53 @@ investigacionApp.controller('FondoConcursableController', function($log, $scope,
 
     $scope.deleteFondo = function(fondo){
     	$scope.fondo = fondo;
-    	FondoConcursableService.deleteFondo ($scope.fondo).then(deleteFondoSuccess. deleteFondoError);
+    	FondoConcursableService.deleteFondo ($scope.fondo).then(deleteFondoSuccess, deleteFondoError);
     };
 
     $scope.update = function(fondo){
     	$scope.fondo = fondo;
     };
+
+    /**************** PAGINACION *****************/
+    
+    $scope.rangoPaginas = [5,10,20,100];
+    $scope.currentPage = 1;
+    $scope.currentRango = $scope.rangoPaginas[0];
+    $scope.maxSize = 5;
+    $scope.total = 0;
+
+    $scope.numPages = function () {
+      return Math.ceil($scope.total / $scope.currentRango);
+    };
+
+    $scope.$watch('currentPage + currentRango', function() {
+        $scope.getUsuariosByPagina();
+        $scope.row = ($scope.currentPage - 1) * $scope.currentRango + 1;
+    });
+    
+    var paginacionUsuarioSuccess = function(response){
+        $log.debug("Get paginacionUsuario - Success");
+        console.log("Respuesta :: ", response);
+        $scope.users = [];
+        $scope.users = response.lista;
+        $scope.total = response.total;
+    };
+    
+    var paginacionUsuarioError = function(response){
+        $log.debug("Get paginacionUsuario - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.getUsuariosByPagina = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+//        UsuariosService.paginacionUsuario(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
+        FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
+    };
+    
+    $scope.clickBuscar = function(){
+        $scope.getUsuariosByPagina();
+    };
+
 
     $scope.getFondos();
 });
