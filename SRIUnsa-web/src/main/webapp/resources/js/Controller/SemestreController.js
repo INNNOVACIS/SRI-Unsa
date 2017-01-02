@@ -121,6 +121,9 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
     
     $scope.cancel = function(){
         $scope.semestre = {};
+        $scope.fechaInicio = "";
+        $scope.fechaFin = "";
+        $scope.errorFecha = false;
     };
     
     $scope.changeFecha = function(){

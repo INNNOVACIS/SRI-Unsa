@@ -25,9 +25,9 @@ investigacionApp.factory('SharedService', function($location) {
             return sDate;
         },
         scrollTop : function(){
-            $('html,body').animate({
-            scrollTop: $("#page-wrapper").offset().top - 100
-        }, 800);
+                $('html,body').animate({
+                scrollTop: $("#page-wrapper").offset().top - 100
+            }, 800);
         },
         popUp : {
             open:false,
@@ -74,6 +74,9 @@ investigacionApp.factory('SharedService', function($location) {
                 }
             });
             return permitido;
+        },
+        getRoles : function(privilegios){
+            var privilegio = [];
         }
     };
 });

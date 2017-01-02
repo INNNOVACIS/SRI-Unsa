@@ -5,7 +5,8 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
     $scope.loader = false;
     
     var loginServiceSuccess = function(response){
-        console.log("autenticación success :: ", response);
+        $log.debug("loginService - Success");
+        console.log("Respuesta :: ", response);
         if(response !== "") {
             sessvars.nombreUsuario = response.nombreUsuario;
             sessvars.nombreRol = response.nombreRol;
@@ -27,16 +28,19 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
     };
 
     var loginServiceError = function(response){
-        console.log("error");
+        $log.debug("loginService - Error");
+        console.log("Respuesta :: ", response);
         alert("Usuario no registrado");
         $scope.loader = false;
     };
     
     var getPrivilegiosByIdRolSuccess = function(response){
-        $log.debug("getPrivilegiosByIdRolSuccess");        
+        $log.debug("getPrivilegiosByIdRol - Success");
+        console.log("Respuesta :: ", response);
         sessvars.privilegios = response;
         $scope.sharedService.privilegios = sessvars.privilegios;
         
+        //Crea el Menu Horizontal
         sessvars.stringMenu = CrearMenu($scope.sharedService.privilegios);
         sessvars.htmlMenu = $sce.trustAsHtml(sessvars.stringMenu);
         $scope.sharedService.htmlMenu = sessvars.htmlMenu;
@@ -50,12 +54,14 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
 //        $location.path("/homeDirectorUnidad");
     };
     var getPrivilegiosByIdRolError = function(response){
+        $log.debug("getPrivilegiosByIdRol - Error");
+        console.log("Respuesta :: ", response);
         $scope.loader = false;
     };
     
     var GetActoresByIdUsuarioSuccess = function(response){
         $log.debug("GetActoresByIdUsuario - Success");
-        console.log("Respuesta :: ", response);
+        console.log("Respuesta :: ", response);        
         sessvars.locationHome = seleccionarHome(response.body);
         sessvars.crearActividadHome = sessvars.locationHome.replace("/", "#");
         $scope.sharedService.locationHome = sessvars.locationHome;

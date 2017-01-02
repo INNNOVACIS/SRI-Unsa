@@ -1,10 +1,9 @@
-<div class="container-fluid">
-    <div class="panel panel-danger" >
-        <div class="panel-body">
-            <div class="col-lg-offset-2 col-md-10">
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12" style="margin-top:20px;">
                 <div class="panel panel-info">
                     <div class="panel-heading" style="padding-bottom:19px;">
-                        Administración de Fondos Concursables
+                        Fuente de Financiamiento
                         <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#popNuevoFondo">
                             <span class="glyphicon glyphicon-plus"></span>
                             Nuevo
@@ -50,7 +49,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 <!-- NUEVO FONDO -->
 <div id="popNuevoFondo" class="modal fade" role="dialog">
@@ -58,7 +57,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Registrar Fondo Concursable</h4>
+                <h4 class="modal-title">Registrar Fuente de Financimiento</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -77,11 +76,11 @@
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="registrarFondo()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="registrarFondo()">
                     <span class="glyphicon glyphicon-rol"></span>
                     Registrar
                 </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
                 </button>
