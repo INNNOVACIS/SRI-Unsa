@@ -55,7 +55,7 @@ investigacionApp.service("ActividadesGeneradasService", function(SRIUnsaConfig, 
         var deferred = $q.defer();
         $http({
             method : 'POST',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/descargarPdf',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada',
             data : request
         }).success(function(response) {
             deferred.resolve(response);

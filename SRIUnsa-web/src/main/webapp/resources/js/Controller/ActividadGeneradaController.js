@@ -1,5 +1,10 @@
-investigacionApp.controller('ActividadGeneradaController', function($log, $scope, $routeParams, $location, TipoInvestigacionService, 
-    ArchivosService, ActividadesPendientesService, SharedService, ActividadesGeneradasService, SRIUnsaConfig) {
+investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
+    '$routeParams', '$location', 'TipoInvestigacionService', 
+    'ArchivosService', 'ActividadesPendientesService', 'SharedService', 
+    'ActividadesGeneradasService' ,'SRIUnsaConfig',
+    function($log, $scope, $routeParams, $location, TipoInvestigacionService, 
+        ArchivosService, ActividadesPendientesService, SharedService, ActividadesGeneradasService,
+        SRIUnsaConfig) {
     
     $scope.sharedService = SharedService;
     $scope.sharedService.scrollTop();
@@ -209,4 +214,4 @@ investigacionApp.controller('ActividadGeneradaController', function($log, $scope
     };
     
     $scope.getActividadById($scope.idActividad);
-});
+}]);
