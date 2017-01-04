@@ -27,12 +27,13 @@
     
 //    $scope.responsable = $scope.sharedService.docente.snombre + " " + $scope.sharedService.docente.sapellido;
     
-    $scope.facultad.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome.nombreFacultad;
-    $scope.departamento.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome.nombreDepartamento;
-    $scope.director.snombre = $scope.sharedService.usuarioHome.nombreDirector;
-    $scope.director.sapellido = $scope.sharedService.usuarioHome.apellidoDirector;
-    $scope.director.nidPersona = $scope.sharedService.usuarioHome.idPersonaDirector;
-    $scope.responsable = $scope.sharedService.usuarioHome.nombre + " " + $scope.sharedService.usuarioHome.apellido;
+    $scope.facultad.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome[0].nombreFacultad;
+    $scope.departamento.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome[0].nombreDepartamento;
+    $scope.director.nidPersona = $scope.sharedService.usuarioHome[0].idPersonaDirector;
+    $scope.responsable = $scope.sharedService.usuarioHome[0].nombre + " " + $scope.sharedService.usuarioHome[0].apellido;
+    $scope.directores = $scope.sharedService.usuarioHome;
+    $scope.director.snombre = $scope.sharedService.usuarioHome[0].nombreDirector;
+    $scope.director.sapellido = $scope.sharedService.usuarioHome[0].apellidoDirector;
 
     console.log("USUARIOHOME :: ", $scope.sharedService.usuarioHome);
 

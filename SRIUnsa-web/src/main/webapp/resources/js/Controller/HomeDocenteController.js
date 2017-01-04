@@ -60,8 +60,8 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     $scope.GetTipoInvestigaciones = function(){
         TipoInvestigacionService.getInvestigaciones().then(GetTipoInvestigacionesSuccess, GetTipoInvestigacionesError);
     };
-    $scope.GetUsuarioHome = function(idUsuario){
-        UsuariosService.GetUsuarioHome(idUsuario).then(GetUsuarioHomeSuccess, GetUsuarioHomeError);
+    $scope.GetUsuarioHome = function(idUsuario, idUsuarioDirector){
+        UsuariosService.GetUsuarioHome(idUsuario, idUsuarioDirector).then(GetUsuarioHomeSuccess, GetUsuarioHomeError);
     };
  
     $scope.goHome = function(tipoInvestigacion){
@@ -124,6 +124,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     
     if($scope.sharedService.idUsuarioRegistrar === -1){
         console.log("Ingreso como Docente :: ", $scope.sharedService.idUsuarioRegistrar);
+        $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, 0);
     } else {
         console.log("Ingreso como director unidad :: ", $scope.sharedService.idUsuarioRegistrar);
         $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, $scope.sharedService.usuarioLogin.idUsuario);

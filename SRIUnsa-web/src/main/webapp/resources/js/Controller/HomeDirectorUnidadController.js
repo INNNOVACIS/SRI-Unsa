@@ -71,9 +71,9 @@ function($log, $scope, UsuariosService, $location,
          * 
          * */
         sessvars.idUsuarioRegistrar = sessvars.idDocente;
-        sessvars.idUsuarioDirector = sessvars;
+//        sessvars.idUsuarioDirector = $scope.sharedService.usuarioLogin.idUsuario;
         $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
-        $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
+//        $scope.sharedService.idUsuarioDirector = sessvars.idUsuarioDirector;
         
         
         $location.path("/homedocente");

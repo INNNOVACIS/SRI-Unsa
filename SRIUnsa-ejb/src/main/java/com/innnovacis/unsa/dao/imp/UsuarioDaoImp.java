@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.transaction.Transactional;
 
 
@@ -241,12 +242,13 @@ public class UsuarioDaoImp implements IUsuarioDao {
     }
 
     @Override
-    public SRIUsuarioHome GetUsuarioHome(int idUsuario) {
-        SRIUsuarioHome respuesta = null;
+    public List<SRIUsuarioHome> GetUsuarioHome(int idUsuario, int idUsuarioDirector) {
+        List<SRIUsuarioHome> respuesta = null;
         try {
-            Query query = em.createNativeQuery("{call GetUsuarioHome(?1)}", SRIUsuarioHome.class)
-                                .setParameter(1, idUsuario);
-            respuesta = (SRIUsuarioHome) query.getSingleResult();
+            Query query = em.createNativeQuery("{call GetUsuarioHome(?1, ?2)}", SRIUsuarioHome.class)
+                                .setParameter(1, idUsuario)
+                                .setParameter(2, idUsuarioDirector);
+            respuesta = query.getResultList();
         } catch(Exception ex) {
             throw ex;
         }
