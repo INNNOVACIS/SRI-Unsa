@@ -1,4 +1,6 @@
-investigacionApp.controller('SemestreController', function($log, $scope, ngToast, SemestreService, SharedService) {
+investigacionApp.controller('SemestreController',
+    ['$log', '$scope', 'ngToast', 'SemestreService', 'SharedService',
+    function($log, $scope, ngToast, SemestreService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.semestres = [];
@@ -272,4 +274,4 @@ investigacionApp.controller('SemestreController', function($log, $scope, ngToast
         return '';
     }
     
-});
+}]);
