@@ -225,4 +225,17 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
         };
         ActividadesGeneradasService.EnviarEmail(actividadGeneral).then(EnviarEmailSuccess, EnviarEmailError);
     };
+    
+    /*******************EXPORTAR ARCHIVOS **************/
+    
+    $scope.descargarPDF = function(){
+        console.log("Empezando descarga de PDF...");
+        var objFiltro = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()
+                        };
+        ActividadesGeneradasService.descargarPDF(objFiltro)
+            .then(GetActividadesGeneradasSuccess, GetActividadesGeneradasError);
+    };
+    
 });

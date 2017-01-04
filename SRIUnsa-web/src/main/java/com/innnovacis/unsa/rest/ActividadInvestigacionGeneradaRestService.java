@@ -6,7 +6,10 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
+import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import com.itextpdf.text.DocumentException;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -53,4 +56,17 @@ public class ActividadInvestigacionGeneradaRestService {
         return builder.build();
     }
     
+    @POST
+    @Path("/descargarPdf")
+    public void descargarPdf(SRIPaginacion entidad)  {
+        GeneratePdf pdfEjemplo = new GeneratePdf();        
+        try {
+            pdfEjemplo.generarPdfEjemplo();
+            log.log(Level.INFO, "Se genera PDF");
+        } catch(FileNotFoundException ex) {
+            log.log(Level.INFO, "Error File Not Found : {0}", ex.getMessage());
+        }catch(DocumentException ex2) {
+            log.log(Level.INFO, "Error generacion documento : {0}", ex2.getMessage());
+        }
+    }
 }

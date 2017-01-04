@@ -47,5 +47,21 @@ investigacionApp.service("ActividadesGeneradasService", function(SRIUnsaConfig, 
         });
         return deferred.promise;
     };
+    
+    // Funcion que descarga un PDF de actividades generadas
+    this.descargarPDF = function(request) {
+        $log.debug("ActividadesGeneradasService - descargarPDF");
 
+        var deferred = $q.defer();
+        $http({
+            method : 'POST',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/descargarPdf',
+            data : request
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
 });
