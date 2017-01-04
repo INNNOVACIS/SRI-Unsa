@@ -45,6 +45,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     var GetUsuarioHomeSuccess = function(response){
         $log.debug("GetUsuarioHome - Success");
         console.log("Respuesta :: ", response);
+        
         sessvars.usuarioHome = response.body;
         $scope.sharedService.usuarioHome = response.body;
     };
@@ -118,11 +119,14 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         ActividadesGeneradasService.GetActividadesGeneradas(objPagina).then(GetActividadesGeneradasSuccess, GetActividadesGeneradasError);
     };
     
+    
+    /***************************** VERIFICA SI INGRESO COMO DIRECTOR UNIDAD O COMO DOCENTE *******************************/
+    
     if($scope.sharedService.idUsuarioRegistrar === -1){
-        console.log("Vicerector o Director de Unidad :: ", $scope.sharedService.idUsuarioRegistrar);
+        console.log("Ingreso como Docente :: ", $scope.sharedService.idUsuarioRegistrar);
     } else {
-        console.log("Docente a Registrar :: ", $scope.sharedService.idUsuarioRegistrar);
-        $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar);
+        console.log("Ingreso como director unidad :: ", $scope.sharedService.idUsuarioRegistrar);
+        $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, $scope.sharedService.usuarioLogin.idUsuario);
     }
     
     $scope.getSemestres();

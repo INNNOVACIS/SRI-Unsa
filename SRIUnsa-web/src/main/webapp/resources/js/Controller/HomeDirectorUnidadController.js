@@ -66,8 +66,13 @@ function($log, $scope, UsuariosService, $location,
         $scope.sharedService.idDocente = sessvars.idDocente;
         $scope.sharedService.docente = sessvars.docente;
         
-        
+        /*
+         * Asignamos el id del docente para registrar su actividad
+         * 
+         * */
         sessvars.idUsuarioRegistrar = sessvars.idDocente;
+        sessvars.idUsuarioDirector = sessvars;
+        $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
         $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
         
         
