@@ -1,4 +1,6 @@
-investigacionApp.controller('ActividadesGeneradasController', function($log, $scope, $location, SharedService, FondoConcursableService, 
+investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', '$location', 'SharedService', 'FondoConcursableService', 
+    'SemestreService', 'TipoInvestigacionService', 'ActividadesGeneradasService', 'EstructuraAreaInvestigacionService',
+    'TipoNivelService', 'EstructuraOrganizacionService', 'SRIUnsaConfig' ,function($log, $scope, $location, SharedService, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, ActividadesGeneradasService, EstructuraAreaInvestigacionService,
     TipoNivelService, EstructuraOrganizacionService, SRIUnsaConfig) {
     
@@ -238,4 +240,4 @@ investigacionApp.controller('ActividadesGeneradasController', function($log, $sc
             .then(GetActividadesGeneradasSuccess, GetActividadesGeneradasError);
     };
     
-});
+}]);

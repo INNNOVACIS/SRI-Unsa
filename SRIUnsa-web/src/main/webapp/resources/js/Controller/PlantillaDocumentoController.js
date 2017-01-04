@@ -1,4 +1,5 @@
-investigacionApp.controller('PlantillaDocumentoController', function($log, $scope, ngToast, EstructuraOrganizacionService, 
+investigacionApp.controller('PlantillaDocumentoController',['$log', '$scope', 'ngToast', 'EstructuraOrganizacionService', 
+    'PlantillaDocumentoService', 'SharedService', function($log, $scope, ngToast, EstructuraOrganizacionService, 
     PlantillaDocumentoService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -213,4 +214,4 @@ investigacionApp.controller('PlantillaDocumentoController', function($log, $scop
     $scope.GetPlantillaDocumento();
     $scope.getEstructuraOrganizaciones();
  
-});
+}]);

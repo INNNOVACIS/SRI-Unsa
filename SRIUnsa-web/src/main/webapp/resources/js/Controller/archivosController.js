@@ -1,4 +1,6 @@
-investigacionApp.controller('archivosController', function($log, $scope, $location, $rootScope, $filter, 
+investigacionApp.controller('archivosController',['$log', '$scope', '$location', '$rootScope', '$filter', 
+    'ArchivosService', 'SharedService', 
+function($log, $scope, $location, $rootScope, $filter, 
     ArchivosService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -116,4 +118,4 @@ investigacionApp.controller('archivosController', function($log, $scope, $locati
     };
     
     $scope.getArchivosByPagina();
-});
+}]);

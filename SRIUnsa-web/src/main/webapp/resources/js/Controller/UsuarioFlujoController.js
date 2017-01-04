@@ -1,4 +1,6 @@
-investigacionApp.controller('UsuarioFlujoController', function($log, $scope, UsuarioFlujoService, FlujoActorService,
+investigacionApp.controller('UsuarioFlujoController',['$log', '$scope', 'UsuarioFlujoService', 'FlujoActorService',
+    'UsuariosService', 'RolService', 'UsuarioRolService', 'SharedService', 
+function($log, $scope, UsuarioFlujoService, FlujoActorService,
     UsuariosService, RolService, UsuarioRolService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -275,4 +277,4 @@ investigacionApp.controller('UsuarioFlujoController', function($log, $scope, Usu
     $scope.getUsuarioActores();
     $scope.getUsuarios();
     $scope.getUsuarioFlujoByPagina();
-});
+}]);

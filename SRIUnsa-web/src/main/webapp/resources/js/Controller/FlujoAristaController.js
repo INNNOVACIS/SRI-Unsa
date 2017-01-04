@@ -1,4 +1,4 @@
-investigacionApp.controller('FlujoAristaController', function($log, $scope, ngToast, FlujoAristaService, FlujoActorService, EstadoService) {
+investigacionApp.controller('FlujoAristaController',['$log', '$scope', 'ngToast', 'FlujoAristaService', 'FlujoActorService', 'EstadoService', function($log, $scope, ngToast, FlujoAristaService, FlujoActorService, EstadoService) {
 
     $scope.flujoActores = [];
 
@@ -237,4 +237,4 @@ investigacionApp.controller('FlujoAristaController', function($log, $scope, ngTo
     $scope.getEstados();
     $scope.getFlujoActores();
     $scope.getFlujoAristaByPagina();
-});
+}]);

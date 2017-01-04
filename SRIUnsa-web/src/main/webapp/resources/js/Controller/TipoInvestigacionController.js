@@ -1,4 +1,6 @@
-investigacionApp.controller('TipoInvestigacionController', function($log, $scope, ngToast, $location, $rootScope, $filter, 
+investigacionApp.controller('TipoInvestigacionController',['$log', '$scope', 'ngToast', '$location', '$rootScope', '$filter', 
+    'TipoInvestigacionService', 'SharedService', 
+function($log, $scope, ngToast, $location, $rootScope, $filter, 
     TipoInvestigacionService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -160,4 +162,4 @@ investigacionApp.controller('TipoInvestigacionController', function($log, $scope
     };
     
     $scope.getTipoInvestigacionByPagina();
-});
+}]);

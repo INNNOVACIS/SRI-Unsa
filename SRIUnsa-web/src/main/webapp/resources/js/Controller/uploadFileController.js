@@ -1,5 +1,6 @@
 //investigacionApp.controller('homeController', function($scope, $location, $rootScope, $filter, FileUploader, SharedService) {
-investigacionApp.controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader) {
+investigacionApp.controller('AppController', ['$scope', 'FileUploader', 
+    function($scope, FileUploader) {
 	var uploader = $scope.uploader = new FileUploader({
         url: 'upload.php'
     });

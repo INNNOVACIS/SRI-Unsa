@@ -1,4 +1,6 @@
-investigacionApp.controller('ActividadesPendientesController', function($log, $scope, $location, FondoConcursableService, SRIUnsaConfig,
+investigacionApp.controller('ActividadesPendientesController',['$log', '$scope', '$location', 'FondoConcursableService', 'SRIUnsaConfig',
+    'SemestreService', 'TipoInvestigacionService', 'ActividadesPendientesService', 'TipoNivelService', 'EstructuraOrganizacionService', 'SharedService',
+    'UsuarioFlujoService' ,function($log, $scope, $location, FondoConcursableService, SRIUnsaConfig,
     SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService, SharedService,
     UsuarioFlujoService ) {
     
@@ -195,4 +197,4 @@ investigacionApp.controller('ActividadesPendientesController', function($log, $s
         $location.path("/actividad/Pendientes/"+ actividadPendiente.idactividadinvestigacion);
     };
     
-});
+}]);

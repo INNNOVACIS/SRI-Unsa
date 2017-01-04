@@ -1,4 +1,6 @@
-investigacionApp.controller('ActividadesRevisadasController', function($log, $scope, $location, ActividadesRevisadasService, 
+investigacionApp.controller('ActividadesRevisadasController',['$log', '$scope', '$location', 'ActividadesRevisadasService', 
+    'SemestreService', 'TipoInvestigacionService', 'FondoConcursableService', 'TipoNivelService', 'EstructuraOrganizacionService', 'SharedService',
+    'SRIUnsaConfig', 'UsuarioFlujoService', function($log, $scope, $location, ActividadesRevisadasService, 
     SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, SharedService,
     SRIUnsaConfig, UsuarioFlujoService ) {
 
@@ -185,4 +187,4 @@ investigacionApp.controller('ActividadesRevisadasController', function($log, $sc
         $location.path("/actividad/Revisadas/"+ actividadRevisada.idactividadinvestigacion);
     };
     
-});
+}]);

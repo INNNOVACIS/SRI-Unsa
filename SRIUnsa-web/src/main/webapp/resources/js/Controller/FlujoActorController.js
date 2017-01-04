@@ -1,4 +1,5 @@
-investigacionApp.controller('FlujoActorController', function($log, $scope, FlujoActorService, SharedService) {
+investigacionApp.controller('FlujoActorController',['$log', '$scope', 'FlujoActorService', 'SharedService', 
+    function($log, $scope, FlujoActorService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.actores = [];
@@ -114,4 +115,4 @@ investigacionApp.controller('FlujoActorController', function($log, $scope, Flujo
     };
     
     $scope.getActoresByPagina();
-});
+}]);

@@ -1,4 +1,5 @@
-investigacionApp.controller('FondoConcursableController', function($log, $scope, $location, $rootScope, $filter, 
+investigacionApp.controller('FondoConcursableController',['$log', '$scope', '$location', '$rootScope', '$filter', 
+    'FondoConcursableService', function($log, $scope, $location, $rootScope, $filter, 
     FondoConcursableService) {
 
     $scope.fondos = [];
@@ -95,4 +96,4 @@ investigacionApp.controller('FondoConcursableController', function($log, $scope,
     };
 
     $scope.getFondosByPagina();
-});
+}]);

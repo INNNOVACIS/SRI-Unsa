@@ -1,4 +1,5 @@
-investigacionApp.controller('TipoNivelController', function($log, $scope, ngToast, TipoNivelService, SharedService) {
+investigacionApp.controller('TipoNivelController',['$log', '$scope', 'ngToast', 'TipoNivelService', 'SharedService', 
+function($log, $scope, ngToast, TipoNivelService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.listarTipoNivel = [];
@@ -162,4 +163,4 @@ investigacionApp.controller('TipoNivelController', function($log, $scope, ngToas
     };
     
     $scope.getTipoNivelByPagina();
-});
+}]);

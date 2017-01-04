@@ -1,4 +1,7 @@
-investigacionApp.controller('UpdateActividadGeneradaController', function($log, $scope, $location, $routeParams, FondoConcursableService, 
+investigacionApp.controller('UpdateActividadGeneradaController',['$log', '$scope', '$location', '$routeParams', 'FondoConcursableService', 
+    'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'HomeService', 'PersonasService', 'PlantillaDocumentoService',
+    'TipoNivelService', 'EstructuraOrganizacionService', 'ArchivosService', 'SharedService', 'FileUploader', 'SRIUnsaConfig', '$sce', 
+function($log, $scope, $location, $routeParams, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, HomeService, PersonasService, PlantillaDocumentoService,
     TipoNivelService, EstructuraOrganizacionService, ArchivosService, SharedService, FileUploader, SRIUnsaConfig, $sce) {
     
@@ -468,4 +471,4 @@ investigacionApp.controller('UpdateActividadGeneradaController', function($log, 
         };
     };
     
-});
+}]);

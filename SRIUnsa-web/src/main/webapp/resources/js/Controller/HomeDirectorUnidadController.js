@@ -1,4 +1,6 @@
-investigacionApp.controller('HomeDirectorUnidadController', function($log, $scope, UsuariosService, $location, 
+investigacionApp.controller('HomeDirectorUnidadController',['$log', '$scope', 'UsuariosService', '$location', 
+    'HomeVicerectorService', 'SharedService', 
+function($log, $scope, UsuariosService, $location, 
     HomeVicerectorService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -159,4 +161,4 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0);
     $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad);
     $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad);
-});
+}]);

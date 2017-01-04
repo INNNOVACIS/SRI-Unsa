@@ -1,4 +1,5 @@
-investigacionApp.controller('LoginController', function($scope, $location, $log, $sce, SharedService, 
+investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$sce', 'SharedService', 
+    'PrivilegioService', 'LoginService', 'UsuariosService', function($scope, $location, $log, $sce, SharedService, 
     PrivilegioService, LoginService, UsuariosService) {
     
     $scope.sharedService = SharedService;
@@ -357,5 +358,5 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
 //    };
     
     
-});
+}]);
 
