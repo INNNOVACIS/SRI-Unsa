@@ -51,10 +51,10 @@ public class PrivilegiosRestServices {
     }
     
     @GET
-    @Path("/listarRolPrivilegios/{id:[0-9][0-9]*}")
+    @Path("/GetPrivilegiosByIdUsuario/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SRIPrivilegio> GetPrivilegiosByIdRol(@PathParam("id") int id){
-        return privilegioBusiness.GetPrivilegiosByIdRol(id);
+    public List<SRIPrivilegio> GetPrivilegiosByIdUsuario(@PathParam("id") int id){
+        return privilegioBusiness.GetPrivilegiosByIdUsuario(id);
     }
     
     @GET

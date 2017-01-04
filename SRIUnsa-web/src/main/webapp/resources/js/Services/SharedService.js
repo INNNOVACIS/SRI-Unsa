@@ -1,6 +1,10 @@
 investigacionApp.factory('SharedService', function($location) {
 
     return {
+        usuarioLogin : sessvars.usuarioLogin,
+        idUsuarioRegistrar : sessvars.idUsuarioRegistrar,
+        usuarioHome : sessvars.usuarioHome,
+        
         userAutenticado : sessvars.autenticado,
         nombreRol : sessvars.nombreRol,
         nombreUsuario : sessvars.nombreUsuario,

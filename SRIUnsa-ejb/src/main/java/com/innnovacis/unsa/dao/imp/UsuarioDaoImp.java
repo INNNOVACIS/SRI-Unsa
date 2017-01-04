@@ -7,8 +7,9 @@ import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
+import com.innnovacis.unsa.util.SRIUsuarioHome;
+import com.innnovacis.unsa.util.SRIUsuarioLogin;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
-import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.inject.Inject;
@@ -116,17 +117,17 @@ public class UsuarioDaoImp implements IUsuarioDao {
     }
 
     @Override
-    public SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad) {
-        SRIUsuarioRolUtil objUsuarioRol = null;
+    public SRIUsuarioLogin AutenticarUsuario(SRIUsuario entidad) {
+        SRIUsuarioLogin usuarioLogin = null;
         try {
-            Query query = em.createNativeQuery("{call AutenticarUsuario(?1,?2)}", SRIUsuarioRolUtil.class)
+            Query query = em.createNativeQuery("{call AutenticarUsuario(?1,?2)}", SRIUsuarioLogin.class)
                         .setParameter(1, entidad.getSUsuarioLogin())
                         .setParameter(2, entidad.getSUsuarioPassword());
-            objUsuarioRol = (SRIUsuarioRolUtil)query.getSingleResult();
+            usuarioLogin = (SRIUsuarioLogin)query.getSingleResult();
         } catch(Exception ex) {
             throw ex;
         }
-        return objUsuarioRol;
+        return usuarioLogin;
     }
 
     @Override
@@ -233,6 +234,19 @@ public class UsuarioDaoImp implements IUsuarioDao {
             Query query = em.createNativeQuery("{call GetTotalDocentesActivosInactivosByFacultad(?1)}", SRIDocenteActivosInactivos.class)
                                 .setParameter(1, idFacultad);
             respuesta = (SRIDocenteActivosInactivos) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public SRIUsuarioHome GetUsuarioHome(int idUsuario) {
+        SRIUsuarioHome respuesta = null;
+        try {
+            Query query = em.createNativeQuery("{call GetUsuarioHome(?1)}", SRIUsuarioHome.class)
+                                .setParameter(1, idUsuario);
+            respuesta = (SRIUsuarioHome) query.getSingleResult();
         } catch(Exception ex) {
             throw ex;
         }

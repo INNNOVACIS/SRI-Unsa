@@ -149,7 +149,22 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
             var deferred = $q.defer();
             $http({
                     method : 'GET',
-                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetTotalActivosInactivosByFacultad/' + idFacultad,
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetTotalActivosInactivosByFacultad/' + idFacultad
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+	};
+        
+        this.GetUsuarioHome = function(idUsuario) {
+            $log.debug("Usuario Service - GetUsuarioHome");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'GET',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetUsuarioHome/' + idUsuario
             }).success(function(response) {
                     deferred.resolve(response);
             }).error(function(response) {			

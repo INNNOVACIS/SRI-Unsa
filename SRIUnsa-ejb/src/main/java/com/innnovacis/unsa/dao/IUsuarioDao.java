@@ -10,6 +10,8 @@ import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
+import com.innnovacis.unsa.util.SRIUsuarioHome;
+import com.innnovacis.unsa.util.SRIUsuarioLogin;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.util.List;
@@ -35,10 +37,11 @@ public interface IUsuarioDao {
     
     int GetTotalPaginacion(SRIPaginacionObject entidad);
     List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad);
-    SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad);
+    SRIUsuarioLogin AutenticarUsuario(SRIUsuario entidad);
     List<SRIUsuarioPersona> GetDestinatariosByCodigoActorDestino(String codigoActorDestino);
     List<SRIUsuarioPersona> GetUsuarioPersonaByIdUsuario(int idUsuario);
     
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos();
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad);
+    SRIUsuarioHome GetUsuarioHome(int idUsuario);
 }

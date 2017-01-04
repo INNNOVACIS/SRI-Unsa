@@ -12,8 +12,9 @@ import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
+import com.innnovacis.unsa.util.SRIUsuarioHome;
+import com.innnovacis.unsa.util.SRIUsuarioLogin;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
-import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -120,8 +121,8 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
     }
 
     @Override
-    public SRIUsuarioRolUtil AutenticarUsuario(SRIUsuario entidad) {
-        SRIUsuarioRolUtil respuesta = null;
+    public SRIUsuarioLogin AutenticarUsuario(SRIUsuario entidad) {
+        SRIUsuarioLogin respuesta = null;
         try{
             respuesta = usuarioDao.AutenticarUsuario(entidad);
         }
@@ -300,6 +301,18 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         SRIDocenteActivosInactivos respuesta = null;
         try{
             respuesta = usuarioDao.GetTotalDocentesActivosInactivosByFacultad(idFacultad);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public SRIUsuarioHome GetUsuarioHome(int idUsuario) {
+        SRIUsuarioHome respuesta = null;
+        try{
+            respuesta = usuarioDao.GetUsuarioHome(idUsuario);
         }
         catch(Exception ex){
             throw ex;

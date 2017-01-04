@@ -8,6 +8,8 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         $log.debug("loginService - Success");
         console.log("Respuesta :: ", response);
         if(response !== "") {
+            sessvars.usuarioLogin = response;
+            $scope.sharedService.usuarioLogin = sessvars.usuarioLogin;
             sessvars.nombreUsuario = response.nombreUsuario;
             sessvars.nombreRol = response.nombreRol;
             sessvars.idUsuario = response.idUsuario;
@@ -20,7 +22,7 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
             $scope.sharedService.idUsuario = response.idUsuario;
             $scope.sharedService.idRol = response.idRol;
             $scope.sharedService.userAutenticado = sessvars.autenticado;
-            $scope.getPrivilegios(response.idUsuario);                
+            $scope.GetPrivilegiosByIdUsuario(response.idUsuario);                
         } else {
             alert("Usuario no registrado");
             $scope.loader = false;
@@ -34,8 +36,8 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         $scope.loader = false;
     };
     
-    var getPrivilegiosByIdRolSuccess = function(response){
-        $log.debug("getPrivilegiosByIdRol - Success");
+    var GetPrivilegiosByIdUsuarioSuccess = function(response){
+        $log.debug("GetPrivilegiosByIdUsuario - Success");
         console.log("Respuesta :: ", response);
         sessvars.privilegios = response;
         $scope.sharedService.privilegios = sessvars.privilegios;
@@ -55,8 +57,8 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         $scope.GetUsuariosByIdUsuario($scope.sharedService.idUsuario);
 //        $location.path("/homeDirectorUnidad");
     };
-    var getPrivilegiosByIdRolError = function(response){
-        $log.debug("getPrivilegiosByIdRol - Error");
+    var GetPrivilegiosByIdUsuarioError = function(response){
+        $log.debug("GetPrivilegiosByIdUsuario - Error");
         console.log("Respuesta :: ", response);
         $scope.loader = false;
     };
@@ -91,8 +93,8 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         LoginService.Autenticar($scope.usuario).then(loginServiceSuccess, loginServiceError);
     };
     
-    $scope.getPrivilegios = function(id){
-        PrivilegioService.getPrivilegiosByIdRol(id).then(getPrivilegiosByIdRolSuccess, getPrivilegiosByIdRolError);
+    $scope.GetPrivilegiosByIdUsuario = function(id){
+        PrivilegioService.GetPrivilegiosByIdUsuario(id).then(GetPrivilegiosByIdUsuarioSuccess, GetPrivilegiosByIdUsuarioError);
     };
     
     $scope.GetActoresByIdUsuario = function(idUsuario){
@@ -108,14 +110,20 @@ investigacionApp.controller('LoginController', function($scope, $location, $log,
         angular.forEach(actores, function(value, key){
             if(value.scodigo === "DOCE" && rango === 0){
                 location = "/homedocente";
+                sessvars.idUsuarioRegistrar = $scope.sharedService.usuarioLogin.idUsuario,
+                $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
             }
             if(value.scodigo === "DIUN" && rango === 0){
                 rango = 1;
                 location = "/homeDirectorUnidad";
+                sessvars.idUsuarioRegistrar = -1,
+                $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
             }
             if(value.scodigo === "VICE"){
                 rango = 2;
                 location = "/homeVicerector";
+                sessvars.idUsuarioRegistrar = -1,
+                $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
             }
         });
         return location;

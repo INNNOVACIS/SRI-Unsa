@@ -1,5 +1,5 @@
 investigacionApp.controller('HomeDocenteController', function($log, $scope, $location,  TipoInvestigacionService, SharedService,
-    ActividadesGeneradasService, SRIUnsaConfig, SemestreService) {
+    ActividadesGeneradasService, SRIUnsaConfig, SemestreService, UsuariosService) {
 
     $scope.sharedService = SharedService;
     $scope.sortType     = 'id'; // set the default sort type
@@ -40,11 +40,25 @@ investigacionApp.controller('HomeDocenteController', function($log, $scope, $loc
 //        $scope.loadTable = false;
     };
     
+    var GetUsuarioHomeSuccess = function(response){
+        $log.debug("GetUsuarioHome - Success");
+        console.log("Respuesta :: ", response);
+        sessvars.usuarioHome = response.body;
+        $scope.sharedService.usuarioHome = response.body;
+    };
+    var GetUsuarioHomeError = function(response){
+        $log.debug("GetUsuarioHome - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     $scope.getSemestres = function(){
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
     $scope.GetTipoInvestigaciones = function(){
         TipoInvestigacionService.getInvestigaciones().then(GetTipoInvestigacionesSuccess, GetTipoInvestigacionesError);
+    };
+    $scope.GetUsuarioHome = function(idUsuario){
+        UsuariosService.GetUsuarioHome(idUsuario).then(GetUsuarioHomeSuccess, GetUsuarioHomeError);
     };
  
     $scope.goHome = function(tipoInvestigacion){
@@ -101,6 +115,13 @@ investigacionApp.controller('HomeDocenteController', function($log, $scope, $loc
                           filtro : getFiltros()};
         ActividadesGeneradasService.GetActividadesGeneradas(objPagina).then(GetActividadesGeneradasSuccess, GetActividadesGeneradasError);
     };
+    
+    if($scope.sharedService.idUsuarioRegistrar === -1){
+        console.log("Vicerector o Director de Unidad :: ", $scope.sharedService.idUsuarioRegistrar);
+    } else {
+        console.log("Docente a Registrar :: ", $scope.sharedService.idUsuarioRegistrar);
+        $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar);
+    }
     
     $scope.getSemestres();
     $scope.GetTipoInvestigaciones();

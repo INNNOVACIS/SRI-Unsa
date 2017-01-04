@@ -23,5 +23,5 @@ public interface IPrivilegioBusiness {
     List<SRIPrivilegio> GetAll();
     int GetTotalPaginacion (SRIPaginacionObject object);
     List<SRIPrivilegio> GetPagina(SRIPaginacionObject object);
-    List<SRIPrivilegio> GetPrivilegiosByIdRol(int id);
+    List<SRIPrivilegio> GetPrivilegiosByIdUsuario(int id);
 }

@@ -112,10 +112,10 @@ public class PrivilegioBusinessImp implements IPrivilegioBusiness {
     }
 
     @Override
-    public List<SRIPrivilegio> GetPrivilegiosByIdRol(int id) {
+    public List<SRIPrivilegio> GetPrivilegiosByIdUsuario(int id) {
         List<SRIPrivilegio> respuesta = null;
         try{
-            respuesta = privilegioDao.GetPrivilegiosByIdRol(id);
+            respuesta = privilegioDao.GetPrivilegiosByIdUsuario(id);
         }
         catch(Exception ex){
             System.out.println("Error =========> " + ex.getMessage());

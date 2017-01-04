@@ -17,8 +17,22 @@
     $scope.colaboradores = [];
     $scope.submitted = false;
     $scope.tipoMonedas = ["Soles", "Dolares"];
+    $scope.facultad = {};
+    $scope.departamento = {};
+    $scope.director = {};
     
-    $scope.responsable = $scope.sharedService.docente.snombre + " " + $scope.sharedService.docente.sapellido;
+//    $scope.responsable = $scope.sharedService.docente.snombre + " " + $scope.sharedService.docente.sapellido;
+    
+    $scope.facultad.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome.nombreFacultad;
+    $scope.departamento.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome.nombreDepartamento;
+    $scope.director.snombre = $scope.sharedService.usuarioHome.nombreDirector;
+    $scope.director.sapellido = $scope.sharedService.usuarioHome.apellidoDirector;
+    $scope.director.nidPersona = $scope.sharedService.usuarioHome.idPersonaDirector;
+    $scope.responsable = $scope.sharedService.usuarioHome.nombre + " " + $scope.sharedService.usuarioHome.apellido;
+
+    
+
+    console.log("USUARIOHOME :: ", $scope.sharedService.usuarioHome);
 
     /***************** CallBack *******************/
     
@@ -32,7 +46,6 @@
                 $scope.changeTipoActividad($scope.tipoInvestigacion.snombreActividadInvestigacion);
             }
         });
-//        $scope.tipoInvestigacion = $scope.sharedService.tipoInvestigacion;
     };
     var GetTipoInvestigacionesError = function(response){
         $log.debug("GetTipoInvestigaciones - Error");
@@ -45,15 +58,16 @@
         
         $scope.estructuraOrganizaciones = response;
         
-        angular.forEach($scope.estructuraOrganizaciones, function(value, key){
-            if(value.nidEstructuraOrganizacion === $scope.sharedService.usuario.nidEstructuraOrganizacion){
-                $scope.facultad = value;
-                $scope.changeFacultad($scope.facultad);
-            }
-            if(value.nidEstructuraOrganizacion === $scope.sharedService.usuario.nidDepartamento){
-                $scope.departamento = value;
-            }
-        });
+        //Seleccionamos la facultad y departamento correspondiente al usuario
+//        angular.forEach($scope.estructuraOrganizaciones, function(value, key){
+//            if(value.nidEstructuraOrganizacion === $scope.sharedService.usuario.nidEstructuraOrganizacion){
+//                $scope.facultad = value;
+//                $scope.changeFacultad($scope.facultad);
+//            }
+//            if(value.nidEstructuraOrganizacion === $scope.sharedService.usuario.nidDepartamento){
+//                $scope.departamento = value;
+//            }
+//        });
     };
     var GetEstructuraOrganizacionesError = function(response){
         $log.debug("GetEstructuraOrganizaciones - Error");
@@ -173,11 +187,13 @@
     var GetByIdUsuarioSuccess = function(response){
         $log.debug("GetByIdUsuario - Success");
         console.log("Respuesta :: ", response);
-        angular.forEach($scope.personas, function(value, key){
-            if(value.nidPersona === response.body.nidPersona){
-                $scope.director = value;/**/
-            }
-        });
+        
+//        //Get Usuarios para seleccionar el Director
+//        angular.forEach($scope.personas, function(value, key){
+//            if(value.nidPersona === response.body.nidPersona){
+//                $scope.director = value;/**/
+//            }
+//        });
     };
     var GetByIdUsuarioError = function(response){
         $log.debug("GetByIdUsuario - Error");

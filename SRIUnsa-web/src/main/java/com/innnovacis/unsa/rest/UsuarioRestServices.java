@@ -12,8 +12,9 @@ import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
+import com.innnovacis.unsa.util.SRIUsuarioHome;
+import com.innnovacis.unsa.util.SRIUsuarioLogin;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
-import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
@@ -171,7 +172,7 @@ public class UsuarioRestServices {
         Response.ResponseBuilder builder = null;
         Map<String, Object> response = new HashMap<>();
         try {
-            SRIUsuarioRolUtil respuesta = usuarioBusiness.AutenticarUsuario(usuario);
+            SRIUsuarioLogin respuesta = usuarioBusiness.AutenticarUsuario(usuario);
             response.put("body", respuesta);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "Autenticar Usuario : {0}", usuario.toString());
@@ -267,6 +268,30 @@ public class UsuarioRestServices {
         Map<String, Object> response = new HashMap<>();
         response.put("body", docenteActivosInactivos);
         Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(response);
+        return builder.build();
+    }
+    
+    @GET
+    @Path("GetUsuarioHome/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetUsuarioHome(@PathParam("id") int id) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIUsuarioHome body = null;
+        try {
+            body = usuarioBusiness.GetUsuarioHome(id);
+            respuesta.put("body", body);
+            if (body == null) {
+                builder = Response.status(Response.Status.NOT_FOUND).entity(respuesta);
+                log.log(Level.INFO, "getUsuarioById - Nulo : {0}");
+            } else {
+                builder = Response.status(Response.Status.OK).entity(respuesta);
+                log.log(Level.INFO, "getUsuarioById - Success : {0}", body.toString());
+            }
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetUsuarioById - Error : {0}", ex.getMessage());
+        }
         return builder.build();
     }
     

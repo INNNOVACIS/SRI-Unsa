@@ -57,12 +57,18 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
         HomeVicerectorService.GetTotalActividadesByTipoActividadFacultad(idFacultad).then(GetTotalActividadesByTipoActividadFacultadSuccess, GetTotalActividadesByTipoActividadFacultadError);
     };
 
-    $scope.goHome = function(usuario){
+    $scope.registrar = function(usuario){
         console.log("USUARIO :: ", usuario);
         sessvars.docente = usuario;
         sessvars.idDocente = usuario.nidUsuario;
         $scope.sharedService.idDocente = sessvars.idDocente;
         $scope.sharedService.docente = sessvars.docente;
+        
+        
+        sessvars.idUsuarioRegistrar = sessvars.idDocente;
+        $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
+        
+        
         $location.path("/homedocente");
     };
     
@@ -77,7 +83,7 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
         
         $scope.sharedService.tipoInvestigacion = tipoInvestigacion;
         $scope.getUsuariosByPagina();
-        $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuario.nidEstructuraOrganizacion, $scope.idTipoInvestigacion);//$scope.idTipoInvestigacion
+        $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, $scope.idTipoInvestigacion);
         
     };
     
@@ -140,7 +146,7 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     
     $scope.getUsuariosByPagina = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuario.nidEstructuraOrganizacion, idDepartamento : $scope.idDepartamento, 
+                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
@@ -150,7 +156,7 @@ investigacionApp.controller('HomeDirectorUnidadController', function($log, $scop
     };
     
     $scope.getUsuariosByPagina();
-    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuario.nidEstructuraOrganizacion, 0);
-    $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuario.nidEstructuraOrganizacion);
-    $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuario.nidEstructuraOrganizacion);
+    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0);
+    $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad);
+    $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad);
 });
