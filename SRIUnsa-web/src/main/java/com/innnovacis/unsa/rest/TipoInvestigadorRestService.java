@@ -18,8 +18,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.innnovacis.unsa.business.ITipoInvestigadorBusiness;
 import com.innnovacis.unsa.model.SRITipoActividadInvestigacion;
-import com.innnovacis.unsa.modelborrar.Member;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -31,6 +34,22 @@ public class TipoInvestigadorRestService {
 
     @Inject
     private ITipoInvestigadorBusiness tipoInvestigadorBusiness;
+    
+    @POST
+    @Path("/getTipoInvestigadorByPagina")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response paginacionAreaInvestigacion(SRIPaginacionObject entidad) {
+        int total = tipoInvestigadorBusiness.GetTotalPaginacion(entidad);
+        List<SRITipoInvestigador> lista = tipoInvestigadorBusiness.GetPagina(entidad);
+
+        Map<String, Object> responseObj = new HashMap<>();
+        responseObj.put("total", total);
+        responseObj.put("lista", lista);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
+        
+        return builder.build();
+    }
     
     @GET
     @Path("/{id:[0-9][0-9]*}")

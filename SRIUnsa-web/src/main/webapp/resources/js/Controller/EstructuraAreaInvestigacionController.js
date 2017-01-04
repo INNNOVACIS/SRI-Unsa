@@ -1,49 +1,58 @@
 investigacionApp.controller('EstructuraAreaInvestigacionController', function($log, $scope, $location, $rootScope, $filter, 
     EstructuraAreaInvestigacionService, SharedService) {
 
+    $scope.sharedService = SharedService;
     $scope.areaInvestigaciones = [];
     $scope.areaInvestigacion = {};
+    $scope.areas = [];
+    $scope.subAreas = [];
+    $scope.disciplinas = [];
+    $scope.niveles = ["Area", "Sub Area", "Disciplina"];
 	
     /********** Servicios Callback **********/
         
     var getAreaInvestigacionServiceSuccess = function(response){
     	$log.debug("Get AreaInvestigacion - Success");
+        console.log("Respuesta :: ", response);
     	$scope.areaInvestigaciones = response;
+        getAreaSubAreaDisciplina($scope.areaInvestigaciones);
     };
 
     var getAreaInvestigacionServiceError = function(response){
      	$log.debug("Get AreaInvestigacion - Error"); 
+        console.log("Respuesta :: ", response);
     };
 
     var registrarAreaInvestigacionSuccess = function(response){
-        
     	$log.debug("Registrar AreaInvestigacion - Success");
-    	$scope.areaInvestigaciones.push($scope.areaInvestigacion);
-    	$scope.areaInvestigacion = {};
+        console.log("Respuesta :: ", response);
+    	$scope.getAreaInvestigacionByPagina();
     };
-
     var registrarAreaInvestigacionError = function(response){
         $log.debug("Registrar AreaInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var updateAreaInvestigacionSuccess = function(response){
     	$log.debug("Update AreaInvestigacion - Success");
-    	console.log("success :: ", response);
-    	$scope.areaInvestigacion = response;
+    	console.log("Respuesta :: ", response);
+    	$scope.getAreaInvestigacionByPagina();
     };
 
     var updateAreaInvestigacionError = function(response){
         $log.debug("Update AreaInvestigacion - Error");
+        console.log("Respuesta :: ", response);
     };
 
     var deleteAreaInvestigacionSuccess = function(response){
-    	$log.debug("Delete AreaInvestigacion - Success");
-    	console.log("success :: ", response);
+    	$log.debug("DeleteAreaInvestigacion - Success");
+    	console.log("Respuesta :: ", response);
     	$scope.areaInvestigacion = response;
     };
 
     var deleteAreaInvestigacionError = function(response){
-
+        $log.debug("DeleteAreaInvestigacion - Error");
+    	console.log("Respuesta :: ", response);
     };
 
     /********** CRUD AreaInvestigaciones ***********/
@@ -53,21 +62,115 @@ investigacionApp.controller('EstructuraAreaInvestigacionController', function($l
     };
 
     $scope.registrarAreaInvestigacion = function(){
-	EstructuraAreaInvestigacionService.registrarAreaInvestigacion($scope.areaInvestigacion).then(registrarAreaInvestigacionSuccess, registrarAreaInvestigacionError);
+        var areaInvestigacion = {
+            nIdPadre : getIdPadre(),            
+            sNivel : $scope.nivel,
+            sNombre : $scope.nombre,
+            sestado : "A",
+            suserCreacion : $scope.sharedService.nombreUsuario,
+            suserModificacion : $scope.sharedService.nombreUsuario
+        };
+	EstructuraAreaInvestigacionService.registrarAreaInvestigacion(areaInvestigacion).then(registrarAreaInvestigacionSuccess, registrarAreaInvestigacionError);
     };
 
     $scope.updateAreaInvestigacion = function(){
-    	
-    	EstructuraAreaInvestigacionService.updateAreaInvestigacion($scope.areaInvestigacion).then(updateAreaInvestigacionSuccess, updateAreaInvestigacionError);
+        var areaInvestigacion = {
+            nIdPadre : getIdPadre(),            
+            sNivel : $scope.nivel,
+            sNombre : $scope.nombre,
+            nidEstructura : $scope.areaInvestigacion.nidEstructura,
+            sestado : "A",
+            suserCreacion : $scope.sharedService.nombreUsuario,
+            suserModificacion : $scope.sharedService.nombreUsuario
+        };
+    	EstructuraAreaInvestigacionService.updateAreaInvestigacion(areaInvestigacion).then(updateAreaInvestigacionSuccess, updateAreaInvestigacionError);
     };
 
     $scope.deleteAreaInvestigacion = function(areaInvestigacion){
     	$scope.areaInvestigacion = areaInvestigacion;
-    	EstructuraAreaInvestigacionService.deleteAreaInvestigacion ($scope.areaInvestigacion).then(deleteAreaInvestigacionSuccess. deleteAreaInvestigacionError);
+    	EstructuraAreaInvestigacionService.deleteAreaInvestigacion ($scope.areaInvestigacion).then(deleteAreaInvestigacionSuccess, deleteAreaInvestigacionError);
     };
 
     $scope.update = function(areaInvestigacion){
-    	$scope.areaInvestigacion = areaInvestigacion;
+        $scope.areaInvestigacion = areaInvestigacion;
+        $scope.nombre = areaInvestigacion.sNombre;
+        $scope.nivel = areaInvestigacion.sNivel;
+        $scope.changeNivel(areaInvestigacion.sNivel);
+        seleccionarEstructuraAreaOrganizacion(areaInvestigacion);
+    	
+    };
+    
+    $scope.changeNivel = function(nivel){
+        switch(nivel.toUpperCase()){
+            case "AREA" :
+                $scope.showArea = false;
+                $scope.showSubArea = false;
+                $scope.showDisciplina = false;
+                break;
+            case "SUB AREA" :
+                $scope.showArea = true;
+                $scope.showSubArea = false;
+                $scope.showDisciplina = false;
+                break;
+            case "DISCIPLINA" :
+                $scope.showArea = false;
+                $scope.showSubArea = true;
+                $scope.showDisciplina = false;
+                break;
+            default:
+        }
+    };
+    
+    $scope.cancel = function(){
+        $scope.nombre = "";
+        $scope.nivel = "";
+        $scope.area = {};
+        $scope.subArea = {};
+    };
+    
+    var seleccionarEstructuraAreaOrganizacion = function(estructura){
+        if(estructura.sNivel.toUpperCase() === "SUB AREA"){
+            angular.forEach($scope.areas, function(value, key){
+                if(value.nidEstructura === estructura.nIdPadre){
+                    $scope.area = value;
+                }
+            });
+        }
+        if(estructura.sNivel.toUpperCase() === "DISCIPLINA"){
+            angular.forEach($scope.subAreas, function(value, key){
+                if(value.nidEstructura === estructura.nIdPadre){
+                    $scope.subArea = value;
+                }
+            });
+        }
+    };
+    
+    var getAreaSubAreaDisciplina = function(areaOrganizaciones){
+        angular.forEach(areaOrganizaciones, function(value, key){
+            switch(value.sNivel.toUpperCase()){
+                case "AREA" :
+                    $scope.areas.push(value);
+                    break;
+                case "SUB AREA" :
+                    $scope.subAreas.push(value);
+                    break;
+                case "DISCIPLINA" :
+                    $scope.disciplinas.push(value);
+                    break;
+                default:
+            }
+        });
+    };
+    
+    var getIdPadre = function(){
+        var padre = 0;
+        if($scope.area !== undefined &&  $scope.area !==  {}){
+            padre = $scope.area.nidEstructura;
+        }
+        if($scope.subArea !== undefined &&  $scope.subArea !==  {}){
+            padre = $scope.subArea.nidEstructura;
+        }
+        return padre;
     };
 
      /**************** PAGINACION *****************/
@@ -90,6 +193,8 @@ investigacionApp.controller('EstructuraAreaInvestigacionController', function($l
     
     var getAreaInvestigacionByPaginaSuccess = function(response){
         $log.debug("Get paginacionUsuario - Success");
+        console.log("Respuesta :: ", response);
+        $scope.areaInvestigaciones = [];
         $scope.areaInvestigaciones = response.lista;
         $scope.total = response.total;
     };
@@ -107,5 +212,6 @@ investigacionApp.controller('EstructuraAreaInvestigacionController', function($l
         $scope.getAreaInvestigacionByPagina();
     };
     
+    $scope.getAreaInvestigaciones();
     $scope.getAreaInvestigacionByPagina();
 });

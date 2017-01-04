@@ -68,7 +68,7 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
         var usuariopersona = {
             nidUsuario : $scope.usuario.nidUsuario,
             nidPersona : $scope.usuario.nidPersona,
-            nidEstructuraOrganizacion : $scope.usuario.nidEstructuraOrganizacion,
+            nidEstructuraOrganizacion : $scope.organizacion.nidPadre,
             nidDepartamento : $scope.organizacion.nidEstructuraOrganizacion,
             susuarioLogin : $scope.usuario.susuarioLogin,
             susuarioPassword : $scope.usuario.susuarioPassword,

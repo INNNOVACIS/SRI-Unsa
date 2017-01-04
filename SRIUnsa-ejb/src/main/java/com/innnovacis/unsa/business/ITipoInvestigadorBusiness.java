@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRITipoInvestigador;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -20,5 +21,7 @@ public interface ITipoInvestigadorBusiness {
     boolean Delete(SRITipoInvestigador entidad);
     SRITipoInvestigador Get(int idEntidad);
     List<SRITipoInvestigador> GetAll();
-
+    
+    int GetTotalPaginacion(SRIPaginacionObject entidad);
+    List<SRITipoInvestigador>  GetPagina(SRIPaginacionObject entidad);
 }

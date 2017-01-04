@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <input ng-model="buscar" class="form-control" placeholder="Buscar" >
+                                    <input ng-model="buscar" class="form-control" placeholder="Buscar" uppercase>
                                 </div>
                                 <div class="col-sm-2">
                                     <button ng-click="clickBuscar()" class="btn btn-primary">
@@ -68,7 +68,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Registrar Tipo de $Aacute;rea de Investigaci&oacute;n</h4>
+                <h4 class="modal-title">Registrar Tipo de &aacute;rea de Investigaci&oacute;n</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -76,22 +76,40 @@
                         <div class="col-md-12">
                             <form name="formRegistroTipoAreaInvestigacion" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Nombre</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="areaInvestigacion.sNombre" type="text"
-                                               class="form-control" placeholder="Nombre del Area de Investigacion"
-                                               required >
+                                    <label class="control-label col-md-3" style="">Nivel</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" ng-model="nivel" 
+                                                ng-options="opt as opt for opt in niveles" 
+                                                ng-change="changeNivel(nivel)"
+                                                required ></select>
                                     </div>
-                                    <label class="control-label col-md-2" style="">Id Padre</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="areaInvestigacion.nIdPadre" type="text"
-                                               class="form-control" placeholder="id del padre"
-                                               required >
+                                </div>
+                                <div class="form-group" ng-show="showArea">
+                                    <label class="control-label col-md-3" style="">&Aacute;rea</label>
+                                    <div class="col-md-9">
+                                        <select  ng-model="area"
+                                            ng-options="obj as obj.sNombre for obj in areas"
+                                            class="form-control"
+                                            required >
+                                        </select>
                                     </div>
-                                    <label class="control-label col-md-2" style="">Nivel</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="areaInvestigacion.sNivel" type="text"
-                                               class="form-control" placeholder="Area, SubArea, Disciplina"
+                                </div>
+                                <div class="form-group" ng-show="showSubArea">
+                                    <label class="control-label col-md-3" style="">Sub &Aacute;rea</label>
+                                    <div class="col-md-9">
+                                        <select  ng-model="subArea"
+                                            ng-options="obj as obj.sNombre for obj in subAreas"
+                                            class="form-control"
+                                            required >
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="">Nombre</label>
+                                    <div class="col-md-9">
+                                        <input id="inpRol" ng-model="nombre" type="text"
+                                               class="form-control"
+                                               uppercase
                                                required >
                                     </div>
                                 </div>
@@ -125,24 +143,42 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form name="formUpdateAreaInvestigacion" class="form-horizontal">
+                            <form name="formRegistroTipoAreaInvestigacion" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Nombre</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="areaInvestigacion.sNombre" type="text" 
-                                               class="form-control" placeholder="Nombre del Area de Investigacion"
-                                               required >
+                                    <label class="control-label col-md-3" style="">Nivel</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" ng-model="nivel"
+                                                ng-options="opt as opt for opt in niveles" 
+                                                ng-change="changeNivel(nivel)"
+                                                required ></select>
                                     </div>
-                                    <label class="control-label col-md-2" style="">Id Padre</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="areaInvestigacion.nIdPadre" type="text"
-                                               class="form-control" placeholder="id del padre"
-                                               required >
+                                </div>
+                                <div class="form-group" ng-show="showArea">
+                                    <label class="control-label col-md-3" style="">&Aacute;rea</label>
+                                    <div class="col-md-9">
+                                        <select  ng-model="area"
+                                            ng-options="obj as obj.sNombre for obj in areas"
+                                            class="form-control"
+                                            required >
+                                        </select>
                                     </div>
-                                    <label class="control-label col-md-2" style="">Nivel</label>
-                                    <div class="col-md-10">
-                                        <input id="inpRol" ng-model="areaInvestigacion.sNivel" type="text"
-                                               class="form-control" placeholder="Area, SubArea, Disciplina"
+                                </div>
+                                <div class="form-group" ng-show="showSubArea">
+                                    <label class="control-label col-md-3" style="">Sub &Aacute;rea</label>
+                                    <div class="col-md-9">
+                                        <select  ng-model="subArea"
+                                            ng-options="obj as obj.sNombre for obj in subAreas"
+                                            class="form-control"
+                                            required >
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="">Nombre</label>
+                                    <div class="col-md-9">
+                                        <input id="inpRol" ng-model="nombre" type="text"
+                                               class="form-control"
+                                               uppercase
                                                required >
                                     </div>
                                 </div>

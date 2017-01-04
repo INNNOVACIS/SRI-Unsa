@@ -181,6 +181,7 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
             usuario.setNIdUsuario(usuariopersona.getNIdUsuario());
             usuario.setNIdPersona(usuariopersona.getNIdPersona());
             usuario.setNIdEstructuraOrganizacion(usuariopersona.getNIdEstructuraOrganizacion());
+            usuario.setNIdDepartamento(usuariopersona.getNidDepartamento());
             usuario.setSUsuarioLogin(usuariopersona.getSUsuarioLogin());
             usuario.setSUsuarioPassword(usuariopersona.getSUsuarioPassword());
             usuario.setSUsuarioEmail(usuariopersona.getSUsuarioEmail());

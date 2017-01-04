@@ -20,21 +20,7 @@ investigacionApp.controller('EstructuraOrganizacionController', function($log, $
 
     var getEstructuraOrganizacionServiceSuccess = function(response){
     	$log.debug("GetEstructuraOrganizacion - Success");
-    	console.log("Respuesta :: ", response);
-        
-//        angular.forEach(response, function(superior, key) {
-//            angular.forEach(response, function(value, key) {
-//                if(superior.nidPadre == value.nidEstructuraOrganizacion){
-//                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
-//                }
-//            });
-//            angular.forEach($scope.niveles, function(nivel, key) {
-//                if(superior.nidTipoNivel == nivel.nidTipoNivel){
-//                    superior.nombreNivel = nivel.snombreTipoNivel;
-//                }
-//            });
-//        });
-        
+    	console.log("Respuesta :: ", response);        
     	$scope.organizaciones = response;
     };
     var getEstructuraOrganizacionServiceError = function(response){

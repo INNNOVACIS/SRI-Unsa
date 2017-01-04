@@ -25,6 +25,7 @@ public class EstructuraAreaInvestigacionDaoImp implements IEstructuraAreaInvesti
     @Transactional
     public SRIEstructuraAreaInvestigacion  Insert(SRIEstructuraAreaInvestigacion entidad) {
         entidad.setDFechaCreacion(new Date());
+        entidad.setDFechaModificacion(new Date());
          em.persist(entidad);
          return entidad;
     }

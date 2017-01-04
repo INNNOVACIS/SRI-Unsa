@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import com.innnovacis.unsa.business.ITipoInvestigadorBusiness;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 
 
@@ -79,6 +80,28 @@ public class TipoInvestigadorBusinessImp implements ITipoInvestigadorBusiness {
          List<SRITipoInvestigador> respuesta = null;
          try{
             respuesta = tipoInvestigadorDao.GetAll();
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public int GetTotalPaginacion(SRIPaginacionObject entidad) {
+        int respuesta = -1;
+         try{
+            respuesta = tipoInvestigadorDao.GetTotalPaginacion(entidad);
+        }
+        catch(Exception ex){
+        }
+         return respuesta;
+    }
+
+    @Override
+    public List<SRITipoInvestigador> GetPagina(SRIPaginacionObject entidad) {
+        List<SRITipoInvestigador> respuesta = null;
+         try{
+            respuesta = tipoInvestigadorDao.GetPagina(entidad);
         }
         catch(Exception ex){
         }

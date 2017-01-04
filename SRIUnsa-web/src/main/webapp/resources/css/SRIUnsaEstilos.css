@@ -1,3 +1,7 @@
+/*id table*/
+.SRI-Width{
+    width: 10px !important;
+}
 /* Barra de Progreso*/
 .SRI-progress{
     height: 40px;
@@ -35,7 +39,7 @@
 /* End Barra de Progreso*/
 
 .table-overflow>td {
-    max-width: 200px;
+    max-width: 250px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

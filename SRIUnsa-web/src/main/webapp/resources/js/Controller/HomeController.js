@@ -501,7 +501,7 @@
             case "INVESTIGACION FORMATIVA":
                 $scope.mostrarActividad = [true, false, false, false];
                 $scope.descripcionLabel = "Breve descripcion de la Actividad Formativa";
-                $scope.tituloLabel = "Nombre del curso";
+                $scope.tituloLabel = "Nombre del curso o Asignatura";
                 $scope.adjuntar = "Adjuntar Sílabo del Curso";
                 $scope.adjuntarOtros = "Adjuntar Resultados de Investigación";
                 $scope.showDescripcion = true;

@@ -1,78 +1,66 @@
 investigacionApp.controller('TipoInvestigadorController', function($log, $scope, ngToast, $location, $rootScope, $filter, 
     TipoInvestigadorService, SharedService) {
 
-    $scope.listarTipoInvestigador = [];
-    $scope.tipoInvestigador = {};
-	
-    var getTipoInvestigadorServiceSuccess = function(response){
-    	$log.debug("Get TipoInvestigador - Success");
-    	console.log("Success :: ", response);
-    	$scope.listarTipoInvestigador = response;
-    }
-
-    var getTipoInvestigadorServiceError = function(response){
-     	$log.debug("Get TipoInvestigador - Error"); 
-    }
+    $scope.tipoInvestigadores = [];
+    $scope.sharedService = SharedService;
 
     var registrarTipoInvestigadorSuccess = function(response){
     	$log.debug("Registrar TipoInvestigador - Success");
-    	console.log("success :: ", response);
-    	$scope.listarTipoInvestigador.push($scope.tipoInvestigador);
-    	
+    	console.log("Respuesta :: ", response);
+    	$scope.getTipoInvestigadorByPagina();
         $scope.cancel();
-        
         $("#popNuevoTipoInvestigador").modal('toggle');
-    }
+    };
 
     var registrarTipoInvestigadorError = function(response){
         $log.debug("Registrar Tipo Investigador - Error");
         console.log("Respuesta :: ", response);
         $scope.cancel();
-    }
+    };
 
     var updateTipoInvestigadorSuccess = function(response){
     	$log.debug("Update User - Success");
-    	console.log("success :: ", response);
-        
+    	console.log("Respuesta :: ", response);
+        $scope.getTipoInvestigadorByPagina();
         $scope.cancel();
-        
         $("#popUpdateTipoInvestigador").modal('toggle');
-    }
+    };
 
     var updateTipoInvestigadorError = function(response){
         $log.debug("Actualizar Tipo Investigador - Error");
         console.log("Respuesta :: ", response);
-    }
+    };
 
     var deleteTipoInvestigadorSuccess = function(response){
     	$log.debug("Delete User - Success");
-    	console.log("success :: ", response);
+    	console.log("Respuesta :: ", response);
     	$scope.tipoInvestigador = response;
-    }
+    };
 
     var deleteTipoInvestigadorError = function(response){
         $log.debug("Eliminar Tipo Investigador - Error");
         console.log("Respuesta :: ", response);
-    }
+    };
 
     /********** CRUD TIPO PRODUCCION ***********/
-
-    $scope.getListaTipoInvestigador = function(){
-      	TipoInvestigadorService.getListaTipoInvestigador().then(getTipoInvestigadorServiceSuccess, getTipoInvestigadorServiceError);
-    }
 
     $scope.registrarTipoInvestigador = function(){
         $scope.submitted = true;
         if($scope.formRegistroTipoInvestigador.$valid){
-            console.log("TipoInvestigador Controller :: ", $scope.tipoInvestigador);
-            TipoInvestigadorService.registrarTipoInvestigador($scope.tipoInvestigador)
+            var tipoInvestigador = {                
+                snombreTipoInvestigador : $scope.nombre,
+                sestado : "A",
+                suserCreacion : $scope.sharedService.nombreUsuario,
+                suserModificacion : $scope.sharedService.nombreUsuario
+            };
+            TipoInvestigadorService.registrarTipoInvestigador(tipoInvestigador)
                 .then(registrarTipoInvestigadorSuccess, registrarTipoInvestigadorError);
             openNotice('Registrado!','success');
         }else {
-            console.log("No se registro Semestre :: ", $scope.semestre);
+            console.log("No se registro Tipo Investigador :: ", $scope.semestre);
             openNotice('Error al registrar!','danger');
         }
-    }
+    };
 
     $scope.updateTipoInvestigador = function(){
     	$scope.submitted = true;
@@ -84,18 +72,19 @@ investigacionApp.controller('TipoInvestigadorController', function($log, $scope,
             console.log("No se registro Tipo Investigador :: ", $scope.semestre);
             openNotice('Error al actualizar!','danger');
         }
-    }
+    };
 
     $scope.deleteTipoInvestigador = function(tipoInvestigador){
     	$scope.tipoInvestigador = tipoInvestigador;
-    	TipoInvestigadorService.deleteTipoInvestigador($scope.tipoInvestigador).then(deleteTipoInvestigadorSuccess. deleteTipoInvestigadorError);
-    }
+    	TipoInvestigadorService.deleteTipoInvestigador($scope.tipoInvestigador)
+            .then(deleteTipoInvestigadorSuccess, deleteTipoInvestigadorError);
+    };
     
 
     $scope.update = function(tipoInvestigador){
-        angular.copy(tipoInvestigador, $scope.tipoInvestigador);
-    	//$scope.tipoInvestigador = tipoInvestigador;
-    }
+//        angular.copy(tipoInvestigador, $scope.tipoInvestigador);
+    	$scope.tipoInvestigador = tipoInvestigador;
+    };
     
     // Funcion que limpia el modelo del Semestre, ya que este es usado tanto para crear como para actualizar
     $scope.cancel = function(){
@@ -111,5 +100,44 @@ investigacionApp.controller('TipoInvestigadorController', function($log, $scope,
         });
     };
     
-    $scope.getListaTipoInvestigador();
+    
+     /**************** PAGINACION *****************/
+    
+    $scope.rangoPaginas = [5,10,20,100];
+    $scope.currentPage = 1;
+    $scope.currentRango = $scope.rangoPaginas[0];
+    $scope.maxSize = 5;
+    $scope.total = 0;
+
+    $scope.numPages = function () {
+      return Math.ceil($scope.total / $scope.currentRango);
+    };
+
+    $scope.$watch('currentPage + currentRango', function() {
+        $scope.getTipoInvestigadorByPagina();
+    });
+    
+    var getTipoInvestigadorByPaginaSuccess = function(response){
+        $log.debug("getTipoInvestigadorByPagina - Success");
+        console.log("Respuesta :: ", response);
+        $scope.tipoInvestigadores = [];
+        $scope.tipoInvestigadores = response.lista;
+        $scope.total = response.total;
+    };
+    
+    var getTipoInvestigadorByPaginaError = function(response){
+        $log.debug("getTipoInvestigadorByPagina - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.getTipoInvestigadorByPagina = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        TipoInvestigadorService.getTipoInvestigadorByPagina(objPagina).then(getTipoInvestigadorByPaginaSuccess, getTipoInvestigadorByPaginaError);
+    };
+    
+    $scope.clickBuscar = function(){
+        $scope.getTipoInvestigadorByPagina();
+    };
+        
+    $scope.getTipoInvestigadorByPagina();
 });
