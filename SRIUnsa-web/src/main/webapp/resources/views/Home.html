@@ -229,7 +229,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">N° de Resoluci&oacute;n</label>
                                     <div class="col-md-8">
-                                        <input class="form-control" ng-model="cuiAsesorado"/>
+                                        <input class="form-control" ng-model="numeroContrato"/>
                                     </div>
                                 </div>
                             </div>
@@ -238,9 +238,9 @@
                                     <label class="control-label col-md-4">Fecha de Resoluci&oacute;n</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaResolucion" is-open="popupResolucion.opened" datepicker-options="dateOptions" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaAceptacion" is-open="popupAceptacion.opened" datepicker-options="dateOptions" close-text="Close" />
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="openResolucion()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                <button type="button" class="btn btn-default" ng-click="openAceptacion()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
                                         </p>
                                     </div>
@@ -296,9 +296,9 @@
                                     <label class="control-label col-md-4">Fecha de Contrato</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaContrato" is-open="popupContrato.opened" datepicker-options="dateOptions" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaAceptacion" is-open="popupAceptacion.opened" datepicker-options="dateOptions" close-text="Close" />
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="openContrato()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                <button type="button" class="btn btn-default" ng-click="openAceptacion()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
                                         </p>
                                     </div>
@@ -309,9 +309,9 @@
                                     <label class="control-label col-md-4">Fecha Finalizaci&oacute;n del Proyecto</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaFin" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaFin" is-open="popupFin.opened" datepicker-options="dateOptions" close-text="Close" />
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                <button type="button" class="btn btn-default" ng-click="openFin()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
                                         </p>
                                     </div>
@@ -324,9 +324,9 @@
                                     <label class="control-label col-md-4">{{ fechaTipoProduccion }}</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaInicio" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaAceptacion" is-open="popupAceptacion.opened" datepicker-options="dateOptions" close-text="Close" />
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                <button type="button" class="btn btn-default" ng-click="openAceptacion()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
                                         </p>
                                     </div>
@@ -336,7 +336,25 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Plazo de Ejecuci&oacute;n</label>
                                     <div class="col-md-8">
-                                        <input class="form-control" ng-model="nombreCurso" />
+                                        <input class="form-control" ng-model="plazoEjecucion" />
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="showVerificacion">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{ labelCodigo }}</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" ng-model="codigo"/>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{ labelNombrePublicacion }}</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" ng-model="nombrePublicacion" />
                                     </div>                            
                                 </div>
                             </div>

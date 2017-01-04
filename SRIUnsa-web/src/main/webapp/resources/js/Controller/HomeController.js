@@ -1,7 +1,7 @@
     investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService,
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService,
-    UsuariosService, PersonasService, ActividadesGeneradasService, PlantillaDocumentoService, FileUploader, $sce) {
+    ActividadesGeneradasService, PlantillaDocumentoService, FileUploader, $sce) {
     
     $scope.sharedService = SharedService;
     $scope.tipoInvestigaciones = [];
@@ -30,8 +30,6 @@
     $scope.director.nidPersona = $scope.sharedService.usuarioHome.idPersonaDirector;
     $scope.responsable = $scope.sharedService.usuarioHome.nombre + " " + $scope.sharedService.usuarioHome.apellido;
 
-    
-
     console.log("USUARIOHOME :: ", $scope.sharedService.usuarioHome);
 
     /***************** CallBack *******************/
@@ -52,45 +50,11 @@
         console.log("Respuesta :: ", response);
     };
     
-    var GetEstructuraOrganizacionesSuccess = function(response){
-        $log.debug("GetEstructuraOrganizaciones - Success");
-        console.log("Respuesta :: ", response);
-        
-        $scope.estructuraOrganizaciones = response;
-        
-        //Seleccionamos la facultad y departamento correspondiente al usuario
-//        angular.forEach($scope.estructuraOrganizaciones, function(value, key){
-//            if(value.nidEstructuraOrganizacion === $scope.sharedService.usuario.nidEstructuraOrganizacion){
-//                $scope.facultad = value;
-//                $scope.changeFacultad($scope.facultad);
-//            }
-//            if(value.nidEstructuraOrganizacion === $scope.sharedService.usuario.nidDepartamento){
-//                $scope.departamento = value;
-//            }
-//        });
-    };
-    var GetEstructuraOrganizacionesError = function(response){
-        $log.debug("GetEstructuraOrganizaciones - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var GetTipoNivelesSuccess = function(response){
-        $log.debug("GetTipoNiveles - Success");
-        console.log("Respuesta :: ", response);
-        $scope.niveles = response;
-        $scope.GetEstructuraOrganizaciones();
-    };
-    var GetTipoNivelesError = function(response){
-        $log.debug("GetTipoNiveles - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
     var GetSemestresSuccess = function(response){
         $log.debug("GetSemestres - Success");
         console.log("Respuesta :: ", response);
         $scope.semestres = response;
-        $scope.semestre = verificarSemestre($scope.semestres);
-        console.log(" semestre ============== ::", $scope.semestre);
+        $scope.semestre = verificarSemestre($scope.semestres);        
     };
     var GetSemestresError = function(response){
         $log.debug("GetSemestres - Error");
@@ -156,51 +120,7 @@
         $scope.message = response;
         $scope.loader = false;
     };
-    
-    var GetUsuariosSuccess = function(response){
-        $log.debug("GetUsuarios - Success");
-        console.log("Respuesta :: ", response);
-        $scope.usuarios = response;
-    };
-    var GetUsuariosError = function(response){
-        $log.debug("GetUsuarios - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var GetPersonasSuccess = function(response){
-        $log.debug("GetPersonas - Success");
-        console.log("Respuesta :: ", response);
-        $scope.personas = response;
-//        var idUsuario = "";
-//        if($scope.sharedService.idDocente === "" ){
-//            idUsuario = $scope.sharedService.idUsuario;
-//        } else {
-//            idUsuario = $scope.sharedService.idDocente;
-//        }
-        UsuariosService.GetByIdUsuario($scope.sharedService.idUsuario).then(GetByIdUsuarioSuccess, GetByIdUsuarioError);
-    };
-    var GetPersonasError = function(response){
-        $log.debug("GetPersonas - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var GetByIdUsuarioSuccess = function(response){
-        $log.debug("GetByIdUsuario - Success");
-        console.log("Respuesta :: ", response);
-        
-//        //Get Usuarios para seleccionar el Director
-//        angular.forEach($scope.personas, function(value, key){
-//            if(value.nidPersona === response.body.nidPersona){
-//                $scope.director = value;/**/
-//            }
-//        });
-    };
-    var GetByIdUsuarioError = function(response){
-        $log.debug("GetByIdUsuario - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    
+
     var EnviarEmailSuccess = function(response){
         $log.debug("EnviarEmail - Success");
         console.log("Respuesta :: ", response);
@@ -256,12 +176,6 @@
     $scope.GetTipoInvestigaciones = function(){
         TipoInvestigacionService.getInvestigaciones().then(GetTipoInvestigacionesSuccess, GetTipoInvestigacionesError);
     };
-    $scope.GetEstructuraOrganizaciones = function(){
-        EstructuraOrganizacionService.getEstructuraOrganizaciones().then(GetEstructuraOrganizacionesSuccess, GetEstructuraOrganizacionesError);
-    };
-    $scope.GetTipoNiveles = function(){
-        TipoNivelService.getListaTipoNivel().then(GetTipoNivelesSuccess, GetTipoNivelesError);
-    };
     $scope.GetSemestres = function(){
         SemestreService.getSemestres().then(GetSemestresSuccess, GetSemestresError);
     };
@@ -277,13 +191,7 @@
     $scope.GetTipoProducciones = function(){
         TipoProduccionService.getListaTipoProduccion().then(GetTipoProduccionesSuccess, GetTipoProduccionesError);
     };
-    $scope.GetUsuarios = function(){
-      	UsuariosService.getUsuarios().then(GetUsuariosSuccess, GetUsuariosError);
-    };
-    $scope.GetPersonas = function(){
-      	PersonasService.getPersonas().then(GetPersonasSuccess, GetPersonasError);
-    };
-    
+
     $scope.AgregarColaborador = function(){
         if(!isRepetido($scope.colaboradores, $scope.persona)){
             $scope.colaboradores.push($scope.persona);
@@ -393,21 +301,18 @@
                     sdisciplina : $scope.disciplinaInvestigacion.sNombre,
                     stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
                     snombreActividadInvestigacion : $scope.nombreInvestigacion,
-                    navance: $scope.avance,
                     dfechaRegistro : $scope.fechaRegistro,
-                    dfechaInicio : $scope.fechaInicio,
+                    dfechaAceptacion : $scope.fechaAceptacion,
                     dfechaFin : $scope.fechaFin,
                     sdescripcionActividad : $scope.descripcion,
-                    
                     nidDirector : $scope.director.nidPersona,
-                    snombreAsesorado : $scope.nombreAsesorado,
-                    scuiAsesorado : $scope.cuiAsesorado,
+                    snombreAsesorado : $scope.nombreAsesorado,                    
                     slineaInvestigacion : $scope.lineaInvestigacion,
                     snombreCurso : $scope.nombreCurso,
                     snumeroContrato : $scope.numeroContrato,
-                    smontoFinanciamiento : $scope.montoFinanciamiento, //
-                    stipoMoneda : $scope.tipoMoneda,
-                    
+                    snombrePublicacion : $scope.nombrePublicacion,
+                    scodigo : $scope.codigo,
+                    splazoEjecucion : $scope.plazoEjecucion,
                     suserCreacion : $scope.sharedService.nombreUsuario,
                     suserModificacion : $scope.sharedService.nombreUsuario,
                     sestado : 'A'
@@ -500,14 +405,11 @@
     
     
     $scope.GetTipoInvestigaciones();
-    $scope.GetTipoNiveles();
     $scope.GetSemestres();
     $scope.GetAreaInvestigaciones();
     $scope.GetFondos();
     $scope.GetTipoAsesorias();
     $scope.GetTipoProducciones();
-    $scope.GetUsuarios();
-    $scope.GetPersonas();
     
     /*********** Funciones Utilitarias ************/
     
@@ -541,9 +443,9 @@
             case "PRODUCCION INTELECTUAL":
                 $scope.mostrarActividad = [false, false, false, true];
                 $scope.descripcionLabel = "Resumen";
-                $scope.tituloLabel = "Titulo";
+                $scope.tituloLabel = "Título";
                 $scope.adjuntar = "Adjuntar Planificación";
-                $scope.adjuntarOtros = "Adjuntar Articulo (Opcional)";
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
                 $scope.showDescripcion = false;
                 break;
             default:
@@ -565,16 +467,21 @@
         $location.path("/actividad/Generadas");
     };
     $scope.changeTipoProduccion = function(tipoProduccion){
+        $scope.showVerificacion = true;
         if(tipoProduccion.snombreTipoProduccion.toUpperCase() === "ARTICULO"){
             $scope.fechaTipoProduccion = "Fecha de Aceptacion";
+            $scope.labelCodigo = "DOI";
+            $scope.labelNombrePublicacion = "Nombre de la Revista";
         } else {
             $scope.fechaTipoProduccion = "Fecha de Publicacion";
+            $scope.labelCodigo = "ISBN";
+            $scope.labelNombrePublicacion = "Nombre de la Editorial";
         }
-    }
+    };
     
     var getTotalColaboradores = function(){
         var total = $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
-        $scope.totalColaboradores = total + " seleccionados"
+        $scope.totalColaboradores = total + " seleccionados";
 //        return total + " seleccionados";
     };
     
@@ -583,15 +490,12 @@
     };
     
     var limpiarCampos = function(){
-//        $scope.tipoInvestigacion = {};
         $scope.duracionInvestigacion = 0;
         $scope.tipoProduccion = {};
         $scope.fondo = {};
         $scope.tipoAsesoria = {};
         $scope.semestre = {};
-//        $scope.facultad = {};
         $scope.escuela = {};
-//        $scope.departamento = {};
         $scope.areaInvestigacion = {};
         $scope.subAreaInvestigacion = {};
         $scope.disciplinaInvestigacion = {};
@@ -759,21 +663,11 @@
 
     $scope.toggleMin();
 
-    $scope.open1 = function() {
-      $scope.popup1.opened = true;
+    $scope.openAceptacion = function() {
+      $scope.popupAceptacion.opened = true;
     };
-
-    $scope.open2 = function() {
-      $scope.popup2.opened = true;
-    };
-    $scope.open3 = function() {
-      $scope.popup3.opened = true;
-    };
-    $scope.openResolucion = function() {
-      $scope.popupResolucion.opened = true;
-    };
-    $scope.openContrato = function() {
-      $scope.popupContrato.opened = true;
+    $scope.openFin = function() {
+      $scope.popupFin.opened = true;
     };
 
     $scope.setDate = function(year, month, day) {
@@ -784,23 +678,12 @@
     $scope.format = $scope.formats[0];
     $scope.altInputFormats = ['M!/d!/yyyy'];
 
-    $scope.popup1 = {
-      opened: false
-    };
-
-    $scope.popup2 = {
+    
+    $scope.popupAceptacion = {
       opened: false
     };
     
-    $scope.popup3 = {
-      opened: false
-    };
-    
-    $scope.popupResolucion = {
-      opened: false
-    };
-    
-    $scope.popupContrato = {
+    $scope.popupFin = {
       opened: false
     };
 

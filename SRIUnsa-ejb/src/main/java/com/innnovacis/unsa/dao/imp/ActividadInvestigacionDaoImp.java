@@ -29,6 +29,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     public SRIActividadInvestigacion  Insert(SRIActividadInvestigacion entidad) {
         try {
             entidad.setDFechaCreacion(new Date());
+            entidad.setDFechaModificacion(new Date());
             em.persist(entidad);
         } catch(Exception ex) {
             throw ex;

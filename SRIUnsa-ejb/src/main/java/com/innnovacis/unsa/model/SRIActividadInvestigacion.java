@@ -80,27 +80,20 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     @Column(name = "descripcionactividad")
     private String SDescripcionActividad;
     
-    @Column(name = "avance")
-    private int NAvance;
-    
     @Column(name = "fecharegistro")
     private Date DFechaRegistro;
     
-    @Column(name = "fechainicio")
-    private Date DFechaInicio;
+    @Column(name = "fechaaceptacion")
+    private Date DFechaAceptacion;
     
     @Column(name = "fechafin")
     private Date DFechaFin;
-    
     
     @Column(name = "iddirector")
     private int NIdDirector;
     
     @Column(name = "nombreasesorado")
     private String SNombreAsesorado;
-    
-    @Column(name = "cuiasesorado")
-    private String SCuiAsesorado;
     
     @Column(name = "lineainvestigacion")
     private String SLineaInvestigacion;
@@ -111,78 +104,15 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     @Column(name = "numerocontrato")
     private String SNumeroContrato;
     
-    @Column(name = "montofinanciamiento")
-    private String SMontoFinanciamiento;
+    @Column(name = "plazoejecucion")
+    private String SPlazoEjecucion;
     
-    @Column(name = "tipomoneda")
-    private String STipoMoneda;
-
-    public int getNIdDirector() {
-        return NIdDirector;
-    }
-
-    public void setNIdDirector(int NIdDirector) {
-        this.NIdDirector = NIdDirector;
-    }
-
-    public String getSTipoMoneda() {
-        return STipoMoneda;
-    }
-
-    public void setSTipoMoneda(String STipoMoneda) {
-        this.STipoMoneda = STipoMoneda;
-    }
-
-    public String getSNombreAsesorado() {
-        return SNombreAsesorado;
-    }
-
-    public void setSNombreAsesorado(String SNombreAsesorado) {
-        this.SNombreAsesorado = SNombreAsesorado;
-    }
-
-    public String getSCuiAsesorado() {
-        return SCuiAsesorado;
-    }
-
-    public void setSCuiAsesorado(String SCuiAsesorado) {
-        this.SCuiAsesorado = SCuiAsesorado;
-    }
-
-    public String getSLineaInvestigacion() {
-        return SLineaInvestigacion;
-    }
-
-    public void setSLineaInvestigacion(String SLineaInvestigacion) {
-        this.SLineaInvestigacion = SLineaInvestigacion;
-    }
-
-    public String getSNombreCurso() {
-        return SNombreCurso;
-    }
-
-    public void setSNombreCurso(String SNombreCurso) {
-        this.SNombreCurso = SNombreCurso;
-    }
-
-    public String getSNumeroContrato() {
-        return SNumeroContrato;
-    }
-
-    public void setSNumeroContrato(String SNumeroContrato) {
-        this.SNumeroContrato = SNumeroContrato;
-    }
-
-    public String getSMontoFinanciamiento() {
-        return SMontoFinanciamiento;
-    }
-
-    public void setSMontoFinanciamiento(String SMontoFinanciamiento) {
-        this.SMontoFinanciamiento = SMontoFinanciamiento;
-    }
+    @Column(name = "codigo")
+    private String SCodigo;
     
-    
-    
+    @Column(name = "nombrepublicacion")
+    private String SNombrePublicacion;
+
     public int getNIdActividadInvestigacion() {
         return NIdActividadInvestigacion;
     }
@@ -197,6 +127,14 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
 
     public void setNIdTipoActividadInvestigacion(int NIdTipoActividadInvestigacion) {
         this.NIdTipoActividadInvestigacion = NIdTipoActividadInvestigacion;
+    }
+
+    public int getNIdResponsable() {
+        return NIdResponsable;
+    }
+
+    public void setNIdResponsable(int NIdResponsable) {
+        this.NIdResponsable = NIdResponsable;
     }
 
     public int getNHoras() {
@@ -311,22 +249,6 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
         this.SDescripcionActividad = SDescripcionActividad;
     }
 
-    public int getNIdResponsable() {
-        return NIdResponsable;
-    }
-
-    public void setNIdResponsable(int NIdResponsable) {
-        this.NIdResponsable = NIdResponsable;
-    }
-
-    public int getNAvance() {
-        return NAvance;
-    }
-
-    public void setNAvance(int NAvance) {
-        this.NAvance = NAvance;
-    }
-
     public Date getDFechaRegistro() {
         return DFechaRegistro;
     }
@@ -335,12 +257,12 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
         this.DFechaRegistro = DFechaRegistro;
     }
 
-    public Date getDFechaInicio() {
-        return DFechaInicio;
+    public Date getDFechaAceptacion() {
+        return DFechaAceptacion;
     }
 
-    public void setDFechaInicio(Date DFechaInicio) {
-        this.DFechaInicio = DFechaInicio;
+    public void setDFechaAceptacion(Date DFechaAceptacion) {
+        this.DFechaAceptacion = DFechaAceptacion;
     }
 
     public Date getDFechaFin() {
@@ -351,5 +273,70 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
         this.DFechaFin = DFechaFin;
     }
 
+    public int getNIdDirector() {
+        return NIdDirector;
+    }
+
+    public void setNIdDirector(int NIdDirector) {
+        this.NIdDirector = NIdDirector;
+    }
+
+    public String getSNombreAsesorado() {
+        return SNombreAsesorado;
+    }
+
+    public void setSNombreAsesorado(String SNombreAsesorado) {
+        this.SNombreAsesorado = SNombreAsesorado;
+    }
+
+    public String getSLineaInvestigacion() {
+        return SLineaInvestigacion;
+    }
+
+    public void setSLineaInvestigacion(String SLineaInvestigacion) {
+        this.SLineaInvestigacion = SLineaInvestigacion;
+    }
+
+    public String getSNombreCurso() {
+        return SNombreCurso;
+    }
+
+    public void setSNombreCurso(String SNombreCurso) {
+        this.SNombreCurso = SNombreCurso;
+    }
+
+    public String getSNumeroContrato() {
+        return SNumeroContrato;
+    }
+
+    public void setSNumeroContrato(String SNumeroContrato) {
+        this.SNumeroContrato = SNumeroContrato;
+    }
+
+    public String getSPlazoEjecucion() {
+        return SPlazoEjecucion;
+    }
+
+    public void setSPlazoEjecucion(String SPlazoEjecucion) {
+        this.SPlazoEjecucion = SPlazoEjecucion;
+    }
+
+    public String getSCodigo() {
+        return SCodigo;
+    }
+
+    public void setSCodigo(String SCodigo) {
+        this.SCodigo = SCodigo;
+    }
+
+    public String getSNombrePublicacion() {
+        return SNombrePublicacion;
+    }
+
+    public void setSNombrePublicacion(String SNombrePublicacion) {
+        this.SNombrePublicacion = SNombrePublicacion;
+    }
+    
+    
 }
 
