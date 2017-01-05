@@ -674,6 +674,9 @@
     $scope.openFin = function() {
       $scope.popupFin.opened = true;
     };
+    $scope.openRegistro = function() {
+      $scope.popupRegistro.opened = true;
+    };
 
     $scope.setDate = function(year, month, day) {
       $scope.dtRegistro = new Date(year, month, day);
@@ -689,6 +692,10 @@
     };
     
     $scope.popupFin = {
+      opened: false
+    };
+    
+    $scope.popupRegistro = {
       opened: false
     };
 

@@ -148,10 +148,10 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         $scope.loader = true;
         var actividadGeneral = {
             idUsuario : $scope.sharedService.idUsuario,
-            idFlujoActorOrigen : SRIUnsaConfig.DIDE,
+            idFlujoActorOrigen : SRIUnsaConfig.DIUN,
             idEstado : SRIUnsaConfig.REVISADO,
             idPlanificacion : -1,
-            codigoActor : SRIUnsaConfig.codeDIDE,
+            codigoActor : SRIUnsaConfig.codeDIUN,
             actividadInvestigacion : {
                 nidActividadInvestigacion : $scope.idActividad
             }
