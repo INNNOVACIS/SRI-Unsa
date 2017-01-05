@@ -13,7 +13,7 @@
                             <div class="col-md-6" >
                                 <div class="form-group">
                                     <label class="control-label col-md-4" >Director de Unidad : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" style="">{{ director.snombre + " " + director.sapellido}}</label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ director.snombre + ' ' + director.sapellido }}</label>
 <!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.directorValidacion.$invalid && submitted }">
                                         <input name="directorValidacion" type="text" ng-model="director" uib-typeahead='opt as (opt.snombre + " " + opt.sapellido ) for opt in personas | filter:$viewValue | limitTo:8' class="form-control" style="background-color:#f0f0f0;" required>
                                         <p ng-show="actividadForm.directorValidacion.$invalid && submitted" class="help-block">El Director de Unidad es Requerido.</p>

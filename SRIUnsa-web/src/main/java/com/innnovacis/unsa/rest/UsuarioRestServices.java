@@ -272,25 +272,25 @@ public class UsuarioRestServices {
     }
     
     @GET
-    @Path("GetUsuarioHome/{id:[0-9][0-9]*}")
+    @Path("GetUsuarioHome/{idUsuario:[0-9][0-9]*}/{idUsuarioDirector:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetUsuarioHome(@PathParam("id") int id) {
+    public Response GetUsuarioHome(@PathParam("idUsuario") int idUsuario, @PathParam("idUsuarioDirector") int idUsuarioDirector) {
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
-        SRIUsuarioHome body = null;
+        List<SRIUsuarioHome> body = null;
         try {
-            body = usuarioBusiness.GetUsuarioHome(id);
+            body = usuarioBusiness.GetUsuarioHome(idUsuario, idUsuarioDirector);
             respuesta.put("body", body);
             if (body == null) {
                 builder = Response.status(Response.Status.NOT_FOUND).entity(respuesta);
-                log.log(Level.INFO, "getUsuarioById - Nulo : {0}");
+                log.log(Level.INFO, "GetUsuarioHome - Nulo : {0}");
             } else {
                 builder = Response.status(Response.Status.OK).entity(respuesta);
-                log.log(Level.INFO, "getUsuarioById - Success : {0}", body.toString());
+                log.log(Level.INFO, "GetUsuarioHome - Success : {0}", body.toString());
             }
         } catch(Exception ex) {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
-            log.log(Level.INFO, "GetUsuarioById - Error : {0}", ex.getMessage());
+            log.log(Level.INFO, "GetUsuarioHome - Error : {0}", ex.getMessage());
         }
         return builder.build();
     }

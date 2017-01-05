@@ -13,7 +13,6 @@ import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioHome;
 import com.innnovacis.unsa.util.SRIUsuarioLogin;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
-import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -43,5 +42,5 @@ public interface IUsuarioDao {
     
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos();
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad);
-    SRIUsuarioHome GetUsuarioHome(int idUsuario);
+    List<SRIUsuarioHome> GetUsuarioHome(int idUsuario, int idUsuarioDirector);
 }

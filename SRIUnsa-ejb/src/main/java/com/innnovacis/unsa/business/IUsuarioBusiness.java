@@ -46,6 +46,6 @@ public interface IUsuarioBusiness {
     
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos();
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad);
-    SRIUsuarioHome GetUsuarioHome(int idUsuario);
+    List<SRIUsuarioHome> GetUsuarioHome(int idUsuario, int idUsuarioDirector);
     
 }

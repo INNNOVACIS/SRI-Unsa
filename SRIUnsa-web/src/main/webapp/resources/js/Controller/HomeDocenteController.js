@@ -45,6 +45,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     var GetUsuarioHomeSuccess = function(response){
         $log.debug("GetUsuarioHome - Success");
         console.log("Respuesta :: ", response);
+        
         sessvars.usuarioHome = response.body;
         $scope.sharedService.usuarioHome = response.body;
     };
@@ -59,8 +60,8 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     $scope.GetTipoInvestigaciones = function(){
         TipoInvestigacionService.getInvestigaciones().then(GetTipoInvestigacionesSuccess, GetTipoInvestigacionesError);
     };
-    $scope.GetUsuarioHome = function(idUsuario){
-        UsuariosService.GetUsuarioHome(idUsuario).then(GetUsuarioHomeSuccess, GetUsuarioHomeError);
+    $scope.GetUsuarioHome = function(idUsuario, idUsuarioDirector){
+        UsuariosService.GetUsuarioHome(idUsuario, idUsuarioDirector).then(GetUsuarioHomeSuccess, GetUsuarioHomeError);
     };
  
     $scope.goHome = function(tipoInvestigacion){
@@ -80,7 +81,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
                 $scope.semestre = value;
             }
         });
-        $scope.getActividades();
+         $scope.getActividades();
     };
     /**************** PAGINACION *****************/
     
@@ -118,11 +119,20 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         ActividadesGeneradasService.GetActividadesGeneradas(objPagina).then(GetActividadesGeneradasSuccess, GetActividadesGeneradasError);
     };
     
+    
+    /***************************** VERIFICA SI INGRESO COMO DIRECTOR UNIDAD O COMO DOCENTE *******************************/
+    
     if($scope.sharedService.idUsuarioRegistrar === -1){
-        console.log("Vicerector o Director de Unidad :: ", $scope.sharedService.idUsuarioRegistrar);
+        console.log("Ingreso como Docente :: ", $scope.sharedService.idUsuarioRegistrar);
+        $scope.sharedService.idDocente = $scope.sharedService.usuarioLogin.idUsuario;
+        $scope.sharedService.docente = {};
+        $scope.sharedService.docente.nidUsuario = $scope.sharedService.idDocente;
+        $scope.sharedService.docente.snombre = "";
+        $scope.sharedService.docente.sapellido = "";
+        $scope.GetUsuarioHome($scope.sharedService.idDocente, 0);
     } else {
-        console.log("Docente a Registrar :: ", $scope.sharedService.idUsuarioRegistrar);
-        $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar);
+        console.log("Ingreso como director unidad :: ", $scope.sharedService.idUsuarioRegistrar);
+        $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, $scope.sharedService.usuarioLogin.idUsuario);
     }
     
     $scope.getSemestres();

@@ -111,20 +111,20 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
         angular.forEach(actores, function(value, key){
             if(value.scodigo === "DOCE" && rango === 0){
                 location = "/homedocente";
-                sessvars.idUsuarioRegistrar = $scope.sharedService.usuarioLogin.idUsuario,
+                sessvars.idUsuarioRegistrar = -1,
                 $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
             }
             if(value.scodigo === "DIUN" && rango === 0){
                 rango = 1;
                 location = "/homeDirectorUnidad";
-                sessvars.idUsuarioRegistrar = -1,
-                $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
+//                sessvars.idUsuarioRegistrar = -1,
+//                $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
             }
             if(value.scodigo === "VICE"){
                 rango = 2;
                 location = "/homeVicerector";
-                sessvars.idUsuarioRegistrar = -1,
-                $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
+//                sessvars.idUsuarioRegistrar = -1,
+//                $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
             }
         });
         return location;

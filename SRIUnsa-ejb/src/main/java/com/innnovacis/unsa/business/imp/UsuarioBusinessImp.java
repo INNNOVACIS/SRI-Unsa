@@ -309,10 +309,10 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
     }
 
     @Override
-    public SRIUsuarioHome GetUsuarioHome(int idUsuario) {
-        SRIUsuarioHome respuesta = null;
+    public List<SRIUsuarioHome> GetUsuarioHome(int idUsuario, int idUsuarioDirector) {
+        List<SRIUsuarioHome> respuesta = null;
         try{
-            respuesta = usuarioDao.GetUsuarioHome(idUsuario);
+            respuesta = usuarioDao.GetUsuarioHome(idUsuario, idUsuarioDirector);
         }
         catch(Exception ex){
             throw ex;

@@ -1,4 +1,4 @@
-    investigacionApp.controller('HomeController',['$log', '$scope', '$location', 'SharedService', 'SRIUnsaConfig',
+        investigacionApp.controller('HomeController',['$log', '$scope', '$location', 'SharedService', 'SRIUnsaConfig',
     'HomeService', 'TipoInvestigacionService', 'SemestreService', 'TipoAsesoriaService', 'TipoProduccionService',
     'EstructuraAreaInvestigacionService', 'FondoConcursableService', 'TipoNivelService', 'EstructuraOrganizacionService',
     'ActividadesGeneradasService', 'PlantillaDocumentoService', 'FileUploader', '$sce', 
@@ -27,12 +27,13 @@
     
 //    $scope.responsable = $scope.sharedService.docente.snombre + " " + $scope.sharedService.docente.sapellido;
     
-    $scope.facultad.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome.nombreFacultad;
-    $scope.departamento.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome.nombreDepartamento;
-    $scope.director.snombre = $scope.sharedService.usuarioHome.nombreDirector;
-    $scope.director.sapellido = $scope.sharedService.usuarioHome.apellidoDirector;
-    $scope.director.nidPersona = $scope.sharedService.usuarioHome.idPersonaDirector;
-    $scope.responsable = $scope.sharedService.usuarioHome.nombre + " " + $scope.sharedService.usuarioHome.apellido;
+    $scope.facultad.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome[0].nombreFacultad;
+    $scope.departamento.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome[0].nombreDepartamento;
+    $scope.director.nidPersona = $scope.sharedService.usuarioHome[0].idPersonaDirector;
+    $scope.responsable = $scope.sharedService.usuarioHome[0].nombre + " " + $scope.sharedService.usuarioHome[0].apellido;
+    $scope.directores = $scope.sharedService.usuarioHome;
+    $scope.director.snombre = $scope.sharedService.usuarioHome[0].nombreDirector;
+    $scope.director.sapellido = $scope.sharedService.usuarioHome[0].apellidoDirector;
 
     console.log("USUARIOHOME :: ", $scope.sharedService.usuarioHome);
 
@@ -282,7 +283,7 @@
             $scope.loader = true;
             $scope.sharedService.scrollTop();
             var actividadGeneral = {
-                idUsuario : $scope.sharedService.docente.nidUsuario, //$scope.sharedService.idUsuario = id del Usuario que hace el Registro
+                idUsuario : $scope.sharedService.docente !== undefined ? $scope.sharedService.docente.nidUsuario : $scope.sharedService.usuarioLogin.idUsuario,
                 idFlujoActorOrigen : SRIUnsaConfig.DOCE,
                 idEstado : SRIUnsaConfig.CREADO,
                 idPlanificacion : -1,
@@ -290,7 +291,7 @@
                 colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
                 plantillaDocumentoActividad : getValoresPlantilla(),
                 actividadInvestigacion : {
-                    nidResponsable : $scope.sharedService.docente.nidPersona ,//$scope.responsable.nidPersona,
+                    nidResponsable : $scope.sharedService.docente ? $scope.sharedService.docente.nidPersona : $scope.sharedService.usuarioLogin.idPersona,
                     nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
                     nhoras : $scope.duracionInvestigacion,
                     sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,

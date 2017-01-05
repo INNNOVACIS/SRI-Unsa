@@ -158,13 +158,13 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
             return deferred.promise;
 	};
         
-        this.GetUsuarioHome = function(idUsuario) {
+        this.GetUsuarioHome = function(idUsuario, idUsuarioDirector) {
             $log.debug("Usuario Service - GetUsuarioHome");
 
             var deferred = $q.defer();
             $http({
                     method : 'GET',
-                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetUsuarioHome/' + idUsuario
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetUsuarioHome/' + idUsuario + '/' +idUsuarioDirector
             }).success(function(response) {
                     deferred.resolve(response);
             }).error(function(response) {			
