@@ -14,7 +14,7 @@
                                 <option></option>
                             </select>
                         </div>
-                        <label class="control-label col-md-2">Facultad</label>
+<!--                        <label class="control-label col-md-2">Facultad</label>
                         <div class="col-md-4">
                             <select ng-model="facultad"                
                                 ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
@@ -25,7 +25,7 @@
                                 ng-init="facultad=''">
                                 <option></option>
                             </select>
-                        </div>
+                        </div>-->
                         <label class="control-label col-md-2">Departamento</label>
                         <div class="col-md-4">
                             <select  ng-model="departamento"
@@ -35,17 +35,6 @@
                                 ng-required="true"
                                 style="margin:2px;"
                                 ng-init="departamento=''">
-                                <option></option>
-                            </select> 
-                        </div>
-                        <label class="control-label col-md-2">Escuela</label>
-                        <div class="col-md-4">
-                            <select  ng-model="escuela"
-                                ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
-                                class="form-control" 
-                                ng-required="true"
-                                style="margin:2px;"
-                                ng-init="escuela=''">
                                 <option></option>
                             </select> 
                         </div>
@@ -64,7 +53,7 @@
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-primary" ng-click="filtrar()" >
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"> Filtrar</span>
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filtrar
                         </button> 
                     </div>
 
@@ -100,11 +89,6 @@
                                         Facultad
                                         <span ng-show="sortType === 'facultad' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'facultad' && sortReverse" class="fa fa-caret-up"></span>
-                                    </th>
-                                    <th ng-click="sortType = 'escuela'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                        Escuela
-                                        <span ng-show="sortType === 'escuela' && !sortReverse" class="fa fa-caret-down"></span>
-                                        <span ng-show="sortType === 'escuela' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
                                     <th ng-click="sortType = 'departamento'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Departamento
@@ -160,11 +144,6 @@
                                     </th>
                                     
                                     <th>Fondo</th>
-                                    <th ng-click="sortType = 'horas'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                        Duración
-                                        <span ng-show="sortType === 'horas' && !sortReverse" class="fa fa-caret-down"></span>
-                                        <span ng-show="sortType === 'horas' && sortReverse" class="fa fa-caret-up"></span>
-                                    </th>
                                     <th width="6%">Archivos</th>
                                     <th width="8%">Acción</th>
                                 </tr>
@@ -173,20 +152,15 @@
                                 <tr ng-repeat="actividadPendiente in actividadesPendientes | orderBy:sortType:sortReverse" class="table-overflow">
                                     <td >{{ actividadPendiente.id }}</td>
                                     <td >{{ actividadPendiente.facultad }}</td>
-                                    <td >{{ actividadPendiente.escuela }}</td>
                                     <td >{{ actividadPendiente.departamento }}</td>   
                                     <td >{{ actividadPendiente.semestre }}</td>
                                     <td >{{ actividadPendiente.nombreactividad }}</td>
                                     <td >{{ actividadPendiente.tipoactividad }}</td>
-                                    
-                                      
                                     <td >{{ actividadPendiente.fechacreacion }}</td>
                                     <td >{{ actividadPendiente.ultimafecha }}</td>
                                     <td >{{ actividadPendiente.ultimoaprobador }}</td>
                                     <td >{{ actividadPendiente.pendiente }}</td>
-                                    
-                                        <td >{{ actividadPendiente.fondoconcursable }}</td>
-                                    <td >{{ actividadPendiente.horas }}</td>
+                                    <td >{{ actividadPendiente.fondoconcursable }}</td>                                    
                                     <td >{{ actividadPendiente.cantidad }}</td>
                                     <td nowrap>
                                         <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadPendiente)" src="resources/images/iconos/ver.png">

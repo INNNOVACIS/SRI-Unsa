@@ -200,7 +200,7 @@ investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', 
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
-    $scope.getAreaInvestigaciones();
+//    $scope.getAreaInvestigaciones();
  
     $scope.getActividades();
     

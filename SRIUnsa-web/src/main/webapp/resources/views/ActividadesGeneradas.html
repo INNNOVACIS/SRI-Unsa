@@ -16,20 +16,6 @@
                                         <option></option>
                                     </select>
                                 </div>
-                                <label class="control-label col-md-2">Facultad</label>
-                                <div class="col-md-4">
-                                    <select ng-model="facultad"                
-                                        ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
-                                        class="form-control"
-                                        ng-change="facultadChange()"
-                                        ng-required="true"
-                                        style="margin:2px;"
-                                        ng-init="facultad=''">
-                                        <option></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label col-md-2">Departamento</label>
                                 <div class="col-md-4">
                                     <select  ng-model="departamento"
@@ -42,42 +28,29 @@
                                         <option></option>
                                     </select> 
                                 </div>
-                                <label class="control-label col-md-2">Escuela</label>
+<!--                                <label class="control-label col-md-2">Facultad</label>
                                 <div class="col-md-4">
-                                    <select  ng-model="escuela"
-                                        ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
-                                        class="form-control" 
+                                    <select ng-model="facultad"                
+                                        ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
+                                        class="form-control"
+                                        ng-change="facultadChange()"
                                         ng-required="true"
                                         style="margin:2px;"
-                                        ng-init="escuela=''">
+                                        ng-init="facultad=''">
                                         <option></option>
-                                    </select> 
-                                </div>
+                                    </select>
+                                </div>-->
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Semestre</label>
                                 <div class="col-md-4">
-                                    <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
+                                    <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres">
                                         <option></option>
                                     </select>
                                 </div>
-                                <label class="control-label col-md-2"> Fondo Concursable</label>
+                                <label class="control-label col-md-2">Fuente de Financiamiento</label>
                                 <div class="col-md-4">
-                                    <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
-                                        <option></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Responsable</label>
-                                <div class="col-md-4">
-                                    <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
-                                        <option></option>
-                                    </select>
-                                </div>
-                                <label class="control-label col-md-2"> Parametro</label>
-                                <div class="col-md-4">
-                                    <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
+                                    <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos">
                                         <option></option>
                                     </select>
                                 </div>
@@ -117,39 +90,36 @@
                                         <span ng-show="sortType === 'id' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'id' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
+                                    
                                     <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Facultad
                                         <span ng-show="sortType === 'facultad' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'facultad' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-                                    <th ng-click="sortType = 'escuela'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                        Escuela
-                                        <span ng-show="sortType === 'escuela' && !sortReverse" class="fa fa-caret-down"></span>
-                                        <span ng-show="sortType === 'escuela' && sortReverse" class="fa fa-caret-up"></span>
-                                    </th>
+                                    
                                     <th ng-click="sortType = 'departamento'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Departamento
                                         <span ng-show="sortType === 'departamento' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'departamento' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
+                                    
                                     <th ng-click="sortType = 'semestre'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Semestre
                                         <span ng-show="sortType === 'semestre' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'semestre' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-    <!--                                <th>Nombre del Proyecto</th>-->
+
                                     <th ng-click="sortType = 'nombreactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Nombre del Proyecto
                                         <span ng-show="sortType === 'nombreactividad' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'nombreactividad' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
+                                    
                                     <th ng-click="sortType = 'tipoactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Tipo
                                         <span ng-show="sortType === 'tipoactividad' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'tipoactividad' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-                                    
-                                    
                                     
                                      <th ng-click="sortType = 'fechacreacion'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Fecha Creación
@@ -157,14 +127,11 @@
                                         <span ng-show="sortType === 'fechacreacion' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
                                     
-                                    
                                      <th ng-click="sortType = 'ultimafecha'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Fecha Ultima Revisión
                                         <span ng-show="sortType === 'ultimafecha' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'ultimafecha' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-                                    
-                                    
                                     
                                      <th ng-click="sortType = 'ultimoaprobador'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Ultima Revisión
@@ -172,21 +139,18 @@
                                         <span ng-show="sortType === 'ultimoaprobador' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
                                     
-                                    
-                                    
                                      <th ng-click="sortType = 'pendiente'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Pendiente
                                         <span ng-show="sortType === 'pendiente' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'pendiente' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
                                     
-                                    
-                                    <th>Fondo</th>
-                                    <th ng-click="sortType = 'horas'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                        Duración
-                                        <span ng-show="sortType === 'horas' && !sortReverse" class="fa fa-caret-down"></span>
-                                        <span ng-show="sortType === 'horas' && sortReverse" class="fa fa-caret-up"></span>
+                                    <th ng-click="sortType = 'fondo'; sortReverse = !sortReverse" style='cursor: pointer'>
+                                        Fondo
+                                        <span ng-show="sortType === 'fondo' && !sortReverse" class="fa fa-caret-down"></span>
+                                        <span ng-show="sortType === 'fondo' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
+                                    
                                     <th width="6%">Archivos</th>
                                     <th width="8%">Acción</th>
                                 </tr>
@@ -195,20 +159,15 @@
                                 <tr ng-repeat="actividadGenerada in actividadesGeneradas | orderBy:sortType:sortReverse" class="table-overflow">
                                     <td >{{ actividadGenerada.id }}</td>
                                     <td >{{ actividadGenerada.facultad }}</td>
-                                    <td >{{ actividadGenerada.escuela }}</td>
                                     <td >{{ actividadGenerada.departamento }}</td>   
                                     <td >{{ actividadGenerada.semestre }}</td>
                                     <td ><strong>{{ actividadGenerada.nombreactividad }}</strong></td>
                                     <td >{{ actividadGenerada.tipoactividad }}</td>
-                                    
                                     <td >{{ actividadGenerada.fechacreacion }}</td>
                                     <td >{{ actividadGenerada.ultimafecha }}</td>
                                     <td >{{ actividadGenerada.ultimoaprobador }}</td>
                                     <td >{{ actividadGenerada.pendiente }}</td>
-                                    
-                                    
                                     <td >{{ actividadGenerada.fondoconcursable }}</td>
-                                    <td >{{ actividadGenerada.horas }}</td>
                                     <td >{{ actividadGenerada.cantidad }}</td>
                                     <td nowrap>
                                         <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/ver.png">

@@ -25,9 +25,9 @@
                                     <label class="control-label col-md-4">Fecha Registro</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-model="fechaRegistro" is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                            <input type="text" class="form-control" uib-datepicker-popup datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-model="fechaRegistro" is-open="popupRegistro.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="open3()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                <button type="button" class="btn btn-default" ng-click="openRegistro()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
                                         </p>
                                     </div>
@@ -511,7 +511,7 @@
 
 <div ng-class="{'SRI-modal-open': modal.open, 'SRI-modal-close': modal.close}" >
     <div class="SRI-modal">
-        <a ng-click="openCloseModal(false, true)" class="SRIModal-cerrar" >Cerrar</a>
+<!--        <a ng-click="openCloseModal(false, true)" class="SRIModal-cerrar" >Cerrar</a>-->
         <div>
             <h3 style="margin-top: 10px; margin-bottom: 5px;">Registro Correcto!</h3>
             <hr/>
