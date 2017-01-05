@@ -1,4 +1,4 @@
-    investigacionApp.controller('HomeController',['$log', '$scope', '$location', 'SharedService', 'SRIUnsaConfig',
+        investigacionApp.controller('HomeController',['$log', '$scope', '$location', 'SharedService', 'SRIUnsaConfig',
     'HomeService', 'TipoInvestigacionService', 'SemestreService', 'TipoAsesoriaService', 'TipoProduccionService',
     'EstructuraAreaInvestigacionService', 'FondoConcursableService', 'TipoNivelService', 'EstructuraOrganizacionService',
     'ActividadesGeneradasService', 'PlantillaDocumentoService', 'FileUploader', '$sce', 
@@ -283,7 +283,7 @@
             $scope.loader = true;
             $scope.sharedService.scrollTop();
             var actividadGeneral = {
-                idUsuario : $scope.sharedService.docente.nidUsuario, //$scope.sharedService.idUsuario = id del Usuario que hace el Registro
+                idUsuario : $scope.sharedService.docente !== undefined ? $scope.sharedService.docente.nidUsuario : $scope.sharedService.usuarioLogin.idUsuario,
                 idFlujoActorOrigen : SRIUnsaConfig.DOCE,
                 idEstado : SRIUnsaConfig.CREADO,
                 idPlanificacion : -1,
@@ -291,7 +291,7 @@
                 colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
                 plantillaDocumentoActividad : getValoresPlantilla(),
                 actividadInvestigacion : {
-                    nidResponsable : $scope.sharedService.docente.nidPersona ,//$scope.responsable.nidPersona,
+                    nidResponsable : $scope.sharedService.docente ? $scope.sharedService.docente.nidPersona : $scope.sharedService.usuarioLogin.idPersona,
                     nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
                     nhoras : $scope.duracionInvestigacion,
                     sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,

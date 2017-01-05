@@ -125,6 +125,10 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     if($scope.sharedService.idUsuarioRegistrar === -1){
         console.log("Ingreso como Docente :: ", $scope.sharedService.idUsuarioRegistrar);
         $scope.sharedService.idDocente = $scope.sharedService.usuarioLogin.idUsuario;
+        $scope.sharedService.docente = {};
+        $scope.sharedService.docente.nidUsuario = $scope.sharedService.idDocente;
+        $scope.sharedService.docente.snombre = "";
+        $scope.sharedService.docente.sapellido = "";
         $scope.GetUsuarioHome($scope.sharedService.idDocente, 0);
     } else {
         console.log("Ingreso como director unidad :: ", $scope.sharedService.idUsuarioRegistrar);
