@@ -1,4 +1,6 @@
-investigacionApp.controller('UsuarioRolController', function($log, $scope, UsuarioRolService, RolService, UsuariosService,
+investigacionApp.controller('UsuarioRolController',['$log', '$scope', 'UsuarioRolService', 'RolService', 'UsuariosService',
+        'SharedService', 
+function($log, $scope, UsuarioRolService, RolService, UsuariosService,
         SharedService) {
 
     $scope.sharedService = SharedService;
@@ -134,4 +136,4 @@ investigacionApp.controller('UsuarioRolController', function($log, $scope, Usuar
     $scope.getRoles();
     $scope.getUsuariosRolByPagina();
  
-});
+}]);

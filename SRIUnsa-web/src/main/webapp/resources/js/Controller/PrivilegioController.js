@@ -1,4 +1,5 @@
-investigacionApp.controller('PrivilegioController', function($log, $scope, ngToast, PrivilegioService, SharedService) {
+investigacionApp.controller('PrivilegioController',['$log', '$scope', 'ngToast', 'PrivilegioService', 'SharedService', 
+function($log, $scope, ngToast, PrivilegioService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.privilegios = [];
@@ -165,4 +166,4 @@ investigacionApp.controller('PrivilegioController', function($log, $scope, ngToa
     };
     
     $scope.getPrivilegiosByPagina();
-});
+}]);

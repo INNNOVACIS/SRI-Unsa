@@ -1,4 +1,6 @@
-investigacionApp.controller('HomeDocenteController', function($log, $scope, $location,  TipoInvestigacionService, SharedService,
+investigacionApp.controller('HomeDocenteController',['$log', '$scope', '$location',  'TipoInvestigacionService', 'SharedService',
+    'ActividadesGeneradasService', 'SRIUnsaConfig', 'SemestreService', 'UsuariosService', 
+function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     ActividadesGeneradasService, SRIUnsaConfig, SemestreService, UsuariosService) {
 
     $scope.sharedService = SharedService;
@@ -125,4 +127,4 @@ investigacionApp.controller('HomeDocenteController', function($log, $scope, $loc
     
     $scope.getSemestres();
     $scope.GetTipoInvestigaciones();
-});
+}]);

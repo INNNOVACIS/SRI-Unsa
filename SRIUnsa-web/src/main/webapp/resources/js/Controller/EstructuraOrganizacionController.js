@@ -1,4 +1,5 @@
-investigacionApp.controller('EstructuraOrganizacionController', function($log, $scope, $location, $rootScope, $filter, 
+investigacionApp.controller('EstructuraOrganizacionController',['$log', '$scope', '$location', '$rootScope', '$filter', 
+    'EstructuraOrganizacionService', 'TipoNivelService', 'SharedService', function($log, $scope, $location, $rootScope, $filter, 
     EstructuraOrganizacionService, TipoNivelService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -198,4 +199,4 @@ investigacionApp.controller('EstructuraOrganizacionController', function($log, $
     
     $scope.getEstructuraOrganizaciones();
     $scope.getEstructuraOrganizacionByPagina();
-});
+}]);

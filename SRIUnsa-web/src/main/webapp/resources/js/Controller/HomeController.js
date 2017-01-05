@@ -1,4 +1,8 @@
-    investigacionApp.controller('HomeController', function($log, $scope, $location, SharedService, SRIUnsaConfig,
+    investigacionApp.controller('HomeController',['$log', '$scope', '$location', 'SharedService', 'SRIUnsaConfig',
+    'HomeService', 'TipoInvestigacionService', 'SemestreService', 'TipoAsesoriaService', 'TipoProduccionService',
+    'EstructuraAreaInvestigacionService', 'FondoConcursableService', 'TipoNivelService', 'EstructuraOrganizacionService',
+    'ActividadesGeneradasService', 'PlantillaDocumentoService', 'FileUploader', '$sce', 
+    function($log, $scope, $location, SharedService, SRIUnsaConfig,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService,
     EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService,
     ActividadesGeneradasService, PlantillaDocumentoService, FileUploader, $sce) {
@@ -702,4 +706,4 @@
         return '';
     }
 
-});
+}]);

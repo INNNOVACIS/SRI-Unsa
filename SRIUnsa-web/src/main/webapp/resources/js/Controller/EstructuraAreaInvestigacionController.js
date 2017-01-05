@@ -1,4 +1,5 @@
-investigacionApp.controller('EstructuraAreaInvestigacionController', function($log, $scope, $location, $rootScope, $filter, 
+investigacionApp.controller('EstructuraAreaInvestigacionController',['$log', '$scope', '$location', '$rootScope', '$filter', 
+    'EstructuraAreaInvestigacionService', 'SharedService', function($log, $scope, $location, $rootScope, $filter, 
     EstructuraAreaInvestigacionService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -214,4 +215,4 @@ investigacionApp.controller('EstructuraAreaInvestigacionController', function($l
     
     $scope.getAreaInvestigaciones();
     $scope.getAreaInvestigacionByPagina();
-});
+}]);

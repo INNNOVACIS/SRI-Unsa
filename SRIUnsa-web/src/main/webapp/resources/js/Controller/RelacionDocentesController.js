@@ -1,4 +1,6 @@
-investigacionApp.controller('RelacionDocentesController', function($log, $scope, SharedService, FondoConcursableService, 
+investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
+    'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'TipoNivelService', 'EstructuraOrganizacionService',
+    'RelacionDocentesService', 'SRIUnsaConfig', function($log, $scope, SharedService, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService,
     RelacionDocentesService, SRIUnsaConfig) {	
     
@@ -193,4 +195,4 @@ investigacionApp.controller('RelacionDocentesController', function($log, $scope,
     $scope.getAreaInvestigaciones();
     $scope.GetActividadesByDocente();
     
-});
+}]);

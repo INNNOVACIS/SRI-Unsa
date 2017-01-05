@@ -1,4 +1,5 @@
-investigacionApp.controller('TipoProduccionController', function($log, $scope, ngToast, TipoProduccionService, SharedService) {
+investigacionApp.controller('TipoProduccionController',['$log', '$scope', 'ngToast', 'TipoProduccionService', 'SharedService', 
+function($log, $scope, ngToast, TipoProduccionService, SharedService) {
         
     $scope.sharedService = SharedService;
     $scope.tipoProducciones = [];
@@ -159,4 +160,4 @@ investigacionApp.controller('TipoProduccionController', function($log, $scope, n
     };
     
     $scope.getTipoProduccionByPagina();
-});
+}]);

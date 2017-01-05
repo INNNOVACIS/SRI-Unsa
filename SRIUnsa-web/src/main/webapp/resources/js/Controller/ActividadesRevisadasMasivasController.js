@@ -1,4 +1,6 @@
-investigacionApp.controller('ActividadesRevisadasMasivasController', function($log, $scope, $location, ActividadesGeneradasService, 
+investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$scope', '$location', 'ActividadesGeneradasService', 
+    'SemestreService', 'TipoInvestigacionService', 'FondoConcursableService', 'TipoNivelService', 'EstructuraOrganizacionService', 'SharedService',
+    'SRIUnsaConfig', 'UsuarioFlujoService', 'ActividadesRevisadasMasivasService' ,function($log, $scope, $location, ActividadesGeneradasService, 
     SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, SharedService,
     SRIUnsaConfig, UsuarioFlujoService, ActividadesRevisadasMasivasService ) {
 
@@ -308,4 +310,4 @@ investigacionApp.controller('ActividadesRevisadasMasivasController', function($l
         ActividadesRevisadasMasivasService.GetDetalleMasiva(paginaDetalle).then(GetDetalleMasivaSuccess, GetDetalleMasivaError);
     };
 
-});
+}]);

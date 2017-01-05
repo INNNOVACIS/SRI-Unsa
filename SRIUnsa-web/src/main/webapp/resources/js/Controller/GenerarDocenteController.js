@@ -1,4 +1,4 @@
-investigacionApp.controller('GenerarDocenteController', function($scope) {
+investigacionApp.controller('GenerarDocenteController',['$scope', function($scope) {
 	
 	$scope.actividadesInvestigacion = [
 		'Investigación Formativa',
@@ -28,4 +28,4 @@ investigacionApp.controller('GenerarDocenteController', function($scope) {
 			}
 		}  
 	}
-});
+}]);

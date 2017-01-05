@@ -1,4 +1,5 @@
-investigacionApp.controller('HeaderController', function($scope, $sce, $location, SharedService) {
+investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', 'SharedService', 
+function($scope, $sce, $location, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.isActivo = "Actividades de Investigacion";
@@ -61,4 +62,4 @@ investigacionApp.controller('HeaderController', function($scope, $sce, $location
     };
     
 
-});
+}]);

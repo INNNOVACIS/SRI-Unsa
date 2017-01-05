@@ -1,4 +1,5 @@
-investigacionApp.controller('HomeVicerectorController', function($log, $scope, UsuariosService, $location, 
+investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'UsuariosService', '$location', 
+    'SharedService', 'HomeVicerectorService',function($log, $scope, UsuariosService, $location, 
     SharedService, HomeVicerectorService) {
 
     $scope.sharedService = SharedService;
@@ -160,4 +161,4 @@ investigacionApp.controller('HomeVicerectorController', function($log, $scope, U
     $scope.GetTotalDocentesActivosInactivos();
     $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion); //filtrar por actividad no filtra tipoActividad = 0
     $scope.GetTotalActividadesByTipoActividad();
-});
+}]);

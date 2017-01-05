@@ -1,4 +1,6 @@
-investigacionApp.controller('TipoAsesoriaController', function($log, $scope, ngToast, $location, $rootScope, $filter, 
+investigacionApp.controller('TipoAsesoriaController',['$log', '$scope', 'ngToast', '$location', '$rootScope', '$filter', 
+    'TipoAsesoriaService', 'SharedService', 
+function($log, $scope, ngToast, $location, $rootScope, $filter, 
     TipoAsesoriaService, SharedService) {
 
     $scope.sharedService = SharedService;
@@ -163,4 +165,4 @@ investigacionApp.controller('TipoAsesoriaController', function($log, $scope, ngT
     };
     
     $scope.getTipoAsesoriaByPagina();
-});
+}]);

@@ -1,4 +1,5 @@
-investigacionApp.controller('UsuariosController', function($log, $scope, UsuariosService, EstructuraOrganizacionService, SharedService) {
+investigacionApp.controller('UsuariosController',['$log', '$scope', 'UsuariosService', 'EstructuraOrganizacionService', 'SharedService', 
+function($log, $scope, UsuariosService, EstructuraOrganizacionService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
@@ -169,4 +170,4 @@ investigacionApp.controller('UsuariosController', function($log, $scope, Usuario
     $scope.getEstructuraOrganizaciones();
     $scope.getUsuariosByPagina();
  
-});
+}]);

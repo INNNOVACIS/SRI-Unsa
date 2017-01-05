@@ -1,4 +1,5 @@
-investigacionApp.controller('RolController', function($log, $scope, ngToast, RolService, SharedService) {
+investigacionApp.controller('RolController',['$log', '$scope', 'ngToast', 'RolService', 'SharedService', 
+function($log, $scope, ngToast, RolService, SharedService) {
 
     $scope.sharedService = SharedService;
     $scope.roles = [];
@@ -160,4 +161,4 @@ investigacionApp.controller('RolController', function($log, $scope, ngToast, Rol
     };
     
     $scope.getRolesByPagina();
-});
+}]);
