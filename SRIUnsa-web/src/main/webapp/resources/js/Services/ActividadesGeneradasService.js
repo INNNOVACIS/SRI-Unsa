@@ -9,7 +9,8 @@ investigacionApp.service("ActividadesGeneradasService", function(SRIUnsaConfig, 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/listarActividadGenerada',
+            //url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/listarActividadGenerada',
+            url : 'generadorpdfs/descargarPdf',
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			
@@ -55,7 +56,8 @@ investigacionApp.service("ActividadesGeneradasService", function(SRIUnsaConfig, 
         var deferred = $q.defer();
         $http({
             method : 'POST',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada',
+            //url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/descargarPdf',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/generadorpdfs/descargarPdf',
             data : request
         }).success(function(response) {
             deferred.resolve(response);

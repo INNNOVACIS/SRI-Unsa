@@ -6,16 +6,22 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
-import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -56,9 +62,10 @@ public class ActividadInvestigacionGeneradaRestService {
         return builder.build();
     }
     
-    @POST
+    /*@POST
     @Path("/descargarPdf")
     public void descargarPdf(SRIPaginacion entidad)  {
+        System.out.println("Empezando descarga de PDF...");
         GeneratePdf pdfEjemplo = new GeneratePdf();        
         try {
             pdfEjemplo.generarPdfEjemplo();
@@ -68,5 +75,6 @@ public class ActividadInvestigacionGeneradaRestService {
         }catch(DocumentException ex2) {
             log.log(Level.INFO, "Error generacion documento : {0}", ex2.getMessage());
         }
-    }
+    }*/
+    
 }
