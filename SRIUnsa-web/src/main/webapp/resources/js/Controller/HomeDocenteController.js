@@ -81,7 +81,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
                 $scope.semestre = value;
             }
         });
-        $scope.getActividades();
+         $scope.getActividades();
     };
     /**************** PAGINACION *****************/
     
@@ -124,7 +124,8 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     
     if($scope.sharedService.idUsuarioRegistrar === -1){
         console.log("Ingreso como Docente :: ", $scope.sharedService.idUsuarioRegistrar);
-        $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, 0);
+        $scope.sharedService.idDocente = $scope.sharedService.usuarioLogin.idUsuario;
+        $scope.GetUsuarioHome($scope.sharedService.idDocente, 0);
     } else {
         console.log("Ingreso como director unidad :: ", $scope.sharedService.idUsuarioRegistrar);
         $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, $scope.sharedService.usuarioLogin.idUsuario);
