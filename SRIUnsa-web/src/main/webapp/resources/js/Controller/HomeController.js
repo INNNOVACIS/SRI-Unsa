@@ -291,7 +291,7 @@
                 colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
                 plantillaDocumentoActividad : getValoresPlantilla(),
                 actividadInvestigacion : {
-                    nidResponsable : $scope.sharedService.docente ? $scope.sharedService.docente.nidPersona : $scope.sharedService.usuarioLogin.idPersona,
+                    nidResponsable : $scope.sharedService.docente !== undefined  ? $scope.sharedService.docente.nidPersona : $scope.sharedService.usuarioLogin.idPersona,
                     nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
                     nhoras : $scope.duracionInvestigacion,
                     sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,
