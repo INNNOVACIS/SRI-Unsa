@@ -98,7 +98,6 @@
                                             <th ># </th>
                                             <th>Facultad</th>
                                             <th>Departamento</th>
-                                            <th>Escuela</th>
                                             <th>Nombres</th>
                                             <th>Email</th>
                                             <th ng-show="currentTipo != '0'"  width="25%">Tipo Actividad</th>
@@ -110,14 +109,13 @@
                                             <td class="SRI-Width">{{ $index + row}}</td>
                                             <td>{{ user.sfacultad }}</td>
                                             <td>{{ user.sdepartamento }}</td>
-                                            <td>{{ user.sescuela }}</td>
                                             <td>{{ user.snombre + " " + user.sapellido }} </td>
                                             <td>{{ user.semail }}</td>
                                             <td ng-show="currentTipo != '0'">{{ user.snombreActividadInvestigacion }}</td>
                                             <td nowrap>
                                                 <img ng-if="user.ncolor == '0' " style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/rojo.png">
-            <!--                                    <img ng-if="user.nidUsuario == '7' || user.nidUsuario == '3' || user.nidUsuario == '2' " style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/verde.png">-->
-                                                <img ng-if="user.ncolor != '0' " style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/verde.png">
+                                                <img ng-if="user.ncolor == '1' " style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/amarillo.png">
+                                                <img ng-if="user.ncolor == '2' " style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/verde.png">
                                             </td>
                                         </tr>
                                     </tbody>

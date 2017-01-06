@@ -153,7 +153,8 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
             idPlanificacion : -1,
             codigoActor : SRIUnsaConfig.codeDIUN,
             actividadInvestigacion : {
-                nidActividadInvestigacion : $scope.idActividad
+                nidActividadInvestigacion : $scope.idActividad,
+                suserCreacion : $scope.actividadGeneradaVista.suserCreacion
             }
         };
         ActividadesPendientesService.AprobarActividad(actividadGeneral).then(AprobarActividadSuccess, AprobarActividadError);

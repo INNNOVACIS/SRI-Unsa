@@ -394,7 +394,8 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
             procesoFlujo.setNIdArista(flujoArista.getNIdArista());
             procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
-            procesoFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+            procesoFlujo.setSUserCreacion(entidad.getActividadInvestigacion().getSUserCreacion());
+            procesoFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
             procesoFlujo.setSEstado("A");
             procesoFlujo = procesoFlujoDao.Insert(procesoFlujo);
             
