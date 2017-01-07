@@ -499,7 +499,6 @@
         $scope.tipoProduccion = {};
         $scope.fondo = {};
         $scope.tipoAsesoria = {};
-        $scope.semestre = {};
         $scope.escuela = {};
         $scope.areaInvestigacion = {};
         $scope.subAreaInvestigacion = {};
