@@ -401,7 +401,7 @@
                                                     <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
     <!--                                                    <p>Número de Archivos: {{ uploader.queue.length }}</p>-->
                                                 </div>
-                                                <div class="col-md-10">
+                                                <div class="col-md-9">
                                                     <table class="table" style="margin-bottom:0;">
                                                         <thead>
                                                             <tr>
@@ -445,6 +445,11 @@
                                                     <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
                                                         <span class="glyphicon glyphicon-trash"></span> Eliminar todo
                                                     </button>-->
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button type="button" class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#visualizacion">
+                                                        <span class="glyphicon glyphicon-question-sign"></span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -587,3 +592,18 @@
     </div>
 </div>
 
+<div id="visualizacion" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img style="width: 500px; height: auto;" alt="Brand" src="resources/images/resolucion.jpg">
+            </div>
+            <div class="modal-footer">                  
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

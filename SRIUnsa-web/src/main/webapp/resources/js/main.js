@@ -3,6 +3,7 @@ var investigacionApp = angular.module('investigacionApp', [
         'ngAnimate',
         'ngSanitize',
         'ngToast',
+        'ngStorage',
 	'ui.bootstrap',
 	'angularFileUpload'
 ]);
