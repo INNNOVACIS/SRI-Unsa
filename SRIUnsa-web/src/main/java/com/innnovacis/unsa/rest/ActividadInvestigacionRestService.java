@@ -99,7 +99,7 @@ public class ActividadInvestigacionRestService {
             }
         } catch(Exception ex) {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
-            log.log(Level.INFO, "ActividadInvestigacionDelete - Error : {0}", ex.getMessage());
+            log.log(Level.INFO, "getActividadInvestigacionById - Error : {0}", ex.getMessage());
         }
         return builder.build();
     }

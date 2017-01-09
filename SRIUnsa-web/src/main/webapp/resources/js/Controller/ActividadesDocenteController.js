@@ -1,5 +1,4 @@
-investigacionApp.controller('ActividadesDocenteController'
-    ['$log', '$scope', '$location',  'TipoInvestigacionService', 'SharedService',
+investigacionApp.controller('ActividadesDocenteController',['$log', '$scope', '$location',  'TipoInvestigacionService', 'SharedService',
     'ActividadesGeneradasService', 'SRIUnsaConfig', 'SemestreService'
     ,function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     ActividadesGeneradasService, SRIUnsaConfig, SemestreService) {

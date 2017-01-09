@@ -83,6 +83,12 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         });
          $scope.getActividades();
     };
+    
+    $scope.verActividadById = function(actividadGenerada){
+        $scope.sharedService.scrollTop();
+        $scope.loader = true;
+        $location.path("/actividad/Generadas/" + actividadGenerada.idactividadinvestigacion);
+    };
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];

@@ -1,10 +1,10 @@
         investigacionApp.controller('HomeController',['$log', '$scope', '$location', 'SharedService', 'SRIUnsaConfig',
     'HomeService', 'TipoInvestigacionService', 'SemestreService', 'TipoAsesoriaService', 'TipoProduccionService',
-    'EstructuraAreaInvestigacionService', 'FondoConcursableService', 'TipoNivelService', 'EstructuraOrganizacionService',
+    'EstructuraAreaInvestigacionService', 'FondoConcursableService', 'TipoInvestigadorService',
     'ActividadesGeneradasService', 'PlantillaDocumentoService', 'FileUploader', '$sce', 
     function($log, $scope, $location, SharedService, SRIUnsaConfig,
     HomeService, TipoInvestigacionService, SemestreService, TipoAsesoriaService, TipoProduccionService,
-    EstructuraAreaInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService,
+    EstructuraAreaInvestigacionService, FondoConcursableService, TipoInvestigadorService,
     ActividadesGeneradasService, PlantillaDocumentoService, FileUploader, $sce) {
     
     $scope.sharedService = SharedService;
@@ -176,6 +176,16 @@
         console.log("Respuesta :: ", response);
     };
     
+    var GetTipoInvestigadorSuccess = function(response){
+        $log.debug("GetTipoInvestigador - Success");
+        console.log("Respuesta :: ", response);
+        $scope.tipoInvestigadores = response;
+    };
+    var GetTipoInvestigadorError = function(response){
+        $log.debug("GetTipoInvestigador - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     /***************** Servicios ******************/
     
     $scope.GetTipoInvestigaciones = function(){
@@ -195,6 +205,9 @@
     };
     $scope.GetTipoProducciones = function(){
         TipoProduccionService.getListaTipoProduccion().then(GetTipoProduccionesSuccess, GetTipoProduccionesError);
+    };
+    $scope.GetTipoInvestigador = function(){
+        TipoInvestigadorService.GetTipoInvestigador().then(GetTipoInvestigadorSuccess, GetTipoInvestigadorError);
     };
 
     $scope.AgregarColaborador = function(){
@@ -415,6 +428,7 @@
     $scope.GetFondos();
     $scope.GetTipoAsesorias();
     $scope.GetTipoProducciones();
+    $scope.GetTipoInvestigador();
     
     /*********** Funciones Utilitarias ************/
     

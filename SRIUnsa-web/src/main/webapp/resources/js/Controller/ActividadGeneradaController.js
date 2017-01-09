@@ -28,34 +28,35 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     }
     if($scope.sharedService.locationHome === "/homeVicerector"){
         $scope.vicerector = true;
-//        $scope.generado = false;
     }
     
-    /******************* Servicios Callback *******************/
+    /******************* CALLBACK FUNCTION *******************/
     
     var getTipoInvestigacionSuccess = function(response){
         $log.debug("GetTipoInvestigacion - Success");
         console.log("Respuesta :: ", response);
         $scope.tipoInvestigaciones = response;
-        BuscarTipoInvestigacion($scope.actividadGeneradaVista.nidTipoActividadInvestigacion);
+        BuscarTipoInvestigacion($scope.actividadInvestigacion.nidTipoActividadInvestigacion);
     };
     var getTipoInvestigacionError = function(response){
         $log.debug("GetTipoInvestigacion - Error");
         console.log("Respuesta :: ", response);
     };
     
-    var getInvestigacionByIdSuccess = function(response){
-        $log.debug("GetInvestigacionById - Success");
+    var getActividadByIdSuccess = function(response){
+        $log.debug("getActividadById - Success");
         console.log("Respuesta :: ", response);
-        $scope.actividadGeneradaVista = response.body.actividadInvestigacion;
-        $scope.actividadGeneradaVista.dfechaRegistro = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaRegistro);
-        $scope.actividadGeneradaVista.dfechaFin = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaFin);
-        $scope.actividadGeneradaVista.dfechaInicio = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaInicio);
+        $scope.actividadInvestigacion = response.body.actividadInvestigacion;
+        $scope.actividadInvestigacion.dfechaRegistro = $scope.sharedService.dateToString($scope.actividadInvestigacion.dfechaRegistro);
+        $scope.actividadInvestigacion.dfechaFin = $scope.sharedService.dateToString($scope.actividadInvestigacion.dfechaFin);
+        $scope.actividadInvestigacion.dfechaAceptacion = $scope.sharedService.dateToString($scope.actividadInvestigacion.dfechaAceptacion);
         
+        $scope.changeTipoProduccion($scope.actividadInvestigacion.sritipoProduccion);
+        setResponsableDirector(response.body.actividadInvestigacion, response.body.colaboradores);
         $scope.getTipoInvestigacion();
-        $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
+        $scope.getArchivosByIdActividad($scope.actividadInvestigacion.nidActividadInvestigacion);
     };
-    var getInvestigacionByIdError = function(response){
+    var getActividadByIdError = function(response){
         $log.debug("GetInvestigacionById - Error");
         console.log("Respuesta :: ", response);
         $scope.loader = false;  
@@ -124,11 +125,10 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         console.log("Respuesta :: ", response);
     };
     
-    /******************* Servicios *******************/
+    /******************* LLAMADA A LOS SERVICIOS *******************/
 
-    
     $scope.getActividadById = function(idActividad){
-        TipoInvestigacionService.getInvestigacionesById(idActividad).then(getInvestigacionByIdSuccess, getInvestigacionByIdError);
+        TipoInvestigacionService.getInvestigacionesById(idActividad).then(getActividadByIdSuccess, getActividadByIdError);
     };
     
     $scope.getTipoInvestigacion = function(){
@@ -144,6 +144,8 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
     };
     
+    /******************** ACCIONES DEL FORMULARIO APROBAR O RECHAZAR ACTIVIDAD **********************/
+    
     $scope.AprobarActividad = function(){
         $scope.loader = true;
         var actividadGeneral = {
@@ -154,7 +156,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
             codigoActor : SRIUnsaConfig.codeDIUN,
             actividadInvestigacion : {
                 nidActividadInvestigacion : $scope.idActividad,
-                suserCreacion : $scope.actividadGeneradaVista.suserCreacion
+                suserCreacion : $scope.actividadInvestigacion.suserCreacion
             }
         };
         ActividadesPendientesService.AprobarActividad(actividadGeneral).then(AprobarActividadSuccess, AprobarActividadError);
@@ -197,7 +199,18 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         ActividadesGeneradasService.EnviarEmail(actividadGeneral).then(EnviarEmailSuccess, EnviarEmailError);
     };
     
-    /************ Funciones Utilitarias ************/
+    /************ FUNCIONES UTILITARIAS ************/
+
+    var setResponsableDirector = function(actividadInvestigacion, colaboradores){
+        angular.forEach(colaboradores, function(value, key){
+            if(actividadInvestigacion.nidResponsable === value.nidPersona){
+                $scope.responsable = value.snombre + " " + value.sapellido;
+            }
+            if(actividadInvestigacion.nidDirector === value.nidPersona){
+                $scope.director = value.snombre + " " + value.sapellido;
+            }
+        });
+    };
 
     var BuscarTipoInvestigacion = function(idTipoInvestigacion){
         angular.forEach($scope.tipoInvestigaciones, function(valor, key){
@@ -205,6 +218,22 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
                 $scope.nombreTipoActividad = valor.snombreActividadInvestigacion;
             }
         });
+        $scope.changeTipoActividad($scope.nombreTipoActividad);
+    };
+    
+    $scope.changeTipoProduccion = function(tipoProduccion){
+        if(tipoProduccion.toUpperCase() === "ARTICULO"){
+            $scope.showVerificacion = true;
+            $scope.fechaTipoProduccion = "Fecha de Aceptacion";
+            $scope.labelCodigo = "DOI";
+            $scope.labelNombrePublicacion = "Nombre de la Revista";
+        } 
+        if (tipoProduccion.toUpperCase() === "TEXTO" || tipoProduccion.toUpperCase() === "LIBRO" ){
+            $scope.showVerificacion = true;
+            $scope.fechaTipoProduccion = "Fecha de Publicacion";
+            $scope.labelCodigo = "ISBN";
+            $scope.labelNombrePublicacion = "Nombre de la Editorial";
+        }
     };
     
     $scope.irBandejaRevisados = function(){
@@ -212,6 +241,51 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         if($scope.generado && !$scope.vicerector){ $location.path("/actividad/Generadas"); }
         if($scope.revisado){ $location.path("/actividad/Revisadas"); }
         if($scope.vicerector){ $location.path("/actividadesDocente"); }
+    };
+    
+    $scope.changeTipoActividad = function(tipoActividad){
+        $scope.mostrarActividad = [false, false, false, false]; //case1 , case2, case3, case4
+        switch(tipoActividad.toUpperCase()) {
+            case "INVESTIGACION FORMATIVA":
+                $scope.mostrarActividad = [true, false, false, false];
+                $scope.descripcionLabel = "Breve descripcion de la Actividad Formativa";
+                $scope.tituloLabel = "Nombre del curso o Asignatura";
+                $scope.adjuntar = "Adjuntar Sílabo del Curso";
+                $scope.adjuntarOtros = "Adjuntar Resultados de Investigación";
+                $scope.showDescripcion = true;
+                break;
+            case "ASESORIA DE TESIS":
+                $scope.mostrarActividad = [false, true, false, false];
+                $scope.descripcionLabel = "Resumen de Tesis";
+                $scope.tituloLabel = "Titulo de Tesis";
+                $scope.adjuntar = "Adjuntar Resolución";
+                $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)";
+                $scope.showDescripcion = false;
+                break;
+            case "INVESTIGACIONES BASICAS Y APLICADAS":
+                $scope.mostrarActividad = [false, false, true, false];
+                $scope.descripcionLabel = "Resumen de Investigacion";
+                $scope.tituloLabel = "Titulo del Proyecto de Investigacion";
+                $scope.adjuntar = "Adjuntar Contrato";
+                $scope.adjuntarOtros = "Adjuntar Ficha de Postulación";
+                $scope.showDescripcion = true;
+                break;
+            case "PRODUCCION INTELECTUAL":
+                $scope.mostrarActividad = [false, false, false, true];
+                $scope.descripcionLabel = "Resumen";
+                $scope.tituloLabel = "Título";
+                $scope.adjuntar = "Adjuntar Planificación";
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
+                $scope.showDescripcion = false;
+                break;
+            default:
+                $scope.mostrarActividad = [false, false, false, false];
+                $scope.descripcionLabel = "Resumen";
+                $scope.tituloLabel = "Nombre";
+                $scope.adjuntar = "Adjuntar";
+                $scope.adjuntarOtros = "Adjuntar Otros";
+                $scope.showDescripcion = true;
+        };
     };
     
     $scope.getActividadById($scope.idActividad);

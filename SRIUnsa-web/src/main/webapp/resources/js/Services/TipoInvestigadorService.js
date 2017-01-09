@@ -19,8 +19,8 @@ investigacionApp.service("TipoInvestigadorService", function(SRIUnsaConfig, $log
             return deferred.promise;
 	};
         
-	this.getListaTipoInvestigador = function() {
-            $log.debug("Tipo Investigador Service - get Lista TipoInvestigador");
+	this.GetTipoInvestigador = function() {
+            $log.debug("TipoInvestigador Service - GetTipoInvestigador");
 
             var deferred = $q.defer();
             $http({

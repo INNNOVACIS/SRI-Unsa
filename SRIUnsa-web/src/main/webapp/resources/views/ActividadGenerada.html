@@ -6,198 +6,188 @@
     <div class="row">
         <div class="col-lg-12" style="margin-top:20px;">
             <div class="panel panel-primary">
-                <div class="panel-heading">Actividad de Investigaci&oacute;n Generada</div>
+                <div class="panel-heading" style="font-weight: bold; text-transform:uppercase;">{{ nombreTipoActividad }}</div>
                 <div class="panel-body">
-                    <form class="form-horizontal">
+                    
+                    <form name="actividadForm" novalidate class="form-horizontal">
                         <div class="row">
                             <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" >Responsable</label>
-                                    <div class="col-md-8" >
-                                        <input type="text" ng-model="responsable"class="form-control" style="background-color:#f0f0f0;" >
-                                    </div>
+                                    <label class="control-label col-md-4" >Director de Unidad : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ director}}</label>
                                 </div>
                             </div>
                             <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Fecha Registro</label>
-                                    <div class="col-md-8">
-                                        <p class="input-group">
-                                            <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.dfechaRegistro"/>
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
-                                            </span>
-                                        </p>
-                                    </div>
+                                    <label class="control-label col-md-4">Fecha Registro :</label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.dfechaRegistro }}</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" >Nombre Actividad</label>
-                                    <div class="col-md-10" >
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.snombreActividadInvestigacion">
-                                    </div>
+                                    <label class="control-label col-md-4" >Nombre Docente : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ responsable }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Semestre : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" style="text-transform:uppercase;">{{ actividadInvestigacion.ssemestre }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Linea de Investigacion</label>
-                                    <div class="col-md-8" >
-                                        <input readonly="readonly" ng-model="lineaInvestigacion" class="form-control"/>
-                                    </div>
+                                    <label class="control-label col-md-4">Facultad : </label>
+                                    <label class="control-label col-md-8 SRI-text-default">{{ actividadInvestigacion.sfacultad }}</label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Facultad</label>
-                                    <div class="col-md-8">
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sfacultad">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Departamento</label>
-                                    <div class="col-md-8" >
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sdepartamento">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Escuela</label>
-                                    <div class="col-md-8" >
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sescuela">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Fecha Inicio</label>
-                                    <div class="col-md-8">
-                                        <p class="input-group">
-                                            <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.dfechaInicio"/>
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" ><i class="glyphicon glyphicon-calendar"></i></button>
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4"> Avance (%) </label>
-                                    <div class="col-md-8" >
-                                        <input readonly="readonly" class="form-control" type="number" ng-model="actividadGeneradaVista.navance">
-                                    </div>
+                                    <label class="control-label col-md-4">Departamento : </label>
+                                    <label class="control-label col-md-8 SRI-text-default">{{ actividadInvestigacion.sdepartamento }}</label>
                                 </div>
                             </div>
                             
-                            
-                            <div class="col-md-6">
+                            <div class="col-md-6" ng-show="mostrarActividad[2]">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" >Tipo Actividad de Investigaci&oacute;n</label>
-                                    <div class="col-md-8">
-                                        <input readonly="readonly" class="form-control" ng-model="nombreTipoActividad" />
-                                    </div>
+                                    <label class="control-label col-md-4">&Aacute;rea : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.sareaInvestigacion }}</label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Semestre</label>
-                                    <div class="col-md-8" >
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.ssemestre">
-                                    </div>
+                                    <label class="control-label col-md-4"> Sub &aacute;rea : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.ssubAreaInvestigacion }}</label>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Disciplina</label>
-                                    <div class="col-md-8" >
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sdisciplina">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4"> Duraci&oacute;n </label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && submitted }">
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.nhoras">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Fecha Fin</label>
-                                    <div class="col-md-8">
-                                        <p class="input-group">
-                                            <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.dfechaFin" />
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" ><i class="glyphicon glyphicon-calendar"></i></button>
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" ng-show="mostrarActividad[1]">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4"> Tipo de Asesoria</label>
-                                    <div class="col-md-8">
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.stipoAsesoria">
-                                    </div>
+                                    <label class="control-label col-md-4"> Disciplina : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.sdisciplina }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row" ng-show="mostrarActividad[3]">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Tipo de Producción</label>
-                                    <div class="col-md-8">
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sritipoProduccion">
-                                    </div>                                    
+                                    <label class="control-label col-md-4"> Tipo de Producción : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.sritipoProduccion }}</label>                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" >{{ tituloLabel }} : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.snombreActividadInvestigacion }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="mostrarActividad[1]">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Grado : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.stipoAsesoria }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Nombre del Asesorado : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.snombreAsesorado }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">N° de Resoluci&oacute;n : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.snumeroContrato }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha de Resoluci&oacute;n : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.dfechaAceptacion }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row" ng-show="mostrarActividad[2]">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Investigador</label>
-                                    <div class="col-md-8">
-                                        <input readonly="readonly" class="form-control" >
-                                    </div>
+                                    <label class="control-label col-md-4">Rol : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.dfechaRegistro }}</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Fondo Concursable</label>
-                                    <div class="col-md-8">
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.sfondoConcursable">
-                                    </div>
+                                    <label class="control-label col-md-4">Linea de Investigaci&oacute;n : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.slineaInvestigacion }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">N&uacute;mero de Contrato :</label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.snumeroContrato }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fuente de Financiamiento :</label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.sfondoConcursable }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha de Contrato : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.dfechaAceptacion }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha Finalizaci&oacute;n del Proyecto :</label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.dfechaFin }}</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" ng-show="mostrarActividad[0]">
+                        <div class="row" ng-show="mostrarActividad[3]">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Tipo de Labor</label>
-                                    <div class="col-md-8">
-                                        <input readonly="readonly" class="form-control" ng-model="actividadGeneradaVista.stipoLabor">
-                                    </div>                            
+                                    <label class="control-label col-md-4">{{ fechaTipoProduccion }} : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.dfechaAceptacion }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Plazo de Ejecuci&oacute;n : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.splazoEjecucion }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="showVerificacion">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{ labelCodigo }} : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.scodigo }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{ labelNombrePublicacion }} : </label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.snombrePublicacion }}</label>                           
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="form-horizontal" ng-show="showDescripcion">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"> {{ descripcionLabel }} :</label>
+                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.sdescripcionActividad }}</label>
                                 </div>
                             </div>
                         </div>
                     </form>
                     
-                    <!-- Formulario Dinamico -->
-                    
-                    <fieldset >
-                        <legend >{{ facultad.snombreEstructuraOrganizacion }}</legend>
-                    </fieldset>
-                    <form class="form-horizontal">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div ng-bind-html="campos" compila-plantilla></div>
-                            </div>
-                        </div>
-                    </form>
-                    
-                    
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2"> Descripción breve del problema</label>
-                                    <div class="col-md-10">
-                                        <textarea readonly="readonly" style="margin:2px;" class="form-control" rows="5" ng-model="actividadGeneradaVista.sdescripcionActividad"></textarea> 
-                                    </div>
                                     <label class="control-label col-md-2"> Archivos adjuntos a la actividad</label>
                                     <div class="col-md-10">
                                         <div class="panel panel-default" >

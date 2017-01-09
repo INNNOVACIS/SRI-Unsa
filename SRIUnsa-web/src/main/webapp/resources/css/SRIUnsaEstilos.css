@@ -2,6 +2,9 @@
 .SRI-Width{
     width: 10px !important;
 }
+.SRI-Width-Column{
+    width: 250px !important;
+}
 /* Barra de Progreso*/
 .SRI-progress{
     height: 40px;

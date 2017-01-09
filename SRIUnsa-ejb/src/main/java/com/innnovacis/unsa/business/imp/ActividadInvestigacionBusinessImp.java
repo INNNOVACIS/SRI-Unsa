@@ -155,14 +155,20 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     public SRIActividadGeneral Get(int idEntidad) {
         SRIActividadGeneral respuesta = new SRIActividadGeneral();
         SRIActividadInvestigacion actividadInvestigacion = null;
-        List<SRIPersona> persona = null;
+        List<SRIPersona> persona = new ArrayList<SRIPersona>();
+        SRIPersona responsable = null;
+        SRIPersona director = null;
         List<SRIPlantillaDocumentoActividad> plantillaDocumentoActividad = null;
         try{
             actividadInvestigacion = actividadInvestigacionDao.GetById(idEntidad);
-            persona = personaDao.GetPersonasByIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+//            persona = personaDao.GetPersonasByIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
+            responsable = personaDao.GetById(actividadInvestigacion.getNIdResponsable());
+            director = personaDao.GetById(actividadInvestigacion.getNIdDirector());
             plantillaDocumentoActividad = plantillaDocumentoActividadDao.GetPlantillaDocumentoActividadByIdActividad(actividadInvestigacion.getNIdActividadInvestigacion());
             
             respuesta.setPlantillaDocumentoActividad(plantillaDocumentoActividad);
+            persona.add(director);
+            persona.add(responsable);
             respuesta.setColaboradores(persona);
             respuesta.setActividadInvestigacion(actividadInvestigacion);
         }

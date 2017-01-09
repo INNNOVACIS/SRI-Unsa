@@ -107,8 +107,8 @@
                                     <tbody>
                                         <tr ng-repeat="user in users" class="table-overflow" ng-click="verDetalleDocente(user)" style='cursor: pointer'>
                                             <td class="SRI-Width">{{ $index + row}}</td>
-                                            <td>{{ user.sfacultad }}</td>
-                                            <td>{{ user.sdepartamento }}</td>
+                                            <td class="SRI-Width-Column">{{ user.sfacultad }}</td>
+                                            <td class="SRI-Width-Column">{{ user.sdepartamento }}</td>
                                             <td>{{ user.snombre + " " + user.sapellido }} </td>
                                             <td>{{ user.semail }}</td>
                                             <td ng-show="currentTipo != '0'">{{ user.snombreActividadInvestigacion }}</td>
