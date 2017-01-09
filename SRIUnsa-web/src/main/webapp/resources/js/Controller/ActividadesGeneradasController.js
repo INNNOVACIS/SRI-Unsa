@@ -7,40 +7,21 @@ investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', 
     $scope.sharedService = SharedService;
     $scope.loader = false;
     $scope.loadTable = false;
+    $scope.departamentos = [];
     
     $scope.sortType     = 'id'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
     
-    /******************* Servicios Callback *******************/
-    
-    var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("GettipoNivel - Success");
-        console.log("Respuesta :: ", response);
-    	$scope.niveles = response;
-        $scope.getEstructuraOrganizaciones();
-    };
-    var getTipoNivelServiceError = function(response){
-     	$log.debug("GetTipoNivel - Error"); 
-        console.log("Respuesta :: ", response);
-    };
+    /******************* Callback Function *******************/
 
     var getEstructuraOrganizacionServiceSuccess = function(response){
     	$log.debug("GetEstructuraOrganizacion - Success");
         console.log("Respuesta :: ", response);
-        angular.forEach(response, function(superior, key) {
-            angular.forEach(response, function(value, key) {
-                if(superior.nidPadre === value.nidEstructuraOrganizacion){
-                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
-                }
-            });
-            angular.forEach($scope.niveles, function(nivel, key) {
-                if(superior.nidTipoNivel === nivel.nidTipoNivel){
-                    
-                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
-                }
-            });
+        angular.forEach(response, function(value, key) {
+            if($scope.sharedService.usuarioLogin.idFacultad === value.nidPadre){
+                $scope.departamentos.push(value);
+            }
         });
-    	$scope.estructuraOrganizaciones = response;
     };
     var getEstructuraOrganizacionServiceError = function(response){
      	$log.debug("GetEstructuraOrganizacion - Error"); 
@@ -108,10 +89,7 @@ investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', 
     };
     
     /******************* Servicios *******************/
-    
-    $scope.getListaTipoNivel = function(){
-      	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
-    };
+
     $scope.getEstructuraOrganizaciones = function(){
       	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
     };   
@@ -126,15 +104,6 @@ investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', 
     };
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
-    };
-
-    
-    $scope.facultadChange = function(){
-        $scope.departamento = {};
-        $scope.escuela = {};
-    };
-    $scope.departamentoChange = function(){
-        $scope.escuela = {};
     };
     
     /**************** PAGINACION *****************/
@@ -195,12 +164,10 @@ investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', 
         }, 500);
     };
      
-    $scope.getListaTipoNivel();
     $scope.getEstructuraOrganizaciones();
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
-//    $scope.getAreaInvestigaciones();
  
     $scope.getActividades();
     

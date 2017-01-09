@@ -5,49 +5,20 @@ investigacionApp.controller('ActividadesPendientesController',['$log', '$scope',
     UsuarioFlujoService ) {
     
     $scope.sharedService = SharedService;
+    $scope.departamentos = [];
     $scope.loader = false;
     $scope.loadTable = false;
     
-    /******************* Servicios Callback *******************/
+    /******************* Callback Function *******************/
     
-    var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("GetTipoNivel - Success");
-    	console.log("Respuesta :: ", response);
-    	$scope.niveles = response;
-        $scope.getEstructuraOrganizaciones();
-    };
-    var getTipoNivelServiceError = function(response){
-     	$log.debug("GetTipoNivel - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("GetTipoNivel - Success");    	
-    	$scope.niveles = response;
-        $scope.getEstructuraOrganizaciones();
-    };
-    var getTipoNivelServiceError = function(response){
-     	$log.debug("GetTipoNivel - Error");
-        console.log("Respuesta :: ", response);
-    };
-
     var getEstructuraOrganizacionServiceSuccess = function(response){
     	$log.debug("GetEstructuraOrganizacion - Success");
         console.log("Respuesta :: ", response);
-        angular.forEach(response, function(superior, key) {
-            angular.forEach(response, function(value, key) {
-                if(superior.nidPadre === value.nidEstructuraOrganizacion){
-                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
-                }
-            });
-            angular.forEach($scope.niveles, function(nivel, key) {
-                if(superior.nidTipoNivel === nivel.nidTipoNivel){
-                    
-                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
-                }
-            });
+        angular.forEach(response, function(value, key) {
+            if($scope.sharedService.usuarioLogin.idFacultad === value.nidPadre){
+                $scope.departamentos.push(value);
+            }
         });
-    	$scope.estructuraOrganizaciones = response;
     };
     var getEstructuraOrganizacionServiceError = function(response){
      	$log.debug("GetEstructuraOrganizacion - Error");
@@ -94,10 +65,6 @@ investigacionApp.controller('ActividadesPendientesController',['$log', '$scope',
     };
     
     /******************* Servicios *******************/
-    
-    $scope.getListaTipoNivel = function(){
-      	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
-    };
 
     $scope.getEstructuraOrganizaciones = function(){
       	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
@@ -120,14 +87,6 @@ investigacionApp.controller('ActividadesPendientesController',['$log', '$scope',
             nidUsuario : $scope.sharedService.idUsuario
         };
         UsuarioFlujoService.CreateAndGetUsuarioFlujo(usuarioFlujo).then(CreateAndGetUsuarioFlujoSuccess, CreateAndGetUsuarioFlujoError);
-    };
-
-    $scope.facultadChange = function(){
-        $scope.departamento = {};
-        $scope.escuela = {};
-    };
-    $scope.departamentoChange = function(){
-        $scope.escuela = {};
     };
     
     /**************** PAGINACION *****************/
@@ -184,10 +143,10 @@ investigacionApp.controller('ActividadesPendientesController',['$log', '$scope',
         }, 500);
     };
     
-    $scope.getListaTipoNivel();
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
+    $scope.getEstructuraOrganizaciones();
     $scope.CrearOrActualizarUsuarioFlujo();
     
     $scope.getActividades();

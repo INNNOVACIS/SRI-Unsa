@@ -17,7 +17,7 @@
                         <label class="control-label col-md-2">Departamento</label>
                         <div class="col-md-4">
                             <select  ng-model="departamento"
-                                ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
+                                ng-options="obj as obj.snombreEstructuraOrganizacion for obj in departamentos "
                                 class="form-control"
                                 ng-change="departamentoChange()"
                                 ng-required="true"
