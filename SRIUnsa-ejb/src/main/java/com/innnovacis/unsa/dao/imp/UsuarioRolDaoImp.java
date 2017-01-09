@@ -26,8 +26,15 @@ public class UsuarioRolDaoImp implements IUsuarioRolDao {
     @Override
     @Transactional
     public SRIUsuarioRol  Insert(SRIUsuarioRol entidad) {
-        entidad.setDFechaCreacion(new Date());
-        em.persist(entidad);
+        SRIUsuarioRol find = em.createNamedQuery("FindByIdUsuarioIdRol", SRIUsuarioRol.class)
+                               .setParameter("idUsuario", entidad.getNIdUsuario())
+                               .setParameter("idRol", entidad.getNIdRol()).getSingleResult();
+        
+        if(find == null){
+            entidad.setDFechaCreacion(new Date());
+            entidad.setDFechaModificacion(new Date());
+            em.persist(entidad);
+        } 
         return entidad;
     }
 
