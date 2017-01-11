@@ -83,10 +83,9 @@ public class ActividadInvestigacionGeneradaRestService {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
             log.log(Level.INFO, "GetActividadesGeneradasHomeDocente - Error : {0}", ex.getMessage());
         }
-        
+
         return builder.build();
     }
-    
 
     //@Produces("application/pdf")
     @POST

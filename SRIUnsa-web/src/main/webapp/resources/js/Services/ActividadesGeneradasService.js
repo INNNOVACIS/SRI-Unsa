@@ -34,6 +34,19 @@ investigacionApp.service("ActividadesGeneradasService", function (SRIUnsaConfig,
         return deferred.promise;
     };
 
+    this.EnviarEmail = function (request) {
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/enviarEmail',
+            data: request
+        }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
     
     this.GetActividadesGeneradasHomeDocente = function(request) {
         $log.debug("ActividadesGeneradasService - GetActividadesGeneradasHomeDocente");
