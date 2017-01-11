@@ -120,9 +120,26 @@
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
-            <version>5.0.6</version>
+            <version>5.5.10</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-pdfa</artifactId>
+            <version>5.5.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-xtra</artifactId>
+            <version>5.5.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf.tool</groupId>
+            <artifactId>xmlworker</artifactId>
+            <version>5.5.10</version>
+        </dependency>
         <!--
         <dependency>
             <groupId>com.samaxes.maven</groupId>
@@ -186,6 +203,11 @@
             </plugin>-->
       
         </plugins>
+        <resources>
+            <resource>
+                <directory>resources</directory>
+            </resource>
+        </resources>
     </build>
 
 </project>
