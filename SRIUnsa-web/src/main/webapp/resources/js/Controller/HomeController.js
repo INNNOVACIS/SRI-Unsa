@@ -331,8 +331,8 @@
                     snombrePublicacion : $scope.nombrePublicacion,
                     scodigo : $scope.codigo,
                     splazoEjecucion : $scope.plazoEjecucion,
-                    suserCreacion : $scope.sharedService.nombreUsuario,
-                    suserModificacion : $scope.sharedService.nombreUsuario,
+                    suserCreacion : $scope.sharedService.usuarioLogin.nombreUsuario,
+                    suserModificacion : $scope.sharedService.usuarioLogin.nombreUsuario,
                     sestado : 'A'
                 }
             };
@@ -356,7 +356,7 @@
 //        $scope.loader = true;
         $scope.sharedService.scrollTop();
         var actividadGeneral = {
-            idUsuario : $scope.sharedService.idUsuario,
+            idUsuario : $scope.sharedService.usuarioLogin.idUsuario,
             idFlujoActorOrigen : SRIUnsaConfig.DOCE,
             idEstado : SRIUnsaConfig.PREVIO,
             idPlanificacion : -1,
@@ -384,7 +384,7 @@
                 dfechaInicio : $scope.fechaInicio,
                 dfechaFin : $scope.fechaFin,
                 sdescripcionActividad : $scope.descripcion,
-                suserCreacion : $scope.sharedService.nombreUsuario,
+                suserCreacion : $scope.sharedService.usuarioLogin.nombreUsuario,
                 sestado : 'A'
             }
         };
@@ -407,7 +407,7 @@
     
     $scope.EnviarEmail = function(idActividadGenerada){   
         var actividadGeneral = {
-            idUsuario : $scope.sharedService.idUsuario,
+            idUsuario : $scope.sharedService.usuarioLogin.idUsuario,
             idFlujoActorOrigen : SRIUnsaConfig.DOCE,
             idEstado : SRIUnsaConfig.CREADO,
             idPlanificacion : -1,

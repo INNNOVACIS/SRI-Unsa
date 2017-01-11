@@ -149,7 +149,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     $scope.AprobarActividad = function(){
         $scope.loader = true;
         var actividadGeneral = {
-            idUsuario : $scope.sharedService.idUsuario,
+            idUsuario : $scope.sharedService.usuarioLogin.idUsuario,
             idFlujoActorOrigen : SRIUnsaConfig.DIUN,
             idEstado : SRIUnsaConfig.REVISADO,
             idPlanificacion : -1,
@@ -186,7 +186,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     
     $scope.EnviarEmail = function(idActividadGenerada){   
         var actividadGeneral = {
-            idUsuario : $scope.sharedService.idUsuario,
+            idUsuario : $scope.sharedService.usuarioLogin.idUsuario,
             idFlujoActorOrigen : SRIUnsaConfig.DIDE,
             idEstado : SRIUnsaConfig.REVISADO,
             idPlanificacion : -1,

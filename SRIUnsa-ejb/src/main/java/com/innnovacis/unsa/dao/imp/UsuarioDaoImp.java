@@ -17,7 +17,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
 import javax.transaction.Transactional;
 
 

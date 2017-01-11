@@ -45,6 +45,12 @@ public class SRIUsuarioLogin implements Serializable{
     
     @Column(name = "nombreRol" )
     private String nombreRol;
+    
+    @Column(name = "nombre" )
+    private String nombre;
+    
+    @Column(name = "apellido" )
+    private String apellido;
 
     public int getIdPersona() {
         return idPersona;
@@ -109,4 +115,21 @@ public class SRIUsuarioLogin implements Serializable{
     public void setNombreRol(String nombreRol) {
         this.nombreRol = nombreRol;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
 }

@@ -1,27 +1,23 @@
-investigacionApp.factory('SharedService', function($location) {
+investigacionApp.factory('SharedService', function($location, $localStorage ) {
 
     return {
-        usuarioLogin : sessvars.usuarioLogin,
-        idUsuarioRegistrar : sessvars.idUsuarioRegistrar,
-        usuarioHome : sessvars.usuarioHome,
+        usuarioLogin : $localStorage.usuarioLogin,
+        userAutenticado : $localStorage.autenticado,
+        privilegios : $localStorage.privilegios,
+        htmlMenu : $localStorage.htmlMenu,
+        stringMenu : $localStorage.stringMenu,
+        menuvertical : $localStorage.menuvertical,
+        crearActividadHome : $localStorage.crearActividadHome,
+        locationHome : $localStorage.locationHome,
+        idUsuarioRegistrar : $localStorage.idUsuarioRegistrar,        
+        docente : $localStorage.docente, //almacena el objeto docente del que se registrara las actividad.
         
-        userAutenticado : sessvars.autenticado,
-        nombreRol : sessvars.nombreRol,
-        nombreUsuario : sessvars.nombreUsuario,
-        idRol : sessvars.idRol,
-        idUsuario : sessvars.idUsuario,
-        idDocente : sessvars.idDocente,
-        idPersona : sessvars.idPersona,
-        privilegios : sessvars.privilegios,
-        htmlMenu : sessvars.htmlMenu,
-        stringMenu : sessvars.stringMenu,
+        usuarioHome : sessvars.usuarioHome,
         htmlMenuVertical : sessvars.htmlMenuVertical,
         stringMenuVertical : sessvars.stringMenuVertical,
-        locationHome : sessvars.locationHome,
-        crearActividadHome : sessvars.crearActividadHome,
         tipoInvestigacion : sessvars.tipoInvestigacion,
-        usuario : sessvars.usuario,
-        docente : sessvars.docente, //almacena el objeto docente del que se registrara las actividad.
+        
+        
         dateToString: function(date){
             var nDate = Number(date); 
             var dDate = new Date(nDate);
@@ -64,7 +60,7 @@ investigacionApp.factory('SharedService', function($location) {
             }
         },
         isAutenticado : function(){
-            return this.nombreUsuario === "" || this.nombreUsuario === undefined ? false : true;
+            return this.usuarioLogin.nombreUsuario === "" || this.usuarioLogin.nombreUsuario === undefined ? false : true;
         },
         isPermitido : function(url){
             var permitido = false;
@@ -80,38 +76,7 @@ investigacionApp.factory('SharedService', function($location) {
             return permitido;
         },
         // Show Menu Vertical
-        vicerector : sessvars.vicerector,
-        homeDocente : sessvars.homeDoce,
-        homeDirector : sessvars.homeDirector,
-        actividadInvestigacion : sessvars.actividadInvestigacion,
-        actividadDocente : sessvars.actividadDocente,
-        actividades : sessvars.actividades,
-        reportes : sessvars.reportes,
-        configuracion : sessvars.configuracion,
-        permisos : sessvars.permisos,
-        generadas : sessvars.generadas,
-        pendientes : sessvars.pendientes,
-        revisadas : sessvars.revisadas,
-        revisadasMasivas : sessvars.revisadasMasivas,
-        relacionDocentes : sessvars.relacionDocentes,
-        archivos : sessvars.archivos,
-        showTipoInvestigacion : sessvars.showTipoInvestigacion,
-        tipoNivel : sessvars.tipoNivel,
-        tipoInvestigador : sessvars.tipoInvestigador,
-        tipoProduccion : sessvars.tipoProduccion,
-        tipoAsesoria : sessvars.tipoAsesoria,
-        semestres : sessvars.semestres,
-        estructuraOrganizacion : sessvars.estructuraOrganizacion,
-        areaInvestigacion : sessvars.areaInvestigacion,
-        flujoArista : sessvars.flujoArista,
-        generarCampos : sessvars.generarCampos,
-        fuenteFinanciamiento : sessvars.fuenteFinanciamiento,
-        usuarios : sessvars.usuarios,
-        roles : sessvars.roles,
-        rolUsuario : sessvars.rolUsuario,
-        privilegio : sessvars.privilegio,
-        actores : sessvars.actores,
-        usuarioActores : sessvars.usuarioActores,    
+        menuvertical : $localStorage.menuvertical,
     };
 });
 

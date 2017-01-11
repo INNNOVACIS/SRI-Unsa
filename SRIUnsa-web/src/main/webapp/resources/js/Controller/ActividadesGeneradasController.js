@@ -152,7 +152,7 @@ investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', 
     
     $scope.getActividades = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
         ActividadesGeneradasService.GetActividadesGeneradas(objPagina).then(GetActividadesGeneradasSuccess, GetActividadesGeneradasError);
     };
@@ -184,7 +184,7 @@ investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', 
     $scope.EnviarEmail = function(actividadGenerada){
         $scope.loader = true;     
         var actividadGeneral = {
-            idUsuario : $scope.sharedService.idUsuario,
+            idUsuario : $scope.sharedService.usuarioLogin.idUsuario,
             idFlujoActorOrigen : SRIUnsaConfig.DOCE,
             idEstado : SRIUnsaConfig.CREADO,
             idPlanificacion : -1,

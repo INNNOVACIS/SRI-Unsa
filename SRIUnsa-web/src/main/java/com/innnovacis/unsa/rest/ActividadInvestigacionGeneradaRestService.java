@@ -55,6 +55,26 @@ public class ActividadInvestigacionGeneradaRestService {
         return builder.build();
     }
 
+    
+    @POST
+    @Path("/GetActividadesGeneradasHomeDocente")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetActividadesGeneradasHomeDocente(SRIPaginacion entidad) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetActividadesGeneradasHomeDocente - Success : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetActividadesGeneradasHomeDocente - Error : {0}", ex.getMessage());
+        }
+
+        return builder.build();
+    }
+
     //@Produces("application/pdf")
     @POST
     @Path("/descargarPdf")

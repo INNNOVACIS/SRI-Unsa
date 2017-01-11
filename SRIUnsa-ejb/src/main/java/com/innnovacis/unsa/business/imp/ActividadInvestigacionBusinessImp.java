@@ -434,6 +434,23 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
     
     @Override
+    public Map<String, Object> GetActividadesGeneradasHomeDocente(SRIPaginacion entidad) {
+        
+        int total = -1;
+        List<SRIActividadGeneralPaginacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            lstActividadGeneral = actividadInvestigacionDao.GetActividadesGeneradasHomeDocente(entidad);
+            total = actividadInvestigacionDao.GetTotalActividadesGeneradasHomeDocente(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+    
+    @Override
     public Map<String, Object> GetActividadesPendientes(SRIPaginacion entidad) {
         
         int total = -1;
