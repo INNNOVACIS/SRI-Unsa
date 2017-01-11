@@ -82,7 +82,7 @@ investigacionApp.controller('ActividadesRevisadasController',['$log', '$scope', 
     $scope.CrearOrActualizarUsuarioFlujo = function(){
         var usuarioFlujo = {
             nidFlujoActor : SRIUnsaConfig.DIDE,
-            nidUsuario : $scope.sharedService.idUsuario
+            nidUsuario : $scope.sharedService.usuarioLogin.idUsuario
         };
         UsuarioFlujoService.CreateAndGetUsuarioFlujo(usuarioFlujo).then(CreateAndGetUsuarioFlujoSuccess, CreateAndGetUsuarioFlujoError);
     };
@@ -130,7 +130,7 @@ investigacionApp.controller('ActividadesRevisadasController',['$log', '$scope', 
     
     $scope.getActividades = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
                           filtro : getFiltros()};
         ActividadesRevisadasService.GetActividadesRevisadas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
     };

@@ -21,40 +21,40 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu"> <!--  ng-bind-html="sharedService.htmlMenuVertical" compila-plantilla  -->
                     <li class="sidebar-search"><a href="{{ sharedService.crearActividadHome }}"><button class="btn btn-primary" type="button"><i class="fa fa-edit fa-fw"></i>  Crear Actividad</button></a></li>
-                    <li ng-show="sharedService.generadas" ><a href="#actividad/Generadas">Actividades Generadas</a></li>
-                    <li ng-show="sharedService.revisadas" ><a href="#actividad/Revisadas">Actividades Revisadas</a></li>
-                    <li ng-show="sharedService.pendientes"><a href="#actividad/Pendientes">Actividades Pendientes</a></li>
+                    <li ng-show="sharedService.menuvertical.generadas" ><a href="#actividad/Generadas">Actividades Generadas</a></li>
+                    <li ng-show="sharedService.menuvertical.revisadas" ><a href="#actividad/Revisadas">Actividades Revisadas</a></li>
+                    <li ng-show="sharedService.menuvertical.pendientes"><a href="#actividad/Pendientes">Actividades Pendientes</a></li>
                     <li >
-                       <a ng-show="sharedService.reportes"><i class="fa fa-files-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
-                       <ul ng-show="sharedService.relacionDocentes" class="nav nav-second-level">
+                       <a ng-show="sharedService.menuvertical.reportes"><i class="fa fa-files-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                       <ul ng-show="sharedService.menuvertical.relacionDocentes" class="nav nav-second-level">
                           <li><a href="#relacionDocentes">Relacion Docentes</a></li>
                        </ul>
                     </li>
                     <li>
-                       <a ng-show="sharedService.configuracion"><i class="fa fa-gear fa-fw"></i> Configuracion<span class="fa arrow"></span></a>
+                       <a ng-show="sharedService.menuvertical.configuracion"><i class="fa fa-gear fa-fw"></i> Configuracion<span class="fa arrow"></span></a>
                        <ul class="nav nav-second-level">
-                          <li ng-show="sharedService.tipoInvestigacion"><a href="#tipoinvestigacion">Tipo de Investigacion</a></li>
-                          <li ng-show="sharedService.tipoNivel"><a href="#tiponivel">Tipo nivel</a></li>
-                          <li ng-show="sharedService.tipoInvestigador"><a href="#tipoinvestigador">Tipo de Investigador</a></li>
-                          <li ng-show="sharedService.tipoProduccion"><a href="#tipoproduccion">Tipo de Produccion</a></li>
-                          <li ng-show="sharedService.tipoAsesoria"><a href="#tipoasesoria">Tipo de Asesoria</a></li>
-                          <li ng-show="sharedService.semestres"><a href="#semestre">Semestres</a></li>
-                          <li ng-show="sharedService.estructuraOrganizacion"><a href="#estructuraorganizacion">Estructura de la Organizacion</a></li>
-                          <li ng-show="sharedService.areaInvestigacion"><a href="#areainvestigacion">Area de investigacion</a></li>
-                          <li ng-show="sharedService.flujoArista"><a href="#flujoarista">Flujo Arista</a></li>
-                          <li ng-show="sharedService.generarCampos"><a href="#generarCampos">Generar Campos</a></li>
-                          <li ng-show="sharedService.fuenteFinanciamiento"><a href=#fondoconcursable">Fuente Financiamiento</a></li>
+                          <li ng-show="sharedService.menuvertical.tipoInvestigacion"><a href="#tipoinvestigacion">Tipo de Investigacion</a></li>
+                          <li ng-show="sharedService.menuvertical.tipoNivel"><a href="#tiponivel">Tipo nivel</a></li>
+                          <li ng-show="sharedService.menuvertical.tipoInvestigador"><a href="#tipoinvestigador">Tipo de Investigador</a></li>
+                          <li ng-show="sharedService.menuvertical.tipoProduccion"><a href="#tipoproduccion">Tipo de Produccion</a></li>
+                          <li ng-show="sharedService.menuvertical.tipoAsesoria"><a href="#tipoasesoria">Tipo de Asesoria</a></li>
+                          <li ng-show="sharedService.menuvertical.semestres"><a href="#semestre">Semestres</a></li>
+                          <li ng-show="sharedService.menuvertical.estructuraOrganizacion"><a href="#estructuraorganizacion">Estructura de la Organizacion</a></li>
+                          <li ng-show="sharedService.menuvertical.areaInvestigacion"><a href="#areainvestigacion">Area de investigacion</a></li>
+                          <li ng-show="sharedService.menuvertical.flujoArista"><a href="#flujoarista">Flujo Arista</a></li>
+                          <li ng-show="sharedService.menuvertical.generarCampos"><a href="#generarCampos">Generar Campos</a></li>
+                          <li ng-show="sharedService.menuvertical.fuenteFinanciamiento"><a href=#fondoconcursable">Fuente Financiamiento</a></li>
                        </ul>
                     </li>
                     <li>
-                       <a ng-show="sharedService.permisos"><i class="fa fa-user fa-fw"></i> Permisos<span class="fa arrow"></span></a>
+                       <a ng-show="sharedService.menuvertical.permisos"><i class="fa fa-user fa-fw"></i> Permisos<span class="fa arrow"></span></a>
                        <ul class="nav nav-second-level">
-                          <li ng-show="sharedService.usuarios"><a href="#usuarios">Usuarios</a></li>
-                          <li ng-show="sharedService.privilegio"><a href="#privilegios">Privilegios</a></li>
-                          <li ng-show="sharedService.roles"><a href="#roles">Roles</a></li>
-                          <li ng-show="sharedService.rolUsuario"><a href="#usuariorol">Rol de Usuario</a></li>
-                          <li ng-show="sharedService.actores"><a href="#flujoactor">Actores</a></li>
-                          <li ng-show="sharedService.usuarioActores"><a href="#usuarioflujo">Usuarios Actores</a></li>
+                          <li ng-show="sharedService.menuvertical.usuarios"><a href="#usuarios">Usuarios</a></li>
+                          <li ng-show="sharedService.menuvertical.privilegio"><a href="#privilegios">Privilegios</a></li>
+                          <li ng-show="sharedService.menuvertical.roles"><a href="#roles">Roles</a></li>
+                          <li ng-show="sharedService.menuvertical.rolUsuario"><a href="#usuariorol">Rol de Usuario</a></li>
+                          <li ng-show="sharedService.menuvertical.actores"><a href="#flujoactor">Actores</a></li>
+                          <li ng-show="sharedService.menuvertical.usuarioActores"><a href="#usuarioflujo">Usuarios Actores</a></li>
                        </ul>
                     </li>
                 </ul>

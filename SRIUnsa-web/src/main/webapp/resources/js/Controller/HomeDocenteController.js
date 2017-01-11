@@ -28,16 +28,16 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         console.log("Respuesta :: ", response);
     };
     
-    var GetActividadesGeneradasSuccess = function(response){
-        $log.debug("GetActividadesGeneradas - Success");
+    var GetActividadesGeneradasHomeDocenteSuccess = function(response){
+        $log.debug("GetActividadesGeneradasHomeDocente - Success");
         console.log("Respuesta :: ", response);
         $scope.actividadesGeneradas = [];
         $scope.actividadesGeneradas = response.lista;
         $scope.total = response.total;
 //        $scope.loadTable = false;
     };
-    var GetActividadesGeneradasError = function(response){
-        $log.debug("GetActividadesGeneradas - Error");
+    var GetActividadesGeneradasHomeDocenteError = function(response){
+        $log.debug("GetActividadesGeneradasHomeDocente - Error");
         console.log("Respuesta :: ", response);
 //        $scope.loadTable = false;
     };
@@ -122,7 +122,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idDocente, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
-        ActividadesGeneradasService.GetActividadesGeneradas(objPagina).then(GetActividadesGeneradasSuccess, GetActividadesGeneradasError);
+        ActividadesGeneradasService.GetActividadesGeneradasHomeDocente(objPagina).then(GetActividadesGeneradasHomeDocenteSuccess, GetActividadesGeneradasHomeDocenteError);
     };
     
     

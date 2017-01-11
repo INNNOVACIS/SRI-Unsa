@@ -1,5 +1,5 @@
-investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', 'SharedService', 
-function($scope, $sce, $location, SharedService) {
+investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', 'SharedService', '$window', '$localStorage',
+function($scope, $sce, $location, SharedService, $window, $localStorage) {
 
     $scope.sharedService = SharedService;
     $scope.isActivo = "Actividades de Investigacion";
@@ -9,12 +9,20 @@ function($scope, $sce, $location, SharedService) {
     $scope.message = $scope.sharedService.nombreUsuario;
 
     $scope.logout = function(){
+        
+        $window.localStorage.clear();
+        $localStorage.usuarioLogin = "";
+        $localStorage.autenticado = false;
+        $scope.sharedService.usuarioLogin.nombreUsuario = "";
+        $scope.sharedService.menuvertical = {};
+        
     	$scope.sharedService.userAutenticado = false;
         $scope.sharedService.nombreUsuario = "";
         $scope.sharedService.nombreRol = "";
         $scope.sharedService.idUsuario = 0;
         $scope.sharedService.idRol = 0;
         
+        sessvars.menuvertical = {};
         sessvars.autenticado = false;
         sessvars.nombreRol = "";
         sessvars.nombreUsuario = "";
