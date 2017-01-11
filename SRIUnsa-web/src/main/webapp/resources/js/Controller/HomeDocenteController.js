@@ -120,7 +120,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     
     $scope.getActividades = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.idDocente, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
         ActividadesGeneradasService.GetActividadesGeneradasHomeDocente(objPagina).then(GetActividadesGeneradasHomeDocenteSuccess, GetActividadesGeneradasHomeDocenteError);
     };
@@ -130,12 +130,13 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     
     if($scope.sharedService.idUsuarioRegistrar === -1){
         console.log("Ingreso como Docente :: ", $scope.sharedService.idUsuarioRegistrar);
-        $scope.sharedService.idDocente = $scope.sharedService.usuarioLogin.idUsuario;
         $scope.sharedService.docente = {};
-        $scope.sharedService.docente.nidUsuario = $scope.sharedService.idDocente;
+        $scope.sharedService.docente.nidUsuario = $scope.sharedService.usuarioLogin.idUsuario;
+//        $scope.sharedService.docente = {};
+//        $scope.sharedService.docente.nidUsuario = $scope.sharedService.idDocente;
         $scope.sharedService.docente.snombre = "";
         $scope.sharedService.docente.sapellido = "";
-        $scope.GetUsuarioHome($scope.sharedService.idDocente, 0);
+        $scope.GetUsuarioHome($scope.sharedService.docente.nidUsuario, 0);
     } else {
         console.log("Ingreso como director unidad :: ", $scope.sharedService.idUsuarioRegistrar);
         $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, $scope.sharedService.usuarioLogin.idUsuario);

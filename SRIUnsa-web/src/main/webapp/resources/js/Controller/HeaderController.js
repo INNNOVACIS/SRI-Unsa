@@ -6,31 +6,42 @@ function($scope, $sce, $location, SharedService, $window, $localStorage) {
     $scope.sharedService.htmlMenu = $sce.trustAsHtml($scope.sharedService.stringMenu);
     $scope.sharedService.htmlMenuVertical = $sce.trustAsHtml($scope.sharedService.stringMenuVertical);
 
-    $scope.message = $scope.sharedService.nombreUsuario;
+    $scope.nombreUsuario = $scope.sharedService.usuarioLogin.nombreUsuario;
 
     $scope.logout = function(){
         
         $window.localStorage.clear();
         $localStorage.usuarioLogin = "";
         $localStorage.autenticado = false;
+        $localStorage.privilegios = "";
+        $localStorage.htmlMenu = "";
+        $localStorage.stringMenu = "";
+        $localStorage.crearActividadHome = "";
+        $localStorage.locationHome = "";
+        $localStorage.idUsuarioRegistrar = "";
+        $localStorage.docente = "";
+        $localStorage.menuvertical = {};
+        
         $scope.sharedService.usuarioLogin.nombreUsuario = "";
+    	$scope.sharedService.userAutenticado = false;
+        $scope.sharedService.privilegios = "";
+        $scope.sharedService.htmlMenu = "";
+        $scope.sharedService.stringMenu = "";
+        $scope.sharedService.crearActividadHome = "";
+        $scope.sharedService.locationHome = "";
+        $scope.sharedService.idUsuarioRegistrar = "";
+        $scope.sharedService.docente = "";
         $scope.sharedService.menuvertical = {};
         
-    	$scope.sharedService.userAutenticado = false;
-        $scope.sharedService.nombreUsuario = "";
-        $scope.sharedService.nombreRol = "";
-        $scope.sharedService.idUsuario = 0;
-        $scope.sharedService.idRol = 0;
-        
-        sessvars.menuvertical = {};
-        sessvars.autenticado = false;
-        sessvars.nombreRol = "";
-        sessvars.nombreUsuario = "";
-        sessvars.idRol = 0;
-        sessvars.idUsuario = 0;
-        sessvars.privilegios = [];
-        sessvars.htmlMenu = null;
-        sessvars.stringMenu = "";
+//        sessvars.menuvertical = {};
+//        sessvars.autenticado = false;
+//        sessvars.nombreRol = "";
+//        sessvars.nombreUsuario = "";
+//        sessvars.idRol = 0;
+//        sessvars.idUsuario = 0;
+//        sessvars.privilegios = [];
+//        sessvars.htmlMenu = null;
+//        sessvars.stringMenu = "";
     	$location.path("/");
     };
     

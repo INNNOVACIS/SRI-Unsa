@@ -121,7 +121,7 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             }
             // Item padre con DropDown
             if(value.nidPadre === 0 && value.surlPrivilegio === null && value.sNombrePrivilegio !== "Permisos"){
-                item = '<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-o fa-fw"></i> ' + value.sNombrePrivilegio + ' <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user">';
+                item = '<li class="dropdown"><a class="dropdown-toggle SRI-Pointer" data-toggle="dropdown"><i class="fa fa-file-o fa-fw"></i> ' + value.sNombrePrivilegio + ' <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user">';
                 angular.forEach(privilegios, function(subValue, key){
                     if(subValue.nidPadre !== 0 &&  subValue.nidPadre === value.nidPrivilegio){
                         subItem = subItem + GetItemHtml(subValue.surlPrivilegio, subValue.sNombrePrivilegio);
@@ -132,7 +132,7 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             }
             menuHorizontal = menuHorizontal + item;
         });
-        menuHorizontal = menuHorizontal + '<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown"   > <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user"><li><a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li> </ul> </li>';
+        menuHorizontal = menuHorizontal + '<li class="dropdown"> <a class="dropdown-toggle SRI-Pointer" data-toggle="dropdown"   > <i class="fa fa-user fa-fw"></i> ' + '{{ sharedService.usuarioLogin.nombre }}' + ' <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user"><li><a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li> </ul> </li>';
         return menuHorizontal;
     };
     
@@ -171,136 +171,136 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
     };
    
     $scope.ShowMenuVertical = function(privilegios){
-        sessvars.menuvertical = {};
+        $localStorage.menuvertical = {};
         $scope.sharedService.menuvertical = {};
         angular.forEach(privilegios, function(value, key){
             switch(value.snombrePrivilegio.toUpperCase()) {
                 case "VICERECTOR":
-                    sessvars.menuvertical.vicerector = true;
+                    $localStorage.menuvertical.vicerector = true;
                     $scope.sharedService.menuvertical.vicerector = true;
                     break;
                 case "HOME DOCENTE":
-                    sessvars.menuvertical.homeDocente = true;
+                    $localStorage.menuvertical.homeDocente = true;
                     $scope.sharedService.menuvertical.homeDocente = true;
                     break;
                 case "HOME DIRECTOR UNIDAD":
-                    sessvars.menuvertical.homeDirector = true;
+                    $localStorage.menuvertical.homeDirector = true;
                     $scope.sharedService.menuvertical.homeDirector = true;
                     break;
                 case "ACTIVIDAD DE INVESTIGACION":
-                    sessvars.actividadInvestigacion = true;
+                    $localStorage.menuvertical.actividadInvestigacion = true;
                     $scope.sharedService.menuvertical.actividadInvestigacion = true;
                     break;
                 case "ACTIVIDAD DOCENTE":
-                    sessvars.menuvertical.actividadDocente = true;
+                    $localStorage.menuvertical.actividadDocente = true;
                     $scope.sharedService.menuvertical.actividadDocente = true;
                     break;
                 case "ACTIVIDADES":
-                    sessvars.menuvertical.actividades = true;
+                    $localStorage.menuvertical.actividades = true;
                     $scope.sharedService.menuvertical.actividades = true;
                     break;
                 case "REPORTES":
-                    sessvars.menuvertical.reportes = true;
+                    $localStorage.menuvertical.reportes = true;
                     $scope.sharedService.menuvertical.reportes = true;
                     break;
                 case "CONFIGURACION":
-                    sessvars.menuvertical.configuracion = true;
+                    $localStorage.menuvertical.configuracion = true;
                     $scope.sharedService.menuvertical.configuracion = true;
                     break;
                 case "PERMISOS":
-                    sessvars.menuvertical.permisos = true;
+                    $localStorage.menuvertical.permisos = true;
                     $scope.sharedService.menuvertical.permisos = true;
                     break;
                 case "GENERADAS":
-                    sessvars.menuvertical.generadas = true;
+                    $localStorage.menuvertical.generadas = true;
                     $scope.sharedService.menuvertical.generadas = true;
                     break;
                 case "PENDIENTES":
-                    sessvars.menuvertical.pendientes = true;
+                    $localStorage.menuvertical.pendientes = true;
                     $scope.sharedService.menuvertical.pendientes = true;
                     break;
                 case "REVISADAS":
-                    sessvars.menuvertical.revisadas = true;
+                    $localStorage.menuvertical.revisadas = true;
                     $scope.sharedService.menuvertical.revisadas = true;
                     break;
                 case "REVISADAS MASIVAS":
-                    sessvars.menuvertical.revisadasMasivas = true;
+                    $localStorage.menuvertical.revisadasMasivas = true;
                     $scope.sharedService.menuvertical.revisadasMasivas = true;
                     break;
                 case "RELACION DOCENTES":
-                    sessvars.menuvertical.relacionDocentes = true;
+                    $localStorage.menuvertical.relacionDocentes = true;
                     $scope.sharedService.menuvertical.relacionDocentes = true;
                     break;
                 case "ARCHIVOS":
-                    sessvars.menuvertical.archivos = true;
+                    $localStorage.menuvertical.archivos = true;
                     $scope.sharedService.menuvertical.archivos = true;
                     break;
                 case "TIPO INVESTIGACION":
-                    sessvars.menuvertical.showTipoInvestigacion = true;
+                    $localStorage.menuvertical.showTipoInvestigacion = true;
                     $scope.sharedService.menuvertical.showTipoInvestigacion = true;
                     break;
                 case "TIPO NIVEL":
-                    sessvars.menuvertical.tipoNivel = true;
+                    $localStorage.menuvertical.tipoNivel = true;
                     $scope.sharedService.menuvertical.tipoNivel = true;
                     break;
                 case "TIPO INVESTIGADOR":
-                    sessvars.menuvertical.tipoInvestigador = true;
+                    $localStorage.menuvertical.tipoInvestigador = true;
                     $scope.sharedService.menuvertical.tipoInvestigador = true;
                     break;
                 case "TIPO DE PRODUCCION":
-                    sessvars.menuvertical.tipoProduccion = true;
+                    $localStorage.menuvertical.tipoProduccion = true;
                     $scope.sharedService.menuvertical.tipoProduccion = true;
                     break;
                 case "TIPO DE ASESORIA":
-                    sessvars.menuvertical.tipoAsesoria = true;
+                    $localStorage.menuvertical.tipoAsesoria = true;
                     $scope.sharedService.menuvertical.tipoAsesoria = true;
                     break;
                 case "SEMESTRES ":
-                    sessvars.menuvertical.semestres = true;
+                    $localStorage.menuvertical.semestres = true;
                     $scope.sharedService.menuvertical.semestres = true;
                     break;
                 case "ESTRUCTURA DE LA ORGANIZACION":
-                    sessvars.menuvertical.estructuraOrganizacion = true;
+                    $localStorage.menuvertical.estructuraOrganizacion = true;
                     $scope.sharedService.menuvertical.estructuraOrganizacion = true;
                     break;
                 case "AREA DE INVESTIGACION":
-                    sessvars.menuvertical.areaInvestigacion = true;
+                    $localStorage.menuvertical.areaInvestigacion = true;
                     $scope.sharedService.menuvertical.areaInvestigacion = true;
                     break;
                 case "FLUJO ARISTA":
-                    sessvars.menuvertical.flujoArista = true;
+                    $localStorage.menuvertical.flujoArista = true;
                     $scope.sharedService.menuvertical.flujoArista = true;
                     break;
                 case "GENERAR CAMPOS":
-                    sessvars.menuvertical.generarCampos = true;
+                    $localStorage.menuvertical.generarCampos = true;
                     $scope.sharedService.menuvertical.generarCampos = true;
                     break;
                 case "FUENTE DE FINANCIAMIENTO":
-                    sessvars.menuvertical.fuenteFinanciamiento = true;
+                    $localStorage.menuvertical.fuenteFinanciamiento = true;
                     $scope.sharedService.menuvertical.fuenteFinanciamiento = true;
                     break;
                 case "USUARIOS":
-                    sessvars.menuvertical.usuarios = true;
+                    $localStorage.menuvertical.usuarios = true;
                     $scope.sharedService.menuvertical.usuarios = true;
                     break;
                 case "ROLES":
-                    sessvars.menuvertical.roles = true;
+                    $localStorage.menuvertical.roles = true;
                     $scope.sharedService.menuvertical.roles = true;
                     break;
                 case "ROL USUARIO":
-                    sessvars.menuvertical.rolUsuario = true;
+                    $localStorage.menuvertical.rolUsuario = true;
                     $scope.sharedService.menuvertical.rolUsuario = true;
                     break;
                 case "PRIVILEGIOS":
-                    sessvars.menuvertical.privilegio = true;
+                    $localStorage.menuvertical.privilegio = true;
                     $scope.sharedService.menuvertical.privilegio = true;
                     break;
                 case "ACTORES":
-                    sessvars.menuvertical.actores = true;
+                    $localStorage.menuvertical.actores = true;
                     $scope.sharedService.menuvertical.actores = true;
                     break;
                 case "USUARIO ACTORES":
-                    sessvars.menuvertical.usuarioActores = true;
+                    $localStorage.menuvertical.usuarioActores = true;
                     $scope.sharedService.menuvertical.usuarioActores = true;
                     break;
                 default:

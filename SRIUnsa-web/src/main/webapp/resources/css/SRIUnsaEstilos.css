@@ -1,4 +1,7 @@
 /*id table*/
+.SRI-Pointer{
+    cursor: pointer;
+}
 .SRI-Width{
     width: 10px !important;
 }

@@ -1,6 +1,6 @@
 investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'UsuariosService', '$location', 
-    'SharedService', 'HomeVicerectorService',function($log, $scope, UsuariosService, $location, 
-    SharedService, HomeVicerectorService) {
+    'SharedService', 'HomeVicerectorService', '$localStorage',function($log, $scope, UsuariosService, $location, 
+    SharedService, HomeVicerectorService, $localStorage) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
@@ -61,10 +61,9 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     
     $scope.verDetalleDocente = function(usuario){
         console.log("USUARIO :: ", usuario);
-        sessvars.docente = usuario;
-        sessvars.idDocente = usuario.nidUsuario;
-        $scope.sharedService.idDocente = sessvars.idDocente;
-        $scope.sharedService.docente = sessvars.docente;
+        $localStorage.docente = usuario;
+        $scope.sharedService.docente = $localStorage.docente;
+        
         $location.path("/actividadesDocente");
     };
     
