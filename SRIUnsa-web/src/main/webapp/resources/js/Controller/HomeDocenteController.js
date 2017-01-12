@@ -132,8 +132,6 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         console.log("Ingreso como Docente :: ", $scope.sharedService.idUsuarioRegistrar);
         $scope.sharedService.docente = {};
         $scope.sharedService.docente.nidUsuario = $scope.sharedService.usuarioLogin.idUsuario;
-//        $scope.sharedService.docente = {};
-//        $scope.sharedService.docente.nidUsuario = $scope.sharedService.idDocente;
         $scope.sharedService.docente.snombre = "";
         $scope.sharedService.docente.sapellido = "";
         $scope.GetUsuarioHome($scope.sharedService.docente.nidUsuario, 0);
@@ -144,4 +142,42 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     
     $scope.getSemestres();
     $scope.GetTipoInvestigaciones();
+    
+    
+    /******************* EXPORTAR ARCHIVOS *****************/
+    
+    var descargarPDFSuccess = function (response){
+        $log.debug("descargarPDF - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarPDFError = function (response){
+        $log.debug("descargarPDF - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var descargarExcelSuccess = function (response){
+        $log.debug("descargarExcel - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarExcelError = function (response){
+        $log.debug("descargarExcel - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.descargarPDF = function(){
+        console.log("Empezando descarga de PDF...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        ActividadesGeneradasService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+    };
+    
+    $scope.descargarExcel = function(){
+        console.log("Empezando descarga de Excel...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        ActividadesGeneradasService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
+    };
+    
 }]);

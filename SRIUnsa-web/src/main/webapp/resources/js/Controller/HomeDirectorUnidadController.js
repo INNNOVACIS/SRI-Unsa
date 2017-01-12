@@ -166,4 +166,41 @@ function($log, $scope, UsuariosService, $location,
     $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0);
     $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad);
     $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad);
+    
+    /******************* EXPORTAR ARCHIVOS *****************/
+    
+    var descargarPDFSuccess = function (response){
+        $log.debug("descargarPDF - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarPDFError = function (response){
+        $log.debug("descargarPDF - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var descargarExcelSuccess = function (response){
+        $log.debug("descargarExcel - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarExcelError = function (response){
+        $log.debug("descargarExcel - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.descargarPDF = function(){
+        console.log("Empezando descarga de PDF...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
+                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+        UsuariosService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+    };
+    
+    $scope.descargarExcel = function(){
+        console.log("Empezando descarga de Excel...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
+                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+        UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
+    };
+    
 }]);

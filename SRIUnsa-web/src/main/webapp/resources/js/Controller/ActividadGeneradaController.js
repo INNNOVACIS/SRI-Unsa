@@ -289,4 +289,40 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     };
     
     $scope.getActividadById($scope.idActividad);
+    
+    /******************* EXPORTAR ARCHIVOS *****************/
+    
+    var descargarPDFSuccess = function (response){
+        $log.debug("descargarPDF - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarPDFError = function (response){
+        $log.debug("descargarPDF - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var descargarExcelSuccess = function (response){
+        $log.debug("descargarExcel - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarExcelError = function (response){
+        $log.debug("descargarExcel - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.descargarPDFById = function(){
+        console.log("Empezando descarga de PDF...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        ActividadesGeneradasService.descargarPDFById(pagina).then(descargarPDFSuccess, descargarPDFError);
+    };
+    
+    $scope.descargarExcelById = function(){
+        console.log("Empezando descarga de Excel...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        ActividadesGeneradasService.descargarExcelById(pagina).then(descargarExcelSuccess, descargarExcelError);
+    };
 }]);

@@ -96,4 +96,5 @@ investigacionApp.service("TipoInvestigacionService", function(SRIUnsaConfig, $lo
 		});
 		return deferred.promise;
 	};
+        
 });
