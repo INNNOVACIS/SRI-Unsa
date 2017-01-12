@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
+import com.innnovacis.unsa.util.GenerateExcel;
 import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacion;
@@ -127,12 +128,24 @@ public class ActividadInvestigacionGeneradaRestService {
         try {
             respuesta = actividadInvestigacionBusiness.GetActividadesGeneradas(entidad);
             
-//            GeneratePdf generadorPDF =  new GeneratePdf();            
-            byte[] blobAsBytes = null;//generadorPDF.getArrayByteFrom(respuesta);
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIActividadGeneralPaginacion> listaObjetos
+                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
+            
+            GenerateExcel generadorExcel =  new GenerateExcel();            
+            byte[] blobAsBytes = generadorExcel.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Actividades de Investigación Generadas",listaObjetosSend);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
-                    .header("content-disposition", "documento.pdf")
+                    .header("content-disposition", "documento.xlsx")
                     .build();
 
         } catch (Exception ex) {
