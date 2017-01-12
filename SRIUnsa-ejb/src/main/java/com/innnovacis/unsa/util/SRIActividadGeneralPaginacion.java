@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -200,6 +201,22 @@ public class SRIActividadGeneralPaginacion implements Serializable {
 
     public void setPendiente(String pendiente) {
         this.pendiente = pendiente;
+    }
+    
+    public ArrayList<String> getArrayDatos() {
+        ArrayList<String> arrayRpta = new ArrayList<String>();
+        arrayRpta.add(this.getFacultad());
+        arrayRpta.add(this.getDepartamento());
+        arrayRpta.add(this.getSemestre());
+        arrayRpta.add(this.getNombreactividad());
+        arrayRpta.add(this.getTipoactividad());
+        arrayRpta.add(this.getFechacreacion());
+        arrayRpta.add(this.getUltimafecha());
+        arrayRpta.add(this.getUltimoaprobador());
+        arrayRpta.add(this.getPendiente());
+        arrayRpta.add(this.getFondoconcursable());
+        
+        return arrayRpta;
     }
     
 }

@@ -84,9 +84,9 @@ public class GeneratePdf {
         return cellte;
     }
 
-    public byte[] getArrayByteFrom(Map<String, Object> respuesta) throws IOException, DocumentException {
-
-        int nroColumnas = 10;
+    public byte[] getArrayByteFrom(Map<String, Object> respuesta, int contador,
+            String[] nombreColumnasCabeceras, String tituloPrincipal,
+            ArrayList<ArrayList<String>> listaObjetosSend) throws IOException, DocumentException {
 
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
         Document documento = new Document(PageSize.A4.rotate());
@@ -106,69 +106,34 @@ public class GeneratePdf {
         documento.add(new Paragraph("--"));
         documento.add(new Paragraph("--"));
         float[] columnWidths = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
-        PdfPTable table = new PdfPTable(10);
+        PdfPTable table = new PdfPTable(contador);
         table.setWidthPercentage(100);
         table.getDefaultCell().setUseAscender(true);
         table.getDefaultCell().setUseDescender(true);
         
         // Creacion de la cabecera principal de la tabla
-        table.addCell(createCellMainHeader("Actividades de Investigación Generadas"));
-
-        String[] nombreColumnas = {"Facultad", "Departamento", "Semestre", "Nombre del proyecto",
-            "Tipo", "Fecha creación", "Fecha última revisión", "Última revisión", "Pendiente", "Fondo"};
-
+        table.addCell(createCellMainHeader(tituloPrincipal));
+        
         // Cabeceras sub principales
-        table.addCell(createCellHeader(nombreColumnas[0]));
-        table.addCell(createCellHeader(nombreColumnas[1]));
-        table.addCell(createCellHeader(nombreColumnas[2]));
-        table.addCell(createCellHeader(nombreColumnas[3]));
-        table.addCell(createCellHeader(nombreColumnas[4]));
-        table.addCell(createCellHeader(nombreColumnas[5]));
-        table.addCell(createCellHeader(nombreColumnas[6]));
-        table.addCell(createCellHeader(nombreColumnas[7]));
-        table.addCell(createCellHeader(nombreColumnas[8]));
-        table.addCell(createCellHeader(nombreColumnas[9]));
+        for(int i = 0 ; i < contador;i++)
+        {
+            table.addCell(createCellHeader(nombreColumnasCabeceras[i]));
+        }
 
         table.setHeaderRows(1);
         table.getDefaultCell().setBackgroundColor(new BaseColor(247, 247, 247));
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
         // Creamos los Items de la tabla
-        ArrayList<SRIActividadGeneralPaginacion> listaObjetos
-                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+        for (int counter = 0; counter < listaObjetosSend.size(); counter++) {
 
-        for (int counter = 0; counter < listaObjetos.size(); counter++) {
-
-            Font ft3 = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, new BaseColor(70, 70, 70));
-
-            ArrayList<PdfPCell> cells = new ArrayList<PdfPCell>();
-            for (int j = 0; j < nroColumnas; j++) {
-                cells.add(createCell());
-            }
-
-            cells.get(0).addElement(new Phrase(listaObjetos.get(counter).getFacultad() == null ? ""
-                    : listaObjetos.get(counter).getFacultad(), ft3));
-            cells.get(1).addElement(new Phrase(listaObjetos.get(counter).getDepartamento() == null ? ""
-                    : listaObjetos.get(counter).getDepartamento(), ft3));
-            cells.get(2).addElement(new Phrase(listaObjetos.get(counter).getSemestre() == null ? ""
-                    : listaObjetos.get(counter).getSemestre(), ft3));
-            cells.get(3).addElement(new Phrase(listaObjetos.get(counter).getNombreactividad() == null ? ""
-                    : listaObjetos.get(counter).getNombreactividad(), ft3));
-            cells.get(4).addElement(new Phrase(listaObjetos.get(counter).getTipoactividad() == null ? ""
-                    : listaObjetos.get(counter).getTipoactividad(), ft3));
-            cells.get(5).addElement(new Phrase(listaObjetos.get(counter).getFechacreacion() == null ? ""
-                    : listaObjetos.get(counter).getFechacreacion(), ft3));
-            cells.get(6).addElement(new Phrase(listaObjetos.get(counter).getUltimafecha() == null ? ""
-                    : listaObjetos.get(counter).getUltimafecha(), ft3));
-            cells.get(7).addElement(new Phrase(listaObjetos.get(counter).getUltimoaprobador() == null ? ""
-                    : listaObjetos.get(counter).getUltimoaprobador(), ft3));
-            cells.get(8).addElement(new Phrase(listaObjetos.get(counter).getPendiente() == null ? ""
-                    : listaObjetos.get(counter).getPendiente(), ft3));
-            cells.get(9).addElement(new Phrase(listaObjetos.get(counter).getFondoconcursable() == null ? ""
-                    : listaObjetos.get(counter).getFondoconcursable(), ft3));
-
-            for (int j = 0; j < nroColumnas; j++) {
-                table.addCell(cells.get(j));
+            Font ft = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, new BaseColor(70, 70, 70));
+            
+            ArrayList<String> arrayDatosObjeto = listaObjetosSend.get(counter);
+            for (int j = 0; j < contador; j++) {
+                PdfPCell celda = createCell();
+                celda.addElement(new Phrase( arrayDatosObjeto.get(j), ft));
+                table.addCell(celda);
             }
         }
         documento.add(table);

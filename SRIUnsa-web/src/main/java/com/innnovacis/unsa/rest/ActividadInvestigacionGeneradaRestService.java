@@ -7,7 +7,9 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.util.GeneratePdf;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -86,8 +88,21 @@ public class ActividadInvestigacionGeneradaRestService {
         try {
             respuesta = actividadInvestigacionBusiness.GetActividadesGeneradas(entidad);
             
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIActividadGeneralPaginacion> listaObjetos
+                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = {"Facultad", "Departamento", "Semestre", "Nombre del proyecto",
+            "Tipo", "Fecha creación", "Fecha última revisión", "Última revisión", "Pendiente", "Fondo"};
+            
             GeneratePdf generadorPDF =  new GeneratePdf();            
-            byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta);
+            byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Actividades de Investigación Generadas",listaObjetosSend);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
