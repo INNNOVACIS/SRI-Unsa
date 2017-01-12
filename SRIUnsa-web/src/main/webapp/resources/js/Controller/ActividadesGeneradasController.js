@@ -195,7 +195,7 @@ investigacionApp.controller('ActividadesGeneradasController',['$log', '$scope', 
         ActividadesGeneradasService.EnviarEmail(actividadGeneral).then(EnviarEmailSuccess, EnviarEmailError);
     };
     
-    /******************* EXPORTAR ARCHIVOS *****************/
+    /******************* EXPORTAR ARCHIVOS *******************/
     
     var descargarPDFSuccess = function (response){
         $log.debug("descargarPDF - Success");

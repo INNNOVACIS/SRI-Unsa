@@ -117,8 +117,6 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
         $scope.inactivo = (docentes.ninactivos * 100 / total) + "%";
     };
     
-    
-    
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];
@@ -160,4 +158,38 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     $scope.GetTotalDocentesActivosInactivos();
     $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion); //filtrar por actividad no filtra tipoActividad = 0
     $scope.GetTotalActividadesByTipoActividad();
+    
+    /******************* EXPORTAR ARCHIVOS *****************/
+    
+    var descargarPDFSuccess = function (response){
+        $log.debug("descargarPDF - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarPDFError = function (response){
+        $log.debug("descargarPDF - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var descargarExcelSuccess = function (response){
+        $log.debug("descargarExcel - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarExcelError = function (response){
+        $log.debug("descargarExcel - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.descargarPDF = function(){
+        console.log("Empezando descarga de PDF...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion};
+        UsuariosService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+    };
+    
+    $scope.descargarExcel = function(){
+        console.log("Empezando descarga de Excel...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion};
+        UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
+    };
 }]);
