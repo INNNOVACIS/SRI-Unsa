@@ -170,8 +170,6 @@ investigacionApp.controller('EstructuraOrganizacionController',['$log', '$scope'
         $scope.getEstructuraOrganizacionByPagina();
     });
     
-    /*********************************************/
-    
     var getEstructuraOrganizacionByPaginaSuccess = function(response){
         $log.debug("getEstructuraOrganizacionByPaginaSuccess - Success");
         console.log("Respuestas :: ", response);
@@ -199,4 +197,43 @@ investigacionApp.controller('EstructuraOrganizacionController',['$log', '$scope'
     
     $scope.getEstructuraOrganizaciones();
     $scope.getEstructuraOrganizacionByPagina();
+    
+    /******************* EXPORTAR ARCHIVOS *******************/
+    
+    var descargarPDFSuccess = function (response){
+        $log.debug("descargarPDF - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var descargarPDFError = function (response){
+        $log.debug("descargarPDF - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    
+    var descargarExcelSuccess = function (response){
+        $log.debug("descargarExcel - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var descargarExcelError = function (response){
+        $log.debug("descargarExcel - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    
+    $scope.descargarPDF = function(){
+        console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        EstructuraOrganizacionService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+    };
+    
+    $scope.descargarExcel = function(){
+        console.log("Empezando descarga de Excel...");
+        $scope.loader = true;
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        EstructuraOrganizacionService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
+    };
+    
 }]);

@@ -7,6 +7,7 @@ package com.innnovacis.unsa.model;
  */
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -82,12 +83,6 @@ public class SRIEstructuraOrganizacion  extends SRIEntidad implements Serializab
     public void setSNivel(String SNivel) {
         this.SNivel = SNivel;
     }
-
-   
-
-
-    
-    
 
 }
 

@@ -7,10 +7,16 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IEstructuraOrganizacionBusiness;
 import com.innnovacis.unsa.model.SRIEstructuraOrganizacion;
+import com.innnovacis.unsa.util.GeneratePdf;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -78,5 +84,22 @@ public class EstructuraOrganizacionRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public boolean DeleteAreaInvestigacion(SRIEstructuraOrganizacion estructuraOrganizacion){
         return estructuraOrganizacionBusiness.Delete(estructuraOrganizacion);
+    }
+    
+    @POST
+    @Path("/descargarPdf")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarPdf(SRIPaginacionObject object) {
+        
+        return null;
+    }
+    
+     @POST
+    @Path("/descargarExcel")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarExcel(SRIPaginacion entidad) {
+        
+        return null;
     }
 }
