@@ -92,7 +92,6 @@
                                               <th>Docente</th>
                                               <th>N° DNI</th>
                                               <th>Tipo de Actividad de Investigación</th>
-                                              <th>Duración</th>
                                               <th>Archivos subidos</th>
                                               <th width="15%"><input type="checkbox" ng-model="seleccionar" ng-click="seleccionarTodo(seleccionar)"> Revisar</th>
                                               <th>Acción</th>
@@ -100,12 +99,11 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="actividadRevisada in actividadesRevisadas" ng-class="{'filaSeleccionada': actividadRevisada.seleccionado}" class="table-overflow">
-                                                <td>{{ $index + 1 }}</td> <!-- $index + 1 -->
+                                                <td class="SRI-Width" >{{ $index + 1 }}</td> <!-- $index + 1 -->
                                                 <td><strong>{{ actividadRevisada.nombreactividad }}</strong></td>
                                                 <td>{{ actividadRevisada.docente.nombre }}</td>
                                                 <td>{{ actividadRevisada.docente.dni }}</td>
                                                 <td>{{ actividadRevisada.tipoactividad }}</td>
-                                                <td>{{ actividadRevisada.horas }}</td>
                                                 <td>{{ actividadRevisada.cantidad }}</td>
                                                 <td><input type="checkbox" ng-model="actividadRevisada.seleccionado"> </td>
                                                 <td nowrap>

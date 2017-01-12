@@ -6,7 +6,7 @@ function($scope, $sce, $location, SharedService, $window, $localStorage) {
     $scope.sharedService.htmlMenu = $sce.trustAsHtml($scope.sharedService.stringMenu);
     $scope.sharedService.htmlMenuVertical = $sce.trustAsHtml($scope.sharedService.stringMenuVertical);
 
-    $scope.nombreUsuario = $scope.sharedService.usuarioLogin.nombreUsuario;
+    $scope.nombreUsuario = $scope.sharedService.usuarioLogin === undefined ? "" : $scope.sharedService.usuarioLogin.nombreUsuario;
 
     $scope.logout = function(){
         
