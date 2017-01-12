@@ -218,5 +218,10 @@ public class SRIActividadGeneralPaginacion implements Serializable {
         
         return arrayRpta;
     }
+    public static String[] getArrayHeaders() {
+        String[] nombreColumnas = {"Facultad", "Departamento", "Semestre", "Nombre del proyecto",
+            "Tipo", "Fecha creación", "Fecha última revisión", "Última revisión", "Pendiente", "Fondo"};
+        return nombreColumnas;
+    }
     
 }

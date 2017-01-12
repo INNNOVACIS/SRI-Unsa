@@ -83,7 +83,9 @@ public class GeneratePdf {
 
         return cellte;
     }
-
+    public byte[] getArrayByteFrom(Map<String, Object> respuesta) throws IOException, DocumentException {
+        return new byte[1];
+    }
     public byte[] getArrayByteFrom(Map<String, Object> respuesta, int contador,
             String[] nombreColumnasCabeceras, String tituloPrincipal,
             ArrayList<ArrayList<String>> listaObjetosSend) throws IOException, DocumentException {

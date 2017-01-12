@@ -97,8 +97,7 @@ public class ActividadInvestigacionGeneradaRestService {
                 listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
             }
             
-            String[] nombreColumnas = {"Facultad", "Departamento", "Semestre", "Nombre del proyecto",
-            "Tipo", "Fecha creación", "Fecha última revisión", "Última revisión", "Pendiente", "Fondo"};
+            String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
             GeneratePdf generadorPDF =  new GeneratePdf();            
             byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta, nombreColumnas.length,
