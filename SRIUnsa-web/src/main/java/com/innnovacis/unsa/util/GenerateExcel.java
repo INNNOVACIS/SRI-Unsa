@@ -60,7 +60,7 @@ public class GenerateExcel {
                 
             int cwidth = spreadsheet.getColumnWidth(ceroCelda);
             spreadsheet.autoSizeColumn(ceroCelda);
-            cwidth += 2000;
+            cwidth += 2100;
             spreadsheet.setColumnWidth(ceroCelda, cwidth);
             
             Font font = workbook.createFont();
