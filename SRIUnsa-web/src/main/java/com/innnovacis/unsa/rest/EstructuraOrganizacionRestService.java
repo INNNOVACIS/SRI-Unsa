@@ -7,16 +7,11 @@ package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IEstructuraOrganizacionBusiness;
 import com.innnovacis.unsa.model.SRIEstructuraOrganizacion;
-import com.innnovacis.unsa.util.GeneratePdf;
-import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
