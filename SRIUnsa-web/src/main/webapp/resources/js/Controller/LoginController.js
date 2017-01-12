@@ -116,7 +116,7 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             var item = "";
             var subItem = "";
             // Item padre sin DropDown
-            if(value.nidPadre === 0 && value.surlPrivilegio !== null && value.surlPrivilegio !== '#homeDirectorUnidad'){ //or ""
+            if(value.nidPadre === 0 && value.surlPrivilegio !== null && value.surlPrivilegio !== '#homeDirectorUnidad' && value.surlPrivilegio !== '#home'){ //or ""
                 item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
             }
             // Item padre con DropDown
@@ -132,7 +132,7 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             }
             menuHorizontal = menuHorizontal + item;
         });
-        menuHorizontal = menuHorizontal + '<li class="dropdown"> <a class="dropdown-toggle SRI-Pointer" data-toggle="dropdown"   > <i class="fa fa-user fa-fw"></i> ' + '{{ sharedService.usuarioLogin.nombre }}' + ' <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user"><li><a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li> </ul> </li>';
+        menuHorizontal = menuHorizontal + '<li class="dropdown"> <a class="dropdown-toggle SRI-Pointer" data-toggle="dropdown"   > <i class="fa fa-user fa-fw"></i> ' + '{{ sharedService.usuarioLogin.nombre + " " + sharedService.usuarioLogin.apellido}}' + ' <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user"><li><a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li> </ul> </li>';
         return menuHorizontal;
     };
     

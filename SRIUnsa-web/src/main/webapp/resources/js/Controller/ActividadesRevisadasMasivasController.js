@@ -261,6 +261,11 @@ investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$s
                           idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
                           filtro : getFiltros()};
         ActividadesRevisadasMasivasService.GetActividadesRevisadasMasivas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
+        
+//        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+//                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
+//                          filtro : getFiltros()};
+//        ActividadesRevisadasService.GetActividadesRevisadas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
     };
     
     $scope.filtrar = function() {
