@@ -10,6 +10,7 @@ import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
+import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioHome;
@@ -293,6 +294,23 @@ public class UsuarioRestServices {
             log.log(Level.INFO, "GetUsuarioHome - Error : {0}", ex.getMessage());
         }
         return builder.build();
+    }
+    
+    @POST
+    @Path("/descargarPdf")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarPdf(SRIPaginacionObject object) {
+        
+        return null;
+    }
+    
+    @POST
+    @Path("/descargarExcel")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarExcel(SRIPaginacionObject object) {
+        
+        return null;
     }
     
 }

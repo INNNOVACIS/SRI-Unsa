@@ -9,6 +9,7 @@ import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
+import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import java.util.HashMap;
 import java.util.List;
@@ -263,7 +264,5 @@ public class ActividadInvestigacionRestService {
         }
         return builder.build();
     }
-    
-    
     
 }
