@@ -102,4 +102,31 @@ public class ActividadInvestigacionGeneradaRestService {
                 .header("content-disposition", "documentovacio.pdf")
                 .build();
     }
+    
+     @POST
+    @Path("/descargarExcel")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarExcel(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            respuesta = actividadInvestigacionBusiness.GetActividadesGeneradas(entidad);
+            
+//            GeneratePdf generadorPDF =  new GeneratePdf();            
+            byte[] blobAsBytes = null;//generadorPDF.getArrayByteFrom(respuesta);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "documento.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.pdf")
+                .build();
+    }
 }

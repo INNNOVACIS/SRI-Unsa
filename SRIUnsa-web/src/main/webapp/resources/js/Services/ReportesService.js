@@ -1,71 +1,10 @@
 /**
  * Actividades Generadas Service
  */
-investigacionApp.service("ActividadesGeneradasService", function (SRIUnsaConfig, $log, $http, $q) {
-
-    this.getAllActividadesGeneradas = function () {
-        $log.debug("Actividades Generadas Service - getAllActividadesGeneradas");
-
-        var deferred = $q.defer();
-        $http({
-            method: 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/listarActividadGenerada',
-        }).success(function (response) {
-            deferred.resolve(response);
-        }).error(function (response) {
-            deferred.reject(response);
-        });
-        return deferred.promise;
-    };
-
-    this.GetActividadesGeneradas = function (request) {
-        $log.debug("ActividadesGeneradasService - GetActividadesGeneradas");
-
-        var deferred = $q.defer();
-        $http({
-            method: 'POST',
-            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/actividades',
-            data: request
-        }).success(function (response) {
-            deferred.resolve(response);
-        }).error(function (response) {
-            deferred.reject(response);
-        });
-        return deferred.promise;
-    };
-    
-    this.GetActividadesGeneradasHomeDocente = function(request) {
-        $log.debug("ActividadesGeneradasService - GetActividadesGeneradasHomeDocente");
-
-        var deferred = $q.defer();
-        $http({
-            method : 'POST',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/GetActividadesGeneradasHomeDocente',
-            data : request
-        }).success(function(response) {
-            deferred.resolve(response);
-        }).error(function(response) {			
-            deferred.reject(response);
-        });
-        return deferred.promise;
-    };
-    
-    this.EnviarEmail = function (request) {
-        var deferred = $q.defer();
-        $http({
-            method: 'POST',
-            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/enviarEmail',
-            data: request
-        }).success(function (response) {
-            deferred.resolve(response);
-        }).error(function (response) {
-            deferred.reject(response);
-        });
-        return deferred.promise;
-    };
+investigacionApp.service("ReportesService", function (SRIUnsaConfig, $log, $http, $q) {
 
     this.descargarPDF = function (request) {
-        $log.debug("ActividadesGeneradasService - descargarPDF");
+        $log.debug("ReportesService - descargarPDF");
 
         var deferred = $q.defer();
         $http({
@@ -110,7 +49,7 @@ investigacionApp.service("ActividadesGeneradasService", function (SRIUnsaConfig,
         var deferred = $q.defer();
         $http({
             method: 'POST',
-            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/descargarExcel',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/descargarPdf',
             //url : 'generadorpdfss/descargarPdf',
             data: request,
             responseType: 'arraybuffer'

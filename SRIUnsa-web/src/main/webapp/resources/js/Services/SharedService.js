@@ -60,7 +60,11 @@ investigacionApp.factory('SharedService', function($location, $localStorage ) {
             }
         },
         isAutenticado : function(){
-            return this.usuarioLogin.nombreUsuario === "" || this.usuarioLogin.nombreUsuario === undefined ? false : true;
+            if(this.usuarioLogin !== undefined){
+                return this.usuarioLogin.nombreUsuario === "" || this.usuarioLogin.nombreUsuario === undefined ? false : true;
+            } else {
+                return false;
+            }
         },
         isPermitido : function(url){
             var permitido = false;
