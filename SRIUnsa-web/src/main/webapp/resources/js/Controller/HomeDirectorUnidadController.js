@@ -189,17 +189,17 @@ function($log, $scope, UsuariosService, $location,
     
     $scope.descargarPDF = function(){
         console.log("Empezando descarga de PDF...");
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
-                          filtro : getFiltros()};
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
+                          idTipoInvestigacion : $scope.idTipoInvestigacion};
         UsuariosService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
     };
     
     $scope.descargarExcel = function(){
         console.log("Empezando descarga de Excel...");
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
-                          filtro : getFiltros()};
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
+                          idTipoInvestigacion : $scope.idTipoInvestigacion};
         UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
     };
     
