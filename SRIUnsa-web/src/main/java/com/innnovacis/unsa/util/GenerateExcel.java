@@ -14,7 +14,13 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.model.StylesTable;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -36,14 +42,52 @@ public class GenerateExcel {
         XSSFWorkbook workbook = new XSSFWorkbook();
         // Crear la hoja
         XSSFSheet spreadsheet = workbook.createSheet(tituloPrincipal);
-        //Create row object
+        // Crear una fila
         XSSFRow row;
         int rowid = 0;
+        // Creando la cabecera principal
+        row = spreadsheet.createRow(rowid++);
+        int ceroCelda = 0;
+        for (String obj : nombreColumnasCabeceras) {
+            Cell cell = row.createCell(ceroCelda++);
+            
+            CellStyle borderStyle = workbook.createCellStyle();
+            borderStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            borderStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            borderStyle.setBorderRight(CellStyle.BORDER_THIN);
+            borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            borderStyle.setBorderTop(CellStyle.BORDER_THIN);
+            borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            
+            cell.setCellStyle(borderStyle);
+            cell.setCellValue((String) obj);
+        }
         for (ArrayList<String> list : listaObjetosSend) {
             row = spreadsheet.createRow(rowid++);
             int cellid = 0;
             for (String obj : list) {
                 Cell cell = row.createCell(cellid++);
+                
+                CellStyle borderStyle = workbook.createCellStyle();
+                borderStyle.setBorderBottom(CellStyle.BORDER_THIN);
+                borderStyle.setBottomBorderColor(IndexedColors.ROSE.getIndex());
+                borderStyle.setBorderLeft(CellStyle.BORDER_MEDIUM_DASHED);
+                borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+                borderStyle.setBorderRight(CellStyle.BORDER_THIN);
+                borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+                borderStyle.setBorderTop(CellStyle.BORDER_MEDIUM_DASH_DOT_DOT);
+                borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+                borderStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+                borderStyle.setFillPattern(CellStyle.SOLID_FOREGROUND); 
+                Font font = workbook.createFont();
+                font.setColor(HSSFColor.WHITE.index);
+                borderStyle.setFont(font);
+                
+                borderStyle.setFont(font);
+                cell.setCellStyle(borderStyle);
+            
                 cell.setCellValue((String) obj);
             }
         }
