@@ -153,7 +153,7 @@ public class ActividadInvestigacionGeneradaRestService {
         }
         return Response
                 .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
-                .header("content-disposition", "documentovacio.pdf")
+                .header("content-disposition", "documentovacio.xlsx")
                 .build();
     }
     

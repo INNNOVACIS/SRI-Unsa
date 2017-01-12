@@ -49,21 +49,30 @@ public class GenerateExcel {
         row = spreadsheet.createRow(rowid++);
         int ceroCelda = 0;
         for (String obj : nombreColumnasCabeceras) {
-            Cell cell = row.createCell(ceroCelda++);
+            Cell cell = row.createCell(ceroCelda);
             
-            CellStyle borderStyle = workbook.createCellStyle();
-            borderStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            borderStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            borderStyle.setBorderRight(CellStyle.BORDER_THIN);
-            borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            borderStyle.setBorderTop(CellStyle.BORDER_THIN);
-            borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle estilo = workbook.createCellStyle();
+            estilo.setWrapText(true);
+            estilo.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+            estilo.setAlignment(CellStyle.ALIGN_CENTER);
+            estilo.setFillForegroundColor(IndexedColors.DARK_RED.getIndex());
+            estilo.setFillPattern(CellStyle.SOLID_FOREGROUND); 
+                
+            int cwidth = spreadsheet.getColumnWidth(ceroCelda);
+            spreadsheet.autoSizeColumn(ceroCelda);
+            cwidth += 2000;
+            spreadsheet.setColumnWidth(ceroCelda, cwidth);
             
-            cell.setCellStyle(borderStyle);
+            Font font = workbook.createFont();
+            font.setColor(HSSFColor.WHITE.index);              
+            estilo.setFont(font);
+                
+            cell.setCellStyle(estilo);
             cell.setCellValue((String) obj);
+            
+            ceroCelda++;
         }
+        ceroCelda = 0;
         for (ArrayList<String> list : listaObjetosSend) {
             row = spreadsheet.createRow(rowid++);
             int cellid = 0;
@@ -71,20 +80,13 @@ public class GenerateExcel {
                 Cell cell = row.createCell(cellid++);
                 
                 CellStyle borderStyle = workbook.createCellStyle();
-                borderStyle.setBorderBottom(CellStyle.BORDER_THIN);
-                borderStyle.setBottomBorderColor(IndexedColors.ROSE.getIndex());
-                borderStyle.setBorderLeft(CellStyle.BORDER_MEDIUM_DASHED);
-                borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-                borderStyle.setBorderRight(CellStyle.BORDER_THIN);
-                borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-                borderStyle.setBorderTop(CellStyle.BORDER_MEDIUM_DASH_DOT_DOT);
-                borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-                borderStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+                borderStyle.setWrapText(true);
+                borderStyle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+                borderStyle.setAlignment(CellStyle.ALIGN_LEFT);        
+		borderStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
                 borderStyle.setFillPattern(CellStyle.SOLID_FOREGROUND); 
                 Font font = workbook.createFont();
-                font.setColor(HSSFColor.WHITE.index);
-                borderStyle.setFont(font);
-                
+                font.setColor(HSSFColor.BLACK.index);              
                 borderStyle.setFont(font);
                 cell.setCellStyle(borderStyle);
             
