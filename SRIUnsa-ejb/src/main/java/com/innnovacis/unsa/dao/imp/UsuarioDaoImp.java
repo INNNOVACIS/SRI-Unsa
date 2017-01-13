@@ -4,6 +4,7 @@ package com.innnovacis.unsa.dao.imp;
 import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.GenerarCodigo;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
@@ -26,6 +27,9 @@ public class UsuarioDaoImp implements IUsuarioDao {
 
     @Inject
     private EntityManager em;
+    
+    @Inject
+    private GenerarCodigo generarCodigo;
     
     @Override
     @Transactional
@@ -248,6 +252,34 @@ public class UsuarioDaoImp implements IUsuarioDao {
                                 .setParameter(1, idUsuario)
                                 .setParameter(2, idUsuarioDirector);
             respuesta = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    @Transactional
+    public SRIUsuario enviarCodigo(int idUsuario) {
+        SRIUsuario entidad = null;
+        try{
+            entidad = em.createNamedQuery("SRIUsuario.GetById", SRIUsuario.class).setParameter("idEntidad", idUsuario).getSingleResult();
+            entidad.setSCodigo(generarCodigo.getCadenaAlfaNumerica(6));
+            em.merge(entidad);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return entidad;
+    }
+
+    @Override
+    public SRIUsuario verificarCodigo(SRIUsuario entidad) {
+        SRIUsuario respuesta = null;
+        try {
+            Query query = em.createNativeQuery("{call VerificarCodigo(?1,?2)}", SRIUsuario.class)
+                        .setParameter(1, entidad.getNIdUsuario())
+                        .setParameter(2, entidad.getSCodigo());
+            respuesta = (SRIUsuario)query.getSingleResult();
         } catch(Exception ex) {
             throw ex;
         }

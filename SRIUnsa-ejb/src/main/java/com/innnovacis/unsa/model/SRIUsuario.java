@@ -49,6 +49,9 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
 
     @Column(name = "usuarioemail")
     private String SUsuarioEmail;
+    
+    @Column(name = "codigo")
+    private String SCodigo;
 
     public int getNIdDepartamento() {
         return NIdDepartamento;
@@ -104,6 +107,14 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
 
     public void setSUsuarioPassword(String SUsuarioPassword) {
         this.SUsuarioPassword = SUsuarioPassword;
+    }
+
+    public String getSCodigo() {
+        return SCodigo;
+    }
+
+    public void setSCodigo(String SCodigo) {
+        this.SCodigo = SCodigo;
     }
     
 }

@@ -329,4 +329,21 @@ public class UsuarioRestServices {
         List<SRIUsuarioPersona> lista = usuarioBusiness.GetPagina(entidad);
         return null;
     }
+    
+    @GET
+    @Path("enviarCodigo/{idUsuario:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean enviarCodigo(@PathParam("idUsuario") int idUsuario){
+        boolean respuesta = usuarioBusiness.enviarCodigo(idUsuario);
+        return respuesta;
+    }
+    
+    @POST
+    @Path("/verificarCodigo")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public SRIUsuario verificarCodigo(SRIUsuario usuario) {
+        SRIUsuario respuesta = usuarioBusiness.verificarCodigo(usuario);
+        return respuesta;
+    }
 }

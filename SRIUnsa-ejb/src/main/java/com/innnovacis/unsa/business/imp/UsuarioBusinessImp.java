@@ -9,15 +9,19 @@ import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIPersona;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.Email;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioHome;
 import com.innnovacis.unsa.util.SRIUsuarioLogin;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 
 
@@ -316,6 +320,40 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         }
         catch(Exception ex){
             throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public boolean enviarCodigo(int idUsuario) {
+        SRIUsuario entidad = null;
+        boolean respuesta = false;
+        try{
+            entidad = usuarioDao.enviarCodigo(idUsuario);
+            Email email = new Email();
+            List<String> destinatarios = new ArrayList<String>();
+            destinatarios.add(entidad.getSUsuarioEmail());
+            email.enviarCodigoEmail(entidad.getSCodigo(), destinatarios);
+        }
+        catch(Exception ex){
+            try {
+                throw ex;
+            } catch (Exception ex1) {
+                Logger.getLogger(UsuarioBusinessImp.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        return respuesta;
+    }
+
+    @Override
+    public SRIUsuario verificarCodigo(SRIUsuario entidad) {
+        SRIUsuario respuesta = null;
+        try{
+            respuesta = usuarioDao.verificarCodigo(entidad);
+        }
+        catch(Exception ex){
+                throw ex;
+
         }
         return respuesta;
     }

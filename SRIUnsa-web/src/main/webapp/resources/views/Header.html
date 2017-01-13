@@ -77,6 +77,88 @@
         </div>
     </div>
     
+    <div id="modalCambiarContrasena" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{ titulo }}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form ng-show="showCodigoSeguridad" name="formCodigoSeguridad" novalidate class="form-horizontal">
+                                    <p>{{ mensaje }}</p>
+                                    <div class="form-group">
+                                        <div class="col-md-6" ng-class="{ 'has-error' : formCodigoSeguridad.codigo.$invalid && submitted || formCambiarContrasena.codigo.$error.minlength || formCambiarContrasena.codigo.$error.maxlength}">
+                                            <input name="codigo" 
+                                                   ng-model="codigoSeguridad" 
+                                                   ng-minlength=6 
+                                                   ng-maxlength=6
+                                                   type="text" 
+                                                   class="form-control" 
+                                                   placeholder="######" 
+                                                   required
+                                                   uppercase>
+                                            <p ng-show="formCodigoSeguridad.codigo.$error.required && submitted" class="help-block">
+                                                Ingrese el C&oacute;digo de Seguridad.
+                                            </p>
+                                            <p ng-show="formCodigoSeguridad.codigo.$error.minlength" class="help-block">
+                                                El C&oacute;digo de seguridad, debe tener 6 d&iacute;gitos.
+                                            </p>
+                                            <p ng-show="formCodigoSeguridad.codigo.$error.maxlength" class="help-block">
+                                                El C&oacute;digo de seguridad, debe tener 6 d&iacute;gitos.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form ng-show="showContrasena" name="formCambiarContrasena" novalidate class="form-horizontal">
+                                    <p>{{ mensaje }}</p>
+                                    <div class="form-group">
+                                        <div  class="col-md-6" ng-class="{ 'has-error' : formCambiarContrasena.contrasena.$invalid && submitted || formCambiarContrasena.contrasena.$error.minlength || formCambiarContrasena.contrasena.$error.maxlength}">
+                                            <input name="contrasena" 
+                                                   ng-model="nuevaContrasena" 
+                                                   ng-minlength=5 
+                                                   ng-maxlength=10
+                                                   type="password" 
+                                                   class="form-control" 
+                                                   placeholder="Ingrese su Contrase&ntilde;a" 
+                                                   required>
+                                            <p ng-show="formCambiarContrasena.contrasena.$error.required && submitted" class="help-block">
+                                                Ingrese la Contrase&ntilde;a.
+                                            </p>
+                                            <p ng-show="formCambiarContrasena.contrasena.$error.minlength" class="help-block">
+                                                La nueva Contrase&ntilde;a debe ser mayor de 5 caracteres.
+                                            </p>
+                                            <p ng-show="formCambiarContrasena.contrasena.$error.maxlength" class="help-block">
+                                                La nueva Contrase&ntilde;a debe ser menor o igual que 10 caracteres.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button ng-show="showCodigoSeguridad" type="button" class="btn btn-primary" ng-click="verificarCodigo()">
+                        <span class="glyphicon glyphicon-rol"></span>
+                        Continuar
+                    </button>
+                    <button ng-show="showContrasena" type="button" class="btn btn-primary" ng-click="guardarContrasena()">
+                        <span class="glyphicon glyphicon-rol"></span>
+                        Continuar
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 
 

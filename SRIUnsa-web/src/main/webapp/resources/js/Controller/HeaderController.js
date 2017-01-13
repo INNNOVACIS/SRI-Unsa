@@ -1,5 +1,5 @@
-investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', 'SharedService', '$window', '$localStorage',
-function($scope, $sce, $location, SharedService, $window, $localStorage) {
+investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', 'SharedService', '$window', '$localStorage', 'ngToast',
+    '$log', 'HeaderService', function($scope, $sce, $location, SharedService, $window, $localStorage, ngToast, $log, HeaderService) {
 
     $scope.sharedService = SharedService;
     $scope.isActivo = "Actividades de Investigacion";
@@ -7,7 +7,8 @@ function($scope, $sce, $location, SharedService, $window, $localStorage) {
     $scope.sharedService.htmlMenuVertical = $sce.trustAsHtml($scope.sharedService.stringMenuVertical);
 
     $scope.nombreUsuario = $scope.sharedService.usuarioLogin === undefined ? "" : $scope.sharedService.usuarioLogin.nombreUsuario;
-
+    $scope.submitted = false;
+    
     $scope.logout = function(){
         
         $window.localStorage.clear();
@@ -33,20 +34,95 @@ function($scope, $sce, $location, SharedService, $window, $localStorage) {
         $scope.sharedService.docente = "";
         $scope.sharedService.menuvertical = {};
         
-//        sessvars.menuvertical = {};
-//        sessvars.autenticado = false;
-//        sessvars.nombreRol = "";
-//        sessvars.nombreUsuario = "";
-//        sessvars.idRol = 0;
-//        sessvars.idUsuario = 0;
-//        sessvars.privilegios = [];
-//        sessvars.htmlMenu = null;
-//        sessvars.stringMenu = "";
     	$location.path("/");
     };
     
     $scope.setMenuTab = function (event) {
         $scope.isActivo = event.target.innerText;
+    };
+    
+    /******************* CAMBIAR CONTRASEÑA **********************/
+    
+    $scope.titulo = "Ingrese su Código de Seguridad";
+    $scope.mensaje = "Por favor, compruebe su correo electrónico para ver el mensaje con su código. Su código tiene 6 caracteres de longitud."
+    $scope.showContrasena = false;
+    $scope.showCodigoSeguridad = true;
+    
+    var verificarCodigoSuccess = function(response){
+        $log.debug("verificarCodigo - Success");
+        console.log("Respuesta :: ", response);
+        if(response !== null){
+            $scope.showContrasena = true;
+            $scope.showCodigoSeguridad = false;
+            $scope.titulo = "Ingrese su nueva Contraseña";
+            $scope.mensaje = "Una contraseña fuerte es una combinación de letras y signos de puntuación. Debe tener al menos 5 caracteres."
+            $scope.usuario = response;
+        }
+    };
+    var verificarCodigoError = function(response){
+        $log.debug("verificarCodigo - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var enviarCodigoSuccess = function(response){
+        $log.debug("enviarCodigo - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var enviarCodigoError = function(response){
+        $log.debug("enviarCodigo - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var updateUsuarioSuccess = function(response){
+        $log.debug("updateUsuario - Success");
+        console.log("Respuesta :: ", response);
+        openNotice('Cambio de Contraseña correcto!','success');
+        $('#modalCambiarContrasena').modal('hide');
+    };
+    var updateUsuarioError = function(response){
+        $log.debug("updateUsuario - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.verificarCodigo = function(){
+        if($scope.formCodigoSeguridad.$valid){
+            var usuario = {
+                nidUsuario : $scope.sharedService.usuarioLogin.idUsuario,
+                scodigo : $scope.codigoSeguridad
+            };
+            HeaderService.verificarCodigo(usuario).then(verificarCodigoSuccess, verificarCodigoError);
+        } else {
+//            openNotice('Error al registrar!','danger');
+            $scope.submitted = true;
+            $scope.cancel();
+        }
+    };
+    
+    $scope.guardarContrasena = function(){
+        if($scope.formCambiarContrasena.$valid){
+            $scope.usuario.susuarioPassword = $scope.nuevaContrasena;
+            HeaderService.updateUsuario($scope.usuario).then(updateUsuarioSuccess, updateUsuarioError);
+        } else {
+            $scope.submitted = true;
+            $scope.cancel();
+        }
+    };
+    
+    $scope.enviarCodigo = function(){
+        HeaderService.enviarCodigo($scope.sharedService.usuarioLogin.idUsuario).then(enviarCodigoSuccess, enviarCodigoError);
+    };
+    
+    /**************** NOTIFICACIONES *****************/
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
+    
+    $scope.cancel = function(){
+        $scope.codigoSeguridad = "";
     };
     
     /*
