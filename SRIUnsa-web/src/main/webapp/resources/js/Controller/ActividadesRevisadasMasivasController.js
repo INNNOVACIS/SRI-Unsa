@@ -1,43 +1,24 @@
 investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$scope', '$location', 'ActividadesGeneradasService', 
-    'SemestreService', 'TipoInvestigacionService', 'FondoConcursableService', 'TipoNivelService', 'EstructuraOrganizacionService', 'SharedService',
-    'SRIUnsaConfig', 'UsuarioFlujoService', 'ActividadesRevisadasMasivasService' ,function($log, $scope, $location, ActividadesGeneradasService, 
-    SemestreService, TipoInvestigacionService, FondoConcursableService, TipoNivelService, EstructuraOrganizacionService, SharedService,
-    SRIUnsaConfig, UsuarioFlujoService, ActividadesRevisadasMasivasService ) {
+    'SemestreService', 'TipoInvestigacionService', 'FondoConcursableService', 'EstructuraOrganizacionService', 'SharedService',
+    'SRIUnsaConfig', 'UsuarioFlujoService', 'ActividadesRevisadasMasivasService', 'ActividadesPendientesService' ,function($log, $scope, $location, ActividadesGeneradasService, 
+    SemestreService, TipoInvestigacionService, FondoConcursableService, EstructuraOrganizacionService, SharedService,
+    SRIUnsaConfig, UsuarioFlujoService, ActividadesRevisadasMasivasService, ActividadesPendientesService ) {
 
     $scope.sharedService = SharedService;
     $scope.loader = false;
     $scope.showDetalle = false;
+    $scope.departamentos = [];
     
     /*********** Servicios Callback ***********/  
-    
-    var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("GetTipoNivel - Success");
-    	console.log("Respuesta :: ", response);
-    	$scope.niveles = response;
-        $scope.getEstructuraOrganizaciones();
-    };
-    var getTipoNivelServiceError = function(response){
-     	$log.debug("GetTipoNivel - Error"); 
-        console.log("Respuesta :: ", response);
-    };
 
     var getEstructuraOrganizacionServiceSuccess = function(response){
     	$log.debug("GetEstructuraOrganizacion - Success");
         console.log("Respuesta :: ", response);
-        angular.forEach(response, function(superior, key) {
-            angular.forEach(response, function(value, key) {
-                if(superior.nidPadre === value.nidEstructuraOrganizacion){
-                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
-                }
-            });
-            angular.forEach($scope.niveles, function(nivel, key) {
-                if(superior.nidTipoNivel === nivel.nidTipoNivel){
-                    
-                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
-                }
-            });
-        });
-    	$scope.estructuraOrganizaciones = response;
+        angular.forEach(response, function(value, key) {
+            if($scope.sharedService.usuarioLogin.idFacultad === value.nidPadre){
+                $scope.departamentos.push(value);
+            }
+        }); 
     };
     var getEstructuraOrganizacionServiceError = function(response){
      	$log.debug("GetEstructuraOrganizacion - Error");
@@ -132,9 +113,6 @@ investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$s
     
     /******************* Servicios *******************/
     
-    $scope.getListaTipoNivel = function(){
-      	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
-    };
     $scope.getEstructuraOrganizaciones = function(){
       	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
     };
@@ -155,27 +133,19 @@ investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$s
         UsuarioFlujoService.CreateAndGetUsuarioFlujo(usuarioFlujo).then(CreateAndGetUsuarioFlujoSuccess, CreateAndGetUsuarioFlujoError);
     };
     
-    $scope.facultadChange = function(){
-        $scope.departamento = {};
-        $scope.escuela = {};
-    };
-    $scope.departamentoChange = function(){
-        $scope.escuela = {};
-    };
-    
     $scope.aprobarActividades = function(){
         $scope.loader = true;
         var actividadesGenerales = [];
         angular.forEach($scope.actividadesRevisadas, function(value, key){
             if(value.seleccionado !== undefined && value.seleccionado === true){
                 var actividadGeneral = {
-                    idUsuario : $scope.sharedService.idUsuario,
+                    idUsuario : $scope.sharedService.usuarioLogin.idUsuario,
                     idFlujoActorOrigen : SRIUnsaConfig.DIUN,
                     idEstado : SRIUnsaConfig.REVISADO,
                     idPlanificacion : -1,
                     codigoActor : SRIUnsaConfig.codeDIUN,
                     actividadInvestigacion : {
-                        nidActividadInvestigacion : value.idactividadinvestigacion
+                        nidActividadInvestigacion : value.idactividadinvestigacion                        
                     }
                 };
                 actividadesGenerales.push(actividadGeneral);
@@ -195,13 +165,13 @@ investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$s
     };
     
     $scope.GetCabeceraMasiva = function(){
-        var id = $scope.sharedService.idUsuario;
+        var id = $scope.sharedService.usuarioLogin.idUsuario;
         ActividadesRevisadasMasivasService.GetCabeceraMasiva(id).then(GetCabeceraMasivaSuccess, GetCabeceraMasivaError);
     };
     
     $scope.EnviarEmail = function(idActividadGenerada){   
         var actividadGeneral = {
-            idUsuario : $scope.sharedService.idUsuario,
+            idUsuario : $scope.sharedService.usuarioLogin.idUsuario,
             idFlujoActorOrigen : SRIUnsaConfig.DOCE,
             idEstado : SRIUnsaConfig.CREADO,
             idPlanificacion : -1,
@@ -230,8 +200,6 @@ investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$s
         $scope.GetActividadesRevisadasMasivas();
     });
     
-    /*********************************************/
-    
     var getFiltros = function(){
         var filtro = {
             nidTipoActividadInvestigacion : ($scope.tipoInvestigacion === null || $scope.tipoInvestigacion === undefined) ? "" : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
@@ -257,27 +225,25 @@ investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$s
     };
     
     $scope.GetActividadesRevisadasMasivas = function(){
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
-                          filtro : getFiltros()};
-        ActividadesRevisadasMasivasService.GetActividadesRevisadasMasivas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
-        
 //        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
 //                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
 //                          filtro : getFiltros()};
-//        ActividadesRevisadasService.GetActividadesRevisadas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
+//        ActividadesRevisadasMasivasService.GetActividadesRevisadasMasivas(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: SRIUnsaConfig.DIDE, 
+                          filtro : getFiltros()};
+        ActividadesPendientesService.paginacionActividades(objPagina).then(GetActividadesRevisadasSuccess, GetActividadesRevisadasError);
     };
     
     $scope.filtrar = function() {
         $scope.GetActividadesRevisadasMasivas();
     };
         
-    $scope.getListaTipoNivel();
     $scope.getFondos();
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
     $scope.CrearOrActualizarUsuarioFlujo();
-    
+    $scope.getEstructuraOrganizaciones();
     $scope.GetActividadesRevisadasMasivas();
     
     $scope.verActividadById = function(actividadRevisada){
@@ -310,7 +276,7 @@ investigacionApp.controller('ActividadesRevisadasMasivasController',['$log', '$s
             nidTipoActividadInvestigacion : id
         };
         var paginaDetalle = { currentPage : 1, rango : 100, total : 100,
-                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.REVISADO, idFlujoActor: SRIUnsaConfig.DIUN, 
                           filtro : filtro};
         ActividadesRevisadasMasivasService.GetDetalleMasiva(paginaDetalle).then(GetDetalleMasivaSuccess, GetDetalleMasivaError);
     };

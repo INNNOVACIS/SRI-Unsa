@@ -4,10 +4,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12" style="margin-top:20px;">
-            
-            
-            
-            <form name="outerForm" class="tab-form-demo">
+            <form name="outerForm" class="tab-form-demo" novalidate>
                 <uib-tabset active="activeForm">
                     <uib-tab index="0" heading="Generar Informe">
                         <div class="panel panel-primary" style="margin-top:20px;">
@@ -19,38 +16,15 @@
                                             <option></option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-md-2">Facultad</label>
-                                    <div class="col-md-4">
-                                        <select ng-model="facultad"                
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Facultad'}"
-                                            class="form-control"
-                                            ng-change="facultadChange()"
-                                            ng-required="true"
-                                            style="margin:2px;"
-                                            ng-init="facultad=''">
-                                            <option></option>
-                                        </select>
-                                    </div>
                                     <label class="control-label col-md-2">Departamento</label>
                                     <div class="col-md-4">
                                         <select  ng-model="departamento"
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Departamento', nidPadre: facultad.nidEstructuraOrganizacion}"
+                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in departamentos "
                                             class="form-control"
                                             ng-change="departamentoChange()"
                                             ng-required="true"
                                             style="margin:2px;"
                                             ng-init="departamento=''">
-                                            <option></option>
-                                        </select> 
-                                    </div>
-                                    <label class="control-label col-md-2">Escuela</label>
-                                    <div class="col-md-4">
-                                        <select  ng-model="escuela"
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
-                                            class="form-control" 
-                                            ng-required="true"
-                                            style="margin:2px;"
-                                            ng-init="escuela=''">
                                             <option></option>
                                         </select> 
                                     </div>
@@ -75,11 +49,19 @@
                             </div>
                         </div>
 
-
-                        <div class="panel panel-info">
-                            <div class="panel-heading">Actividades de Investigaci&oacute;n
+                        <div class="panel panel-primary">
+                               <div class="panel-heading" style="line-height: 2;">Actividades de Investigación Revisadas
                                 <button class="btn btn-primary btn-sm pull-right" ng-click="aprobarActividades()">
-                                    <span class="glyphicon glyphicon-ok"></span> Generar Informe
+                                    <span class="glyphicon glyphicon-ok"></span> 
+                                    Generar Informe
+                                </button>
+                                <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()" style="margin-right: 6px;">
+                                    <span class="glyphicon glyphicon-cloud-download"></span>
+                                    Descargar PDF
+                                </button>
+                                <button class="btn btn-success btn-sm pull-right" ng-click="descargarExcel()" style="margin-right: 6px;">
+                                    <span class="glyphicon glyphicon-cloud-download"></span>
+                                    Descargar Excel
                                 </button>
                             </div>
                             <div class="panel-body">
@@ -119,12 +101,12 @@
                                         num-pages="numPages()" 
                                         current-page="currentPage"
                                         max-size="maxSize"
-                                        total="total">    
+                                        total="total">
                                     </pagination>
                                 </div>
                             </div>
                         </div>
-                    </uib-tab>
+                    </uib-tab>  
                     <uib-tab index="1" heading="Informes Generados" ng-click="GetCabeceraMasiva()">
                         <div class="panel panel-primary" style="margin-top:20px;">
                             <div class="panel-heading">Informes Generados</div>
@@ -152,14 +134,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <pagination
-                                        rango-paginas="rangoPaginas"
-                                        current-rango="currentRango"
-                                        num-pages="numPages()" 
-                                        current-page="currentPage"
-                                        max-size="maxSize"
-                                        total="total">    
-                                    </pagination>
                                 </div>
                             </div>
                         </div>
@@ -177,17 +151,10 @@
                                                     <span ng-show="sortType === 'id' && !sortReverse" class="fa fa-caret-down"></span>
                                                     <span ng-show="sortType === 'id' && sortReverse" class="fa fa-caret-up"></span>
                                                 </th>
-                <!--                                <th>Nombre de la Actividad</th>
-                                                <th>Docente</th>-->
                                                 <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                                     Facultad
                                                     <span ng-show="sortType === 'facultad' && !sortReverse" class="fa fa-caret-down"></span>
                                                     <span ng-show="sortType === 'facultad' && sortReverse" class="fa fa-caret-up"></span>
-                                                </th>
-                                                <th ng-click="sortType = 'escuela'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                                    Escuela
-                                                    <span ng-show="sortType === 'escuela' && !sortReverse" class="fa fa-caret-down"></span>
-                                                    <span ng-show="sortType === 'escuela' && sortReverse" class="fa fa-caret-up"></span>
                                                 </th>
                                                 <th ng-click="sortType = 'departamento'; sortReverse = !sortReverse" style='cursor: pointer'>
                                                     Departamento
@@ -199,7 +166,6 @@
                                                     <span ng-show="sortType === 'semestre' && !sortReverse" class="fa fa-caret-down"></span>
                                                     <span ng-show="sortType === 'semestre' && sortReverse" class="fa fa-caret-up"></span>
                                                 </th>
-                <!--                                <th>Nombre del Proyecto</th>-->
                                                 <th ng-click="sortType = 'nombreactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                                     Nombre del Proyecto
                                                     <span ng-show="sortType === 'nombreactividad' && !sortReverse" class="fa fa-caret-down"></span>
@@ -243,12 +209,7 @@
 
 
                                                 <th>Fondo</th>
-                                                <th ng-click="sortType = 'horas'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                                    Duración
-                                                    <span ng-show="sortType === 'horas' && !sortReverse" class="fa fa-caret-down"></span>
-                                                    <span ng-show="sortType === 'horas' && sortReverse" class="fa fa-caret-up"></span>
-                                                </th>
-                                                <th width="6%">Archivos</th>
+                                                <th>Archivos</th>
                                                 <th width="8%">Acción</th>
                                             </tr>
                                         </thead>
@@ -256,7 +217,6 @@
                                             <tr ng-repeat="detalleMasiva in detalleMasivas | orderBy:sortType:sortReverse" class="table-overflow">
                                                 <td >{{ detalleMasiva.id }}</td>
                                                 <td >{{ detalleMasiva.facultad }}</td>
-                                                <td >{{ detalleMasiva.escuela }}</td>
                                                 <td >{{ detalleMasiva.departamento }}</td>   
                                                 <td >{{ detalleMasiva.semestre }}</td>
                                                 <td >{{ detalleMasiva.nombreactividad }}</td>
@@ -269,7 +229,6 @@
                                                 <td >{{ detalleMasiva.pendiente }}</td>
 
                                                 <td >{{ detalleMasiva.fondoconcursable }}</td>
-                                                <td >{{ detalleMasiva.horas }}</td>
                                                 <td >{{ detalleMasiva.cantidad }}</td>
                                                 <td nowrap>
                                                     <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadRevisada)" src="resources/images/iconos/ver.png">
@@ -277,23 +236,12 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
-<!--                                    <pagination
-                                        rango-paginas="rangoPaginas"
-                                        current-rango="currentRango"
-                                        num-pages="numPages()" 
-                                        current-page="currentPage"
-                                        max-size="maxSize"
-                                        total="total">
-                                    </pagination>-->
                                 </div>
                             </div>
                         </div>
                     </uib-tab>
                 </uib-tabset>
-            </form>
-            
+            </form>     
         </div>
     </div>
 </div>
-

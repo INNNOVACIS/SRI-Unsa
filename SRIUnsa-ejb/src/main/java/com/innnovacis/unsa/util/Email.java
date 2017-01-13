@@ -164,122 +164,6 @@ public class Email {
 +"</body>"
 +"</html>";
                 break;
-            case "DIDE":
-                table = "<html>"
-+"<head>"
-+"</head>"
-+"<body style='margin: 0; padding: 0;'>"
-+"	<table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
-+"		<tr>"
-+"			<td style='padding: 10px 0 30px 0;'>"
-+"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
-+"					<tr>"
-+"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
-+"							<img src=\"cid:LogoUnsa\" alt='Creating Email Magic' width='400' height='160' style='display: block;' />"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
-+"										<b>SRI - Confirmacion de Operacion!</b>"
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado " + nombreCompleto + " se registro la actividad de investigacion, pendiente de su aprobación."
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='font-size: 0.9em;'>"
-+"										<table border='1' cellpadding='3' cellspacing='0' width='100%'>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Nombre de la Actividad : </th>"
-+"											    <td>" + data.getSNombreActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Tipo Actividad de Investigación : </th>"
-+"											    <td>" + data.getNIdTipoActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Facultad : </th>"
-+"											    <td>" + data.getSFacultad() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Departamento : </th>"
-+"											    <td>" + data.getSDepartamento() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Escuela : </th>"
-+"											    <td>" + data.getSEscuela() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Fondo Concursable : </th>"
-+"											    <td>" + data.getSFondoConcursable() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Area Investigación : </th>"
-+"											    <td>" + data.getSAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>SubArea Investigación : </th>"
-+"											    <td>" + data.getSSubAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Disciplina : </th>"
-+"											    <td>" + data.getSDisciplina() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Numero de horas : </th>"
-+"											    <td>" + String.valueOf(data.getNHoras()) + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Descripción : </th>"
-+"											    <td>" + data.getSDescripcionActividad() + "</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
-+"										Para acceder al Registro de su Actividad de Investigacion <a href='http://www.google.com.pe' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
-+"										&reg;Innnovacis,  SRIUnsa 2016"
-+"									</td>"
-+"									<td align='right' width='20%'>"
-+"										<table border='0' cellpadding='0' cellspacing='0'>"
-+"											<tr>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/tw.gif' alt='Twitter' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"												<td style='font-size: 0; line-height: 0;' width='20'>&nbsp;</td>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/fb.gif' alt='Facebook' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"				</table>"
-+"			</td>"
-+"		</tr>"
-+"	</table>"
-+"</body>"
-+"</html>";
-                break;
             case "DIUN":
                 table = "<html>"
 +"<head>"
@@ -634,6 +518,75 @@ public class Email {
         return table;
     }
 
+    public String GetBodyEmail(String nombreCompleto, String codigo) {
+        String mensaje = "<html>"
++"<head>"
++"</head>"
++"<body style='margin: 0; padding: 0;'>"
++"	<table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
++"		<tr>"
++"			<td style='padding: 10px 0 30px 0;'>"
++"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
++"					<tr>"
++"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
++"							<img src=\"cid:LogoUnsa\" alt='Creating Email Magic' width='400' height='160' style='display: block;' />"
++"						</td>"
++"					</tr>"
++"					<tr>"
++"						<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
++"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
++"								<tr>"
++"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
++"										<b>SRI - Confirmacion de Operacion!</b>"
++"									</td>"
++"								</tr>"
++"								<tr>"
++"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"										Estimado " + nombreCompleto + ":"
++"									</td>"              
++"								</tr>"
++"								<tr>"
++"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"										Alguien solicit&oacute; recientemente el cambio de su contrase&ntilde;a."
++"									</td>"              
++"								</tr>"
++"								<tr>"
++"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"										Ingrese este c&oacute;digo para cambiar la contraseña."
++"									</td>"              
++"								</tr>"
++"                                                              <tr>"
++"                                                                      <td style='font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;padding:10px;background-color:#f2f2f2;border-left:1px solid #ccc;border-right:1px solid #ccc;border-top:1px solid #ccc;border-bottom:1px solid #ccc'>"
++"                                                                          <span style='font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823'>"
++                                                                               codigo
++"                                                                          </span>"
++"                                                                      </td>"
++"                                                              </tr>"
++"							</table>"
++"						</td>"
++"					</tr>"
++"					<tr>"
++"						<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
++"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
++"								<tr>"
++"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
++"										Para acceder al Registro de su Actividad de Investigacion <a href='http://www.google.com.pe' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
++"										&reg;Innnovacis,  SRIUnsa 2016"
++"									</td>"
++"								</tr>"
++"							</table>"
++"						</td>"
++"					</tr>"
++"				</table>"
++"			</td>"
++"		</tr>"
++"	</table>"
++"</body>"
++"</html>";
+            
+        return mensaje;
+    }
+    
     public String readProperties(String value) throws IOException {
         String respuesta = "";
         URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
@@ -672,6 +625,26 @@ public class Email {
         
         this.info = from + " : " + pass + " : " + host + " : " + pass + " : " + port + " : " + auth + " : " + enable;
     }
+    
+    public void enviarCodigoEmail(String codigo, List<String> destinatarios) throws GeneralSecurityException, IOException{
+        Email email = new Email();
+        String from = email.readProperties("user");
+        String pass = MD5.decrypt(email.readProperties("password"));
+        String host = email.readProperties("host");
+        String port = email.readProperties("port");
+        String auth = email.readProperties("auth");
+        String enable = email.readProperties("enable");
+        
+        for(String destinatario : destinatarios){
+            List<String> to = new ArrayList<String>();
+            to.add(destinatario);
+            String subject = "SRI-UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
+            String nombreCompleto = "";
+            String body = GetBodyEmail(nombreCompleto, codigo);
+            sendFromGMail("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, body);
+        }
+    }
+    
     public String recuperar() throws IOException, GeneralSecurityException{
         Email email = new Email();
         String fileName = System.getProperty("jboss.server.config.dir");
@@ -714,7 +687,7 @@ public class Email {
             messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
-            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
+            DataSource fds = new FileDataSource("/home/will/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);
