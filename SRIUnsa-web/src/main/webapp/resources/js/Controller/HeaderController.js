@@ -43,8 +43,8 @@ investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', '
     
     /******************* CAMBIAR CONTRASEÑA **********************/
     
-    $scope.titulo = "Ingrese su Código de Seguridad";
-    $scope.mensaje = "Por favor, compruebe su correo electrónico para ver el mensaje con su código. Su código tiene 6 caracteres de longitud."
+    $scope.titulo = "Ingrese el código de seguridad";
+    $scope.mensaje = "Comprueba si recibiste un correo electrónico con tu código, que debe tener seis dígitos.";
     $scope.showContrasena = false;
     $scope.showCodigoSeguridad = true;
     
@@ -55,7 +55,7 @@ investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', '
             $scope.showContrasena = true;
             $scope.showCodigoSeguridad = false;
             $scope.titulo = "Ingrese su nueva Contraseña";
-            $scope.mensaje = "Una contraseña fuerte es una combinación de letras y signos de puntuación. Debe tener al menos 5 caracteres."
+            $scope.mensaje = "Una contraseña segura combina letras y signos de puntuación. Recuerda que la contraseña debe tener 5 caracteres como mínimo."
             $scope.usuario = response;
         }
     };
