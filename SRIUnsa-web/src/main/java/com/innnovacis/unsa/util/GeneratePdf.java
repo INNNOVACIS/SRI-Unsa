@@ -122,7 +122,7 @@ public class GeneratePdf {
             table.addCell(createCellHeader(nombreColumnasCabeceras[i]));
         }
 
-        table.setHeaderRows(1);
+        table.setHeaderRows(2);
         table.getDefaultCell().setBackgroundColor(new BaseColor(247, 247, 247));
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 

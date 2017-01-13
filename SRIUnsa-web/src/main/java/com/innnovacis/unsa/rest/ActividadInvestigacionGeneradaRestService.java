@@ -87,6 +87,9 @@ public class ActividadInvestigacionGeneradaRestService {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
             respuesta = actividadInvestigacionBusiness.GetActividadesGeneradas(entidad);
             
             ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
@@ -126,6 +129,9 @@ public class ActividadInvestigacionGeneradaRestService {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
             respuesta = actividadInvestigacionBusiness.GetActividadesGeneradas(entidad);
             
             ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
@@ -161,15 +167,81 @@ public class ActividadInvestigacionGeneradaRestService {
     @Path("/descargarHomeDocentePdf")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response descargarHomeDocentePdf(SRIPaginacion entidad) {
-        Map<String, Object> respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
-        return null;
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIActividadGeneralPaginacion> listaObjetos
+                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
+            
+            GeneratePdf generador =  new GeneratePdf();            
+            byte[] blobAsBytes = generador.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Home Docente",listaObjetosSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "documento.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.xlsx")
+                .build();
     }
     
      @POST
     @Path("/descargarHomeDocenteExcel")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response descargarHomeDocenteExcel(SRIPaginacion entidad) {
-        Map<String, Object> respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
-        return null;
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIActividadGeneralPaginacion> listaObjetos
+                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
+            
+            GenerateExcel generadorExcel =  new GenerateExcel();            
+            byte[] blobAsBytes = generadorExcel.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Home Docente",listaObjetosSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "documento.xlsx")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.xlsx")
+                .build();
     }
 }

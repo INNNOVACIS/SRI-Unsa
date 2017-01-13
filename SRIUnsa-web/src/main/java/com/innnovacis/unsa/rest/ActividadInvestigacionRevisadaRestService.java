@@ -149,6 +149,9 @@ public class ActividadInvestigacionRevisadaRestService {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
             respuesta = actividadInvestigacionBusiness.GetActividadesRevisadas(entidad);
             
             ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
@@ -188,6 +191,9 @@ public class ActividadInvestigacionRevisadaRestService {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
             respuesta = actividadInvestigacionBusiness.GetActividadesRevisadas(entidad);
             
             ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
