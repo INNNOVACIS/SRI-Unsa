@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -164,5 +165,21 @@ public class SRIUsuarioColor implements Serializable{
     public void setSEscuela(String SEscuela) {
         this.SEscuela = SEscuela;
     }
-
+    
+    public ArrayList<String> getArrayDatos() {
+        ArrayList<String> arrayRpta = new ArrayList<String>();
+        arrayRpta.add(this.getSDepartamento());
+        arrayRpta.add(this.getSNombre());
+        arrayRpta.add(this.getSApellido());
+        arrayRpta.add(Integer.toString(this.getNDni()));
+        arrayRpta.add(this.getSEmail());
+        arrayRpta.add(Integer.toString(this.getNColor()));
+        
+        return arrayRpta;
+    }
+    public static String[] getArrayHeaders() {
+        String[] nombreColumnas = {"Departamento", "Nombres", "Apellidos",
+            "DNI", "Emailc", "Estado"};
+        return nombreColumnas;
+    }
 }

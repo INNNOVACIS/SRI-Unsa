@@ -9,6 +9,7 @@ package com.innnovacis.unsa.rest;
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
@@ -17,6 +18,7 @@ import com.innnovacis.unsa.util.SRIUsuarioLogin;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -297,11 +299,39 @@ public class UsuarioRestServices {
     
     @POST
     @Path("/descargarPdf")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response descargarPdf(SRIPaginacionObject object) {
-        
-        return null;
+    public Response descargarPdf(SRIPaginacionObject entidad) {
+              
+        try {
+            // Establecemos un rango grande para traer todos los elementos
+            entidad.setRango(2000);
+            int total = usuarioBusiness.GetTotalUsuariosColor(entidad);
+            List<SRIUsuarioColor> lista = usuarioBusiness.GetUsuariosColor(entidad);
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            for(int i = 0; i < lista.size(); i++){
+                listaObjetosSend.add(lista.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIUsuarioColor.getArrayHeaders();
+            
+            GeneratePdf generadorPDF =  new GeneratePdf();            
+            byte[] blobAsBytes = generadorPDF.getArrayByteFrom2( nombreColumnas.length,
+                    nombreColumnas, "Home Director de Unidad",listaObjetosSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "documento.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.pdf")
+                .build();
     }
     
     @POST

@@ -174,7 +174,7 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
 	};
         
         this.descargarPDF = function (request) {
-            $log.debug("ActividadesGeneradasService - descargarPDF");
+            $log.debug("Usuarios - descargarPDF");
 
             var deferred = $q.defer();
             $http({
@@ -214,7 +214,7 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
         };
     
     this.descargarExcel = function (request) {
-        $log.debug("ReportesService - descargarExcel");
+        $log.debug("Usuarios - descargarExcel");
 
         var deferred = $q.defer();
         $http({
