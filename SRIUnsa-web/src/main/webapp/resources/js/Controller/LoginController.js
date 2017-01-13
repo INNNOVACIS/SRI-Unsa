@@ -132,7 +132,11 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             }
             menuHorizontal = menuHorizontal + item;
         });
-        menuHorizontal = menuHorizontal + '<li class="dropdown"> <a class="dropdown-toggle SRI-Pointer" data-toggle="dropdown"   > <i class="fa fa-user fa-fw"></i> ' + '{{ sharedService.usuarioLogin.nombre + " " + sharedService.usuarioLogin.apellido}}' + ' <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user"><li><a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li> </ul> </li>';
+        menuHorizontal = menuHorizontal + '<li class="dropdown"> <a class="dropdown-toggle SRI-Pointer" data-toggle="dropdown"   > <i class="fa fa-user fa-fw"></i> ' 
+                                        + '{{ sharedService.usuarioLogin.nombre + " " + sharedService.usuarioLogin.apellido}}' 
+                                        + ' <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user">'
+                                        + '<li><a ng-click="cambiarContrasena()"><i class="fa fa-refresh fa-fw"></i> Cambiar Contraseña</a></li>'
+                                        + '<li><a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li> </ul> </li>';
         return menuHorizontal;
     };
     

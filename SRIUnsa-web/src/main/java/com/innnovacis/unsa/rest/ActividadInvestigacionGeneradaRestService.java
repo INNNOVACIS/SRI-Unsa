@@ -157,5 +157,19 @@ public class ActividadInvestigacionGeneradaRestService {
                 .build();
     }
     
+    @POST
+    @Path("/descargarHomeDocentePdf")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarHomeDocentePdf(SRIPaginacion entidad) {
+        Map<String, Object> respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
+        return null;
+    }
     
+     @POST
+    @Path("/descargarHomeDocenteExcel")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarHomeDocenteExcel(SRIPaginacion entidad) {
+        Map<String, Object> respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
+        return null;
+    }
 }

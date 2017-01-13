@@ -169,7 +169,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
-        ActividadesGeneradasService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+        ActividadesGeneradasService.descargarHomeDocentePDF(pagina).then(descargarPDFSuccess, descargarPDFError);
     };
     
     $scope.descargarExcel = function(){
@@ -177,7 +177,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
-        ActividadesGeneradasService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
+        ActividadesGeneradasService.descargarHomeDocenteExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
     };
     
 }]);
