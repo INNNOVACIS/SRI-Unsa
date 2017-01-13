@@ -91,7 +91,7 @@
                                 <form ng-show="showCodigoSeguridad" name="formCodigoSeguridad" novalidate class="form-horizontal">
                                     <p>{{ mensaje }}</p>
                                     <div class="form-group">
-                                        <div class="col-md-6" ng-class="{ 'has-error' : formCodigoSeguridad.codigo.$invalid && submitted || formCambiarContrasena.codigo.$error.minlength || formCambiarContrasena.codigo.$error.maxlength}">
+                                        <div class="col-md-6" ng-class="{ 'has-error' : formCodigoSeguridad.codigo.$invalid && submitted || formCodigoSeguridad.codigo.$error.minlength || formCodigoSeguridad.codigo.$error.maxlength}">
                                             <input name="codigo" 
                                                    ng-model="codigoSeguridad" 
                                                    ng-minlength=6 
@@ -105,10 +105,10 @@
                                                 Ingrese el C&oacute;digo de Seguridad.
                                             </p>
                                             <p ng-show="formCodigoSeguridad.codigo.$error.minlength" class="help-block">
-                                                El C&oacute;digo de seguridad, debe tener 6 d&iacute;gitos.
+                                                El C&oacute;digo de seguridad, debe tener 6 caracteres.
                                             </p>
                                             <p ng-show="formCodigoSeguridad.codigo.$error.maxlength" class="help-block">
-                                                El C&oacute;digo de seguridad, debe tener 6 d&iacute;gitos.
+                                                El C&oacute;digo de seguridad, debe tener 6 caracteres.
                                             </p>
                                         </div>
                                     </div>
