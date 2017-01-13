@@ -82,7 +82,7 @@ investigacionApp.service("TipoInvestigacionService", function(SRIUnsaConfig, $lo
 	};
 
 	this.deleteInvesigacion = function(request) {
-		$log.debug("Investigacion Service - Delete Investigacion");
+		$log.debug("InvestigacionService - Delete Investigacion");
 		
 		var deferred = $q.defer();
 		$http({
@@ -97,4 +97,43 @@ investigacionApp.service("TipoInvestigacionService", function(SRIUnsaConfig, $lo
 		return deferred.promise;
 	};
         
+    this.descargarPDF = function (request) {
+        $log.debug("InvestigacionService - descargarPDF");
+
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/descargarPdf',
+            data: request,
+            responseType: 'arraybuffer'
+        }).success(function (data, status, headers) {
+            headers = headers();
+
+            var filename = headers['content-disposition'];//['x-filename'];
+            var contentType = headers['content-type'];
+
+            var linkElement = document.createElement('a');
+            try {
+                var blob = new Blob([data], {type: contentType});
+                var url = window.URL.createObjectURL(blob);
+
+                linkElement.setAttribute('href', url);
+                linkElement.setAttribute("download", filename);
+
+                var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+                linkElement.dispatchEvent(clickEvent);
+            } catch (ex) {
+                console.log(ex);
+            }
+            deferred.resolve(data);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+    
 });

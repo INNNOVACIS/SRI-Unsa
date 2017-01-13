@@ -310,19 +310,13 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         console.log("Respuesta :: ", response);
     };
     
-    $scope.descargarPDFById = function(){
+    $scope.descargarPDF = function(){
         console.log("Empezando descarga de PDF...");
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
-                          filtro : getFiltros()};
-        ActividadesGeneradasService.descargarPDFById(pagina).then(descargarPDFSuccess, descargarPDFError);
+        TipoInvestigacionService.descargarPDF($scope.idActividad).then(descargarPDFSuccess, descargarPDFError);
     };
     
-    $scope.descargarExcelById = function(){
+    $scope.descargarExcel = function(){
         console.log("Empezando descarga de Excel...");
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
-                          filtro : getFiltros()};
-        ActividadesGeneradasService.descargarExcelById(pagina).then(descargarExcelSuccess, descargarExcelError);
+        TipoInvestigacionService.descargarExcel($scope.idActividad).then(descargarExcelSuccess, descargarExcelError);
     };
 }]);

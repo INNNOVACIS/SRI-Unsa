@@ -265,4 +265,13 @@ public class ActividadInvestigacionRestService {
         return builder.build();
     }
     
+        
+    @POST
+    @Path("/descargarPdf")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarPdf(int id) {
+        SRIActividadGeneral body = actividadInvestigacionBusiness.Get(id);        
+        return null;
+    }
+    
 }

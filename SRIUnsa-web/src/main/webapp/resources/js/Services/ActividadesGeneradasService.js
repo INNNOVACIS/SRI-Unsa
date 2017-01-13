@@ -142,6 +142,6 @@ investigacionApp.service("ActividadesGeneradasService", function (SRIUnsaConfig,
             deferred.reject(response);
         });
         return deferred.promise;
-    };    
+    };
     
 });

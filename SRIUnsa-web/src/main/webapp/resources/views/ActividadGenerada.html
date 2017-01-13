@@ -6,7 +6,12 @@
     <div class="row">
         <div class="col-lg-12" style="margin-top:20px;">
             <div class="panel panel-primary">
-                <div class="panel-heading" style="font-weight: bold; text-transform:uppercase;">{{ nombreTipoActividad }}</div>
+                <div class="panel-heading" style="font-weight: bold; text-transform:uppercase; line-height: 2;">{{ nombreTipoActividad }}
+                    <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
+                        <span class="glyphicon glyphicon-cloud-download"></span>
+                        Descargar PDF
+                    </button>
+                </div>
                 <div class="panel-body">
                     
                     <form name="actividadForm" novalidate class="form-horizontal">
