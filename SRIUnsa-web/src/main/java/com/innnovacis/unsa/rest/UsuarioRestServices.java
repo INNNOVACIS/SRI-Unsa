@@ -10,7 +10,6 @@ import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
-import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioHome;
@@ -313,4 +312,21 @@ public class UsuarioRestServices {
         return null;
     }
     
+    
+    @POST
+    @Path("/descargarUsuariosPdf")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarUsuariosPdf(SRIPaginacionObject entidad) {
+        List<SRIUsuarioPersona> lista = usuarioBusiness.GetPagina(entidad);
+        return null;
+    }
+    
+    @POST
+    @Path("/descargarUsuariosExcel")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarUsuariosExcel(SRIPaginacionObject entidad) {
+        List<SRIUsuarioPersona> lista = usuarioBusiness.GetPagina(entidad);
+        return null;
+    }
 }

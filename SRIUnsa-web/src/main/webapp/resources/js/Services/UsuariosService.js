@@ -252,4 +252,74 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
         });
         return deferred.promise;
     };
+    
+    this.descargarUsuariosPDF = function (request) {
+            $log.debug("UsuariosService - descargarUsuariosPDF");
+
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/descargarUsuariosPdf',
+                data: request,
+                responseType: 'arraybuffer'
+            }).success(function (data, status, headers) {
+                headers = headers();
+                var filename = headers['content-disposition'];//['x-filename'];
+                var contentType = headers['content-type'];
+                var linkElement = document.createElement('a');
+                try {
+                    var blob = new Blob([data], {type: contentType});
+                    var url = window.URL.createObjectURL(blob);
+                    linkElement.setAttribute('href', url);
+                    linkElement.setAttribute("download", filename);
+                    var clickEvent = new MouseEvent("click", {
+                        "view": window,
+                        "bubbles": true,
+                        "cancelable": false
+                    });
+                    linkElement.dispatchEvent(clickEvent);
+                } catch (ex) {
+                    console.log(ex);
+                }
+                deferred.resolve(data);
+            }).error(function (response) {
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
+    
+    this.descargarUsuariosExcel = function (request) {
+        $log.debug("UsuariosService - descargarUsuariosExcel");
+
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/descargarUsuariosExcel',
+            data: request,
+            responseType: 'arraybuffer'
+        }).success(function (data, status, headers) {
+            headers = headers();
+            var filename = headers['content-disposition'];//['x-filename'];
+            var contentType = headers['content-type'];
+            var linkElement = document.createElement('a');
+            try {
+                var blob = new Blob([data], {type: contentType});
+                var url = window.URL.createObjectURL(blob);
+                linkElement.setAttribute('href', url);
+                linkElement.setAttribute("download", filename);
+                var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+                linkElement.dispatchEvent(clickEvent);
+            } catch (ex) {
+                console.log(ex);
+            }
+            deferred.resolve(data);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };    
 });

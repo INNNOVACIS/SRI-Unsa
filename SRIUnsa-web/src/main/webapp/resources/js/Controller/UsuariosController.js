@@ -170,4 +170,43 @@ function($log, $scope, UsuariosService, EstructuraOrganizacionService, SharedSer
     $scope.getEstructuraOrganizaciones();
     $scope.getUsuariosByPagina();
  
+ 
+    /******************* EXPORTAR ARCHIVOS *****************/
+    
+    var descargarPDFSuccess = function (response){
+        $log.debug("descargarPDF - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var descargarPDFError = function (response){
+        $log.debug("descargarPDF - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    
+    var descargarExcelSuccess = function (response){
+        $log.debug("descargarExcel - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var descargarExcelError = function (response){
+        $log.debug("descargarExcel - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    
+    $scope.descargarPDF = function(){
+        console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        UsuariosService.descargarUsuariosPDF(objPagina).then(descargarPDFSuccess, descargarPDFError);
+    };
+    
+    $scope.descargarExcel = function(){
+        console.log("Empezando descarga de Excel...");
+        $scope.loader = true;
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        UsuariosService.descargarUsuariosExcel(objPagina).then(descargarExcelSuccess, descargarExcelError);
+    };
+ 
 }]);

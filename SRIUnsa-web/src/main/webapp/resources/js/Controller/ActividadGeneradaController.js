@@ -295,28 +295,18 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     var descargarPDFSuccess = function (response){
         $log.debug("descargarPDF - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarPDFError = function (response){
         $log.debug("descargarPDF - Error");
         console.log("Respuesta :: ", response);
-    };
-    
-    var descargarExcelSuccess = function (response){
-        $log.debug("descargarExcel - Success");
-        console.log("Respuesta :: ", response);
-    };
-    var descargarExcelError = function (response){
-        $log.debug("descargarExcel - Error");
-        console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     $scope.descargarPDF = function(){
         console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
         TipoInvestigacionService.descargarPDF($scope.idActividad).then(descargarPDFSuccess, descargarPDFError);
     };
-    
-    $scope.descargarExcel = function(){
-        console.log("Empezando descarga de Excel...");
-        TipoInvestigacionService.descargarExcel($scope.idActividad).then(descargarExcelSuccess, descargarExcelError);
-    };
+
 }]);
