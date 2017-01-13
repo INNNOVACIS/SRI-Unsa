@@ -178,7 +178,7 @@ investigacionApp.controller('ActividadesRevisadasController',['$log', '$scope', 
     $scope.descargarPDF = function(){
         console.log("Empezando descarga de PDF...");
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: SRIUnsaConfig.DIUN, 
                           filtro : getFiltros()};
         ActividadesRevisadasService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
     };
@@ -186,7 +186,7 @@ investigacionApp.controller('ActividadesRevisadasController',['$log', '$scope', 
     $scope.descargarExcel = function(){
         console.log("Empezando descarga de Excel...");
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
-                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: SRIUnsaConfig.DIUN, 
                           filtro : getFiltros()};
         ActividadesRevisadasService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
     };

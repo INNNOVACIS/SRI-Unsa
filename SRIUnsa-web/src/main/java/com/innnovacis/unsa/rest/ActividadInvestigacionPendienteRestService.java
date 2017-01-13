@@ -6,9 +6,12 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
+import com.innnovacis.unsa.util.GenerateExcel;
 import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacion;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -84,12 +87,24 @@ public class ActividadInvestigacionPendienteRestService {
         try {
             respuesta = actividadInvestigacionBusiness.GetActividadesPendientes(entidad);
             
-            GeneratePdf generadorPDF =  new GeneratePdf();            
-            byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta);
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIActividadGeneralPaginacion> listaObjetos
+                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
+            
+            GeneratePdf generadorDoc =  new GeneratePdf();            
+            byte[] blobAsBytes = generadorDoc.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Actividades de Investigación Pendientes",listaObjetosSend);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
-                    .header("content-disposition", "documento.pdf")
+                    .header("content-disposition", "ActividadesPendientes.pdf")
                     .build();
 
         } catch (Exception ex) {
@@ -109,14 +124,26 @@ public class ActividadInvestigacionPendienteRestService {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
-            respuesta = actividadInvestigacionBusiness.GetActividadesGeneradas(entidad);
+            respuesta = actividadInvestigacionBusiness.GetActividadesPendientes(entidad);
             
-//            GeneratePdf generadorPDF =  new GeneratePdf();            
-            byte[] blobAsBytes = null;//generadorPDF.getArrayByteFrom(respuesta);
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIActividadGeneralPaginacion> listaObjetos
+                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
+            
+            GenerateExcel generadorExcel =  new GenerateExcel();            
+            byte[] blobAsBytes = generadorExcel.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Actividades de Investigación Pendientes",listaObjetosSend);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
-                    .header("content-disposition", "Actividades Pendientes.pdf")
+                    .header("content-disposition", "ActividadesPendientes.xlsx")
                     .build();
 
         } catch (Exception ex) {
@@ -124,7 +151,7 @@ public class ActividadInvestigacionPendienteRestService {
         }
         return Response
                 .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
-                .header("content-disposition", "documentovacio.pdf")
+                .header("content-disposition", "documentovacio.xlsx")
                 .build();
     }
     
