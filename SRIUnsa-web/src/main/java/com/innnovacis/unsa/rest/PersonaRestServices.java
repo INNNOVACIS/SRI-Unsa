@@ -7,29 +7,17 @@ package com.innnovacis.unsa.rest;
 
 
 import com.innnovacis.unsa.business.IPersonaBusiness;
-import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIPersona;
-import com.innnovacis.unsa.model.SRIUsuario;
-import com.innnovacis.unsa.util.SRIPaginacionObject;
-import com.innnovacis.unsa.util.SRIUsuarioPersona;
-import com.innnovacis.unsa.util.SRIUsuarioRolUtil;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.logging.Logger;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
 
 /**
  *
@@ -50,6 +38,15 @@ public class PersonaRestServices {
     @Produces(MediaType.APPLICATION_JSON)
     public List<SRIPersona> getPersonas() {
         return personaBusiness.GetAll();
+    }
+    
+    @PUT
+    @Path("/updatePersona")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updatePersona(SRIPersona persona) {
+        
+            return personaBusiness.updatePersona(persona);        
     }
  
 }

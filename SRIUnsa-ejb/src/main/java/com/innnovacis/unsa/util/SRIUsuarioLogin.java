@@ -51,6 +51,9 @@ public class SRIUsuarioLogin implements Serializable{
     
     @Column(name = "apellido" )
     private String apellido;
+    
+    @Column(name = "codigo" )
+    private String codigo;
 
     public int getIdPersona() {
         return idPersona;
@@ -130,6 +133,14 @@ public class SRIUsuarioLogin implements Serializable{
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
     
 }

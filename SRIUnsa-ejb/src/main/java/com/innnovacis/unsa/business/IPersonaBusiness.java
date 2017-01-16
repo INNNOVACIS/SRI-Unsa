@@ -22,4 +22,5 @@ public interface IPersonaBusiness {
     SRIPersona Get(int idEntidad);
     List<SRIPersona> GetAll();
     
+    boolean updatePersona(SRIPersona persona);
 }

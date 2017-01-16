@@ -117,7 +117,8 @@
                                     <p>{{ mensaje }}</p>
                                     <div class="form-group">
                                         <div  class="col-md-6" ng-class="{ 'has-error' : formCambiarContrasena.contrasena.$invalid && submitted || formCambiarContrasena.contrasena.$error.minlength || formCambiarContrasena.contrasena.$error.maxlength}">
-                                            <input name="contrasena" 
+                                            <input id="contrasena"
+                                                   name="contrasena" 
                                                    ng-model="nuevaContrasena" 
                                                    ng-minlength=5 
                                                    ng-maxlength=10
@@ -125,6 +126,8 @@
                                                    class="form-control" 
                                                    placeholder="Ingrese su Contrase&ntilde;a" 
                                                    required>
+<!--                                            <label style="margin-top: 10px;">Confirmar Contrase&ntilde;a:</label>
+                                            <input type="password" id="contrasena2" name="contrasena2" ng-model="nuevaContrasena2" pw-check="contrasena" />-->
                                             <p ng-show="formCambiarContrasena.contrasena.$error.required && submitted" class="help-block">
                                                 Ingrese la Contrase&ntilde;a.
                                             </p>
@@ -134,6 +137,9 @@
                                             <p ng-show="formCambiarContrasena.contrasena.$error.maxlength" class="help-block">
                                                 La nueva Contrase&ntilde;a debe ser menor o igual que 10 caracteres.
                                             </p>
+<!--                                            <p class="help-block" ng-show="formCambiarContrasena.contrasena2.$error.pwmatch">
+                                                Las contrase&ntilde;as no coinciden.
+                                            </p> -->
                                         </div>
                                     </div>
                                 </form>
@@ -153,6 +159,56 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                         <span class="glyphicon glyphicon-remove"></span>
                         Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="modalDni" class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingrese su DNI</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form name="formDni" novalidate class="form-horizontal">
+                                    <p>Bienvenido al Sistema de Registro de Investigaciones, por favor ingrese su n&uacute;mero de DNI.</p>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-md-6" ng-class="{ 'has-error' : formDni.dni.$invalid && submitted || formDni.dni.$error.minlength || formDni.dni.$error.maxlength}">
+                                            <input name="dni" 
+                                                   ng-model="dniUsuario" 
+                                                   ng-minlength=8 
+                                                   ng-maxlength=8
+                                                   type="number"
+                                                   class="form-control" 
+                                                   placeholder="########" 
+                                                   required>
+                                            <p ng-show="formDni.dni.$error.required && submitted" class="help-block">
+                                                Ingrese el n&uacute;mero de DNI.
+                                            </p>
+                                            <p ng-show="formDni.dni.$error.minlength" class="help-block">
+                                                El n&uacute;mero de DNI, debe tener 8 D&iacute;gitos.
+                                            </p>
+                                            <p ng-show="formDni.dni.$error.maxlength" class="help-block">
+                                                El n&uacute;mero de DNI, debe tener 8 D&iacute;gitos.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="guardarDni()">
+                        <span class="glyphicon glyphicon-rol"></span>
+                        Guardar
                     </button>
                 </div>
             </div>
