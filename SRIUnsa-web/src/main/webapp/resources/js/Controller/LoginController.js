@@ -16,6 +16,11 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             $scope.sharedService.usuarioLogin = $localStorage.usuarioLogin;
             $scope.sharedService.userAutenticado = $localStorage.autenticado;
             
+            if($scope.sharedService.usuarioLogin.codigo === null || $scope.sharedService.usuarioLogin.codigo === ""){
+//                $('#modalDni').modal({backdrop: 'static', keyboard: false});
+                $('#modalDni').modal('show');
+            }
+            
             $scope.GetPrivilegiosByIdUsuario($scope.sharedService.usuarioLogin.idUsuario);                
         } else {
             alert("Usuario no registrado");

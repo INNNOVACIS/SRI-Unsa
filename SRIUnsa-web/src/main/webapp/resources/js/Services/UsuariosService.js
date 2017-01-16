@@ -82,7 +82,23 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
             return deferred.promise;
 	};
         
-        this.GetByIdUsuario = function(idUsuario) {
+    this.updatePersona = function(request) {
+        $log.debug("Usuario Service - UpdatePersona");
+
+        var deferred = $q.defer();
+        $http({
+                method : 'PUT',
+                url : SRIUnsaConfig.SRIUnsaUrlServicio + '/persona/updatePersona',
+                data : request
+        }).success(function(response) {
+                deferred.resolve(response);
+        }).error(function(response) {			
+                deferred.reject(response);
+        });
+        return deferred.promise;
+    };    
+    
+    this.GetByIdUsuario = function(idUsuario) {
             $log.debug("Usuario Service - get Usuarios");
 
             var deferred = $q.defer();
@@ -96,6 +112,7 @@ investigacionApp.service("UsuariosService", function(SRIUnsaConfig, $log, $http,
             });
             return deferred.promise;
 	};
+        
         
         this.GetActoresByIdUsuario = function(idUsuario) {
             $log.debug("Usuario Service - GetActoresByIdUsuario");

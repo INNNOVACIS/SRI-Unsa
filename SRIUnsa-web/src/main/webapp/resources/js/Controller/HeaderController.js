@@ -1,5 +1,6 @@
 investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', 'SharedService', '$window', '$localStorage', 'ngToast',
-    '$log', 'HeaderService', function($scope, $sce, $location, SharedService, $window, $localStorage, ngToast, $log, HeaderService) {
+    '$log', 'HeaderService', 'UsuariosService', function($scope, $sce, $location, SharedService, $window, $localStorage, ngToast, $log, HeaderService,
+        UsuariosService) {
 
     $scope.sharedService = SharedService;
     $scope.isActivo = "Actividades de Investigacion";
@@ -8,6 +9,37 @@ investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', '
 
     $scope.nombreUsuario = $scope.sharedService.usuarioLogin === undefined ? "" : $scope.sharedService.usuarioLogin.nombreUsuario;
     $scope.submitted = false;
+    
+    if($scope.sharedService.usuarioLogin !== undefined){
+        if($scope.sharedService.usuarioLogin.codigo === null ||$scope.sharedService.usuarioLogin.codigo === ""){
+            $('#modalDni').modal('show');
+        }
+    }
+    
+    var updatePersonaSuccess = function(response){
+        console.log("UpdatePersona - Success")
+        console.log("Respuesta :: ", response);
+        $('#modalDni').modal('hide');
+        $scope.sharedService.usuarioLogin.codigo = $scope.dniUsuario;
+    };
+    
+    var updatePersonaError = function(response){
+        console.log("UpdatePersona - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.guardarDni = function(){
+        if($scope.formDni.$valid){
+            var persona = {
+                nidPersona : $scope.sharedService.usuarioLogin.idPersona,
+                sapellido : $scope.sharedService.usuarioLogin.idUsuario.toString(),
+                ndni : $scope.dniUsuario
+            };
+            UsuariosService.updatePersona(persona).then(updatePersonaSuccess, updatePersonaError);
+        } else {
+            $scope.submitted = true;
+        }
+    };
     
     $scope.logout = function(){
         
@@ -111,6 +143,10 @@ investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', '
     $scope.enviarCodigo = function(){
         HeaderService.enviarCodigo($scope.sharedService.usuarioLogin.idUsuario).then(enviarCodigoSuccess, enviarCodigoError);
     };
+    
+    $scope.$watch('contrasena2', function() {
+        console.log("no coincide", $scope.contrasena2);
+    });
     
     /**************** NOTIFICACIONES *****************/
     var openNotice = function (text, type) {
