@@ -5,7 +5,6 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IArchivoBusiness;
 import com.innnovacis.unsa.dao.IArchivoDao;
 import com.innnovacis.unsa.model.SRIArchivo;
-import com.innnovacis.unsa.model.SRIPrivilegio;
 import com.innnovacis.unsa.util.SRIArchivoUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 
@@ -135,5 +134,4 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
         return respuesta;
     }
 
-    
 }

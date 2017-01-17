@@ -90,6 +90,7 @@
         $log.debug("GetFondos - Success");
         console.log("Respuesta :: ", response);
         $scope.tipoAsesorias = response;
+        $scope.tipoAsesoria = $scope.tipoAsesorias[0];
     };
     var GetTipoAsesoriasError = function(response){
         $log.debug("GetFondos - Error");
@@ -329,6 +330,8 @@
                     snombreCurso : $scope.nombreCurso,
                     snumeroContrato : $scope.numeroContrato,
                     snombrePublicacion : $scope.nombrePublicacion,
+                    sestadoProduccion : $scope.estadoProduccion,
+                    sduracionProyecto : $scope.duracion,
                     scodigo : $scope.codigo,
                     splazoEjecucion : $scope.plazoEjecucion,
                     suserCreacion : $scope.sharedService.usuarioLogin.nombreUsuario,
@@ -434,13 +437,16 @@
     
     $scope.changeTipoActividad = function(tipoActividad){
         $scope.mostrarActividad = [false, false, false, false]; //case1 , case2, case3, case4
+        $scope.realizado = true;
+        $scope.ejecucion = true;
+        $scope.pendiente = true;
         switch(tipoActividad.toUpperCase()) {
             case "INVESTIGACION FORMATIVA":
                 $scope.mostrarActividad = [true, false, false, false];
                 $scope.descripcionLabel = "Breve descripcion de la Actividad Formativa";
                 $scope.tituloLabel = "Nombre del curso o Asignatura";
                 $scope.adjuntar = "Adjuntar Sílabo del Curso";
-                $scope.adjuntarOtros = "Adjuntar Resultados de Investigación";
+                $scope.adjuntarOtros = "Adjuntar Resultados de Investigación(Opcional)";
                 $scope.showDescripcion = true;
                 break;
             case "ASESORIA DE TESIS":
@@ -448,7 +454,7 @@
                 $scope.descripcionLabel = "Resumen de Tesis";
                 $scope.tituloLabel = "Titulo de Tesis";
                 $scope.adjuntar = "Adjuntar Resolución";
-                $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)";
+                $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)(Opcional)";
                 $scope.showDescripcion = false;
                 break;
             case "INVESTIGACIONES BASICAS Y APLICADAS":
@@ -476,6 +482,30 @@
                 $scope.showDescripcion = true;
         };
     };
+    
+    $scope.changeEstadoProduccion = function(){        
+        $scope.realizado = false;
+        $scope.ejecucion = false;
+        $scope.pendiente = false;
+        switch($scope.estadoProduccion) {
+            case "REALIZADO":
+                $scope.realizado = true;
+                $scope.ejecucion = false;
+                $scope.pendiente = false;
+                break;
+            case "EJECUCION":
+                $scope.realizado = false;
+                $scope.ejecucion = true;
+                $scope.pendiente = false;
+                break;
+            case "PENDIENTE":
+                $scope.realizado = false;
+                $scope.ejecucion = false;
+                $scope.pendiente = true;
+                break;
+        };
+    };
+    
     
     $scope.registrarNuevaActividad = function(){
         limpiarCampos();
@@ -649,6 +679,7 @@
     
     $scope.today = function() {
         $scope.fechaRegistro = new Date();
+        $scope.fechaShowRegistro = $scope.sharedService.dateToString($scope.fechaRegistro);
     };
     $scope.today();
 

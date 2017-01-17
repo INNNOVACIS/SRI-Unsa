@@ -6,13 +6,9 @@
 package com.innnovacis.unsa.util;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -761,7 +757,7 @@ public class Email {
 //        log.log(Level.INFO, "Email password : {0}", pass);
 //        log.log(Level.INFO, "Email port : {0}", port);
 //        log.log(Level.INFO, "Email auth : {0}", auth);
-        // first part (the html)
+//        first part (the html)
         BodyPart messageBodyPart = new MimeBodyPart();
         String htmlText = body;
         try {
@@ -818,13 +814,13 @@ public class Email {
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
             
+            //ADJUNTAR IMAGE
             DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
-            
             multipart.addBodyPart(messageBodyPart);
             
-            //ENVIAR INFORME BYTE
+            //ADJUNTAR INFORME BYTE
             DataSource dataSource = new ByteArrayDataSource(informe, "application/pdf");
             MimeBodyPart pdfBodyPart = new MimeBodyPart();
             pdfBodyPart.setDataHandler(new DataHandler(dataSource));
@@ -836,13 +832,6 @@ public class Email {
             message.setFrom(new InternetAddress(from));
             InternetAddress[] toAddress = new InternetAddress[to.size()];
             
-            
-            
-//            BufferedDataSource bds = new BufferedDataSource(informe, "Informe"); 
-//            messageBodyPart.setDataHandler(new DataHandler(bds)); 
-//            messageBodyPart.setFileName(bds.getName());
-            
-            // To get the array of addresses
             for (int i = 0; i < to.size(); i++) {
                 toAddress[i] = new InternetAddress(to.get(i));
             }
@@ -866,42 +855,16 @@ public class Email {
 }
 
 class GMailAuthenticator extends Authenticator {
-     String user;
-     String pw;
-     public GMailAuthenticator (String username, String password)
-     {
-        super();
-        this.user = username;
-        this.pw = password;
-     }
+    String user;
+    String pw;
+    public GMailAuthenticator (String username, String password)
+    {
+       super();
+       this.user = username;
+       this.pw = password;
+    }
     public PasswordAuthentication getPasswordAuthentication()
     {
        return new PasswordAuthentication(user, pw);
     }
-}
-
-
-class BufferedDataSource implements DataSource { 
-
-    private byte[] _data; 
-    private java.lang.String _name; 
-
-    public BufferedDataSource(byte[] data, String name) { 
-    _data = data; 
-    _name = name;
-    } 
-
-public String getContentType() { return "application/octet-stream";} 
-public InputStream getInputStream() throws IOException { return new ByteArrayInputStream(_data);} 
-public String getName() { return _name;} 
-
-/** 
-* Returns an OutputStream from the DataSource 
-* @returns OutputStream Array of bytes converted into an OutputStream 
-*/ 
-public OutputStream getOutputStream() throws IOException { 
-OutputStream out = new ByteArrayOutputStream(); 
-out.write(_data); 
-return out;
-}
 }

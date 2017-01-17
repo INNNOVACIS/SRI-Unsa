@@ -1,7 +1,7 @@
 investigacionApp.controller('ActividadesPendientesController',['$log', '$scope', '$location', 'FondoConcursableService', 'SRIUnsaConfig',
-    'SemestreService', 'TipoInvestigacionService', 'ActividadesPendientesService', 'TipoNivelService', 'EstructuraOrganizacionService', 'SharedService',
+    'SemestreService', 'TipoInvestigacionService', 'ActividadesPendientesService', 'ArchivosService', 'EstructuraOrganizacionService', 'SharedService',
     'UsuarioFlujoService' ,function($log, $scope, $location, FondoConcursableService, SRIUnsaConfig,
-    SemestreService, TipoInvestigacionService, ActividadesPendientesService, TipoNivelService, EstructuraOrganizacionService, SharedService,
+    SemestreService, TipoInvestigacionService, ActividadesPendientesService, ArchivosService, EstructuraOrganizacionService, SharedService,
     UsuarioFlujoService ) {
     
     $scope.sharedService = SharedService;
@@ -64,6 +64,27 @@ investigacionApp.controller('ActividadesPendientesController',['$log', '$scope',
         console.log("Respuesta :: ", response);
     };
     
+    var descargarArchivoSuccess = function(response){
+        $log.debug("descargarArchivo - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var descargarArchivoError = function(response){
+        $log.debug("descargarArchivo - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var getArchivosByIdActividadSuccess = function(response){
+        $log.debug("getArchivosByIdActividad - Success");
+        console.log("Respuesta :: ", response);
+        angular.forEach(response, function(value, key){
+            ArchivosService.descargarArchivo(value.id).then(descargarArchivoSuccess, descargarArchivoError);
+        });
+    };
+    var getArchivosByIdActividadError = function(response){
+        $log.debug("getArchivosByIdActividad - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     /******************* Servicios *******************/
 
     $scope.getEstructuraOrganizaciones = function(){
@@ -87,6 +108,11 @@ investigacionApp.controller('ActividadesPendientesController',['$log', '$scope',
             nidUsuario : $scope.sharedService.usuarioLogin.idUsuario
         };
         UsuarioFlujoService.CreateAndGetUsuarioFlujo(usuarioFlujo).then(CreateAndGetUsuarioFlujoSuccess, CreateAndGetUsuarioFlujoError);
+    };
+    
+    $scope.getArchivosByIdActividad = function(actividadPendiente){
+        var idActividadInvestigacion = actividadPendiente.idactividadinvestigacion;
+        ArchivosService.getArchivosByIdActividad(idActividadInvestigacion).then(getArchivosByIdActividadSuccess, getArchivosByIdActividadError);
     };
     
     /**************** PAGINACION *****************/
@@ -121,12 +147,15 @@ investigacionApp.controller('ActividadesPendientesController',['$log', '$scope',
     };
     
     var paginacionActividadesSuccess = function(response){
+        $log.debug("paginacionActividadesPendientes - Success");
+        console.log("Respuesta :: ", response);
         $scope.actividadesPendientes = response.lista;
         $scope.total = response.total;
         $scope.loadTable = false;
     };
     var paginacionActividadesError = function(response){
-        console.log("error :: ", response);
+        $log.debug("paginacionActividadesPenedientes - Error");
+        console.log("Respuesta :: ", response);
     };
     
     $scope.getActividades = function(){
