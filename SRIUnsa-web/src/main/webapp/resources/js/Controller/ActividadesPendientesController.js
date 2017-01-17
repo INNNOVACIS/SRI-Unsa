@@ -185,6 +185,8 @@ investigacionApp.controller('ActividadesPendientesController',['$log', '$scope',
         $location.path("/actividad/Pendientes/"+ actividadPendiente.idactividadinvestigacion);
     };
     
+    
+    
     /*********** IMPRIMIR REPORTE ***********/
     
     var descargarPDFSuccess = function (response){

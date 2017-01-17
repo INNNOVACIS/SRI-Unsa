@@ -17,7 +17,6 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             $scope.sharedService.userAutenticado = $localStorage.autenticado;
             
             if($scope.sharedService.usuarioLogin.codigo === null || $scope.sharedService.usuarioLogin.codigo === ""){
-//                $('#modalDni').modal({backdrop: 'static', keyboard: false});
                 $('#modalDni').modal('show');
             }
             
@@ -93,12 +92,16 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
                 $localStorage.idUsuarioRegistrar = -1,
                 $scope.sharedService.idUsuarioRegistrar = $localStorage.idUsuarioRegistrar;
             }
-            if(value.scodigo === "DIUN" && rango === 0){
+            if(value.scodigo === "DIDE" && rango === 0){
                 rango = 1;
+                location = "/homeDirectorDepartamento";
+            }
+            if(value.scodigo === "DIUN" && rango === 0){
+                rango = 2
                 location = "/homeDirectorUnidad";
             }
             if(value.scodigo === "VICE"){
-                rango = 2;
+                rango = 3;
                 location = "/homeVicerector";
             }
         });
@@ -114,6 +117,10 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
                 item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
                 menuHorizontal = menuHorizontal + item;
             }
+            if(value.nidPadre === 0 && value.surlPrivilegio !== null && value.surlPrivilegio === '#homeDirectorDepartamento'){
+                item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
+                menuHorizontal = menuHorizontal + item;
+            }
         });
         
         
@@ -121,7 +128,7 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             var item = "";
             var subItem = "";
             // Item padre sin DropDown
-            if(value.nidPadre === 0 && value.surlPrivilegio !== null && value.surlPrivilegio !== '#homeDirectorUnidad' && value.surlPrivilegio !== '#home'){ //or ""
+            if(value.nidPadre === 0 && value.surlPrivilegio !== null && value.surlPrivilegio !== '#homeDirectorUnidad' && value.surlPrivilegio !== '#homeDirectorDepartamento' && value.surlPrivilegio !== '#home'){ //or ""
                 item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
             }
             // Item padre con DropDown

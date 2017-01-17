@@ -24,6 +24,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/HomeDocente.html',
 		controller : 'HomeDocenteController'
 	})
+        .when('/homeDirectorDepartamento', {
+		templateUrl : 'resources/views/HomeDirectorDepartamento.html',
+		controller : 'HomeDirectorDepartamentoController'
+	})
         .when('/homeDirectorUnidad', {
 		templateUrl : 'resources/views/HomeDirectorUnidad.html',
 		controller : 'HomeDirectorUnidadController'

@@ -771,5 +771,29 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         }
         return respuesta;
     }
+
+    @Override
+    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion) {
+        List<SRIDocentesActivosInactivosFacultad> respuesta = null;
+        try{
+            respuesta = actividadInvestigacionDao.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento) {
+        List<SRITotalTipoActividad> respuesta = null;
+        try{
+            respuesta = actividadInvestigacionDao.GetTotalActividadesByTipoActividadDepartamento(idDepartamento);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
     
 }
