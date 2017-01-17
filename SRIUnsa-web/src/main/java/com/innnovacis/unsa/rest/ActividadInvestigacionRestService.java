@@ -9,7 +9,6 @@ import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
-import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import java.util.HashMap;
 import java.util.List;
@@ -224,7 +223,24 @@ public class ActividadInvestigacionRestService {
         return builder.build();
     }
     
-    
+    @GET
+    @Path("GetTotalActividadesByTipoActividadDepartamento/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetTotalActividadesByTipoActividadDepartamento(@PathParam("id") int id){
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        List<SRITotalTipoActividad>  totalTipoActividades = null;
+        try {
+            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadDepartamento(id);
+            respuesta.put("body", totalTipoActividades);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetTotalActividadesByTipoActividadDepartamento - Success : {0}", totalTipoActividades.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetTotalActividadesByTipoActividadDepartamento - Error : {0}", ex.getMessage());
+        }
+        return builder.build();
+    }
     
     
     @GET
@@ -261,6 +277,25 @@ public class ActividadInvestigacionRestService {
         } catch(Exception ex) {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
             log.log(Level.INFO, "GetActivosInactivosByFacultad Error : {0}", ex.getMessage());
+        }
+        return builder.build();
+    }
+    
+    @GET
+    @Path("GetTotalActivosInactivosHomeDepartamento/{idDepartamento:[0-9][0-9]*}/{idTipoInvestigacion:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetTotalActivosInactivosHomeDepartamento(@PathParam("idDepartamento") int idDepartamento, @PathParam("idTipoInvestigacion") int idTipoInvestigacion){
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        List<SRIDocentesActivosInactivosFacultad>  totalTipoActividades = null;
+        try {
+            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion);
+            respuesta.put("body", totalTipoActividades);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetTotalActivosInactivosHomeDepartamento Success : {0}", totalTipoActividades.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetTotalActivosInactivosHomeDepartamento Error : {0}", ex.getMessage());
         }
         return builder.build();
     }

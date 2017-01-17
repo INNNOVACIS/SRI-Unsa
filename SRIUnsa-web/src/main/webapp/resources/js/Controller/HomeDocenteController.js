@@ -54,6 +54,18 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         console.log("Respuesta :: ", response);
     };
     
+    var enviarInformeSuccess = function(response){
+        $log.debug("enviarInforme - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var enviarInformeError = function(response){
+        $log.debug("enviarInforme - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    
+    
     $scope.getSemestres = function(){
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
@@ -68,6 +80,14 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         sessvars.tipoInvestigacion = tipoInvestigacion;
         $scope.sharedService.tipoInvestigacion = sessvars.tipoInvestigacion;
         $location.path("/home");
+    };
+    
+    $scope.enviarInforme = function(){
+        $scope.loader = true;
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        ActividadesGeneradasService.enviarInforme(pagina).then(enviarInformeSuccess, enviarInformeError);
     };
     
     $scope.changeSemestre = function(semestre){

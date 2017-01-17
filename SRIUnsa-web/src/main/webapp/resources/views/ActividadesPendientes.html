@@ -71,24 +71,23 @@
                                         <span ng-show="sortType === 'id' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'id' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-    <!--                                <th>Nombre de la Actividad</th>
-                                    <th>Docente</th>-->
-                                    <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
+
+<!--                                    <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Facultad
                                         <span ng-show="sortType === 'facultad' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'facultad' && sortReverse" class="fa fa-caret-up"></span>
-                                    </th>
+                                    </th>-->
                                     <th ng-click="sortType = 'departamento'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Departamento
                                         <span ng-show="sortType === 'departamento' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'departamento' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-                                    <th ng-click="sortType = 'semestre'; sortReverse = !sortReverse" style='cursor: pointer'>
+<!--                                    <th ng-click="sortType = 'semestre'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Semestre
                                         <span ng-show="sortType === 'semestre' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'semestre' && sortReverse" class="fa fa-caret-up"></span>
-                                    </th>
-    <!--                                <th>Nombre del Proyecto</th>-->
+                                    </th>-->
+
                                     <th ng-click="sortType = 'nombreactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Nombre del Proyecto
                                         <span ng-show="sortType === 'nombreactividad' && !sortReverse" class="fa fa-caret-down"></span>
@@ -99,18 +98,16 @@
                                         <span ng-show="sortType === 'tipoactividad' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'tipoactividad' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-                                    
-                                   
-                                    
+
                                      <th ng-click="sortType = 'fechacreacion'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                        Fecha Creación
+                                        Fecha de Registro
                                         <span ng-show="sortType === 'fechacreacion' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'fechacreacion' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
                                     
                                     
                                      <th ng-click="sortType = 'ultimafecha'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                        Fecha Ultima Revisión
+                                        Fecha Revisión
                                         <span ng-show="sortType === 'ultimafecha' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'ultimafecha' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
@@ -139,9 +136,9 @@
                             <tbody>
                                 <tr ng-repeat="actividadPendiente in actividadesPendientes | orderBy:sortType:sortReverse" class="table-overflow">
                                     <td >{{ actividadPendiente.id }}</td>
-                                    <td >{{ actividadPendiente.facultad }}</td>
+<!--                                    <td >{{ actividadPendiente.facultad }}</td>-->
                                     <td >{{ actividadPendiente.departamento }}</td>   
-                                    <td >{{ actividadPendiente.semestre }}</td>
+<!--                                    <td >{{ actividadPendiente.semestre }}</td>-->
                                     <td >{{ actividadPendiente.nombreactividad }}</td>
                                     <td >{{ actividadPendiente.tipoactividad }}</td>
                                     <td >{{ actividadPendiente.fechacreacion }}</td>
@@ -149,7 +146,11 @@
                                     <td >{{ actividadPendiente.ultimoaprobador }}</td>
                                     <td >{{ actividadPendiente.pendiente }}</td>
                                     <td >{{ actividadPendiente.fondoconcursable }}</td>                                    
-                                    <td >{{ actividadPendiente.cantidad }}</td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="getArchivosByIdActividad(actividadPendiente)">
+                                            <span class="glyphicon glyphicon-down"></span> {{ actividadPendiente.cantidad }} Descargar
+                                        </button>
+                                    </td>
                                     <td nowrap>
                                         <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadPendiente)" src="resources/images/iconos/ver.png">
                                     </td>

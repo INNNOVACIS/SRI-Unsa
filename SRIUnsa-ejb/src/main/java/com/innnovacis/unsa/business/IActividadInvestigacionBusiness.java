@@ -42,6 +42,7 @@ public interface IActividadInvestigacionBusiness {
     Map<String, Object> GetActividadesByDocenteColaboradores(SRIPaginacion entidad);
     Map<String, Object> GetActividadesByDocenteDetalle(SRIPaginacion entidad);
     boolean EnviarEmail(SRIActividadGeneral entidad);
+    boolean EnviarInforme(byte[] informe);
     
     List<SRICabeceraDetalleMasiva> GetCabeceraMasiva(int idUsuarioFlujo);
     Map<String, Object> GetDetalleMasiva(SRIPaginacion entidad);
@@ -49,5 +50,7 @@ public interface IActividadInvestigacionBusiness {
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad();
     List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion);
     List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion);
+    List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad);
+    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento);
 }

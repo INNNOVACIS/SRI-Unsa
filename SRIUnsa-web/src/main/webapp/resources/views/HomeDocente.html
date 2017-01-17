@@ -59,22 +59,21 @@
                                                 <span ng-show="sortType === 'id' && !sortReverse" class="fa fa-caret-down"></span>
                                                 <span ng-show="sortType === 'id' && sortReverse" class="fa fa-caret-up"></span>
                                             </th>
-                                            <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
+<!--                                            <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                                 Facultad
                                                 <span ng-show="sortType === 'facultad' && !sortReverse" class="fa fa-caret-down"></span>
                                                 <span ng-show="sortType === 'facultad' && sortReverse" class="fa fa-caret-up"></span>
-                                            </th>
+                                            </th>-->
                                             <th ng-click="sortType = 'departamento'; sortReverse = !sortReverse" style='cursor: pointer'>
                                                 Departamento
                                                 <span ng-show="sortType === 'departamento' && !sortReverse" class="fa fa-caret-down"></span>
                                                 <span ng-show="sortType === 'departamento' && sortReverse" class="fa fa-caret-up"></span>
                                             </th>
-                                            <th ng-click="sortType = 'semestre'; sortReverse = !sortReverse" style='cursor: pointer'>
+<!--                                            <th ng-click="sortType = 'semestre'; sortReverse = !sortReverse" style='cursor: pointer'>
                                                 Semestre
                                                 <span ng-show="sortType === 'semestre' && !sortReverse" class="fa fa-caret-down"></span>
                                                 <span ng-show="sortType === 'semestre' && sortReverse" class="fa fa-caret-up"></span>
-                                            </th>
-            <!--                                <th>Nombre del Proyecto</th>-->
+                                            </th>-->
                                             <th ng-click="sortType = 'nombreactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                                 Nombre del Proyecto
                                                 <span ng-show="sortType === 'nombreactividad' && !sortReverse" class="fa fa-caret-down"></span>
@@ -126,9 +125,9 @@
                                     <tbody>
                                         <tr ng-repeat="actividadGenerada in actividadesGeneradas | orderBy:sortType:sortReverse" class="table-overflow">
                                             <td >{{ actividadGenerada.id }}</td>
-                                            <td >{{ actividadGenerada.facultad }}</td>
+<!--                                            <td >{{ actividadGenerada.facultad }}</td>-->
                                             <td >{{ actividadGenerada.departamento }}</td>   
-                                            <td >{{ actividadGenerada.semestre }}</td>
+<!--                                            <td >{{ actividadGenerada.semestre }}</td>-->
                                             <td ><strong>{{ actividadGenerada.nombreactividad }}</strong></td>
                                             <td >{{ actividadGenerada.tipoactividad }}</td>
 
@@ -155,6 +154,10 @@
                                     total="total">    
                                 </pagination>
                             </div>
+                            <button class="btn btn-danger btn-sm pull-right" ng-click="enviarInforme()">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                Enviar Informe
+                            </button>
                         </div>
                     </div>
                 </div>

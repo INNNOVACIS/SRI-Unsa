@@ -47,6 +47,8 @@ public interface IActividadInvestigacionDao {
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad();
     List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion);
     List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion);
+    List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad);
+    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento);
     
 }

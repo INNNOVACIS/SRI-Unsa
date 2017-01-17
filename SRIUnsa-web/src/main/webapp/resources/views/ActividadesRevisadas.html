@@ -69,24 +69,21 @@
                                         <span ng-show="sortType === 'id' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'id' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-    <!--                                <th>Nombre de la Actividad</th>
-                                    <th>Docente</th>-->
-                                    <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
+<!--                                    <th ng-click="sortType = 'facultad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Facultad
                                         <span ng-show="sortType === 'facultad' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'facultad' && sortReverse" class="fa fa-caret-up"></span>
-                                    </th>
+                                    </th>-->
                                     <th ng-click="sortType = 'departamento'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Departamento
                                         <span ng-show="sortType === 'departamento' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'departamento' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
-                                    <th ng-click="sortType = 'semestre'; sortReverse = !sortReverse" style='cursor: pointer'>
+<!--                                    <th ng-click="sortType = 'semestre'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Semestre
                                         <span ng-show="sortType === 'semestre' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'semestre' && sortReverse" class="fa fa-caret-up"></span>
-                                    </th>
-    <!--                                <th>Nombre del Proyecto</th>-->
+                                    </th>-->
                                     <th ng-click="sortType = 'nombreactividad'; sortReverse = !sortReverse" style='cursor: pointer'>
                                         Nombre del Proyecto
                                         <span ng-show="sortType === 'nombreactividad' && !sortReverse" class="fa fa-caret-down"></span>
@@ -100,14 +97,14 @@
                                     
                                     
                                      <th ng-click="sortType = 'fechacreacion'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                        Fecha Creación
+                                        Fecha de Registro
                                         <span ng-show="sortType === 'fechacreacion' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'fechacreacion' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
                                     
                                     
                                      <th ng-click="sortType = 'ultimafecha'; sortReverse = !sortReverse" style='cursor: pointer'>
-                                        Fecha Ultima Revisión
+                                        Fecha Revisión
                                         <span ng-show="sortType === 'ultimafecha' && !sortReverse" class="fa fa-caret-down"></span>
                                         <span ng-show="sortType === 'ultimafecha' && sortReverse" class="fa fa-caret-up"></span>
                                     </th>
@@ -137,9 +134,9 @@
                             <tbody>
                                 <tr ng-repeat="actividadRevisada in actividadesRevisadas | orderBy:sortType:sortReverse" class="table-overflow">
                                     <td >{{ actividadRevisada.id }}</td>
-                                    <td >{{ actividadRevisada.facultad }}</td>
+<!--                                    <td >{{ actividadRevisada.facultad }}</td>-->
                                     <td >{{ actividadRevisada.departamento }}</td>   
-                                    <td >{{ actividadRevisada.semestre }}</td>
+<!--                                    <td >{{ actividadRevisada.semestre }}</td>-->
                                     <td >{{ actividadRevisada.nombreactividad }}</td>
                                     <td >{{ actividadRevisada.tipoactividad }}</td>  
                                     <td >{{ actividadRevisada.fechacreacion }}</td>

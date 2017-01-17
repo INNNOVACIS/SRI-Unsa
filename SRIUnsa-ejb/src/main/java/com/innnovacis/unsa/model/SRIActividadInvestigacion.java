@@ -112,6 +112,12 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     
     @Column(name = "nombrepublicacion")
     private String SNombrePublicacion;
+    
+    @Column(name = "estadoproduccion")
+    private String SEstadoProduccion;
+    
+    @Column(name = "duracionproyecto")
+    private String SDuracionProyecto;
 
     public int getNIdActividadInvestigacion() {
         return NIdActividadInvestigacion;
@@ -336,7 +342,22 @@ public class SRIActividadInvestigacion  extends SRIEntidad implements Serializab
     public void setSNombrePublicacion(String SNombrePublicacion) {
         this.SNombrePublicacion = SNombrePublicacion;
     }
-    
-    
+
+    public String getSEstadoProduccion() {
+        return SEstadoProduccion;
+    }
+
+    public void setSEstadoProduccion(String SEstadoProduccion) {
+        this.SEstadoProduccion = SEstadoProduccion;
+    }
+
+    public String getSDuracionProyecto() {
+        return SDuracionProyecto;
+    }
+
+    public void setSDuracionProyecto(String SDuracionProyecto) {
+        this.SDuracionProyecto = SDuracionProyecto;
+    }
+
 }
 

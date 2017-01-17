@@ -31,6 +31,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 /**
  *
@@ -587,6 +588,63 @@ public class Email {
         return mensaje;
     }
     
+    public String GetBodyEmailInforme(String nombreCompleto) {
+        String mensaje = "<html>"
++"<head>"
++"</head>"
++"<body style='margin: 0; padding: 0;'>"
++"	<table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
++"		<tr>"
++"			<td style='padding: 10px 0 30px 0;'>"
++"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
++"					<tr>"
++"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
++"							<img src=\"cid:LogoUnsa\" alt='Creating Email Magic' width='400' height='160' style='display: block;' />"
++"						</td>"
++"					</tr>"
++"					<tr>"
++"						<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
++"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
++"								<tr>"
++"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
++"										<b>SRI - Confirmacion de Operacion!</b>"
++"									</td>"
++"								</tr>"
++"								<tr>"
++"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"										Estimado " + nombreCompleto + ":"
++"									</td>"              
++"								</tr>"
++"								<tr>"
++"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"										Le envio el informe de las actividades generadas para el semestre actual."
++"									</td>"              
++"								</tr>"
++"							</table>"
++"						</td>"
++"					</tr>"
++"					<tr>"
++"						<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
++"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
++"								<tr>"
++"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
++"										Para acceder al Registro de su Actividad de Investigacion <a href='http://www.google.com.pe' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
++"										&reg;Innnovacis,  SRIUnsa 2016"
++"									</td>"
++"								</tr>"
++"							</table>"
++"						</td>"
++"					</tr>"
++"				</table>"
++"			</td>"
++"		</tr>"
++"	</table>"
++"</body>"
++"</html>";
+            
+        return mensaje;
+    }
+    
     public String readProperties(String value) throws IOException {
         String respuesta = "";
         URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
@@ -624,6 +682,25 @@ public class Email {
         }
         
         this.info = from + " : " + pass + " : " + host + " : " + pass + " : " + port + " : " + auth + " : " + enable;
+    }
+    
+    public void enviarInforme(byte[] informe, List<String> destinatarios) throws GeneralSecurityException, IOException{
+        Email email = new Email();
+        String from = email.readProperties("user");
+        String pass = MD5.decrypt(email.readProperties("password"));
+        String host = email.readProperties("host");
+        String port = email.readProperties("port");
+        String auth = email.readProperties("auth");
+        String enable = email.readProperties("enable");
+        
+        for(String destinatario : destinatarios){
+            List<String> to = new ArrayList<String>();
+            to.add(destinatario);
+            String subject = "SRI-UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
+            String nombreCompleto = "";
+            String body = GetBodyEmailInforme(nombreCompleto);
+            sendFromGMailInforme("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, body, informe);
+        }
     }
     
     public void enviarCodigoEmail(String codigo, List<String> destinatarios) throws GeneralSecurityException, IOException{
@@ -680,14 +757,14 @@ public class Email {
 //        log.log(Level.INFO, "Email password : {0}", pass);
 //        log.log(Level.INFO, "Email port : {0}", port);
 //        log.log(Level.INFO, "Email auth : {0}", auth);
-        // first part (the html)
+//        first part (the html)
         BodyPart messageBodyPart = new MimeBodyPart();
         String htmlText = body;
         try {
             messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
-            DataSource fds = new FileDataSource("/home/will/logo/logo-unsa-2.jpg");
+            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);
@@ -715,17 +792,77 @@ public class Email {
         }
 
     }
+    
+    public void sendFromGMailInforme(String enable, String auth, String port, String host, String from, String pass, List<String> to, String subject, String body, byte[] informe) {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.user", "innnovacisaqp");
+        props.put("mail.smtp.password", "innnovacis.");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+
+//        Session session = Session.getDefaultInstance(props);
+        Session session = Session.getInstance(props, new GMailAuthenticator(from, pass));
+        MimeMessage message = new MimeMessage(session);
+
+        MimeMultipart multipart = new MimeMultipart("related");
+        BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = body;
+        try {
+            messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
+            multipart.addBodyPart(messageBodyPart);
+            messageBodyPart = new MimeBodyPart();
+            
+            //ADJUNTAR IMAGE
+            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
+            messageBodyPart.setDataHandler(new DataHandler(fds));
+            messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
+            multipart.addBodyPart(messageBodyPart);
+            
+            //ADJUNTAR INFORME BYTE
+            DataSource dataSource = new ByteArrayDataSource(informe, "application/pdf");
+            MimeBodyPart pdfBodyPart = new MimeBodyPart();
+            pdfBodyPart.setDataHandler(new DataHandler(dataSource));
+            pdfBodyPart.setFileName("Actividades Generadas.pdf");
+            multipart.addBodyPart(pdfBodyPart);
+            
+            
+            message.setContent(multipart);
+            message.setFrom(new InternetAddress(from));
+            InternetAddress[] toAddress = new InternetAddress[to.size()];
+            
+            for (int i = 0; i < to.size(); i++) {
+                toAddress[i] = new InternetAddress(to.get(i));
+            }
+
+            for (int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+
+            message.setSubject(subject);
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+
+        } catch (MessagingException ex) {
+            Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
 }
 
 class GMailAuthenticator extends Authenticator {
-     String user;
-     String pw;
-     public GMailAuthenticator (String username, String password)
-     {
-        super();
-        this.user = username;
-        this.pw = password;
-     }
+    String user;
+    String pw;
+    public GMailAuthenticator (String username, String password)
+    {
+       super();
+       this.user = username;
+       this.pw = password;
+    }
     public PasswordAuthentication getPasswordAuthentication()
     {
        return new PasswordAuthentication(user, pw);
