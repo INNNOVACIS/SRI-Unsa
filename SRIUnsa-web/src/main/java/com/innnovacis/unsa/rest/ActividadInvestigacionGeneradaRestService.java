@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -39,6 +40,43 @@ public class ActividadInvestigacionGeneradaRestService {
     @Inject
     private IActividadInvestigacionBusiness actividadInvestigacionBusiness;
 
+    @POST
+    @Path("/enviarInforme")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean EnviarInforme(SRIPaginacion entidad) {
+        Map<String, Object> respuesta = new HashMap<>();
+        boolean respusta2 = false;
+        try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIActividadGeneralPaginacion> listaObjetos
+                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
+            
+            GeneratePdf generador =  new GeneratePdf();            
+            byte[] blobAsBytes = generador.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Home Docente",listaObjetosSend);
+            
+            respusta2 = actividadInvestigacionBusiness.EnviarInforme(blobAsBytes);
+            
+            return respusta2;
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     @POST
     @Path("/actividades")
     @Produces(MediaType.APPLICATION_JSON)
@@ -121,7 +159,7 @@ public class ActividadInvestigacionGeneradaRestService {
                 .build();
     }
     
-     @POST
+    @POST
     @Path("/descargarExcel")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response descargarExcel(SRIPaginacion entidad) {

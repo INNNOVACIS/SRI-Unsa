@@ -747,4 +747,29 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         return respuesta;
     }
     
+    @Override
+    public boolean EnviarInforme(byte[] informe) {
+        boolean respuesta = false;   
+        try {
+    
+            Email email = new Email();
+            log.log(Level.INFO, "Email enable : {0}", email.recuperar());
+            List<String> destinatarios = new ArrayList<String>();
+            destinatarios.add("jherreraq@gmail.com");
+            destinatarios.add("ali.arapa@gmail.com");
+            destinatarios.add("wilfredoqi@gmail.com");
+            email.enviarInforme(informe, destinatarios);
+            respuesta = true;  
+
+        } catch(Exception ex) {
+            respuesta = false;
+            try {
+                throw ex;
+            } catch (Exception ex1) {
+                Logger.getLogger(ActividadInvestigacionBusinessImp.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        return respuesta;
+    }
+    
 }

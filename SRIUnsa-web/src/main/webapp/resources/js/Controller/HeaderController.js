@@ -144,8 +144,12 @@ investigacionApp.controller('HeaderController',['$scope', '$sce', '$location', '
         HeaderService.enviarCodigo($scope.sharedService.usuarioLogin.idUsuario).then(enviarCodigoSuccess, enviarCodigoError);
     };
     
-    $scope.$watch('contrasena2', function() {
-        console.log("no coincide", $scope.contrasena2);
+    $scope.$watch('nuevaContrasena2', function() {
+        if($scope.nuevaContrasena2 === $scope.nuevaContrasena){
+            $scope.check = false;
+        } else {
+            $scope.check = true;
+        }
     });
     
     /**************** NOTIFICACIONES *****************/

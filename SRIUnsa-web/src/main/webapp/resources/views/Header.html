@@ -116,9 +116,11 @@
                                 <form ng-show="showContrasena" name="formCambiarContrasena" novalidate class="form-horizontal">
                                     <p>{{ mensaje }}</p>
                                     <div class="form-group">
-                                        <div  class="col-md-6" ng-class="{ 'has-error' : formCambiarContrasena.contrasena.$invalid && submitted || formCambiarContrasena.contrasena.$error.minlength || formCambiarContrasena.contrasena.$error.maxlength}">
-                                            <input id="contrasena"
-                                                   name="contrasena" 
+                                        <div  class="col-md-6" ng-class="{ 'has-error' : formCambiarContrasena.contrasena.$invalid && submitted || 
+                                                                                         formCambiarContrasena.contrasena.$error.minlength || 
+                                                                                         formCambiarContrasena.contrasena.$error.maxlength ||
+                                                                                         check}">
+                                            <input name="contrasena" 
                                                    ng-model="nuevaContrasena" 
                                                    ng-minlength=5 
                                                    ng-maxlength=10
@@ -126,8 +128,12 @@
                                                    class="form-control" 
                                                    placeholder="Ingrese su Contrase&ntilde;a" 
                                                    required>
-<!--                                            <label style="margin-top: 10px;">Confirmar Contrase&ntilde;a:</label>
-                                            <input type="password" id="contrasena2" name="contrasena2" ng-model="nuevaContrasena2" pw-check="contrasena" />-->
+                                            <label style="margin-top: 10px;">Confirmar Contrase&ntilde;a:</label>
+                                            <input type="password" 
+                                                   name="contrasena2" 
+                                                   ng-model="nuevaContrasena2"
+                                                   class="form-control"
+                                                   required/>
                                             <p ng-show="formCambiarContrasena.contrasena.$error.required && submitted" class="help-block">
                                                 Ingrese la Contrase&ntilde;a.
                                             </p>
@@ -137,9 +143,9 @@
                                             <p ng-show="formCambiarContrasena.contrasena.$error.maxlength" class="help-block">
                                                 La nueva Contrase&ntilde;a debe ser menor o igual que 10 caracteres.
                                             </p>
-<!--                                            <p class="help-block" ng-show="formCambiarContrasena.contrasena2.$error.pwmatch">
+                                            <p class="help-block" ng-show="check">
                                                 Las contrase&ntilde;as no coinciden.
-                                            </p> -->
+                                            </p> 
                                         </div>
                                     </div>
                                 </form>
