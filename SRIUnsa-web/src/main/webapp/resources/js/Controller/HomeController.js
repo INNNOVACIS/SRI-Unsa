@@ -1,4 +1,4 @@
-        investigacionApp.controller('HomeController',['$log', '$scope', '$location', 'SharedService', 'SRIUnsaConfig',
+    investigacionApp.controller('HomeController',['$log', '$scope', '$location', 'SharedService', 'SRIUnsaConfig',
     'HomeService', 'TipoInvestigacionService', 'SemestreService', 'TipoAsesoriaService', 'TipoProduccionService',
     'EstructuraAreaInvestigacionService', 'FondoConcursableService', 'TipoInvestigadorService',
     'ActividadesGeneradasService', 'PlantillaDocumentoService', 'FileUploader', '$sce', 
