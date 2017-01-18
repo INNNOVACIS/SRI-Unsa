@@ -147,5 +147,26 @@ public class UsuarioFlujoBusinessImp implements IUsuarioFlujoBusiness {
         return respuesta;
     }
 
+    @Override
+    public boolean updateUsuarioFlujo(List<SRIUsuarioFlujo> entidad) {
+        boolean respuesta = false;
+        List<SRIUsuarioFlujo> lstUsuarioFlujo = null;
+        SRIUsuarioFlujo usuarioFlujo = null;
+        try{
+            lstUsuarioFlujo = usuarioFlujoDao.getUsuarioFlujoByIdUsuario(entidad.get(0).getNIdUsuario());
+            for(int i = 0; i < lstUsuarioFlujo.size(); i++){
+                boolean respuestaDelete = usuarioFlujoDao.Delete(lstUsuarioFlujo.get(i));
+            }
+            for(int i = 0; i < entidad.size(); i++){
+                usuarioFlujo = usuarioFlujoDao.Insert(entidad.get(i));
+            }
+            respuesta = true;
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
     
 }

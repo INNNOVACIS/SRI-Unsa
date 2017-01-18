@@ -80,8 +80,8 @@ investigacionApp.service("UsuarioFlujoService", function(SRIUnsaConfig, $log, $h
 		return deferred.promise;
 	};
 
-	this.updateUsuarioFlujo = function(request) {
-		$log.debug("UsuarioFlujo Service - Update UsuarioFlujo");
+	this.actualizarUsuarioActor = function(request) {
+		$log.debug("UsuarioFlujo Service - actualizarUsuarioActor");
 		
 		var deferred = $q.defer();
 		$http({

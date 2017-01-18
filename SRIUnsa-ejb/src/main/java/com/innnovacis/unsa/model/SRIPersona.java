@@ -35,7 +35,7 @@ public class SRIPersona  extends SRIEntidad implements Serializable  {
     private String SEmail;
     
     @Column(name = "dni")
-    private int NDni;
+    private String NDni;
     
     @Column(name = "nombre")
     private String SNombre;
@@ -59,11 +59,11 @@ public class SRIPersona  extends SRIEntidad implements Serializable  {
         this.SEmail = SEmail;
     }
 
-    public int getNDni() {
+    public String getNDni() {
         return NDni;
     }
 
-    public void setNDni(int NDni) {
+    public void setNDni(String NDni) {
         this.NDni = NDni;
     }
 

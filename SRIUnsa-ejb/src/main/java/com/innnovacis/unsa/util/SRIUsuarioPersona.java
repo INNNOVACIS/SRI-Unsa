@@ -47,7 +47,7 @@ public class SRIUsuarioPersona extends SRIEntidad implements Serializable{
     private String SUsuarioEmail;
     
     @Column(name = "dni")
-    private int NDni;
+    private String NDni;
     
     @Column(name = "nombre")
     private String SNombre;
@@ -111,11 +111,11 @@ public class SRIUsuarioPersona extends SRIEntidad implements Serializable{
         this.SUsuarioEmail = SUsuarioEmail;
     }
 
-    public int getNDni() {
+    public String getNDni() {
         return NDni;
     }
 
-    public void setNDni(int NDni) {
+    public void setNDni(String NDni) {
         this.NDni = NDni;
     }
 
