@@ -94,8 +94,8 @@ public class UsuarioFlujoRestServices {
     @Path("/updateUsuarioFlujo")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean updateUsuarioFlujo(SRIUsuarioFlujo object) {
-        return usuarioFlujoBusiness.Update(object);
+    public boolean updateUsuarioFlujo(List<SRIUsuarioFlujo> entidad) {
+        return usuarioFlujoBusiness.updateUsuarioFlujo(entidad);
     }
     
     @PUT

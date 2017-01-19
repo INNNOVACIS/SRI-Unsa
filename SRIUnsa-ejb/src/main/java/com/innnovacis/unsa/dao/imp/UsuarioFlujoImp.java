@@ -27,8 +27,9 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
     @Transactional
     public SRIUsuarioFlujo  Insert(SRIUsuarioFlujo entidad) {
         entidad.setDFechaCreacion(new Date());
-         em.persist(entidad);
-         return entidad;
+        entidad.setDFechaModificacion(new Date());
+        em.persist(entidad);
+        return entidad;
     }
 
     @Override
@@ -79,7 +80,7 @@ public class UsuarioFlujoImp implements IUsuarioFlujoDao {
     }
 
     @Override
-    public List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id) {
+        public List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id) {
         List<SRIUsuarioFlujo> entidad = em.createNamedQuery("SRIUsuarioFlujo.GetByIdUsuario", SRIUsuarioFlujo.class).setParameter("idEntidad", id).getResultList();
         return entidad;
     }

@@ -52,6 +52,9 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
     
     @Column(name = "codigo")
     private String SCodigo;
+    
+    @Column(name = "condicion")
+    private String SCondicion;
 
     public int getNIdDepartamento() {
         return NIdDepartamento;
@@ -115,6 +118,14 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
 
     public void setSCodigo(String SCodigo) {
         this.SCodigo = SCodigo;
+    }
+
+    public String getSCondicion() {
+        return SCondicion;
+    }
+
+    public void setSCondicion(String SCondicion) {
+        this.SCondicion = SCondicion;
     }
     
 }

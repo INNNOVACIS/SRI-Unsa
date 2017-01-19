@@ -28,4 +28,6 @@ public interface IUsuarioFlujoBusiness {
     List<SRIUsuarioFlujo> getUsuarioFlujoByIdUsuario(int id);
     List<SRIFlujoActorUtil> getUsuarioFlujoActorByIdUsuario(int id);
     int CreateAndGetUsuarioFlujo(SRIUsuarioFlujo entidad);
+    
+    boolean updateUsuarioFlujo(List<SRIUsuarioFlujo> entidad);
 }
