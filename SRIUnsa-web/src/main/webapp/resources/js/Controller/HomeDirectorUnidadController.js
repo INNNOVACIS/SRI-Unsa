@@ -203,4 +203,12 @@ function($log, $scope, UsuariosService, $location,
         UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
     };
     
+    $scope.descargarHomeDirectorUnidadPDF = function() {
+        console.log("Empezando descarga de PDF...");
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
+                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+        UsuariosService.descardescargarHomeDirectorUnidadPDFgarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+    };
+    
 }]);

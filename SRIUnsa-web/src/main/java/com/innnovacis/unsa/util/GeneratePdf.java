@@ -36,6 +36,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
@@ -55,43 +56,51 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Innnovacis
  */
 public class GeneratePdf {
-    
-    int DocentesInvestigando = 5;
-    int DocentesNoInvestigando = 30;
+        
+    final Color colorFondoUnochart = new Color(205, 78, 81);
+    final Color colorFondoDoschart = new Color(254, 216, 244);
     
     final BaseColor colorFondoTableClaro = new BaseColor(243, 224, 226);
     final BaseColor colorTextoTableClaro = new BaseColor(70, 70, 70);
+    final Font fuenteTextoTableClaro = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, colorTextoTableClaro);
+    final Font fuentePrincipal = new Font(FontFamily.HELVETICA, 14, Font.NORMAL,  GrayColor.GRAYWHITE);
+    
+    final LineSeparator line = new LineSeparator();
+    
+    final String TEXT_DOCENTES = "Docentes";
     
     public GeneratePdf() {
-
+        line.setOffset(-2);
     }
-    private CategoryDataset getDataSetDocentesInvestigando() { 
+    // Se supone que para este grafico solo deberian llegar dos datos,
+    // uno para el numero de docentes investigando y otro para el nro de docentes
+    // no investigando
+    private CategoryDataset getDataSetDocentesInvestigando(int numDocentesActivos,
+            String[] listNombreDocentesActivos,ArrayList<ArrayList<Integer>> listDocentesActivos) { 
         DefaultCategoryDataset result = new DefaultCategoryDataset();
 
-        result.addValue(DocentesInvestigando, "# Docentes investigando", "Docentes");
-        result.addValue(DocentesNoInvestigando, "# Docentes no investigando", "Docentes");
+        result.addValue(listDocentesActivos.get(0).get(0), listNombreDocentesActivos[0], TEXT_DOCENTES);
+        result.addValue(listDocentesActivos.get(0).get(1), listNombreDocentesActivos[1], TEXT_DOCENTES);
         
         return result;
     }
     
-    private CategoryDataset createDatasetFacultades() { 
+    private CategoryDataset createDatasetFacultades(int numFacultades,
+            String[] listNombreFacultades, ArrayList<ArrayList<String>> listFacultades) { 
         DefaultCategoryDataset result = new DefaultCategoryDataset();
-
-        result.addValue(20.3, "# Docentes investigando", "DEPARTAMENTO ACADEMICO DE CS. FISIOLOGICAS");
-        result.addValue(27.2, "# Docentes investigando", "DEPARTAMENTO ACADEMICO DE CIRUGIA");
-        result.addValue(25, "# Docentes investigando", "DEPARTAMENTO ACADEMICO DE MEDICINA");
-        result.addValue(23, "# Docentes investigando", "DEPARTAMENTO ACADEMICO DE MICROBIOLOGIA Y PATOLOGIA");
-        result.addValue(21, "# Docentes investigando", "DEPARTAMENTO ACADEMICO DE MORFOLOGIA HUMANA");
-        result.addValue(25, "# Docentes no investigando", "DEPARTAMENTO ACADEMICO DE CS. FISIOLOGICAS");
-        result.addValue(24, "# Docentes no investigando", "DEPARTAMENTO ACADEMICO DE CIRUGIA");
-        result.addValue(14, "# Docentes no investigando", "DEPARTAMENTO ACADEMICO DE MEDICINA");
-        result.addValue(16, "# Docentes no investigando", "DEPARTAMENTO ACADEMICO DE MICROBIOLOGIA Y PATOLOGIA");
-        result.addValue(19, "# Docentes no investigando", "DEPARTAMENTO ACADEMICO DE MORFOLOGIA HUMANA");
+        
+        for(int i = 0 ; i < listFacultades.size();i++){
+            result.addValue(Integer.parseInt(listFacultades.get(i).get(2)),
+                    "# Docentes investigando", listFacultades.get(i).get(0));
+            result.addValue(Integer.parseInt(listFacultades.get(i).get(3)),
+                    "# Docentes no investigando", listFacultades.get(i).get(0));
+        }
         
         return result;
     }
     
-    private JFreeChart createChart(final CategoryDataset dataset) {
+    private JFreeChart createChart(final CategoryDataset dataset,int numDocentesActivos,
+            String[] listNombreDocentesActivos,ArrayList<ArrayList<Integer>> listDocentesActivos) {
         
         final JFreeChart chart = ChartFactory.createStackedBarChart(//createBarChart(
             "",         // chart title
@@ -105,42 +114,29 @@ public class GeneratePdf {
         );
         
         chart.getLegend().setFrame(BlockBorder.NONE);
-        
-        /*
-        SubCategoryAxis domainAxis = new SubCategoryAxis("Product / Month");
-        domainAxis.setCategoryMargin(0.05);
-        domainAxis.addSubCategory("Product 1");
-        domainAxis.addSubCategory("Product 2");
-        domainAxis.addSubCategory("Product 3");*/
 
-        // get a reference to the plot for further customisation...
         final CategoryPlot plot = chart.getCategoryPlot();
         ((BarRenderer) plot.getRenderer())
                 .setBarPainter(new StandardBarPainter());
         
         plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-        //plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
         plot.setBackgroundPaint( new Color(255,255,255,0) );
         plot.setBackgroundImageAlpha(0.0f);
         plot.setOutlineVisible(false);
         
-        //CategoryItemRenderer renderer = new CustomRenderer();
-        //plot.setRenderer(renderer);
-        
-        //GroupedStackedBarRenderer rendererA = (GroupedStackedBarRenderer) plot.getRenderer();//new GroupedStackedBarRenderer();
         GroupedStackedBarRenderer rendererA = new GroupedStackedBarRenderer();
         rendererA.setBarPainter(new StandardBarPainter());
         KeyToGroupMap map = new KeyToGroupMap("G1");
-        map.mapKeyToGroup("# Docentes investigando", "G1");
-        map.mapKeyToGroup("# Docentes no investigando", "G1");
+        map.mapKeyToGroup(listNombreDocentesActivos[0], "G1");
+        map.mapKeyToGroup(listNombreDocentesActivos[1], "G1");
         rendererA.setSeriesToGroupMap(map);
         //rendererA.setDrawBarOutline(true);
         rendererA.setShadowVisible(false);
-        rendererA.setSeriesPaint(1, new Color(160, 219, 203));
-        rendererA.setSeriesPaint(2, new Color(160, 202, 226));
+        rendererA.setSeriesPaint(1, colorFondoUnochart);
+        rendererA.setSeriesPaint(2, colorFondoDoschart);
         
-        rendererA.setSeriesOutlinePaint(0, new Color(204, 121, 167));
-        rendererA.setSeriesOutlinePaint(1, new Color(213, 94, 0));
+        //rendererA.setSeriesOutlinePaint(0, new Color(204, 121, 167));
+        //rendererA.setSeriesOutlinePaint(1, new Color(213, 94, 0));
         
         rendererA.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         rendererA.setBaseItemLabelsVisible(true);
@@ -148,18 +144,19 @@ public class GeneratePdf {
         plot.setRenderer(rendererA);
         
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setRange(0.0, DocentesInvestigando + DocentesNoInvestigando + 1);
+        rangeAxis.setRange(0.0, listDocentesActivos.get(0).get(0) +
+                listDocentesActivos.get(0).get(1) + 1);
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         rangeAxis.setVisible(false);
         rangeAxis.setTickLabelsVisible(false);
-        // OPTIONAL CUSTOMISATION COMPLETED.
         
-        return chart;
-        
+        return chart;        
     }
     
-    private JFreeChart createChartFacultades(final CategoryDataset dataset) {
+    private JFreeChart createChartFacultades(final CategoryDataset dataset,int numFacultades,
+            String[] listNombreFacultades, ArrayList<ArrayList<String>> listFacultades) {
         
+        java.awt.Font font3 = new java.awt.Font("Dialog", java.awt.Font.PLAIN, 8); 
         final JFreeChart chart = ChartFactory.createStackedBarChart(//createBarChart(
             "",         // chart title
             "",                 // domain axis label
@@ -173,27 +170,18 @@ public class GeneratePdf {
         
         chart.getLegend().setFrame(BlockBorder.NONE);
         
-        /*
-        SubCategoryAxis domainAxis = new SubCategoryAxis("Product / Month");
-        domainAxis.setCategoryMargin(0.05);
-        domainAxis.addSubCategory("Product 1");
-        domainAxis.addSubCategory("Product 2");
-        domainAxis.addSubCategory("Product 3");*/
-
-        // get a reference to the plot for further customisation...
         final CategoryPlot plot = chart.getCategoryPlot();
         ((BarRenderer) plot.getRenderer()).setBarPainter(new StandardBarPainter());
-        
+        CategoryAxis axisCategory = plot.getDomainAxis();
+        axisCategory.setLabelFont(font3);
+        axisCategory.setTickLabelFont(font3);
+         
         plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         //plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
         plot.setBackgroundPaint( new Color(255,255,255,0) );
         plot.setBackgroundImageAlpha(0.0f);
         plot.setOutlineVisible(false);
         
-        //CategoryItemRenderer renderer = new CustomRenderer();
-        //plot.setRenderer(renderer);
-        
-        //GroupedStackedBarRenderer rendererA = (GroupedStackedBarRenderer) plot.getRenderer();//new GroupedStackedBarRenderer();
         GroupedStackedBarRenderer rendererA = new GroupedStackedBarRenderer();
         rendererA.setBarPainter(new StandardBarPainter());
         KeyToGroupMap map = new KeyToGroupMap("G1");
@@ -214,26 +202,19 @@ public class GeneratePdf {
         plot.setRenderer(rendererA);
         
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setRange(0.0, DocentesInvestigando + DocentesNoInvestigando + 1);
+        //rangeAxis.setRange(0.0, DocentesInvestigando + DocentesNoInvestigando + 1);
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         rangeAxis.setVisible(false);
         rangeAxis.setTickLabelsVisible(false);
-        
+                
         final CategoryAxis domainAxis = (CategoryAxis) plot.getDomainAxis();        
         domainAxis.setMaximumCategoryLabelLines(2);
         
-        java.awt.Font font3 = new java.awt.Font("Dialog", java.awt.Font.PLAIN, 8); 
-        plot.getDomainAxis().setLabelFont(font3);
-        plot.getRangeAxis().setLabelFont(font3);
-        
         return chart;
-        
     }
     
-    private PdfPCell createCellMainHeader(String name) {
-        Font f = new Font(FontFamily.HELVETICA, 13, Font.NORMAL, GrayColor.GRAYWHITE);
-        
-        PdfPCell cell = new PdfPCell(new Phrase(name, f));
+    private PdfPCell createCellMainHeader(String name) {        
+        PdfPCell cell = new PdfPCell(new Phrase(name, fuentePrincipal));
         cell.setBackgroundColor(new BaseColor(146, 3, 11));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setColspan(10);
@@ -244,8 +225,7 @@ public class GeneratePdf {
     }
     
     private PdfPCell createCellHeader(String name) {
-        Font ft = new Font(FontFamily.HELVETICA, 9, Font.NORMAL, new BaseColor(70, 70, 70));
-        PdfPCell cellt = new PdfPCell(new Phrase(name, ft));
+        PdfPCell cellt = new PdfPCell(new Phrase(name, fuenteTextoTableClaro));
         cellt.setBackgroundColor(colorFondoTableClaro);
         cellt.setHorizontalAlignment(Element.ALIGN_CENTER);
         cellt.setPadding(8);
@@ -273,8 +253,7 @@ public class GeneratePdf {
     }
     
     private PdfPCell createCellTipoInvestigacion(String name) {
-        Font ftPrincipal = new Font(FontFamily.HELVETICA, 14, Font.NORMAL,  GrayColor.GRAYWHITE);
-        PdfPCell cellte = new PdfPCell((new Phrase( name, ftPrincipal)));
+        PdfPCell cellte = new PdfPCell((new Phrase( name, fuentePrincipal)));
         cellte.setBackgroundColor(new BaseColor(146, 3, 11));
         cellte.setHorizontalAlignment(Element.ALIGN_CENTER);
         cellte.setPadding(10);
@@ -283,10 +262,9 @@ public class GeneratePdf {
 
         return cellte;
     }
-    private PdfPCell createCellActividades(String name) {
-        Font ft = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, colorTextoTableClaro);
-        
-        PdfPCell cellte = new PdfPCell((new Phrase( name,ft)));
+    
+    private PdfPCell createCellActividades(String name) {        
+        PdfPCell cellte = new PdfPCell((new Phrase( name,fuenteTextoTableClaro)));
         cellte.setBackgroundColor(colorFondoTableClaro);
         cellte.setHorizontalAlignment(Element.ALIGN_CENTER);
         cellte.setPadding(10);
@@ -296,8 +274,8 @@ public class GeneratePdf {
         return cellte;
     }
     
-    
-    public PdfPTable getTableInvestigaciones(){
+    public PdfPTable getTableInvestigaciones(int numTiposActividades, 
+            String[] listNombresTiposActividades, ArrayList<ArrayList<String>> listTiposActividades){
         
         int nroColumnas = 4;
         
@@ -309,44 +287,28 @@ public class GeneratePdf {
         
         table.getDefaultCell().setBackgroundColor(new BaseColor(247, 247, 247));
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-
-        Font ft = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, new BaseColor(70, 70, 70));
         
-        //Cabeceras
-        PdfPCell celda0 = createCellTipoInvestigacion("Investigación Formativa");
-        table.addCell(celda0);
-        
-        PdfPCell celda1 = createCellTipoInvestigacion("Asesoría de Tesis");
-        table.addCell(celda1);
-        
-        PdfPCell celda2 = createCellTipoInvestigacion("Investigaciones Básicas y Aplicadas");
-        table.addCell(celda2);
-        
-        PdfPCell celda3 = createCellTipoInvestigacion("Producción Intelectual");
-        table.addCell(celda3);
-        
-        //Actividades
-        PdfPCell celda0a = createCellActividades("8 Actividades");
-        table.addCell(celda0a);
-        
-        PdfPCell celda1a = createCellActividades("0 Actividades");
-        table.addCell(celda1a);
-        
-        PdfPCell celda2a = createCellActividades("0 Actividades");
-        table.addCell(celda2a);
-        
-        PdfPCell celda3a = createCellActividades("0 Actividades");
-        table.addCell(celda3a);
-        
+                
+        for(int i = 0; i < listTiposActividades.size() ;i++) {
+            PdfPCell celda0 = createCellTipoInvestigacion(listTiposActividades.get(i).get(0));
+            table.addCell(celda0);
+        }
+        for(int i = 0; i < listTiposActividades.size() ;i++) {
+            PdfPCell celda0a = createCellActividades(listTiposActividades.get(i).get(1) + " Actividades");
+            table.addCell(celda0a);
+        }
         return table;
     }
     
-    public byte[] getArrayByteFrom2(int contador,
-            String[] nombreColumnasCabeceras, String tituloPrincipal,
-            ArrayList<ArrayList<String>> listaObjetosSend) throws IOException, DocumentException {
+    public byte[] getArrayByteFromPDFMultiplesTablas(String tituloPrincipal,int numUsuariosDocentes,
+            String[] listColumnasUsuariosDocentes, ArrayList<ArrayList<String>> listUsuariosDocentes,
+            int numTiposActividades, String[] listNombresTiposActividades, ArrayList<ArrayList<String>> listTiposActividades,
+            int numFacultades, String[] listNombreFacultades, ArrayList<ArrayList<String>> listFacultades,
+            int numDocentesActivos, String[] listNombreDocentesActivos,ArrayList<ArrayList<Integer>> listDocentesActivos
+    ) throws IOException, DocumentException {
         
-        LineSeparator line = new LineSeparator();
-        line.setOffset(-2);
+        int width = 700;
+        int height = 75;  
         
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
         Document documento = new Document(PageSize.A4.rotate());
@@ -358,17 +320,16 @@ public class GeneratePdf {
         documento.addProducer();
         documento.addCreator("innnovacis.com");
         documento.addTitle("Innnóvacis");
-        
         documento.open();
         
         Paragraph primerTitulo = new Paragraph("Estadísticas de docentes investigando");        
         primerTitulo.add(line);        
         documento.add(primerTitulo);
         
-        int width = 700;
-        int height = 75;            
-        final CategoryDataset dataset = getDataSetDocentesInvestigando();
-        JFreeChart chart = createChart(dataset);
+        final CategoryDataset dataset = getDataSetDocentesInvestigando(numDocentesActivos,
+                listNombreDocentesActivos, listDocentesActivos);
+        JFreeChart chart = createChart(dataset,numDocentesActivos,
+                listNombreDocentesActivos, listDocentesActivos);
         
         BufferedImage bufferedImage = chart.createBufferedImage(width, height);
         Image image = Image.getInstance(writer, bufferedImage, 1.0f);
@@ -379,26 +340,34 @@ public class GeneratePdf {
         documento.add(segundoTitulo);
         documento.add( Chunk.NEWLINE );
         
-        PdfPTable tableActividades = getTableInvestigaciones();
+        PdfPTable tableActividades = getTableInvestigaciones(numTiposActividades,
+                listNombresTiposActividades, listTiposActividades);
         documento.add(tableActividades);        
-
-        documento.add( Chunk.NEWLINE );
+        
+        documento.newPage();
         Paragraph tercerTitulo = new Paragraph("Estadísticas de docentes por Facultad");
         tercerTitulo.add(line);        
         documento.add(tercerTitulo);
-        documento.newPage();
         
-        height = 300;    
-        final CategoryDataset datasetFacultades = createDatasetFacultades();
-        JFreeChart chartFacultades = createChartFacultades(datasetFacultades);
+        
+        height = 450;    
+        final CategoryDataset datasetFacultades = createDatasetFacultades(numFacultades,
+                listNombreFacultades, listFacultades);
+        JFreeChart chartFacultades = createChartFacultades(datasetFacultades,numFacultades,
+                listNombreFacultades, listFacultades);
         
         BufferedImage bufferedImageFacultadoes = chartFacultades.createBufferedImage(width, height);
         Image imageFacultades = Image.getInstance(writer, bufferedImageFacultadoes, 1.0f);
         documento.add(imageFacultades);
         
-        documento.add(new Paragraph("--"));
-        float[] columnWidths = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
-        PdfPTable table = new PdfPTable(contador);
+        documento.newPage();
+        
+        Paragraph cuartoTitulo = new Paragraph("Profesores");
+        cuartoTitulo.add(line);        
+        documento.add(cuartoTitulo);
+        documento.add( Chunk.NEWLINE );
+        
+        PdfPTable table = new PdfPTable(numUsuariosDocentes);
         table.setWidthPercentage(100);
         table.getDefaultCell().setUseAscender(true);
         table.getDefaultCell().setUseDescender(true);
@@ -407,9 +376,9 @@ public class GeneratePdf {
         table.addCell(createCellMainHeader(tituloPrincipal));
         
         // Cabeceras sub principales
-        for(int i = 0 ; i < contador;i++)
+        for(int i = 0 ; i < numUsuariosDocentes;i++)
         {
-            table.addCell(createCellHeader(nombreColumnasCabeceras[i]));
+            table.addCell(createCellHeader(listColumnasUsuariosDocentes[i]));
         }
 
         table.setHeaderRows(2);
@@ -417,14 +386,11 @@ public class GeneratePdf {
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
         // Creamos los Items de la tabla
-        for (int counter = 0; counter < listaObjetosSend.size(); counter++) {
-
-            Font ft = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, new BaseColor(70, 70, 70));
-            
-            ArrayList<String> arrayDatosObjeto = listaObjetosSend.get(counter);
-            for (int j = 0; j < contador; j++) {
+        for (int counter = 0; counter < listUsuariosDocentes.size(); counter++) {         
+            ArrayList<String> arrayDatosObjeto = listUsuariosDocentes.get(counter);
+            for (int j = 0; j < numUsuariosDocentes; j++) {
                 PdfPCell celda = createCell();
-                celda.addElement(new Phrase( arrayDatosObjeto.get(j), ft));
+                celda.addElement(new Phrase( arrayDatosObjeto.get(j), fuenteTextoTableClaro));
                 table.addCell(celda);
             }
         }
@@ -436,6 +402,7 @@ public class GeneratePdf {
         rptaBytes = baosPDF.toByteArray();
         return rptaBytes;
     }
+    
     public byte[] getArrayByteFrom(Map<String, Object> respuesta, int contador,
             String[] nombreColumnasCabeceras, String tituloPrincipal,
             ArrayList<ArrayList<String>> listaObjetosSend) throws IOException, DocumentException {
@@ -453,11 +420,6 @@ public class GeneratePdf {
         
         documento.open();
         
-        documento.add(new Paragraph("Universidad Nacional de San Agustín"));
-        documento.add(new Paragraph("Arequipa - Arequipa - Perú"));
-        documento.add(new Paragraph("--"));
-        
-        float[] columnWidths = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
         PdfPTable table = new PdfPTable(contador);
         table.setWidthPercentage(100);
         table.getDefaultCell().setUseAscender(true);
@@ -477,14 +439,11 @@ public class GeneratePdf {
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
         // Creamos los Items de la tabla
-        for (int counter = 0; counter < listaObjetosSend.size(); counter++) {
-
-            Font ft = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, new BaseColor(70, 70, 70));
-            
+        for (int counter = 0; counter < listaObjetosSend.size(); counter++) {            
             ArrayList<String> arrayDatosObjeto = listaObjetosSend.get(counter);
             for (int j = 0; j < contador; j++) {
                 PdfPCell celda = createCell();
-                celda.addElement(new Phrase( arrayDatosObjeto.get(j), ft));
+                celda.addElement(new Phrase( arrayDatosObjeto.get(j), fuenteTextoTableClaro));
                 table.addCell(celda);
             }
         }

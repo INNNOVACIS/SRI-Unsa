@@ -71,22 +71,34 @@
                     <!-- Tell Maven we are using Java EE 7 -->
                     <version>7</version>
                     <!-- Use Java EE ear libraries as needed. Java EE ear libraries 
-                        are in easy way to package any libraries needed in the ear, and automatically 
-                        have any modules (EJB-JARs and WARs) use them -->
+                    are in easy way to package any libraries needed in the ear, and automatically 
+                    have any modules (EJB-JARs and WARs) use them -->
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <fileNameMapping>no-version</fileNameMapping>
                 </configuration>
             </plugin>
             <!-- The WildFly plugin deploys your ear to a local WildFly container -->
             <!-- Due to Maven's lack of intelligence with EARs we need to configure 
-                the wildfly maven plugin to skip deployment for all modules. We then enable
-                it specifically in the ear module. -->
-            <plugin>
+            the wildfly maven plugin to skip deployment for all modules. We then enable
+            it specifically in the ear module. -->
+            <!--<plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
                     <filename>${project.artifactId}.ear</filename>
                     <skip>false</skip>
+                </configuration>
+            </plugin>-->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.maven.plugin}</version>
+                <configuration>
+                    <filename>${project.artifactId}.ear</filename>
+                    <hostname>192.168.1.82</hostname>
+                    <port>9990</port>
+                    <username>root</username>
+                    <password>root</password>
                 </configuration>
             </plugin>
         </plugins>

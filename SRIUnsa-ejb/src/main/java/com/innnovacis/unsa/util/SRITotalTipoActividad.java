@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -55,5 +56,15 @@ public class SRITotalTipoActividad implements Serializable{
         this.NTotal = NTotal;
     }
     
-    
+    public ArrayList<String> getArrayDatos() {
+        ArrayList<String> arrayRpta = new ArrayList<String>();
+        arrayRpta.add(this.getSNombreActividadInvestigacion());
+        arrayRpta.add(String.valueOf(this.getNTotal()));
+        
+        return arrayRpta;
+    }
+    public static String[] getArrayHeaders() {
+        String[] nombreColumnas = {"Activos", "Inactivos"};
+        return nombreColumnas;
+    }
 }

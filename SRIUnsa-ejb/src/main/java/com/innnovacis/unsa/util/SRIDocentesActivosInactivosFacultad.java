@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -77,6 +78,21 @@ public class SRIDocentesActivosInactivosFacultad implements Serializable{
 
     public void setNInactivos(int NInactivos) {
         this.NInactivos = NInactivos;
+    }
+    
+    public ArrayList<String> getArrayDatos() {
+        ArrayList<String> arrayRpta = new ArrayList<String>();
+        arrayRpta.add(this.getSNombreEstructuraOrganizacion());
+        arrayRpta.add(String.valueOf(this.getNTotal()));
+        arrayRpta.add(String.valueOf(this.getNActivos()));
+        arrayRpta.add(String.valueOf(this.getNInactivos()));
+        
+        return arrayRpta;
+    }
+    public static String[] getArrayHeaders() {
+        String[] nombreColumnas = {"Facultad", "Total", 
+            "Activos", "Inactivos"};
+        return nombreColumnas;
     }
    
 }

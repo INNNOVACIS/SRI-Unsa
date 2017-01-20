@@ -6,12 +6,15 @@
 package com.innnovacis.unsa.rest;
 
 
+import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
+import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioHome;
 import com.innnovacis.unsa.util.SRIUsuarioLogin;
@@ -49,6 +52,8 @@ public class UsuarioRestServices {
 
     @Inject
     private IUsuarioBusiness usuarioBusiness;
+    @Inject
+    private IActividadInvestigacionBusiness actividadInvestigacionBusiness;
     
     @POST
     @Path("/paginacionUsuarios")
@@ -306,23 +311,55 @@ public class UsuarioRestServices {
             // Establecemos un rango grande para traer todos los elementos
             entidad.setRango(2000);
             int total = usuarioBusiness.GetTotalUsuariosColor(entidad);
-            List<SRIUsuarioColor> lista = usuarioBusiness.GetUsuariosColor(entidad);
+            List<SRIUsuarioColor> listaUsuarios = usuarioBusiness.GetUsuariosColor(entidad);
             
-            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            // Usuarios activos e inactivos
+            SRIDocenteActivosInactivos docenteActivosInactivos = 
+                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad());
             
-            for(int i = 0; i < lista.size(); i++){
-                listaObjetosSend.add(lista.get(i).getArrayDatos());
-            }
+            // Obtenemos el total de actividades por tipo
+            List<SRITotalTipoActividad>  totalTipoActividades = 
+                    //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
             
-            String[] nombreColumnas = SRIUsuarioColor.getArrayHeaders();
+            // Lista  de las facultades
+            List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
+                    actividadInvestigacionBusiness
+                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
+            
+            //Transformando las vistas
+            ArrayList<ArrayList<String>> listaUsuariosSend = new ArrayList<ArrayList<String>>();            
+            for(int i = 0; i < listaUsuarios.size(); i++){
+                listaUsuariosSend.add(listaUsuarios.get(i).getArrayDatos());
+            }            
+            String[] listaUsuariosSendNombreColumnas = SRIUsuarioColor.getArrayHeaders();
+            
+            ArrayList<ArrayList<Integer>> docenteActivosInactivosSend = new ArrayList<>();            
+            docenteActivosInactivosSend.add(docenteActivosInactivos.getArrayDatos());
+            String[] docenteActivosInactivosNombreColumnas = docenteActivosInactivos.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> totalTipoActividadesSend = new ArrayList<ArrayList<String>>();            
+            for(int i = 0; i < totalTipoActividades.size(); i++){
+                totalTipoActividadesSend.add(totalTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] totalTipoActividadesSendNombreColumnas = SRITotalTipoActividad.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> facultadesPorTipoActividadesSend = new ArrayList<ArrayList<String>>();            
+            for(int i = 0; i < facultadesPorTipoActividades.size(); i++){
+                facultadesPorTipoActividadesSend.add(facultadesPorTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] facultadesPorTipoActividadesSendNombreColumnas = SRIDocentesActivosInactivosFacultad.getArrayHeaders();
             
             GeneratePdf generadorPDF =  new GeneratePdf();            
-            byte[] blobAsBytes = generadorPDF.getArrayByteFrom2( nombreColumnas.length,
-                    nombreColumnas, "Home Director de Unidad",listaObjetosSend);
+            byte[] blobAsBytes = generadorPDF.getArrayByteFromPDFMultiplesTablas( "Resumen Actividades",
+                    listaUsuariosSendNombreColumnas.length,listaUsuariosSendNombreColumnas,listaUsuariosSend,
+                    totalTipoActividadesSendNombreColumnas.length,totalTipoActividadesSendNombreColumnas,totalTipoActividadesSend,
+                    facultadesPorTipoActividadesSendNombreColumnas.length,facultadesPorTipoActividadesSendNombreColumnas,facultadesPorTipoActividadesSend,
+                    docenteActivosInactivosNombreColumnas.length,docenteActivosInactivosNombreColumnas,docenteActivosInactivosSend);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
-                    .header("content-disposition", "documento.pdf")
+                    .header("content-disposition", "documentoModelo.pdf")
                     .build();
 
         } catch (Exception ex) {
