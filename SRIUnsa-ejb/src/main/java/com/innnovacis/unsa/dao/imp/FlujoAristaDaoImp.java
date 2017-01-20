@@ -86,4 +86,11 @@ public class FlujoAristaDaoImp implements IFlujoAristaDao {
         return objectFlujoArista;
     }
 
+    @Override
+    public SRIFlujoArista GetFlujoAristaByIdActorOrigen(int idOrigen) {
+        Query query = em.createNativeQuery("{call GetFlujoAristaByIdActorOrigen(?1)}", SRIFlujoArista.class)
+                        .setParameter(1, idOrigen);
+        SRIFlujoArista objectFlujoArista = (SRIFlujoArista)query.getSingleResult();
+        return objectFlujoArista;
+    }
 }

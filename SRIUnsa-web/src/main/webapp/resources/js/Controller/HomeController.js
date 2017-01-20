@@ -440,14 +440,17 @@
         $scope.realizado = true;
         $scope.ejecucion = true;
         $scope.pendiente = true;
+        $scope.pendienteAdjunto = true;
+        $scope.mostrarAyuda = false;
         switch(tipoActividad.toUpperCase()) {
             case "INVESTIGACION FORMATIVA":
                 $scope.mostrarActividad = [true, false, false, false];
                 $scope.descripcionLabel = "Breve descripcion de la Actividad Formativa";
                 $scope.tituloLabel = "Nombre del curso o Asignatura";
                 $scope.adjuntar = "Adjuntar Sílabo del Curso";
-                $scope.adjuntarOtros = "Adjuntar Resultados de Investigación(Opcional)";
+                $scope.adjuntarOtros = "Adjuntar Resultados de Investigación";
                 $scope.showDescripcion = true;
+                $scope.mostrarAyuda = false;
                 break;
             case "ASESORIA DE TESIS":
                 $scope.mostrarActividad = [false, true, false, false];
@@ -456,6 +459,7 @@
                 $scope.adjuntar = "Adjuntar Resolución";
                 $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)(Opcional)";
                 $scope.showDescripcion = false;
+                $scope.mostrarAyuda = false;
                 break;
             case "INVESTIGACIONES BASICAS Y APLICADAS":
                 $scope.mostrarActividad = [false, false, true, false];
@@ -464,6 +468,7 @@
                 $scope.adjuntar = "Adjuntar Contrato";
                 $scope.adjuntarOtros = "Adjuntar Ficha de Postulación";
                 $scope.showDescripcion = true;
+                $scope.mostrarAyuda = true;
                 break;
             case "PRODUCCION INTELECTUAL":
                 $scope.mostrarActividad = [false, false, false, true];
@@ -472,6 +477,7 @@
                 $scope.adjuntar = "Adjuntar Planificación";
                 $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
                 $scope.showDescripcion = false;
+                $scope.mostrarAyuda = false;
                 break;
             default:
                 $scope.mostrarActividad = [false, false, false, false];
@@ -480,6 +486,7 @@
                 $scope.adjuntar = "Adjuntar";
                 $scope.adjuntarOtros = "Adjuntar Otros";
                 $scope.showDescripcion = true;
+                $scope.mostrarAyuda = false;
         };
     };
     
@@ -492,16 +499,22 @@
                 $scope.realizado = true;
                 $scope.ejecucion = false;
                 $scope.pendiente = false;
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
+                $scope.pendienteAdjunto = true;
                 break;
             case "EJECUCION":
                 $scope.realizado = false;
                 $scope.ejecucion = true;
                 $scope.pendiente = false;
+                $scope.adjuntarOtros = "Adjuntar avance de Libro o articulo (Opcional)";
+                $scope.pendienteAdjunto = true;
                 break;
             case "PENDIENTE":
                 $scope.realizado = false;
                 $scope.ejecucion = false;
                 $scope.pendiente = true;
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
+                $scope.pendienteAdjunto = false;
                 break;
         };
     };
@@ -519,7 +532,7 @@
         $scope.showVerificacion = true;
         if(tipoProduccion.snombreTipoProduccion.toUpperCase() === "ARTICULO"){
             $scope.fechaTipoProduccion = "Fecha de Aceptacion";
-            $scope.labelCodigo = "DOI";
+            $scope.labelCodigo = "DOI o URL";
             $scope.labelNombrePublicacion = "Nombre de la Revista";
         } else {
             $scope.fechaTipoProduccion = "Fecha de Publicacion";

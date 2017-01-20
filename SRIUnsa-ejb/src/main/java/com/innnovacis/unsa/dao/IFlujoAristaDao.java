@@ -6,7 +6,6 @@
 package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIFlujoArista;
-import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIFlujoAristaActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
@@ -26,4 +25,5 @@ public interface IFlujoAristaDao {
     int GetTotalPaginacion (SRIPaginacionObject object);
     List<SRIFlujoAristaActorUtil> GetPagina(SRIPaginacionObject object);
     SRIFlujoArista GetFlujoAristaByIdOrigenIdEstado(int idOrigen, int idEstado);
+    SRIFlujoArista GetFlujoAristaByIdActorOrigen(int idOrigen);
 }

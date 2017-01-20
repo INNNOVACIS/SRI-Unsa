@@ -285,23 +285,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">N&uacute;mero de Contrato</label>
-                                    <div class="col-md-8">
+                                    <label class="control-label col-md-4">N&uacute;mero de Contrato o Resoluci&oacute;n de Seleccionados</label>
+                                    <div class="col-md-7">
                                         <input class="form-control" ng-model="numeroContrato" />
+                                    </div>
+                                    <div class="col-md-1" ng-show="mostrarAyuda">
+                                        <button type="button" class="btn btn-danger btn-xs pull-right SRIUnsa-ayuda" data-toggle="modal" data-target="#modalPDF">
+                                            <span class="glyphicon glyphicon-question-sign"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Monto de Financiamiento</label>
-                                    <div class="col-md-6">
-                                        <input  class="form-control" ng-model="montoFinanciamiento" />
-                                    </div>
-                                    <div class="col-md-2" style="padding:0;">
-                                        <select class="form-control" ng-model="tipoMoneda" ng-options="opt as opt for opt in tipoMonedas"></select>
-                                    </div>
-                                </div>
-                            </div>-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Fuente de Financiamiento</label>
@@ -460,8 +454,8 @@
                                                         <span class="glyphicon glyphicon-trash"></span> Eliminar todo
                                                     </button>-->
                                                 </div>
-                                                <div class="col-md-1">
-                                                    <button type="button" class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#visualizacion">
+                                                <div class="col-md-1" ng-show="mostrarAyuda">
+                                                    <button type="button" class="btn btn-danger btn-xs pull-right SRIUnsa-ayuda" data-toggle="modal" data-target="#visualizacion">
                                                         <span class="glyphicon glyphicon-question-sign"></span>
                                                     </button>
                                                 </div>
@@ -471,7 +465,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-md-12">
+                            <div class="col-md-12" ng-show="pendienteAdjunto">
                                 <div class="form-group">
                                     <label for="inpFile" class="control-label col-md-2"> {{ adjuntarOtros }}</label>
                                     <div class="col-md-10">
@@ -482,7 +476,7 @@
                                                     <input id="subirArchivo" style="display:none;" type="file" nv-file-select="" uploader="uploader2" multiple  /><br/>
     <!--                                                    <p>Número de Archivos: {{ uploader.queue.length }}</p>-->
                                                 </div>
-                                                <div class="col-md-10">
+                                                <div class="col-md-9">
                                                     <table class="table" style="margin-bottom:0;">
                                                         <thead>
                                                             <tr></tr>
@@ -504,6 +498,11 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                                <div class="col-md-1" ng-show="mostrarAyuda">
+                                                    <button type="button" class="btn btn-danger btn-xs pull-right SRIUnsa-ayuda" data-toggle="modal" data-target="#modalFicha">
+                                                        <span class="glyphicon glyphicon-question-sign"></span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -610,7 +609,39 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <img style="width: 500px; height: auto;" alt="Brand" src="resources/images/resolucion.jpg">
+                <iframe style="width:100%; height:600px;" src="http://www.unsa.edu.pe/images/concytec/031-2016.pdf"></iframe>
+            </div>
+            <div class="modal-footer">                  
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalPDF" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe style="width:100%; height:600px;" src="http://www.unsa.edu.pe/images/concytec/031-2016.pdf"></iframe>
+            </div>
+            <div class="modal-footer">                  
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalFicha" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe style="width:100%; height:600px;" src="resources/pdf/FichaPostulacion.pdf"></iframe>
             </div>
             <div class="modal-footer">                  
                 <button type="button" class="btn btn-default" data-dismiss="modal">

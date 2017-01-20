@@ -37,6 +37,7 @@ import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
+import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
@@ -382,7 +383,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     public SRIActividadGeneral AprobarActividadInvestigacion(SRIActividadGeneral entidad) {
         
         int idUsuarioFlujoOrigen = -1;
-        SRIUsuarioFlujo usuarioFlujoOrigen = new SRIUsuarioFlujo();
+        int idFlujoActorOrigen = -1;
         SRIFlujoArista flujoArista = new SRIFlujoArista();
         SRIUsuario usuarioOrigen = new SRIUsuario();
         SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
@@ -390,15 +391,22 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         
         try{
             /*Get o crear UsuarioFlujo*/
-            usuarioFlujoOrigen.setNIdFlujoActor(entidad.getIdFlujoActorOrigen());
-            usuarioFlujoOrigen.setNIdUsuario(entidad.getIdUsuario());
-            idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
+//            usuarioFlujoOrigen.setNIdFlujoActor(entidad.getIdFlujoActorOrigen());
+//            usuarioFlujoOrigen.setNIdUsuario(entidad.getIdUsuario());
+//            idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
+            
+            List<SRIFlujoActorUtil> lstUsuarioFlujoOrigen = usuarioFlujoDao.getUsuarioFlujoActorByIdUsuario(entidad.getIdUsuario());
+            idUsuarioFlujoOrigen = GetUsuarioFlujoOrigen(lstUsuarioFlujoOrigen);
+            idFlujoActorOrigen = GetIdFujoActorOrigen(lstUsuarioFlujoOrigen);
+            
             /*Get FlujoArista*/
-            flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
+//            flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
+            flujoArista = flujoAristaDao.GetFlujoAristaByIdActorOrigen(idFlujoActorOrigen);
             usuarioOrigen = usuarioDao.GetById(entidad.getIdUsuario());
             
             procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
             procesoFlujo.setNIdArista(flujoArista.getNIdArista());
+            procesoFlujo.setSFlujo(flujoArista.getSFlujo());
             procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
             procesoFlujo.setSUserCreacion(entidad.getActividadInvestigacion().getSUserCreacion());
             procesoFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
@@ -793,6 +801,58 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         catch(Exception ex){
             throw ex;
         }
+        return respuesta;
+    }
+    
+    public int GetUsuarioFlujoOrigen (List<SRIFlujoActorUtil> lst){
+        int respuesta = -1;
+        int actorMayor = -1;
+        int pesoDiun = 3;
+        int pesoDide = 2;
+        
+        for(int i = 0; i < lst.size(); i++ ){
+            switch(lst.get(i).getSCodigo()){
+                case "DIUN" :
+                    if(actorMayor < pesoDiun){
+                        actorMayor = pesoDiun;
+                        respuesta = lst.get(i).getNIdUsuarioFlujo();
+                    }
+                    break;
+                case "DIDE" : 
+                    if(actorMayor < pesoDide){
+                        actorMayor = pesoDide;
+                        respuesta = lst.get(i).getNIdUsuarioFlujo();
+                    }
+                    break;     
+            }
+        }
+        
+        return respuesta;
+    }
+    
+    public int GetIdFujoActorOrigen (List<SRIFlujoActorUtil> lst){
+        int respuesta = -1;
+        int actorMayor = -1;
+        int pesoDiun = 3;
+        int pesoDide = 2;
+        
+        for(int i = 0; i < lst.size(); i++ ){
+            switch(lst.get(i).getSCodigo()){
+                case "DIUN" :
+                    if(actorMayor < pesoDiun){
+                        actorMayor = pesoDiun;
+                        respuesta = lst.get(i).getNIdFlujoActor();
+                    }
+                    break;
+                case "DIDE" : 
+                    if(actorMayor < pesoDide){
+                        actorMayor = pesoDide;
+                        respuesta = lst.get(i).getNIdFlujoActor();
+                    }
+                    break;     
+            }
+        }
+        
         return respuesta;
     }
     

@@ -1,7 +1,7 @@
 investigacionApp.controller('HomeDocenteController',['$log', '$scope', '$location',  'TipoInvestigacionService', 'SharedService',
-    'ActividadesGeneradasService', 'SRIUnsaConfig', 'SemestreService', 'UsuariosService', 
+    'ActividadesGeneradasService', 'SRIUnsaConfig', 'SemestreService', 'UsuariosService', 'ngToast', 
 function($log, $scope, $location,  TipoInvestigacionService, SharedService,
-    ActividadesGeneradasService, SRIUnsaConfig, SemestreService, UsuariosService) {
+    ActividadesGeneradasService, SRIUnsaConfig, SemestreService, UsuariosService, ngToast) {
 
     $scope.sharedService = SharedService;
     $scope.sortType     = 'id'; // set the default sort type
@@ -52,16 +52,20 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     var GetUsuarioHomeError = function(response){
         $log.debug("GetUsuarioHome - Error");
         console.log("Respuesta :: ", response);
+        $('#modalNotificacion').modal('show');
     };
     
     var enviarInformeSuccess = function(response){
         $log.debug("enviarInforme - Success");
         console.log("Respuesta :: ", response);
+        openNotice('Envio exitoso!','success');
         $scope.loader = false;
     };
     var enviarInformeError = function(response){
         $log.debug("enviarInforme - Error");
         console.log("Respuesta :: ", response);
+        
+        openNotice('Error al enviar el informe!','danger');
         $scope.loader = false;
     };
     
@@ -149,14 +153,21 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
     /***************************** VERIFICA SI INGRESO COMO DIRECTOR UNIDAD O COMO DOCENTE *******************************/
     
     if($scope.sharedService.idUsuarioRegistrar === -1){
-        console.log("Ingreso como Docente :: ", $scope.sharedService.idUsuarioRegistrar);
         $scope.sharedService.docente = {};
         $scope.sharedService.docente.nidUsuario = $scope.sharedService.usuarioLogin.idUsuario;
+        $scope.sharedService.docente.nidPersona = $scope.sharedService.usuarioLogin.idPersona;
         $scope.sharedService.docente.snombre = $scope.sharedService.usuarioLogin.nombre;
         $scope.sharedService.docente.sapellido = $scope.sharedService.usuarioLogin.apellido;
         $scope.GetUsuarioHome($scope.sharedService.docente.nidUsuario, 0);
     } else {
-        console.log("Ingreso como director unidad :: ", $scope.sharedService.idUsuarioRegistrar);
+        if($scope.sharedService.idUsuarioRegistrar === "" || $scope.sharedService.idUsuarioRegistrar === undefined){
+            $scope.sharedService.idUsuarioRegistrar = $scope.sharedService.usuarioLogin.idUsuario;
+            $scope.sharedService.docente = {};
+            $scope.sharedService.docente.nidUsuario = $scope.sharedService.usuarioLogin.idUsuario;
+            $scope.sharedService.docente.nidPersona = $scope.sharedService.usuarioLogin.idPersona;
+            $scope.sharedService.docente.snombre = $scope.sharedService.usuarioLogin.nombre;
+            $scope.sharedService.docente.sapellido = $scope.sharedService.usuarioLogin.apellido;
+        }
         $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, $scope.sharedService.usuarioLogin.idUsuario);
     }
     
@@ -199,5 +210,25 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
                           filtro : getFiltros()};
         ActividadesGeneradasService.descargarHomeDocenteExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
     };
+    
+    /**************** NOTIFICACIONES *****************/
+    
+    $scope.cerrar = function(){
+        $('#modalNotificacion').modal('hide');
+        setTimeout(function(){
+            $scope.$apply(function(){ 
+                $location.path($scope.sharedService.crearActividadHome);
+            });
+        }, 500);
+    };
+    
+    var openNotice = function (text, type) {
+        ngToast.create({
+            className: type,
+            content: '<span class="alert-link">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        });
+    };
+    
     
 }]);
