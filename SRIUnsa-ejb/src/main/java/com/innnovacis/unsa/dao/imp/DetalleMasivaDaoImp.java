@@ -20,6 +20,7 @@ public class DetalleMasivaDaoImp implements IDetalleMasivaDao {
     @Transactional
     public SRIDetalleMasiva  Insert(SRIDetalleMasiva entidad) {
         entidad.setDFechaCreacion(new Date());
+        entidad.setDFechaModificacion(new Date());
         em.persist(entidad);
         return entidad;
     }

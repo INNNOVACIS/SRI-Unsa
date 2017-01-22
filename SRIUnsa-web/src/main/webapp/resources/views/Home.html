@@ -383,13 +383,19 @@
                     </form>-->
                     
                     
-                    <form class="form-horizontal" ng-show="showDescripcion">
+                    <form name="formDescripcion" class="form-horizontal" ng-show="showDescripcion">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-2"> {{ descripcionLabel }}</label>
-                                    <div class="col-md-10">
-                                        <textarea ng-model="descripcion" class="form-control" rows="5"></textarea> 
+                                    <div class="col-md-10" ng-class="{ 'has-error' : formDescripcion.textDescripcion.$error.maxlength}">
+                                        <textarea name="textDescripcion" ng-model="descripcion" class="form-control" rows="5" ng-maxlength=5000 ></textarea>
+                                         <p class="help-block" ng-show="formDescripcion.textDescripcion.$error.maxlength">
+                                            La descripci&oacute;n no debe superar los 5000 caract&eacute;res.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p style="text-align:right;">{{ descripcion.length }} de 5000 Caract&eacute;res<p>
                                     </div>
                                 </div>
                             </div>

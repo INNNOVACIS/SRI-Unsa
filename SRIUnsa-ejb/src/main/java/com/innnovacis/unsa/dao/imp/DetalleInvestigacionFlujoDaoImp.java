@@ -24,6 +24,7 @@ public class DetalleInvestigacionFlujoDaoImp implements IDetalleInvestigacionFlu
     @Transactional
     public SRIDetalleInvestigacionFlujo  Insert(SRIDetalleInvestigacionFlujo entidad) {
         entidad.setDFechaCreacion(new Date());
+        entidad.setDFechaModificacion(new Date());
         em.persist(entidad);
         return entidad;
     }

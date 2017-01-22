@@ -622,8 +622,15 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         int cabecera = 0;
         for(int i = 0; i < entidad.size(); i++){
             
+//            int idUsuarioFlujoOrigen = -1;
+//            SRIUsuarioFlujo usuarioFlujoOrigen = new SRIUsuarioFlujo();
+//            SRIFlujoArista flujoArista = new SRIFlujoArista();
+//            SRIUsuario usuarioOrigen = new SRIUsuario();
+//            SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
+//            SRIDetalleInvestigacionFlujo detalleInvestigacionFlujo =  new SRIDetalleInvestigacionFlujo();
+            
             int idUsuarioFlujoOrigen = -1;
-            SRIUsuarioFlujo usuarioFlujoOrigen = new SRIUsuarioFlujo();
+            int idFlujoActorOrigen = -1;
             SRIFlujoArista flujoArista = new SRIFlujoArista();
             SRIUsuario usuarioOrigen = new SRIUsuario();
             SRIProcesoFlujo procesoFlujo = new SRIProcesoFlujo();
@@ -631,11 +638,20 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
 
             try{
                 /*Get o crear UsuarioFlujo*/
-                usuarioFlujoOrigen.setNIdFlujoActor(entidad.get(i).getIdFlujoActorOrigen());
-                usuarioFlujoOrigen.setNIdUsuario(entidad.get(i).getIdUsuario());
-                idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
+//                usuarioFlujoOrigen.setNIdFlujoActor(entidad.get(i).getIdFlujoActorOrigen());
+//                usuarioFlujoOrigen.setNIdUsuario(entidad.get(i).getIdUsuario());
+//                idUsuarioFlujoOrigen = usuarioFlujoDao.CreateAndGetUsuarioFlujo(usuarioFlujoOrigen);
+                
+                
+                List<SRIFlujoActorUtil> lstUsuarioFlujoOrigen = usuarioFlujoDao.getUsuarioFlujoActorByIdUsuario(entidad.get(i).getIdUsuario());
+                idUsuarioFlujoOrigen = GetUsuarioFlujoOrigen(lstUsuarioFlujoOrigen);
+                idFlujoActorOrigen = GetIdFujoActorOrigen(lstUsuarioFlujoOrigen);
+                
                 /*Get FlujoArista*/
-                flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.get(i).getIdFlujoActorOrigen(), entidad.get(i).getIdEstado());
+//                flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.get(i).getIdFlujoActorOrigen(), entidad.get(i).getIdEstado());
+//                usuarioOrigen = usuarioDao.GetById(entidad.get(i).getIdUsuario());
+                
+                flujoArista = flujoAristaDao.GetFlujoAristaByIdActorOrigen(idFlujoActorOrigen);
                 usuarioOrigen = usuarioDao.GetById(entidad.get(i).getIdUsuario());
 
                 /* Insertar CabeceraMasiva */
@@ -643,6 +659,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                     cabeceraMasiva.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
                     cabeceraMasiva.setFlujo(flujoArista.getSFlujo());
                     cabeceraMasiva.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                    cabeceraMasiva.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
                     cabeceraMasiva.setSEstado("A");
                     cabeceraMasiva = cabeceraMasivaDao.Insert(cabeceraMasiva);
                     cabecera = 1;
@@ -650,14 +667,17 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 
                 procesoFlujo.setNIdEstado(flujoArista.getNIdEstado());
                 procesoFlujo.setNIdArista(flujoArista.getNIdArista());
+                procesoFlujo.setSFlujo(flujoArista.getSFlujo());
                 procesoFlujo.setNIdUsuarioFlujo(idUsuarioFlujoOrigen);
-                procesoFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                procesoFlujo.setSUserCreacion(entidad.get(i).getActividadInvestigacion().getSUserCreacion());
+                procesoFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
                 procesoFlujo.setSEstado("A");
                 procesoFlujo = procesoFlujoDao.Insert(procesoFlujo);
-
+                
                 detalleInvestigacionFlujo.setNIdProcesoFlujo(procesoFlujo.getNIdProcesoFlujo());
                 detalleInvestigacionFlujo.setNIdActividadInvestigacion(entidad.get(i).getActividadInvestigacion().getNIdActividadInvestigacion());
                 detalleInvestigacionFlujo.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                detalleInvestigacionFlujo.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
                 detalleInvestigacionFlujo.setSEstado("A");
                 detalleInvestigacionFlujo = detalleInvestigacionFlujoDao.Insert(detalleInvestigacionFlujo);
                 
@@ -667,6 +687,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
                 detalleMasiva.setNIdActividadInvestigacion(entidad.get(i).getActividadInvestigacion().getNIdActividadInvestigacion());
                 detalleMasiva.setNIdDetalleInvestigacionFlujo(detalleInvestigacionFlujo.getNIdDetalleInvestigacionFlujo());
                 detalleMasiva.setSUserCreacion(usuarioOrigen.getSUsuarioLogin());
+                detalleMasiva.setSUserModificacion(usuarioOrigen.getSUsuarioLogin());
                 detalleMasiva.setSEstado("A");
                 detalleMasiva = detalleMasivaDao.Insert(detalleMasiva);
                 

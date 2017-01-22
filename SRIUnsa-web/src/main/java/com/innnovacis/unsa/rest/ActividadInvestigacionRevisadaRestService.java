@@ -133,7 +133,7 @@ public class ActividadInvestigacionRevisadaRestService {
         try {
             respuesta = actividadInvestigacionBusiness.GetDetalleMasiva(entidad);
             builder = Response.status(Response.Status.OK).entity(respuesta);
-            log.log(Level.INFO, "GetDetalleMasiva : {0}", entidad.toString());
+            log.log(Level.INFO, "GetDetalleMasiva - Success : {0}", entidad.toString());
         } catch(Exception ex) {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
             log.log(Level.INFO, "GetDetalleMasiva - Error : {0}", ex.getMessage());

@@ -26,6 +26,7 @@ public class CabeceraMasivaDaoImp implements ICabeceraMasivaDao {
     @Transactional
     public SRICabeceraMasiva  Insert(SRICabeceraMasiva entidad) {
         entidad.setDFechaCreacion(new Date());
+        entidad.setDFechaModificacion(new Date());
         em.persist(entidad);
         return entidad;
     }
@@ -71,7 +72,7 @@ public class CabeceraMasivaDaoImp implements ICabeceraMasivaDao {
         List<SRIActividadGeneralPaginacion> listActividades = null;
         try {
              Query query = em.createNativeQuery("{call GetDetalleMasiva(?1,?2,?3)}", SRIActividadGeneralPaginacion.class)
-                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion()) //mandamos el idCabeceraDetalle
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion()) //mandamos el idCabecera
                         .setParameter(2 , entidad.getRango())
                         .setParameter(3, entidad.getCurrentPage());
             listActividades = query.getResultList();

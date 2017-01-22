@@ -168,15 +168,6 @@
         console.log("Respuesta :: ", response);
     };
     
-    var GuardarInvestigacionSuccess  =function(response){
-        $log.debug("GuardarInvestigacion - Success");
-        console.log("Respuesta :: ", response);
-    };
-    var GuardarInvestigacionError  =function(response){
-        $log.debug("GuardarInvestigacion - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
     var GetTipoInvestigadorSuccess = function(response){
         $log.debug("GetTipoInvestigador - Success");
         console.log("Respuesta :: ", response);
@@ -350,49 +341,6 @@
             
             console.log("campos por validar");
         }
-    };
-    
-    /************ Guardar Actividad de Investigacion ****************/
-    
-    $scope.guardarInvestigacion = function(isValid){
-        
-//        $scope.loader = true;
-        $scope.sharedService.scrollTop();
-        var actividadGeneral = {
-            idUsuario : $scope.sharedService.usuarioLogin.idUsuario,
-            idFlujoActorOrigen : SRIUnsaConfig.DOCE,
-            idEstado : SRIUnsaConfig.PREVIO,
-            idPlanificacion : -1,
-            codigoActor : SRIUnsaConfig.codeDOCE,
-            colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
-            plantillaDocumentoActividad : getValoresPlantilla(),
-            actividadInvestigacion : {
-                nidResponsable : $scope.responsable.nidPersona,
-                nidTipoActividadInvestigacion : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
-                nhoras : $scope.duracionInvestigacion,
-                sritipoProduccion : $scope.tipoProduccion === undefined ? "" : $scope.tipoProduccion.snombreTipoProduccion,
-                sfondoConcursable : $scope.fondo === undefined ? "" : $scope.fondo.snombreFondoConcursable,
-                stipoAsesoria : $scope.tipoAsesoria === undefined ? "" : $scope.tipoAsesoria.snombreTipoAsesoria,
-                ssemestre : $scope.semestre === undefined ? "" : $scope.semestre.snombreSemestre,
-                sfacultad : $scope.facultad === undefined ? "" : $scope.facultad.snombreEstructuraOrganizacion,
-                sescuela : $scope.escuela === undefined ? "" : $scope.escuela.snombreEstructuraOrganizacion,
-                sdepartamento : $scope.departamento === undefined ? "" : $scope.departamento.snombreEstructuraOrganizacion,
-                sareaInvestigacion: $scope.areaInvestigacion === undefined ? "" : $scope.areaInvestigacion.sNombre,
-                ssubAreaInvestigacion : $scope.subAreaInvestigacion === undefined ? "" : $scope.subAreaInvestigacion.sNombre,
-                sdisciplina :  $scope.disciplinaInvestigacion === undefined ? "" : $scope.disciplinaInvestigacion.sNombre,
-                stipoLabor : $scope.tipoLabor === undefined ? "" : $scope.tipoLabor.nombre,
-                snombreActividadInvestigacion : $scope.nombreInvestigacion,
-                navance: $scope.avance,
-                dfechaRegistro : $scope.fechaRegistro,
-                dfechaInicio : $scope.fechaInicio,
-                dfechaFin : $scope.fechaFin,
-                sdescripcionActividad : $scope.descripcion,
-                suserCreacion : $scope.sharedService.usuarioLogin.nombreUsuario,
-                sestado : 'A'
-            }
-        };
-        console.log("GuardarActividadInvestigacion :: ", actividadGeneral);
-        HomeService.GuardarInvestigacion(actividadGeneral).then(GuardarInvestigacionSuccess, GuardarInvestigacionError);
     };
     
     
