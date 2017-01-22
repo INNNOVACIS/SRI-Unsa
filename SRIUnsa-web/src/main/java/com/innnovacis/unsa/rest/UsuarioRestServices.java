@@ -10,7 +10,9 @@ import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.GenerateExcel;
 import com.innnovacis.unsa.util.GeneratePdf;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
@@ -328,7 +330,7 @@ public class UsuarioRestServices {
                             .GetActivosInactivosByFacultad(entidad.getIdFacultad());
             
             //Transformando las vistas
-            ArrayList<ArrayList<String>> listaUsuariosSend = new ArrayList<ArrayList<String>>();            
+            ArrayList<ArrayList<String>> listaUsuariosSend = new ArrayList<>();            
             for(int i = 0; i < listaUsuarios.size(); i++){
                 listaUsuariosSend.add(listaUsuarios.get(i).getArrayDatos());
             }            
@@ -338,13 +340,13 @@ public class UsuarioRestServices {
             docenteActivosInactivosSend.add(docenteActivosInactivos.getArrayDatos());
             String[] docenteActivosInactivosNombreColumnas = docenteActivosInactivos.getArrayHeaders();
             
-            ArrayList<ArrayList<String>> totalTipoActividadesSend = new ArrayList<ArrayList<String>>();            
+            ArrayList<ArrayList<String>> totalTipoActividadesSend = new ArrayList<>();            
             for(int i = 0; i < totalTipoActividades.size(); i++){
                 totalTipoActividadesSend.add(totalTipoActividades.get(i).getArrayDatos());
             }            
             String[] totalTipoActividadesSendNombreColumnas = SRITotalTipoActividad.getArrayHeaders();
             
-            ArrayList<ArrayList<String>> facultadesPorTipoActividadesSend = new ArrayList<ArrayList<String>>();            
+            ArrayList<ArrayList<String>> facultadesPorTipoActividadesSend = new ArrayList<>();            
             for(int i = 0; i < facultadesPorTipoActividades.size(); i++){
                 facultadesPorTipoActividadesSend.add(facultadesPorTipoActividades.get(i).getArrayDatos());
             }            
@@ -374,9 +376,67 @@ public class UsuarioRestServices {
     @POST
     @Path("/descargarExcel")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response descargarExcel(SRIPaginacionObject object) {
+    public Response descargarExcel(SRIPaginacionObject entidad) {
         
-        return null;
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            // Establecemos un rango grande para traer todos los elementos
+            entidad.setRango(2000);
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            int total = usuarioBusiness.GetTotalUsuariosColor(entidad);
+            List<SRIUsuarioColor> listaUsuarios = usuarioBusiness.GetUsuariosColor(entidad);            
+            // Usuarios activos e inactivos
+            SRIDocenteActivosInactivos docenteActivosInactivos = 
+                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad());
+            // Obtenemos el total de actividades por tipo
+            List<SRITotalTipoActividad>  totalTipoActividades = 
+                    //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+            // Lista  de las facultades
+            List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
+                    actividadInvestigacionBusiness
+                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<>();            
+            for(int i = 0; i < listaUsuarios.size(); i++) {
+                listaObjetosSend.add(listaUsuarios.get(i).getArrayDatos());
+            }
+            String[] nombreColumnas = SRIUsuarioColor.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> totalTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < totalTipoActividades.size(); i++){
+                totalTipoActividadesSend.add(totalTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] totalTipoActividadesSendNombreColumnas = SRITotalTipoActividad.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> facultadesPorTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < facultadesPorTipoActividades.size(); i++){
+                facultadesPorTipoActividadesSend.add(facultadesPorTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] facultadesPorTipoActividadesSendNombreColumnas = SRIDocentesActivosInactivosFacultad.getArrayHeaders();
+            
+            GenerateExcel generadorExcel =  new GenerateExcel();            
+            byte[] blobAsBytes = generadorExcel.getArrayByteFrom2(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Actividades de Investigación Generadas",listaObjetosSend,
+                    docenteActivosInactivos,totalTipoActividadesSendNombreColumnas.length,
+                    totalTipoActividadesSendNombreColumnas,totalTipoActividadesSend,
+                    facultadesPorTipoActividadesSendNombreColumnas.length,
+                    facultadesPorTipoActividadesSendNombreColumnas,facultadesPorTipoActividadesSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "documento.xlsx")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.xlsx")
+                .build();
     }
     
     

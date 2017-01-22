@@ -6,7 +6,6 @@
 package com.innnovacis.unsa.util;
 
 import java.awt.Color;
-import java.awt.Paint;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -26,7 +25,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
-import java.awt.BasicStroke;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -36,15 +34,11 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.general.DatasetUtilities;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.GroupedStackedBarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
@@ -277,17 +271,13 @@ public class GeneratePdf {
     public PdfPTable getTableInvestigaciones(int numTiposActividades, 
             String[] listNombresTiposActividades, ArrayList<ArrayList<String>> listTiposActividades){
         
-        int nroColumnas = 4;
-        
-        PdfPTable table = new PdfPTable(nroColumnas);
+        PdfPTable table = new PdfPTable(listTiposActividades.size());
         table.setWidthPercentage(100);
         table.getDefaultCell().setUseAscender(true);
         table.getDefaultCell().setUseDescender(true);
         
-        
         table.getDefaultCell().setBackgroundColor(new BaseColor(247, 247, 247));
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-        
                 
         for(int i = 0; i < listTiposActividades.size() ;i++) {
             PdfPCell celda0 = createCellTipoInvestigacion(listTiposActividades.get(i).get(0));
@@ -311,16 +301,8 @@ public class GeneratePdf {
         int height = 75;  
         
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
-        Document documento = new Document(PageSize.A4.rotate());
+        Document documento = getDocumentNew();
         PdfWriter writer = PdfWriter.getInstance(documento, baosPDF);
-
-        // Propiedades del documento
-        documento.addAuthor("Innnóvacis");
-        documento.addCreationDate();
-        documento.addProducer();
-        documento.addCreator("innnovacis.com");
-        documento.addTitle("Innnóvacis");
-        documento.open();
         
         Paragraph primerTitulo = new Paragraph("Estadísticas de docentes investigando");        
         primerTitulo.add(line);        
@@ -376,8 +358,7 @@ public class GeneratePdf {
         table.addCell(createCellMainHeader(tituloPrincipal));
         
         // Cabeceras sub principales
-        for(int i = 0 ; i < numUsuariosDocentes;i++)
-        {
+        for(int i = 0 ; i < numUsuariosDocentes;i++) {
             table.addCell(createCellHeader(listColumnasUsuariosDocentes[i]));
         }
 
@@ -408,15 +389,8 @@ public class GeneratePdf {
             ArrayList<ArrayList<String>> listaObjetosSend) throws IOException, DocumentException {
 
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
-        Document documento = new Document(PageSize.A4.rotate());
+        Document documento = getDocumentNew();
         PdfWriter writer = PdfWriter.getInstance(documento, baosPDF);
-
-        // Propiedades del documento
-        documento.addAuthor("Innnóvacis");
-        documento.addCreationDate();
-        documento.addProducer();
-        documento.addCreator("innnovacis.com");
-        documento.addTitle("Innnóvacis");
         
         documento.open();
         
@@ -454,5 +428,17 @@ public class GeneratePdf {
         byte[] rptaBytes = new byte[longitudEnBytes];
         rptaBytes = baosPDF.toByteArray();
         return rptaBytes;
+    }
+    
+    private Document getDocumentNew(){
+        Document documento = new Document(PageSize.A4.rotate());
+        // Propiedades del documento
+        documento.addAuthor("Innnóvacis");
+        documento.addCreationDate();
+        documento.addProducer();
+        documento.addCreator("innnovacis.com");
+        documento.addTitle("Innnóvacis");
+        
+        return documento;
     }
 }
