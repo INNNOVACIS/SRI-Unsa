@@ -388,8 +388,8 @@ public class Email {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.user", "ali.arapa");//innnovacisaqp");
-        props.put("mail.smtp.password", "ali20080410");//innnovacis.");
+        props.put("mail.smtp.user", "innnovacisaqp");//innnovacisaqp");
+        props.put("mail.smtp.password", "innnovacis.");//innnovacis.");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
 
