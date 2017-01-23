@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -588,7 +591,9 @@ public class Email {
         return mensaje;
     }
     
-    public String GetBodyEmailInforme(String nombreCompleto) {
+    public String GetEstructuraEmail(String titulo, String nombreDestino, String cuerpo, String nombreRemitente) {
+        Calendar calendar = new GregorianCalendar();
+        String anio = Integer.toString(calendar.get(Calendar.YEAR));
         String mensaje = "<html>"
 +"<head>"
 +"</head>"
@@ -599,7 +604,7 @@ public class Email {
 +"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
 +"					<tr>"
 +"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
-+"							<img src=\"cid:LogoUnsa\" alt='Creating Email Magic' width='400' height='160' style='display: block;' />"
++"							<img src=\"cid:LogoUnsa\" alt='Logo UNSA' width='400' height='160' style='display: block;' />"
 +"						</td>"
 +"					</tr>"
 +"					<tr>"
@@ -607,17 +612,23 @@ public class Email {
 +"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
 +"								<tr>"
 +"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
-+"										<b>SRI - Confirmacion de Operacion!</b>"
++"										<b>" + titulo + "</b>"
 +"									</td>"
 +"								</tr>"
 +"								<tr>"
 +"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado " + nombreCompleto + ":"
++"										Estimado " + nombreDestino + ":"
 +"									</td>"              
 +"								</tr>"
 +"								<tr>"
 +"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Le envio el informe de las actividades generadas para el semestre actual."
++                                                                       cuerpo
++"									</td>"              
++"								</tr>"
++"								<tr>"
++"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"                                                                          Atentamente. <br>"
++"                                                                          " + nombreRemitente                
 +"									</td>"              
 +"								</tr>"
 +"							</table>"
@@ -628,8 +639,8 @@ public class Email {
 +"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
 +"								<tr>"
 +"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
-+"										Para acceder al Registro de su Actividad de Investigacion <a href='http://www.google.com.pe' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
-+"										&reg;Innnovacis,  SRIUnsa 2016"
++"										Sistema de Registro de Actividades de Investigación. <a href='http://104.131.8.31:8080/SRIUnsa-web' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
++"										&reg;Innnovacis,  SIRI-UNSA " + anio
 +"									</td>"
 +"								</tr>"
 +"							</table>"
@@ -684,22 +695,15 @@ public class Email {
         this.info = from + " : " + pass + " : " + host + " : " + pass + " : " + port + " : " + auth + " : " + enable;
     }
     
-    public void enviarInforme(byte[] informe, List<String> destinatarios) throws GeneralSecurityException, IOException{
-        Email email = new Email();
-        String from = email.readProperties("user");
-        String pass = MD5.decrypt(email.readProperties("password"));
-        String host = email.readProperties("host");
-        String port = email.readProperties("port");
-        String auth = email.readProperties("auth");
-        String enable = email.readProperties("enable");
+    public void enviarInforme(List<String> nombreDestinatarios, String nombreRemitente,
+                              String cuerpo, List<String> emailDestinatarios, String emailRemitente, String titulo, String asunto, byte[] adjunto) throws GeneralSecurityException, IOException{
         
-        for(String destinatario : destinatarios){
+        for(int i = 0; i < emailDestinatarios.size(); i++){
             List<String> to = new ArrayList<String>();
-            to.add(destinatario);
-            String subject = "SRI-UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
-            String nombreCompleto = "";
-            String body = GetBodyEmailInforme(nombreCompleto);
-            sendFromGMailInforme("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, body, informe);
+            to.add(emailDestinatarios.get(i));
+            String subject = asunto;
+            String body = GetEstructuraEmail(titulo, nombreDestinatarios.get(i), cuerpo, nombreRemitente);
+            sendFromGMailInforme("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, emailRemitente, body, adjunto);
         }
     }
     
@@ -737,7 +741,8 @@ public class Email {
        return this.info;
     }
 
-    public void sendFromGMail(String enable, String auth, String port, String host, String from, String pass, List<String> to, String subject, String body) {
+    public void sendFromGMail(String enable, String auth, String port, String host, String from, String pass, 
+                              List<String> to, String subject, String body) {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -751,13 +756,7 @@ public class Email {
         MimeMessage message = new MimeMessage(session);
 
         MimeMultipart multipart = new MimeMultipart("related");
-//        log.log(Level.INFO, "Email enable : {0}", enable);
-//        log.log(Level.INFO, "Email host   : {0}", host);
-//        log.log(Level.INFO, "Email user   : {0}", from);
-//        log.log(Level.INFO, "Email password : {0}", pass);
-//        log.log(Level.INFO, "Email port : {0}", port);
-//        log.log(Level.INFO, "Email auth : {0}", auth);
-//        first part (the html)
+
         BodyPart messageBodyPart = new MimeBodyPart();
         String htmlText = body;
         try {
@@ -793,7 +792,8 @@ public class Email {
 
     }
     
-    public void sendFromGMailInforme(String enable, String auth, String port, String host, String from, String pass, List<String> to, String subject, String body, byte[] informe) {
+    public void sendFromGMailInforme(String enable, String auth, String port, String host, String from, String pass, 
+                                    List<String> to, String subject, String emailRemitente, String body, byte[] informe) {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -802,7 +802,6 @@ public class Email {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
 
-//        Session session = Session.getDefaultInstance(props);
         Session session = Session.getInstance(props, new GMailAuthenticator(from, pass));
         MimeMessage message = new MimeMessage(session);
 
@@ -815,7 +814,7 @@ public class Email {
             messageBodyPart = new MimeBodyPart();
             
             //ADJUNTAR IMAGE
-            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
+            DataSource fds = new FileDataSource("/home/innnovacis/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);
@@ -825,6 +824,7 @@ public class Email {
             MimeBodyPart pdfBodyPart = new MimeBodyPart();
             pdfBodyPart.setDataHandler(new DataHandler(dataSource));
             pdfBodyPart.setFileName("Actividades Generadas.pdf");
+            
             multipart.addBodyPart(pdfBodyPart);
             
             
@@ -839,6 +839,10 @@ public class Email {
             for (int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
+            
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(emailRemitente));
+            message.addRecipient(Message.RecipientType.BCC, new InternetAddress("ali.arapa@gmail.com"));
+//            message.addRecipient(Message.RecipientType.BCC, new InternetAddress("wilfredoqi@gmail.com"));
 
             message.setSubject(subject);
             Transport transport = session.getTransport("smtp");

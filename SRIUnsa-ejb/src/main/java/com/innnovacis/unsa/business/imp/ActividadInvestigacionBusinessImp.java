@@ -777,24 +777,36 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
     
     @Override
-    public boolean EnviarInforme(byte[] informe) {
-        boolean respuesta = false;   
+    public boolean EnviarInforme(byte[] adjunto, SRIPaginacion entidad) {
+        boolean respuesta = false;
+        List<String> nombreDestinatarios = new ArrayList<String>();
+        List<String> emailDestinatarios = new ArrayList<String>();
         try {
-    
+            //Get Remitente y destinatarios
+            List<SRIUsuarioPersona> lstUsuarioPersonas = usuarioDao.GetDirectorDepartamentoByIdDocente(entidad.getIdUsuario());
+            List<SRIUsuarioPersona> remitente = usuarioDao.GetUsuarioPersonaByIdUsuario(entidad.getIdUsuario());
+            
+            for(SRIUsuarioPersona usuarioPersona : lstUsuarioPersonas){
+                nombreDestinatarios.add(usuarioPersona.getSNombre() + " " + usuarioPersona.getSApellido());
+                emailDestinatarios.add(usuarioPersona.getSUsuarioEmail());
+            }
+            String nombreRemitente = remitente.get(0).getSNombre() + " " + remitente.get(0).getSApellido();
+            String emailRemitente = remitente.get(0).getSUsuarioEmail();
+            String cuerpo = "Le envio la actividades de investigación generadas para el semestre actual.";
+            String asunto = "SRI-UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
+            String titulo = "Actividades de Investigación Registradas";
+            
             Email email = new Email();
             log.log(Level.INFO, "Email enable : {0}", email.recuperar());
-            List<String> destinatarios = new ArrayList<String>();
-            destinatarios.add("jherreraq@gmail.com");
-            destinatarios.add("ali.arapa@gmail.com");
-            destinatarios.add("wilfredoqi@gmail.com");
-            email.enviarInforme(informe, destinatarios);
+            
+            email.enviarInforme(nombreDestinatarios, nombreRemitente, cuerpo, emailDestinatarios, emailRemitente, titulo, asunto, adjunto);
             respuesta = true;  
 
         } catch(Exception ex) {
-            respuesta = false;
             try {
                 throw ex;
             } catch (Exception ex1) {
+                respuesta = false;
                 Logger.getLogger(ActividadInvestigacionBusinessImp.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }

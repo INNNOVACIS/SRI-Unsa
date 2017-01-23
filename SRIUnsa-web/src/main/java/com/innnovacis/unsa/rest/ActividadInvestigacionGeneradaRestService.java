@@ -45,7 +45,7 @@ public class ActividadInvestigacionGeneradaRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public boolean EnviarInforme(SRIPaginacion entidad) {
         Map<String, Object> respuesta = new HashMap<>();
-        boolean respusta2 = false;
+        boolean respuesta2 = false;
         try {
             // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
             // los elementos
@@ -65,11 +65,11 @@ public class ActividadInvestigacionGeneradaRestService {
             
             GeneratePdf generador =  new GeneratePdf();            
             byte[] blobAsBytes = generador.getArrayByteFrom(respuesta, nombreColumnas.length,
-                    nombreColumnas, "Home Docente",listaObjetosSend);
+                    nombreColumnas, "Informe de Actividades de Investigación",listaObjetosSend);
             
-            respusta2 = actividadInvestigacionBusiness.EnviarInforme(blobAsBytes);
+            respuesta2 = actividadInvestigacionBusiness.EnviarInforme(blobAsBytes, entidad);
             
-            return respusta2;
+            return respuesta2;
 
         } catch (Exception ex) {
             Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);

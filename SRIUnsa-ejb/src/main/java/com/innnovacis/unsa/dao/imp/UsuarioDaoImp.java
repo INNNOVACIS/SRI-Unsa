@@ -286,4 +286,17 @@ public class UsuarioDaoImp implements IUsuarioDao {
         return respuesta;
     }
 
+    @Override
+    public List<SRIUsuarioPersona> GetDirectorDepartamentoByIdDocente(int idUsuario) {
+        List<SRIUsuarioPersona> lstUsuarioPersona = null;
+        try {
+            Query query = em.createNativeQuery("{call GetDirectorDepartamentoByIdDocente(?1)}", SRIUsuarioPersona.class)
+                        .setParameter(1, idUsuario);
+            lstUsuarioPersona = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return lstUsuarioPersona;
+    }
+
 }
