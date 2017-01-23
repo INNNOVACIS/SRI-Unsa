@@ -154,7 +154,7 @@
                                     total="total">    
                                 </pagination>
                             </div>
-                            <button class="btn btn-danger btn-sm pull-right" ng-click="enviarInforme()">
+                            <button class="btn btn-danger btn-sm pull-right" style="margin-top: 10px;" data-toggle="modal" data-target="#modalConfirmarInforme">
                                 <span class="glyphicon glyphicon-envelope"></span>
                                 Enviar Informe
                             </button>
@@ -187,6 +187,37 @@
                     <button type="button" class="btn btn-primary" ng-click="cerrar()">
                         <span class="glyphicon glyphicon-rol"></span>
                         Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modalConfirmarInforme" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmar Env&iacute;o</h4>
+                </div>
+                <div class="modal-body">
+<!--                    <div class="container-fluid">
+-->                        <div class="row">
+                            <div class="col-md-12">
+                                <form novalidate class="form-horizontal">
+                                    <p>Esta seguro que desea enviar el informe de actividades, este no se puede volver a enviar.</p>
+                                </form>
+                            </div>
+                        </div><!--
+                     </div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="enviarInforme()">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        Enviar Informe
+                    </button>
+                    <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal" ng-click="cancel()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancelar
                     </button>
                 </div>
             </div>

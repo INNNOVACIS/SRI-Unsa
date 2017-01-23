@@ -13,7 +13,6 @@ import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
@@ -400,122 +399,6 @@ public class Email {
 +"</body>"
 +"</html>";
                 break;
-            case "DIGE":
-                table = "<html>"
-+"<head>"
-+"</head>"
-+"<body style='margin: 0; padding: 0;'>"
-+"	<table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
-+"		<tr>"
-+"			<td style='padding: 10px 0 30px 0;'>"
-+"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
-+"					<tr>"
-+"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
-+"							<img src=\"cid:LogoUnsa\" alt='Creating Email Magic' width='400' height='160' style='display: block;' />"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
-+"										<b>SRI - Confirmacion de Operacion!</b>"
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado " + nombreCompleto + " se realizo el registro de su Actividad con exito, con Codigo Operacion SRI00005489."
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='font-size: 0.9em;'>"
-+"										<table border='1' cellpadding='3' cellspacing='0' width='100%'>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Nombre de la Actividad : </th>"
-+"											    <td>" + data.getSNombreActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Tipo Actividad de Investigación : </th>"
-+"											    <td>" + data.getNIdTipoActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Facultad : </th>"
-+"											    <td>" + data.getSFacultad() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Departamento : </th>"
-+"											    <td>" + data.getSDepartamento() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Escuela : </th>"
-+"											    <td>" + data.getSEscuela() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Fondo Concursable : </th>"
-+"											    <td>" + data.getSFondoConcursable() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Area Investigación : </th>"
-+"											    <td>" + data.getSAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>SubArea Investigación : </th>"
-+"											    <td>" + data.getSSubAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Disciplina : </th>"
-+"											    <td>" + data.getSDisciplina() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Numero de horas : </th>"
-+"											    <td>" + String.valueOf(data.getNHoras()) + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Descripción : </th>"
-+"											    <td>" + data.getSDescripcionActividad() + "</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
-+"										Para acceder al Registro de su Actividad de Investigacion <a href='http://www.google.com.pe' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
-+"										&reg;Innnovacis,  SRIUnsa 2016"
-+"									</td>"
-+"									<td align='right' width='20%'>"
-+"										<table border='0' cellpadding='0' cellspacing='0'>"
-+"											<tr>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/tw.gif' alt='Twitter' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"												<td style='font-size: 0; line-height: 0;' width='20'>&nbsp;</td>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/fb.gif' alt='Facebook' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"				</table>"
-+"			</td>"
-+"		</tr>"
-+"	</table>"
-+"</body>"
-+"</html>";
-                break;
         }
         
         
@@ -598,58 +481,58 @@ public class Email {
 +"<head>"
 +"</head>"
 +"<body style='margin: 0; padding: 0;'>"
-+"	<table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
-+"		<tr>"
-+"			<td style='padding: 10px 0 30px 0;'>"
-+"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
-+"					<tr>"
-+"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
-+"							<img src=\"cid:LogoUnsa\" alt='Logo UNSA' width='400' height='160' style='display: block;' />"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
-+"										<b>" + titulo + "</b>"
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado " + nombreDestino + ":"
-+"									</td>"              
-+"								</tr>"
-+"								<tr>"
-+"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+                                                                       cuerpo
-+"									</td>"              
-+"								</tr>"
-+"								<tr>"
-+"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"                                                                          Atentamente. <br>"
-+"                                                                          " + nombreRemitente                
-+"									</td>"              
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
-+"										Sistema de Registro de Actividades de Investigación. <a href='http://104.131.8.31:8080/SRIUnsa-web' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
-+"										&reg;Innnovacis,  SIRI-UNSA " + anio
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"				</table>"
++"  <table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
++"      <tr>"
++"          <td style='padding: 10px 0 30px 0;'>"
++"              <table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
++"                  <tr>"
++"			<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
++"                          <img src=\"cid:LogoUnsa\" alt='Logo UNSA' width='400' height='160' style='display: block;' />"
 +"			</td>"
-+"		</tr>"
-+"	</table>"
++"                  </tr>"
++"                  <tr>"
++"			<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
++"                          <table border='0' cellpadding='0' cellspacing='0' width='100%'>"
++"				<tr>"
++"                                  <td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
++"					<b>" + titulo + "</b>"
++"                                  </td>"
++"				</tr>"
++"				<tr>"
++"                                  <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"					Estimado " + nombreDestino + ":"
++"                                  </td>"              
++"				</tr>"
++"				<tr>"
++"                                  <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++                                       cuerpo
++"                                  </td>"              
++"                              </tr>"
++"				<tr>"
++"                                  <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"                                      Atentamente. <br>"
++                                       nombreRemitente                
++"                                  </td>"              
++"				</tr>"
++"                          </table>"
++"                      </td>"
++"                  </tr>"
++"                  <tr>"
++"			<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
++"                          <table border='0' cellpadding='0' cellspacing='0' width='100%'>"
++"				<tr>"
++"                                  <td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
++"					Sistema de Registro de Investigación Docente. <a href='http://104.131.8.31:8080/SRIUnsa-web' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
++"					&reg;Innnovacis,  SIRI-UNSA " + anio
++"                                  </td>"
++"                              </tr>"
++"                          </table>"
++"			</td>"
++"                  </tr>"
++"		</table>"
++"          </td>"
++"	</tr>"
++"  </table>"
 +"</body>"
 +"</html>";
             
@@ -703,6 +586,13 @@ public class Email {
             to.add(emailDestinatarios.get(i));
             String subject = asunto;
             String body = GetEstructuraEmail(titulo, nombreDestinatarios.get(i), cuerpo, nombreRemitente);
+            sendFromGMailInforme("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, emailRemitente, body, adjunto);
+        }
+        
+        if(emailDestinatarios.isEmpty()){
+            List<String> to = new ArrayList<String>();
+            String subject = asunto;
+            String body = GetEstructuraEmail(titulo, "", cuerpo, nombreRemitente);
             sendFromGMailInforme("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, emailRemitente, body, adjunto);
         }
     }
@@ -814,7 +704,7 @@ public class Email {
             messageBodyPart = new MimeBodyPart();
             
             //ADJUNTAR IMAGE
-            DataSource fds = new FileDataSource("/home/innnovacis/logo/logo-unsa-2.jpg");
+            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);
@@ -842,7 +732,7 @@ public class Email {
             
             message.addRecipient(Message.RecipientType.CC, new InternetAddress(emailRemitente));
             message.addRecipient(Message.RecipientType.BCC, new InternetAddress("ali.arapa@gmail.com"));
-//            message.addRecipient(Message.RecipientType.BCC, new InternetAddress("wilfredoqi@gmail.com"));
+            message.addRecipient(Message.RecipientType.BCC, new InternetAddress("wilfredoqi@gmail.com"));
 
             message.setSubject(subject);
             Transport transport = session.getTransport("smtp");

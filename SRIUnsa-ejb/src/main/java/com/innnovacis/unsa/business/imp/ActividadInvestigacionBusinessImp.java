@@ -792,7 +792,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             }
             String nombreRemitente = remitente.get(0).getSNombre() + " " + remitente.get(0).getSApellido();
             String emailRemitente = remitente.get(0).getSUsuarioEmail();
-            String cuerpo = "Le envio la actividades de investigación generadas para el semestre actual.";
+            String cuerpo = "Le envio las actividades de investigación generadas para el semestre actual.";
             String asunto = "SRI-UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
             String titulo = "Actividades de Investigación Registradas";
             
