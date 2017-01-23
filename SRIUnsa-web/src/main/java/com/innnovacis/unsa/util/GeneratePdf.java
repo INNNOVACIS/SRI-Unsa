@@ -304,6 +304,8 @@ public class GeneratePdf {
         Document documento = getDocumentNew();
         PdfWriter writer = PdfWriter.getInstance(documento, baosPDF);
         
+        documento.open();
+        
         Paragraph primerTitulo = new Paragraph("Estadísticas de docentes investigando");        
         primerTitulo.add(line);        
         documento.add(primerTitulo);
