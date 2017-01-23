@@ -517,40 +517,61 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     @Override
     public boolean EnviarEmail(SRIActividadGeneral entidad) {
         boolean respuesta = false;
-        List<SRIUsuarioPersona> usuariosPersonaDestino   = new ArrayList<SRIUsuarioPersona>();
-        List<SRIUsuarioPersona> usuarioPersonaOrigen     = new ArrayList<SRIUsuarioPersona>();
+//        List<SRIUsuarioPersona> usuariosPersonaDestino   = new ArrayList<SRIUsuarioPersona>();
+//        List<SRIUsuarioPersona> usuarioPersonaOrigen     = new ArrayList<SRIUsuarioPersona>();
         SRIActividadInvestigacion actividadInvestigacion = null;
-        SRIFlujoArista flujoArista = new SRIFlujoArista();
-        SRIFlujoActor flujoActor   = null;         
+//        SRIFlujoArista flujoArista = new SRIFlujoArista();
+//        SRIFlujoActor flujoActor   = null;         
+        
+        List<String> nombreDestinatarios = new ArrayList<String>();
+        List<String> emailDestinatarios = new ArrayList<String>();
         
         try {
             
-            flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
-            flujoActor  = flujoActorDao.GetById(flujoArista.getSIdFlujoActorDestino());
-            usuarioPersonaOrigen   = usuarioDao.GetUsuarioPersonaByIdUsuario(entidad.getIdUsuario());
-            usuariosPersonaDestino = usuarioDao.GetDestinatariosByCodigoActorDestino(flujoActor.getSCodigo());
+//            flujoArista = flujoAristaDao.GetFlujoAristaByIdOrigenIdEstado(entidad.getIdFlujoActorOrigen(), entidad.getIdEstado());
+//            flujoActor  = flujoActorDao.GetById(flujoArista.getSIdFlujoActorDestino());
+//            usuarioPersonaOrigen   = usuarioDao.GetUsuarioPersonaByIdUsuario(entidad.getIdUsuario());
+//            usuariosPersonaDestino = usuarioDao.GetDestinatariosByCodigoActorDestino(flujoActor.getSCodigo());
             actividadInvestigacion =  actividadInvestigacionDao.GetById(entidad.getActividadInvestigacion().getNIdActividadInvestigacion());
+            
+            
+//            Email email = new Email();
+//            log.log(Level.INFO, "Email enable : {0}", email.recuperar());
+            
+//            switch(entidad.getCodigoActor()){
+//                case "DOCE":
+//                    email.initGmail(usuarioPersonaOrigen, actividadInvestigacion, entidad.getCodigoActor());
+//                    break;
+//                case "DIDE":
+//                    break;
+//                case "DIUN":
+//                    break;
+//                case "DECA":
+//                    break;
+//                case "DIGE":
+//                    break;
+//
+//            }
+
+            //Get Remitente y destinatarios
+            List<SRIUsuarioPersona> lstUsuarioPersonas = usuarioDao.GetDirectorDepartamentoByIdDocente(entidad.getIdUsuario());
+            List<SRIUsuarioPersona> remitente = usuarioDao.GetUsuarioPersonaByIdUsuario(entidad.getIdUsuario());
+            
+            for(SRIUsuarioPersona usuarioPersona : lstUsuarioPersonas){
+                nombreDestinatarios.add(usuarioPersona.getSNombre() + " " + usuarioPersona.getSApellido());
+                emailDestinatarios.add(usuarioPersona.getSUsuarioEmail());
+            }
+            String nombreRemitente = remitente.get(0).getSNombre() + " " + remitente.get(0).getSApellido();
+            String emailRemitente = remitente.get(0).getSUsuarioEmail();
+            String cuerpo = "El registro de su actividad de investigación fue realizada con éxito, pendiente de aprobación del Director de Departamento ";
+            String asunto = "SRI-UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
+            String titulo = "Registro de la Actividad de Investigación";
             
             
             Email email = new Email();
             log.log(Level.INFO, "Email enable : {0}", email.recuperar());
-            
-            switch(entidad.getCodigoActor()){
-                case "DOCE":
-                    email.initGmail(usuarioPersonaOrigen, actividadInvestigacion, entidad.getCodigoActor());
-                    break;
-                case "DIDE":
-                    break;
-                case "DIUN":
-                    break;
-                case "DECA":
-                    break;
-                case "DIGE":
-                    break;
-
-            }
-
-            email.initGmail(usuariosPersonaDestino, actividadInvestigacion, flujoActor.getSCodigo());
+             
+            email.enviarRegistro(nombreDestinatarios, nombreRemitente, cuerpo, emailDestinatarios, emailRemitente, titulo, asunto, null, actividadInvestigacion);
             
             respuesta = true;
         } catch(Exception ex) {

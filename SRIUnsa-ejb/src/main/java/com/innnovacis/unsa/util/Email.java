@@ -48,361 +48,68 @@ public class Email {
     private static String RECIPIENT = "ali.arapa@gmail.com";
     public String info;
 
-    public String GetEmail(SRIActividadInvestigacion data, String actor, String nombreCompleto) {
-        String table = "";
-        switch(actor){
-            case "DOCE":
-                    table = "<html>"
-+"<head>"
-+"</head>"
-+"<body style='margin: 0; padding: 0;'>"
-+"	<table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
-+"		<tr>"
-+"			<td style='padding: 10px 0 30px 0;'>"
-+"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
-+"					<tr>"
-+"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
-+"							<img src=\"cid:LogoUnsa\" alt='Creating Email Magic' width='400' height='160' style='display: block;' />"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
-+"										<b>SRI - Confirmacion de Operacion!</b>"
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado " + nombreCompleto + " se realizo el registro de su Actividad con exito."
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='font-size: 0.9em;'>"
-+"										<table border='1' cellpadding='3' cellspacing='0' width='100%'>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Nombre de la Actividad : </th>"
-+"											    <td>" + data.getSNombreActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Tipo Actividad de Investigación : </th>"
-+"											    <td>" + data.getNIdTipoActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Facultad : </th>"
-+"											    <td>" + data.getSFacultad() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Departamento : </th>"
-+"											    <td>" + data.getSDepartamento() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Escuela : </th>"
-+"											    <td>" + data.getSEscuela() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Fondo Concursable : </th>"
-+"											    <td>" + data.getSFondoConcursable() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Area Investigación : </th>"
-+"											    <td>" + data.getSAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>SubArea Investigación : </th>"
-+"											    <td>" + data.getSSubAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Disciplina : </th>"
-+"											    <td>" + data.getSDisciplina() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Numero de horas : </th>"
-+"											    <td>" + String.valueOf(data.getNHoras()) + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Descripción : </th>"
-+"											    <td>" + data.getSDescripcionActividad() + "</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
-+"										Para acceder al Registro de su Actividad de Investigacion <a href='http://www.google.com.pe' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
-+"										&reg;Innnovacis,  SRIUnsa 2016"
-+"									</td>"
-+"									<td align='right' width='20%'>"
-+"										<table border='0' cellpadding='0' cellspacing='0'>"
-+"											<tr>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/tw.gif' alt='Twitter' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"												<td style='font-size: 0; line-height: 0;' width='20'>&nbsp;</td>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/fb.gif' alt='Facebook' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"				</table>"
-+"			</td>"
-+"		</tr>"
-+"	</table>"
-+"</body>"
-+"</html>";
-                break;
-            case "DIUN":
-                table = "<html>"
-+"<head>"
-+"</head>"
-+"<body style='margin: 0; padding: 0;'>"
-+"	<table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
-+"		<tr>"
-+"			<td style='padding: 10px 0 30px 0;'>"
-+"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
-+"					<tr>"
-+"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
-+"							<img src=\"cid:LogoUnsa\" alt='Creating Email Magic' width='400' height='160' style='display: block;' />"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
-+"										<b>SRI - Confirmacion de Operacion!</b>"
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado " + nombreCompleto + " se aprobó la siguiente Actividad de Investigación, pendiente de su aprobación."
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='font-size: 0.9em;'>"
-+"										<table border='1' cellpadding='3' cellspacing='0' width='100%'>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Nombre de la Actividad : </th>"
-+"											    <td>" + data.getSNombreActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Tipo Actividad de Investigación : </th>"
-+"											    <td>" + data.getNIdTipoActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Facultad : </th>"
-+"											    <td>" + data.getSFacultad() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Departamento : </th>"
-+"											    <td>" + data.getSDepartamento() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Escuela : </th>"
-+"											    <td>" + data.getSEscuela() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Fondo Concursable : </th>"
-+"											    <td>" + data.getSFondoConcursable() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Area Investigación : </th>"
-+"											    <td>" + data.getSAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>SubArea Investigación : </th>"
-+"											    <td>" + data.getSSubAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Disciplina : </th>"
-+"											    <td>" + data.getSDisciplina() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Numero de horas : </th>"
-+"											    <td>" + String.valueOf(data.getNHoras()) + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Descripción : </th>"
-+"											    <td>" + data.getSDescripcionActividad() + "</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
-+"										Para revisar la Actividad de Investigacion: <a href='http://www.google.com.pe' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
-+"										&reg;Innnovacis,  SRIUnsa 2016"
-+"									</td>"
-+"									<td align='right' width='20%'>"
-+"										<table border='0' cellpadding='0' cellspacing='0'>"
-+"											<tr>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/tw.gif' alt='Twitter' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"												<td style='font-size: 0; line-height: 0;' width='20'>&nbsp;</td>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/fb.gif' alt='Facebook' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"				</table>"
-+"			</td>"
-+"		</tr>"
-+"	</table>"
-+"</body>"
-+"</html>";
-                break;
-            case "DECA":
-                table = "<html>"
-+"<head>"
-+"</head>"
-+"<body style='margin: 0; padding: 0;'>"
-+"	<table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
-+"		<tr>"
-+"			<td style='padding: 10px 0 30px 0;'>"
-+"				<table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
-+"					<tr>"
-+"						<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
-+"							<img src=\"cid:LogoUnsa\" alt='Creating Email Magic' width='400' height='160' style='display: block;' />"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
-+"										<b>SRI - Confirmacion de Operacion!</b>"
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado " + nombreCompleto + " se aprobó la siguiente Actividad de Investigación."
-+"									</td>"
-+"								</tr>"
-+"								<tr>"
-+"									<td style='font-size: 0.9em;'>"
-+"										<table border='1' cellpadding='3' cellspacing='0' width='100%'>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Nombre de la Actividad : </th>"
-+"											    <td>" + data.getSNombreActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Tipo Actividad de Investigación : </th>"
-+"											    <td>" + data.getNIdTipoActividadInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Facultad : </th>"
-+"											    <td>" + data.getSFacultad() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Departamento : </th>"
-+"											    <td>" + data.getSDepartamento() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Escuela : </th>"
-+"											    <td>" + data.getSEscuela() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Fondo Concursable : </th>"
-+"											    <td>" + data.getSFondoConcursable() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Area Investigación : </th>"
-+"											    <td>" + data.getSAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>SubArea Investigación : </th>"
-+"											    <td>" + data.getSSubAreaInvestigacion() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Disciplina : </th>"
-+"											    <td>" + data.getSDisciplina() + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Numero de horas : </th>"
-+"											    <td>" + String.valueOf(data.getNHoras()) + "</td>"
-+"											</tr>"
-+"											<tr >"
-+"											    <th align='right' width='40%'>Descripción : </th>"
-+"											    <td>" + data.getSDescripcionActividad() + "</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"					<tr>"
-+"						<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
-+"							<table border='0' cellpadding='0' cellspacing='0' width='100%'>"
-+"								<tr>"
-+"									<td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
-+"										Para imprimir el reporte dar  <a href='http://104.131.8.31:8080/SRIUnsa-web/#/' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
-+"										&reg;Innnovacis,  SRIUnsa 2016"
-+"									</td>"
-+"									<td align='right' width='20%'>"
-+"										<table border='0' cellpadding='0' cellspacing='0'>"
-+"											<tr>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/tw.gif' alt='Twitter' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"												<td style='font-size: 0; line-height: 0;' width='20'>&nbsp;</td>"
-+"												<td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>"
-+"													<a href='http://www.twitter.com/' style='color: #ffffff;'>"
-+"														<img src='images/fb.gif' alt='Facebook' width='38' height='38' style='display: block;' border='0' />"
-+"													</a>"
-+"												</td>"
-+"											</tr>"
-+"										</table>"
-+"									</td>"
-+"								</tr>"
-+"							</table>"
-+"						</td>"
-+"					</tr>"
-+"				</table>"
-+"			</td>"
-+"		</tr>"
-+"	</table>"
-+"</body>"
-+"</html>";
-                break;
-        }
+    public String GetEmailRegistro(String titulo, String nombreDestinatario, String cuerpo, 
+            String nombreRemitente, SRIActividadInvestigacion actividadInvestigacion) {
         
+        Calendar calendar = new GregorianCalendar();
+        String anio = Integer.toString(calendar.get(Calendar.YEAR));
+        String urlActividad = "http://localhost:8080/SRIUnsa-web/#/actividad/Generadas/" + actividadInvestigacion.getNIdActividadInvestigacion();
+        String plantillaTabla = GetPlantillaTabla(actividadInvestigacion);
+        String plantilla = "<html>"
++"<head>"
++"</head>"
++"<body style='margin: 0; padding: 0;'>"
++"  <table border='0' cellpadding='0' cellspacing='0' width='100%'>	"
++"      <tr>"
++"          <td style='padding: 10px 0 30px 0;'>"
++"              <table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>"
++"                  <tr>"
++"			<td align='center' bgcolor='#fff' style='padding: 20px 0 20px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>"
++"                          <img src=\"cid:LogoUnsa\" alt='Logo UNSA' width='400' height='160' style='display: block;' />"
++"			</td>"
++"                  </tr>"
++"                  <tr>"
++"			<td bgcolor='#ffffff' style='padding: 40px 30px 40px 30px;'>"
++"                          <table border='0' cellpadding='0' cellspacing='0' width='100%'>"
++"				<tr>"
++"                                  <td align='center' 	style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>"
++"					<b>" + titulo + "</b>"
++"                                  </td>"
++"				</tr>"
++"				<tr>"
++"                                  <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++"					Estimado " + nombreRemitente + ":"
++"                                  </td>"              
++"				</tr>"
++"				<tr>"
++"                                  <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
++                                       cuerpo + " " + nombreDestinatario + "."
++"                                  </td>"              
++"                              </tr>"
++                               plantillaTabla
++"                          </table>"
++"                      </td>"
++"                  </tr>"
++"                  <tr>"
++"			<td bgcolor='#951f1f' style='padding: 30px 30px 30px 30px;'>"
++"                          <table border='0' cellpadding='0' cellspacing='0' width='100%'>"
++"				<tr>"
++"                                  <td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>"
++"					Para acceder al registro de la Actividad de Ivestigación. <a href='" + urlActividad + "' style='color: #ffffff;'><font color='#ffffff'>Click aqui</font></a> <br/>"
++"					&reg;Innnovacis,  SIRI-UNSA " + anio
++"                                  </td>"
++"                              </tr>"
++"                          </table>"
++"			</td>"
++"                  </tr>"
++"		</table>"
++"          </td>"
++"	</tr>"
++"  </table>"
++"</body>"
++"</html>";
         
-        return table;
+        return plantilla;
     }
 
     public String GetBodyEmail(String nombreCompleto, String codigo) {
@@ -557,7 +264,8 @@ public class Email {
         return respuesta;
     }
     
-    public void initGmail(List<SRIUsuarioPersona> destinatarios, SRIActividadInvestigacion data, String actor) throws GeneralSecurityException, IOException{
+    public void enviarRegistro(List<String> nombreDestinatarios, String nombreRemitente, String cuerpo, List<String> emailDestinatarios, 
+            String emailRemitente, String titulo, String asunto, byte[] adjunto, SRIActividadInvestigacion actividadInvestigacion) throws GeneralSecurityException, IOException{
         Email email = new Email();
         String from = email.readProperties("user");
         String pass = MD5.decrypt(email.readProperties("password"));
@@ -566,14 +274,13 @@ public class Email {
         String auth = email.readProperties("auth");
         String enable = email.readProperties("enable");
         
-        for(SRIUsuarioPersona destinatario : destinatarios){
-            List<String> to = new ArrayList<String>();
-            to.add(destinatario.getSUsuarioEmail());
-            String subject = "SRI UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
-            String nombreCompleto = destinatario.getSNombre() + " " + destinatario.getSApellido();
-            String body = GetEmail(data, actor, nombreCompleto);
-            sendFromGMail("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", to, subject, body);
-        }
+       
+        List<String> to = new ArrayList<String>();
+        to.add(emailRemitente);
+        String subject = asunto;
+        String body = GetEmailRegistro(titulo, nombreDestinatarios.get(0), cuerpo, nombreRemitente, actividadInvestigacion);
+        sendFromGMailInforme("true", "true", "465", "smtp.gmail.com", "innnovacisaqp", "innnovacis.", 
+                            to, subject, emailDestinatarios.get(0), body, adjunto);
         
         this.info = from + " : " + pass + " : " + host + " : " + pass + " : " + port + " : " + auth + " : " + enable;
     }
@@ -599,12 +306,6 @@ public class Email {
     
     public void enviarCodigoEmail(String codigo, List<String> destinatarios) throws GeneralSecurityException, IOException{
         Email email = new Email();
-        String from = email.readProperties("user");
-        String pass = MD5.decrypt(email.readProperties("password"));
-        String host = email.readProperties("host");
-        String port = email.readProperties("port");
-        String auth = email.readProperties("auth");
-        String enable = email.readProperties("enable");
         
         for(String destinatario : destinatarios){
             List<String> to = new ArrayList<String>();
@@ -653,7 +354,7 @@ public class Email {
             messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
-            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
+            DataSource fds = new FileDataSource("/home//innovacis/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);
@@ -687,8 +388,8 @@ public class Email {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.user", "innnovacisaqp");
-        props.put("mail.smtp.password", "innnovacis.");
+        props.put("mail.smtp.user", "ali.arapa");//innnovacisaqp");
+        props.put("mail.smtp.password", "ali20080410");//innnovacis.");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
 
@@ -704,19 +405,20 @@ public class Email {
             messageBodyPart = new MimeBodyPart();
             
             //ADJUNTAR IMAGE
-            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
+            DataSource fds = new FileDataSource("/home/innnovacis/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);
             
             //ADJUNTAR INFORME BYTE
+
             DataSource dataSource = new ByteArrayDataSource(informe, "application/pdf");
             MimeBodyPart pdfBodyPart = new MimeBodyPart();
             pdfBodyPart.setDataHandler(new DataHandler(dataSource));
             pdfBodyPart.setFileName("Actividades Generadas.pdf");
-            
+
             multipart.addBodyPart(pdfBodyPart);
-            
+
             
             message.setContent(multipart);
             message.setFrom(new InternetAddress(from));
@@ -730,9 +432,10 @@ public class Email {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
             
+
             message.addRecipient(Message.RecipientType.CC, new InternetAddress(emailRemitente));
             message.addRecipient(Message.RecipientType.BCC, new InternetAddress("ali.arapa@gmail.com"));
-            message.addRecipient(Message.RecipientType.BCC, new InternetAddress("wilfredoqi@gmail.com"));
+//            message.addRecipient(Message.RecipientType.BCC, new InternetAddress("wilfredoqi@gmail.com"));
 
             message.setSubject(subject);
             Transport transport = session.getTransport("smtp");
@@ -744,6 +447,150 @@ public class Email {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public String GetPlantillaTabla (SRIActividadInvestigacion actividadInvestigacion){
+        String respuesta = "";
+        
+        switch(actividadInvestigacion.getNIdTipoActividadInvestigacion()){
+            case 1 : 
+                respuesta = "<tr>"
+                            +"    <td style='font-size: 0.9em;'>"
+                            +"        <table border='1' cellpadding='3' cellspacing='0' width='100%'>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Departamento : </th>"
+                            +"                <td>" + actividadInvestigacion.getSDepartamento() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Tipo de Actividad : </th>"
+                            +"                <td> INVESTIGACIÓN FORMATIVA </td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Nombre del curso o Asignatura : </th>"
+                            +"                <td>" + actividadInvestigacion.getSNombreActividadInvestigacion() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Descripción de la Actividad Formativa : </th>"
+                            +"                <td>" + actividadInvestigacion.getNIdTipoActividadInvestigacion() + "</td>"
+                            +"            </tr>"
+                            +"        </table>"
+                            +"    </td>"
+                            +"</tr>";
+                break;
+            case 11 :
+                respuesta = "<tr>"
+                            +"    <td style='font-size: 0.9em;'>"
+                            +"        <table border='1' cellpadding='3' cellspacing='0' width='100%'>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Departamento : </th>"
+                            +"                <td>" + actividadInvestigacion.getSDepartamento() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Tipo de Actividad : </th>"
+                            +"                <td> ASESORÍA DE TESIS </td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Título de Tesis : </th>"
+                            +"                <td>" + actividadInvestigacion.getSNombreActividadInvestigacion() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Grado: </th>"
+                            +"                <td>" + actividadInvestigacion.getSTipoAsesoria() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Nombre(s) del Asesorado(s): </th>"
+                            +"                <td>" + actividadInvestigacion.getSNombreAsesorado() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>N° de Resolución: </th>"
+                            +"                <td>" + actividadInvestigacion.getSNumeroContrato() + "</td>"
+                            +"            </tr>"
+                            +"        </table>"
+                            +"    </td>"
+                            +"</tr>";
+                break;
+            case 12 :
+                respuesta = "<tr>"
+                            +"    <td style='font-size: 0.9em;'>"
+                            +"        <table border='1' cellpadding='3' cellspacing='0' width='100%'>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Departamento : </th>"
+                            +"                <td>" + actividadInvestigacion.getSDepartamento() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Tipo de Actividad : </th>"
+                            +"                <td> INVESTIGACIONES BÁSICAS Y APLICADAS </td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Área : </th>"
+                            +"                <td>" + actividadInvestigacion.getSAreaInvestigacion() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Sub área : </th>"
+                            +"                <td>" + actividadInvestigacion.getSSubAreaInvestigacion() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Disciplina : </th>"
+                            +"                <td>" + actividadInvestigacion.getSDisciplina() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Título del Proyecto de Investigación : </th>"
+                            +"                <td>" + actividadInvestigacion.getSNombreActividadInvestigacion() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Rol: </th>"
+                            +"                <td>" + actividadInvestigacion.getSTipoLabor() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Número de contrato o Resolución de seleccionados: </th>"
+                            +"                <td>" + actividadInvestigacion.getSNumeroContrato() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Duración del Proyecto : </th>"
+                            +"                <td>" + actividadInvestigacion.getSPlazoEjecucion() + "</td>"
+                            +"            </tr>"
+                            +"        </table>"
+                            +"    </td>"
+                            +"</tr>";
+                break;
+            case 13 :
+                respuesta = "<tr>"
+                            +"    <td style='font-size: 0.9em;'>"
+                            +"        <table border='1' cellpadding='3' cellspacing='0' width='100%'>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Departamento : </th>"
+                            +"                <td>" + actividadInvestigacion.getSDepartamento() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Tipo de Actividad : </th>"
+                            +"                <td> PRODUCCIÓN INTELECTUAL </td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Tipo de Producción: </th>"
+                            +"                <td>" + actividadInvestigacion.getSRITipoProduccion() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Estado: </th>"
+                            +"                <td>" + actividadInvestigacion.getSEstadoProduccion() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Título : </th>"
+                            +"                <td>" + actividadInvestigacion.getSNombreActividadInvestigacion() + "</td>"
+                            +"            </tr>"
+                            +"            <tr >"
+                            +"                <th align='right' width='40%'>Fecha de Publicación: </th>"
+                            +"                <td>" + actividadInvestigacion.getDFechaAceptacion() + "</td>"
+                            +"            </tr>"
+                            +"        </table>"
+                            +"    </td>"
+                            +"</tr>";
+                break;
+            default :
+                respuesta = "";
+                break;
+        }
+        
+        return respuesta;
     }
     
 }
