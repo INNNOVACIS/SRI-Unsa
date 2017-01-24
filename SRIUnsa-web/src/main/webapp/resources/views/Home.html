@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Fecha Registro : </label>
+                                    <label class="control-label col-md-4">Fecha de Registro : </label>
                                     <label class="control-label col-md-8 SRI-text-default" >{{ fechaShowRegistro }}</label>
 <!--                                    <div class="col-md-8">
                                         <p class="input-group">
@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-md-6" >
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" >Nombre Docente : </label>
+                                    <label class="control-label col-md-4" >Nombre del Docente : </label>
                                     <label class="control-label col-md-8 SRI-text-default" >{{ responsable }}</label>
                                 </div>
                             </div>
@@ -386,12 +386,15 @@
                     <form name="formDescripcion" class="form-horizontal" ng-show="showDescripcion">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" >
                                     <label class="control-label col-md-2"> {{ descripcionLabel }}</label>
-                                    <div class="col-md-10" ng-class="{ 'has-error' : formDescripcion.textDescripcion.$error.maxlength}">
-                                        <textarea name="textDescripcion" ng-model="descripcion" class="form-control" rows="5" ng-maxlength=5000 ></textarea>
-                                         <p class="help-block" ng-show="formDescripcion.textDescripcion.$error.maxlength">
+                                    <div class="col-md-10" ng-class="{ 'has-error' : formDescripcion.textDescripcion.$error.maxlength || descripcionValidacion }">
+                                        <textarea name="textDescripcion" ng-model="descripcion" class="form-control" rows="5" ng-maxlength=5000 required></textarea>
+                                         <p class="help-block" ng-show="formDescripcion.textDescripcion.$error.maxlength || descripcionValidacion">
                                             La descripci&oacute;n no debe superar los 5000 caract&eacute;res.
+                                        </p>
+                                        <p class="help-block" ng-show="descripcionValidacion">
+                                            La descripci&oacute;n requerida.
                                         </p>
                                     </div>
                                     <div class="col-md-12">
@@ -407,7 +410,7 @@
                             <div class="col-md-12" ng-show="ejecucion || pendiente">
                                 <div class="form-group">
                                     <label for="inpFile" class="control-label col-md-2"> {{adjuntar}}</label>
-                                    <div class="col-md-10">
+                                    <div class="col-md-10" ng-class="{ 'has-error' : adjuntoValidacion}">
                                         <div class="panel panel-default" >
                                             <div class="panel-body">
                                                 <div class="col-md-2">
@@ -467,6 +470,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <p class="help-block" ng-show="adjuntoValidacion">
+                                            Debe adjuntar un archivo.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -520,7 +526,9 @@
 <!--                                <button type="submit" ng-click="guardarInvestigacion()" class="btn btn-default pull-right" style="margin-left:10px;"> 
                                     <span class="glyphicon glyphicon-floppy-saved"></span> Guardar
                                 </button>-->
-                                <button type="submit" ng-click="registrarInvestigacion(actividadForm.$valid)" class="btn btn-primary pull-right"> 
+                                <button type="submit" 
+                                        class="btn btn-primary pull-right"
+                                        ng-click="openModalConfirmacionRegistro(actividadForm.$valid)" >
                                     <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
                                 </button>                                    
                             </div>
@@ -537,7 +545,7 @@
     <div class="SRI-modal">
 <!--        <a ng-click="openCloseModal(false, true)" class="SRIModal-cerrar" >Cerrar</a>-->
         <div>
-            <h3 style="margin-top: 10px; margin-bottom: 5px;">Registro Correcto!</h3>
+            <h3 style="margin-top: 10px; margin-bottom: 5px;">¡Registro Correcto!</h3>
             <hr/>
             <ul>
                 <li><p>Ir a actividades generadas clic en :<strong> Ir a Bandeja</strong></p></li>
@@ -551,6 +559,8 @@
         <button ng-click="irActividadesGeneradas()" class="btn btn-default">
             <span class="glyphicon glyphicon-arrow-right"></span> Ir a Bandeja
         </button>
+        
+        
     </div>
 </div>
 
@@ -658,3 +668,36 @@
         </div>
     </div>
 </div>
+
+<div id="modalConfirmacionRegistro" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmaci&oacute;n de Registro</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form novalidate class="form-horizontal">
+                                <p>Esta seguro que desea guardar su actividad, la actividad que usted guarde no podr&aacute; ser modificada.</p>
+                                <p>¡Gracias!.</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" 
+                            class="btn btn-primary btn-sm" 
+                            data-dismiss="modal" 
+                            ng-click="registrarInvestigacion(actividadForm.$valid)">
+                        <span class="glyphicon glyphicon-floppy-saved"></span>
+                        Guardar
+                    </button>
+                    <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -51,7 +51,10 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         $scope.actividadInvestigacion.dfechaFin = $scope.sharedService.dateToString($scope.actividadInvestigacion.dfechaFin);
         $scope.actividadInvestigacion.dfechaAceptacion = $scope.sharedService.dateToString($scope.actividadInvestigacion.dfechaAceptacion);
         
-        $scope.changeTipoProduccion($scope.actividadInvestigacion.sritipoProduccion);
+        if($scope.actividadInvestigacion.sritipoProduccion !== null){
+            $scope.changeTipoProduccion($scope.actividadInvestigacion.sritipoProduccion);
+        }
+        
         setResponsableDirector(response.body.actividadInvestigacion, response.body.colaboradores);
         $scope.getTipoInvestigacion();
         $scope.getArchivosByIdActividad($scope.actividadInvestigacion.nidActividadInvestigacion);

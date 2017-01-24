@@ -114,11 +114,13 @@
         if(uploader.queue.length === 0){            
             $scope.loader = false;
             $scope.openCloseModal(true,false);
+            
         } else {
             uploader.uploadAll();
             uploader2.uploadAll();
         }
-        $scope.EnviarEmail(response.body.actividadInvestigacion.nidActividadInvestigacion);
+        /*COMENTARIO POR WILFREDO , no se envia email cuando se registrar una*/
+        //$scope.EnviarEmail(response.body.actividadInvestigacion.nidActividadInvestigacion);
     };
     var RegistrarInvestigacionError = function(response){
         $log.debug(response);
@@ -284,7 +286,7 @@
     /************ Registrar Actividad de Investigacion ****************/
     
     $scope.registrarInvestigacion = function(isValid){
-        if(isValid){
+        if(isValid && uploader.queue.length !== 0 && $scope.descripcion.length != 0){
             $scope.loader = true;
             $scope.sharedService.scrollTop();
             var actividadGeneral = {
@@ -333,16 +335,34 @@
             HomeService.registrarInvestigacion(actividadGeneral).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
         } else {
             $scope.sharedService.scrollTop();
-//            $scope.openCloseModal(true,false);
+            $scope.adjuntoValidacion = true;
+            $scope.descripcionValidacion = true;
             $scope.submitted = true;
             angular.forEach($scope.plantillaDocumento, function(value,key){
                 console.log($scope[value.smodel]);
             });
-            
-            console.log("campos por validar");
         }
     };
     
+    $scope.openModalConfirmacionRegistro = function(isValid){
+        if(isValid && uploader.queue.length !== 0 && $scope.descripcion.length != 0){
+            $('#modalConfirmacionRegistro').modal('show');
+        } else {
+            $scope.sharedService.scrollTop();
+            $scope.adjuntoValidacion = true;
+            $scope.descripcionValidacion = true;
+            $scope.submitted = true;
+        }
+
+    };
+    
+    $scope.$watch('uploader.queue.length', function() {
+       $scope.adjuntoValidacion = false;
+    });
+    
+    $scope.$watch('descripcion', function() {
+       $scope.descripcionValidacion = false;
+    });
     
     var getValoresPlantilla = function(){
         var plantillaDocumentoActividades = [];
@@ -393,7 +413,7 @@
         switch(tipoActividad.toUpperCase()) {
             case "INVESTIGACION FORMATIVA":
                 $scope.mostrarActividad = [true, false, false, false];
-                $scope.descripcionLabel = "Breve descripcion de la Actividad Formativa";
+                $scope.descripcionLabel = "Breve descripción de la Actividad Formativa";
                 $scope.tituloLabel = "Nombre del curso o Asignatura";
                 $scope.adjuntar = "Adjuntar Sílabo del Curso";
                 $scope.adjuntarOtros = "Adjuntar Resultados de Investigación";
@@ -403,16 +423,17 @@
             case "ASESORIA DE TESIS":
                 $scope.mostrarActividad = [false, true, false, false];
                 $scope.descripcionLabel = "Resumen de Tesis";
-                $scope.tituloLabel = "Titulo de Tesis";
+                $scope.tituloLabel = "Título de Tesis";
                 $scope.adjuntar = "Adjuntar Resolución";
                 $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)(Opcional)";
                 $scope.showDescripcion = false;
                 $scope.mostrarAyuda = false;
+                $scope.descripcion = "vacio";
                 break;
             case "INVESTIGACIONES BASICAS Y APLICADAS":
                 $scope.mostrarActividad = [false, false, true, false];
-                $scope.descripcionLabel = "Resumen de Investigacion";
-                $scope.tituloLabel = "Titulo del Proyecto de Investigacion";
+                $scope.descripcionLabel = "Resumen de Investigación";
+                $scope.tituloLabel = "Título del Proyecto de Investigación";
                 $scope.adjuntar = "Adjuntar Contrato";
                 $scope.adjuntarOtros = "Adjuntar Ficha de Postulación";
                 $scope.showDescripcion = true;
@@ -454,7 +475,7 @@
                 $scope.realizado = false;
                 $scope.ejecucion = true;
                 $scope.pendiente = false;
-                $scope.adjuntarOtros = "Adjuntar avance de Libro o articulo (Opcional)";
+                $scope.adjuntarOtros = "Adjuntar avance de Libro o Artículo (Opcional)";
                 $scope.pendienteAdjunto = true;
                 break;
             case "PENDIENTE":
@@ -479,11 +500,11 @@
     $scope.changeTipoProduccion = function(tipoProduccion){
         $scope.showVerificacion = true;
         if(tipoProduccion.snombreTipoProduccion.toUpperCase() === "ARTICULO"){
-            $scope.fechaTipoProduccion = "Fecha de Aceptacion";
+            $scope.fechaTipoProduccion = "Fecha de Aceptación";
             $scope.labelCodigo = "DOI o URL";
             $scope.labelNombrePublicacion = "Nombre de la Revista";
         } else {
-            $scope.fechaTipoProduccion = "Fecha de Publicacion";
+            $scope.fechaTipoProduccion = "Fecha de Publicación";
             $scope.labelCodigo = "ISBN";
             $scope.labelNombrePublicacion = "Nombre de la Editorial";
         }

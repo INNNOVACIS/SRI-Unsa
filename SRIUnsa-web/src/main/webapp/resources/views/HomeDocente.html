@@ -1,3 +1,6 @@
+<div ng-show="loader" class="SRI-loader-open">
+    <div class="SRI-loader"></div>
+</div>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12" style="margin-top:20px;">
@@ -38,14 +41,14 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading" style="line-height: 2;">Actividades de Investigación 
-                            <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
+                            <!--<button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
                                 <span class="glyphicon glyphicon-cloud-download"></span>
                                 Descargar PDF
                             </button>
                             <button class="btn btn-success btn-sm pull-right" ng-click="descargarExcel()" style="margin-right: 6px;">
                                 <span class="glyphicon glyphicon-cloud-download"></span>
                                 Descargar Excel
-                            </button>
+                            </button>-->
                         </div>
                         <div class="panel-body" > <!-- SRI-load-table-container -->
 
@@ -154,7 +157,7 @@
                                     total="total">    
                                 </pagination>
                             </div>
-                            <button class="btn btn-danger btn-sm pull-right" style="margin-top: 10px;" data-toggle="modal" data-target="#modalConfirmarInforme">
+                            <button class="btn btn-success btn-sm pull-right" style="margin-top: 10px;" data-toggle="modal" data-target="#modalConfirmarInforme">
                                 <span class="glyphicon glyphicon-envelope"></span>
                                 Enviar Informe
                             </button>
@@ -223,6 +226,38 @@
             </div>
         </div>
     </div>
+    
+    
+    
+        
+    <div id="modalEnvioExitoso" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Envio Exitoso</h4>
+                </div>
+                <div class="modal-body">
+<!--                    <div class="container-fluid">
+-->                        <div class="row">
+                            <div class="col-md-12">
+                                <form novalidate class="form-horizontal">
+                                    <p>Su informe de Actividades de Investigación ha sido enviado al Director del Departamento.</p>
+                                    <p>¡Gracias!.</p>
+                                </form>
+                            </div>
+                        </div><!--
+                     </div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal" ng-click="cancel()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     
 </div>
 

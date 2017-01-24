@@ -59,6 +59,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         $log.debug("enviarInforme - Success");
         console.log("Respuesta :: ", response);
         openNotice('Envio exitoso!','success');
+        $('#modalEnvioExitoso').modal('show');
         $scope.loader = false;
     };
     var enviarInformeError = function(response){
