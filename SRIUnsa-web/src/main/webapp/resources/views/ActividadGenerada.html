@@ -69,10 +69,17 @@
                             </div>
                         </div>
                         <div class="row" ng-show="mostrarActividad[3]">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Tipo de Producción : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.sritipoProduccion }}</label>                                  
+                                    <label class="control-label col-md-2"> Tipo de Producci&oacute;n : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.sritipoProduccion }}</label>                                  
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Estado : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.sestadoProduccion }}</label>
                                 </div>
                             </div>
                         </div>
@@ -85,28 +92,28 @@
                             </div>
                         </div>
                         <div class="row" ng-show="mostrarActividad[1]">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Grado : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.stipoAsesoria }}</label>
+                                    <label class="control-label col-md-2">Grado : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.stipoAsesoria }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Nombre del Asesorado : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.snombreAsesorado }}</label>
+                                    <label class="control-label col-md-2">Nombre del Asesorado : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.snombreAsesorado }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">N° de Resoluci&oacute;n : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.snumeroContrato }}</label>
+                                    <label class="control-label col-md-2">N° de Resoluci&oacute;n : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.snumeroContrato }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Fecha de Resoluci&oacute;n : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.dfechaAceptacion }}</label>
+                                    <label class="control-label col-md-2">Fecha de Resoluci&oacute;n : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.dfechaAceptacion }}</label>
                                 </div>
                             </div>
                         </div>
@@ -149,30 +156,30 @@
                             </div>
                         </div>
                         <div class="row" ng-show="mostrarActividad[3]">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">{{ fechaTipoProduccion }} : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.dfechaAceptacion }}</label>
+                                    <label class="control-label col-md-2">{{ fechaTipoProduccion }} : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.dfechaAceptacion }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12" ng-show="pendiente || ejecucion">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Plazo de Ejecuci&oacute;n : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.splazoEjecucion }}</label>
+                                    <label class="control-label col-md-2">Plazo de Ejecuci&oacute;n : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.splazoEjecucion + " " + " meses." }}</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" ng-show="showVerificacion">
-                            <div class="col-md-6">
+                        <div class="row" ng-show="showVerificacion && realizado">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">{{ labelCodigo }} : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.scodigo }}</label>
+                                    <label class="control-label col-md-2">{{ labelCodigo }} : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.scodigo }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">{{ labelNombrePublicacion }} : </label>
-                                    <label class="control-label col-md-8 SRI-text-default" >{{ actividadInvestigacion.snombrePublicacion }}</label>                           
+                                    <label class="control-label col-md-2">{{ labelNombrePublicacion }} : </label>
+                                    <label class="control-label col-md-10 SRI-text-default" >{{ actividadInvestigacion.snombrePublicacion }}</label>                           
                                 </div>
                             </div>
                         </div>
@@ -219,7 +226,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div ng-show="pendiente">
+                                    <div ng-show="estadoPendiente">
                                         <button class="col-md-offset-2 btn btn-primary" type="button" ng-click="AprobarActividad()">
                                             <span class="glyphicon glyphicon-ok"></span> Aprobar</button>
                                         <button type="button" class="btn btn-default" ng-click="RechazarActividad()">

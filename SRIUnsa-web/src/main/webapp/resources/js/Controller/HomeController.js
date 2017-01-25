@@ -101,6 +101,7 @@
         $log.debug("GetTipoProducciones - Success");
         console.log("Respuesta :: ", response);
         $scope.tipoProducciones = response;
+        setTipoProduccion($scope.tipoProducciones);
     };
     var GetTipoProduccionesError = function(response){
         $log.debug("GetTipoProducciones - Error");
@@ -475,7 +476,7 @@
                 $scope.ejecucion = false;
                 $scope.pendiente = false;
                 
-                
+
                 $scope.adjuntar = "Adjuntar Libro o Artículo";
                 $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
                 $scope.pendienteAdjunto = false;
@@ -522,6 +523,17 @@
             $scope.labelCodigo = "ISBN";
             $scope.labelNombrePublicacion = "Nombre de la Editorial";
         }
+    };
+    
+    var setTipoProduccion = function(tipoProducciones){
+        angular.forEach(tipoProducciones, function(value, key){
+            if(value.snombreTipoProduccion.toUpperCase() === "ARTICULO"){
+                $scope.tipoProduccion = value;
+            }
+        });
+        $scope.changeTipoProduccion($scope.tipoProduccion);
+        $scope.estadoProduccion = "REALIZADO";
+        $scope.changeEstadoProduccion();
     };
     
     var getTotalColaboradores = function(){

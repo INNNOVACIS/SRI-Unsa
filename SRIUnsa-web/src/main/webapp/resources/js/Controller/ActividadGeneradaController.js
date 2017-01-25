@@ -12,7 +12,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     $scope.idActividad = $routeParams.ID;
     $scope.revisado   = false;
     $scope.generado   = false;
-    $scope.pendiente  = false;
+    $scope.estadoPendiente  = false;
     $scope.vicerector = false;
     
     var estado = $routeParams.ESTADO;
@@ -24,7 +24,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         $scope.generado = true;
     }
     if(estado === "Pendientes"){
-        $scope.pendiente = true;
+        $scope.estadoPendiente = true;
     }
     if($scope.sharedService.locationHome === "/homeVicerector"){
         $scope.vicerector = true;
@@ -53,6 +53,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         
         if($scope.actividadInvestigacion.sritipoProduccion !== null){
             $scope.changeTipoProduccion($scope.actividadInvestigacion.sritipoProduccion);
+            $scope.changeEstadoProduccion($scope.actividadInvestigacion.sestadoProduccion);
         }
         
         setResponsableDirector(response.body.actividadInvestigacion, response.body.colaboradores);
@@ -103,7 +104,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
                 var url = "";
                 if($scope.revisado)  { url = "/actividad/Revisadas"; }
                 if($scope.generado)  { url = "/actividad/Generadas"; }
-                if($scope.pendiente) { url = "/actividad/Pendientes";}
+                if($scope.estadoPendiente) { url = "/actividad/Pendientes";}
                 if($scope.vicerector){ url = "/actividadesDocente";}
                 
                 var op1 = {open:true, txt:'Ir a Bandeja', fun:function(){
@@ -227,16 +228,54 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     $scope.changeTipoProduccion = function(tipoProduccion){
         if(tipoProduccion.toUpperCase() === "ARTICULO"){
             $scope.showVerificacion = true;
-            $scope.fechaTipoProduccion = "Fecha de Aceptacion";
-            $scope.labelCodigo = "DOI";
+            $scope.fechaTipoProduccion = "Fecha de Aceptación";
+            $scope.labelCodigo = "DOI o URL";
             $scope.labelNombrePublicacion = "Nombre de la Revista";
         } 
         if (tipoProduccion.toUpperCase() === "TEXTO" || tipoProduccion.toUpperCase() === "LIBRO" ){
             $scope.showVerificacion = true;
-            $scope.fechaTipoProduccion = "Fecha de Publicacion";
+            $scope.fechaTipoProduccion = "Fecha de Publicación";
             $scope.labelCodigo = "ISBN";
             $scope.labelNombrePublicacion = "Nombre de la Editorial";
         }
+    };
+    
+    $scope.changeEstadoProduccion = function(estadoProduccion){        
+        $scope.realizado = false;
+        $scope.ejecucion = false;
+        $scope.pendiente = false;
+        switch(estadoProduccion) {
+            case "REALIZADO":
+                $scope.realizado = true;
+                $scope.ejecucion = false;
+                $scope.pendiente = false;
+                
+
+                $scope.adjuntar = "Adjuntar Libro o Artículo";
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
+                $scope.pendienteAdjunto = false;
+                break;
+            case "EJECUCION":
+                $scope.realizado = false;
+                $scope.ejecucion = true;
+                $scope.pendiente = false;
+                
+                
+                $scope.adjuntar = "Adjuntar Planificación";
+                $scope.adjuntarOtros = "Adjuntar avance de Libro o Artículo (Opcional)";
+                $scope.pendienteAdjunto = true;
+                break;
+            case "PENDIENTE":
+                $scope.realizado = false;
+                $scope.ejecucion = false;
+                $scope.pendiente = true;
+                
+                $scope.adjuntar = "Adjuntar Planificación";
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
+                $scope.pendienteAdjunto = false;
+                $scope.actividadInvestigacion.sestadoProduccion = "POR REALIZAR"; //SOLO PARA FINES DE VISUALIZACIÓN
+                break;
+        };
     };
     
     $scope.irBandejaRevisados = function(){
@@ -251,7 +290,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
         switch(tipoActividad.toUpperCase()) {
             case "INVESTIGACION FORMATIVA":
                 $scope.mostrarActividad = [true, false, false, false];
-                $scope.descripcionLabel = "Breve descripcion de la Actividad Formativa";
+                $scope.descripcionLabel = "Breve descripción de la Actividad Formativa";
                 $scope.tituloLabel = "Nombre del curso o Asignatura";
                 $scope.adjuntar = "Adjuntar Sílabo del Curso";
                 $scope.adjuntarOtros = "Adjuntar Resultados de Investigación";
@@ -260,15 +299,15 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
             case "ASESORIA DE TESIS":
                 $scope.mostrarActividad = [false, true, false, false];
                 $scope.descripcionLabel = "Resumen de Tesis";
-                $scope.tituloLabel = "Titulo de Tesis";
+                $scope.tituloLabel = "Título de Tesis";
                 $scope.adjuntar = "Adjuntar Resolución";
                 $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)";
                 $scope.showDescripcion = false;
                 break;
             case "INVESTIGACIONES BASICAS Y APLICADAS":
                 $scope.mostrarActividad = [false, false, true, false];
-                $scope.descripcionLabel = "Resumen de Investigacion";
-                $scope.tituloLabel = "Titulo del Proyecto de Investigacion";
+                $scope.descripcionLabel = "Resumen de Investigación";
+                $scope.tituloLabel = "Título del Proyecto de Investigación";
                 $scope.adjuntar = "Adjuntar Contrato";
                 $scope.adjuntarOtros = "Adjuntar Ficha de Postulación";
                 $scope.showDescripcion = true;
