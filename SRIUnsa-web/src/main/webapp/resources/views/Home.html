@@ -14,24 +14,12 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4" >Director de Unidad : </label>
                                     <label class="control-label col-md-8 SRI-text-default" >{{ director.snombre + ' ' + director.sapellido }}</label>
-<!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.directorValidacion.$invalid && submitted }">
-                                        <input name="directorValidacion" type="text" ng-model="director" uib-typeahead='opt as (opt.snombre + " " + opt.sapellido ) for opt in personas | filter:$viewValue | limitTo:8' class="form-control" style="background-color:#f0f0f0;" required>
-                                        <p ng-show="actividadForm.directorValidacion.$invalid && submitted" class="help-block">El Director de Unidad es Requerido.</p>
-                                    </div>-->
                                 </div>
                             </div>
                             <div class="col-md-6" >
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Fecha de Registro : </label>
                                     <label class="control-label col-md-8 SRI-text-default" >{{ fechaShowRegistro }}</label>
-<!--                                    <div class="col-md-8">
-                                        <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-model="fechaRegistro" is-open="popupRegistro.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="openRegistro()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                            </span>
-                                        </p>
-                                    </div>-->
                                 </div>
                             </div>
                             <div class="col-md-6" >
@@ -44,10 +32,6 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Semestre : </label>
                                     <label class="control-label col-md-8 SRI-text-default">{{ semestre.snombreSemestre }}</label>
-<!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.semestre.$invalid && submitted }">
-                                        <select name="semestre" class="form-control" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''" required></select>
-                                        <p ng-show="actividadForm.semestre.$invalid && submitted" class="help-block">El Semestre es Requerido.</p>
-                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -56,68 +40,15 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Facultad : </label>
                                     <label class="control-label col-md-8 SRI-text-default">{{ facultad.snombreEstructuraOrganizacion }}</label>
-<!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.facultadValidacion.$invalid && submitted }">
-                                        <select name="facultadValidacion" ng-model="facultad"                
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { snivel : 'FACULTAD'}"
-                                            class="form-control"
-                                            ng-change="changeFacultad(facultad)"
-                                            required>
-                                        </select>
-                                        <p ng-show="actividadForm.facultadValidacion.$invalid && submitted" class="help-block">La Facultad es Requerida.</p>
-                                    </div>-->
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Departamento : </label>
-                                    <label class="control-label col-md-8 SRI-text-default">{{ departamento.snombreEstructuraOrganizacion     }}</label>
-<!--                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.departamentoValidacion.$invalid && submitted }">
-                                        <select  name="departamentoValidacion" ng-model="departamento"
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in departamentos | filter : { snivel : 'DEPARTAMENTO'}"
-                                            class="form-control"
-                                            required>
-                                        </select>
-                                        <p ng-show="actividadForm.departamentoValidacion.$invalid && submitted" class="help-block">El Departamento es Requerida.</p>
-                                    </div>-->
+                                    <label class="control-label col-md-8 SRI-text-default">{{ departamento.snombreEstructuraOrganizacion }}</label>
                                 </div>
-<!--                                <div class="form-group">
-                                    <label class="control-label col-md-4">Escuela</label>
-                                    <div class="col-md-8" >  ng-class="{ 'has-error' : actividadForm.escuelaValidacion.$invalid && submitted }" 
-                                        <select name="escuelaValidacion" ng-model="escuela"
-                                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in escuelas | filter : { snivel : 'ESCUELA'}"
-                                            class="form-control"
-                                            >
-                                        </select>
-                                        <p ng-show="actividadForm.escuelaValidacion.$invalid && submitted" class="help-block">La Escuela es Requerida.</p>
-                                    </div>
-                                </div>-->
-<!--                                <div class="form-group">
-                                    <label class="control-label col-md-4">Fecha Inicio</label>
-                                    <div class="col-md-8">
-                                        <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaInicio" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4"> Avance (%) </label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.avanceValidacion.$invalid && submitted }">
-                                        <input name="avanceValidacion" class="form-control" type="number" ng-model="avance" placeholder="Avance de la Actividad en porcentaje" required>
-                                        <p ng-show="actividadForm.avanceValidacion.$invalid && submitted" class="help-block">El avance es requerido.</p>
-                                    </div>
-                                </div>-->
                             </div>
                             
                             
                             <div class="col-md-6" ng-show="mostrarActividad[2]">
-<!--                                <div class="form-group">
-                                    <label class="control-label col-md-4" >Tipo Actividad de Investigaci&oacute;n</label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.investigacion.$invalid && submitted }">
-                                        <select name="investigacion" class="form-control" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-change=changeTipoActividad(tipoInvestigacion.snombreActividadInvestigacion) required></select>
-                                        <p ng-show="actividadForm.investigacion.$invalid && submitted" class="help-block">El Tipo de Investigacion es Requerido.</p>
-                                    </div>
-                                </div>-->
                                 <div class="form-group">
                                     <label class="control-label col-md-4">&Aacute;rea</label>
                                     <div class="col-md-8" > <!-- ng-class="{ 'has-error' : actividadForm.area.$invalid && submitted }"-->
@@ -157,24 +88,6 @@
 <!--                                        <p ng-show="actividadForm.disciplina.$invalid && submitted" class="help-block">La Disciplina es Requerida.</p>-->
                                     </div>
                                 </div>
-<!--                                <div class="form-group">
-                                    <label class="control-label col-md-4"> Duraci&oacute;n </label>
-                                    <div class="col-md-8" ng-class="{ 'has-error' : actividadForm.duracion.$invalid && submitted }">
-                                        <input name="duracion" class="form-control" type="number" ng-model="duracionInvestigacion" placeholder="Número de horas que durara la investigación" required>
-                                        <p ng-show="actividadForm.duracion.$invalid && submitted" class="help-block">La duración es Requerida.</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Fecha Fin</label>
-                                    <div class="col-md-8">
-                                        <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaFin" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>-->
 <!--                                <div class="form-group">
                                     <label class="control-label col-md-4"> Colaboradores</label>
                                     <div class="col-md-8">
@@ -368,32 +281,23 @@
                             </div>
                         </div>
                     </form>
-                    
-<!--                     Formulario Dinamico 
-                    
-                    <fieldset >
-                        <legend >{{ facultad.snombreEstructuraOrganizacion }}</legend>
-                    </fieldset>
-                    <form class="form-horizontal">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div ng-bind-html="campos" compila-plantilla></div>
-                            </div>
-                        </div>
-                    </form>-->
-                    
-                    
                     <form name="formDescripcion" class="form-horizontal" ng-show="showDescripcion">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group" >
                                     <label class="control-label col-md-2"> {{ descripcionLabel }}</label>
-                                    <div class="col-md-10" ng-class="{ 'has-error' : formDescripcion.textDescripcion.$error.maxlength || descripcionValidacion }">
-                                        <textarea name="textDescripcion" ng-model="descripcion" class="form-control" rows="5" ng-maxlength=5000 required></textarea>
-                                         <p class="help-block" ng-show="formDescripcion.textDescripcion.$error.maxlength || descripcionValidacion">
+                                    <div class="col-md-10" ng-class="{ 'has-error' : formDescripcion.textDescripcion.$error.maxlength || formDescripcion.textDescripcion.$invalid && submitted }">
+                                        <textarea name="textDescripcion" 
+                                                  ng-model="descripcion" 
+                                                  class="form-control" 
+                                                  rows="5" 
+                                                  ng-maxlength=5000 
+                                            required>
+                                        </textarea>
+                                         <p class="help-block" ng-show="formDescripcion.textDescripcion.$error.maxlength">
                                             La descripci&oacute;n no debe superar los 5000 caract&eacute;res.
                                         </p>
-                                        <p class="help-block" ng-show="descripcionValidacion">
+                                        <p class="help-block" ng-show="formDescripcion.textDescripcion.$invalid && submitted">
                                             La descripci&oacute;n requerida.
                                         </p>
                                     </div>
@@ -405,18 +309,24 @@
                         </div>
                     </form>
                     
-                    <form class="form-horizontal">
+                    <form name="formAdjuntos" class="form-horizontal">
                         <div class="row">
-                            <div class="col-md-12" ng-show="ejecucion || pendiente">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="inpFile" class="control-label col-md-2"> {{adjuntar}}</label>
-                                    <div class="col-md-10" ng-class="{ 'has-error' : adjuntoValidacion}">
+                                    <div class="col-md-10" ng-class="{ 'has-error' : adjuntoIsValido && submitted}"> <!-- ng-class="{ 'has-error' : adjuntoValidacion}" -->
                                         <div class="panel panel-default" >
                                             <div class="panel-body">
                                                 <div class="col-md-2">
                                                     <label for="fileUpload" class="SRI-button"> Adjuntar </label>
-                                                    <input id="fileUpload" style="display:none;" type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
-    <!--                                                    <p>Número de Archivos: {{ uploader.queue.length }}</p>-->
+                                                    <input id="fileUpload" 
+                                                           name="inputFile" 
+                                                           style="display:none;" 
+                                                           type="file" 
+                                                           nv-file-select=""
+                                                           uploader="uploader" 
+                                                           multiple
+                                                           required/><br/>
                                                 </div>
                                                 <div class="col-md-9">
                                                     <table class="table" style="margin-bottom:0;">
@@ -470,7 +380,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="help-block" ng-show="adjuntoValidacion">
+                                        <p class="help-block" ng-show="adjuntoIsValido && submitted">
                                             Debe adjuntar un archivo.
                                         </p>
                                     </div>
@@ -485,7 +395,12 @@
                                             <div class="panel-body">
                                                 <div class="col-md-2">
                                                     <label for="subirArchivo" class="SRI-button"> Adjuntar </label>
-                                                    <input id="subirArchivo" style="display:none;" type="file" nv-file-select="" uploader="uploader2" multiple  /><br/>
+                                                    <input id="subirArchivo" 
+                                                           style="display:none;" 
+                                                           type="file" 
+                                                           nv-file-select="" 
+                                                           uploader="uploader2" 
+                                                           multiple  /><br/>
     <!--                                                    <p>Número de Archivos: {{ uploader.queue.length }}</p>-->
                                                 </div>
                                                 <div class="col-md-9">
@@ -526,11 +441,21 @@
 <!--                                <button type="submit" ng-click="guardarInvestigacion()" class="btn btn-default pull-right" style="margin-left:10px;"> 
                                     <span class="glyphicon glyphicon-floppy-saved"></span> Guardar
                                 </button>-->
-                                <button type="submit" 
+                                <button ng-show="mostrarActividad[0] || mostrarActividad[2]" type="submit" 
                                         class="btn btn-primary pull-right"
-                                        ng-click="openModalConfirmacionRegistro(actividadForm.$valid)" >
+                                        ng-click="openModalConfirmacionRegistro(actividadForm.$valid, formDescripcion.$valid, uploader.queue.length)" >
                                     <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
-                                </button>                                    
+                                </button>
+                                <button ng-show="mostrarActividad[1]" type="submit" 
+                                        class="btn btn-primary pull-right"
+                                        ng-click="openModalConfirmacionRegistro(actividadForm.$valid, !formDescripcion.$valid, uploader.queue.length)" >
+                                    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+                                </button>
+                                <button ng-show="mostrarActividad[3]" type="submit" 
+                                        class="btn btn-primary pull-right"
+                                        ng-click="openModalConfirmacionRegistro(actividadForm.nombre.$valid, !formDescripcion.$valid, uploader.queue.length)" >
+                                    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+                                </button>
                             </div>
                         </div>
                     </form>

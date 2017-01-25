@@ -286,7 +286,7 @@
     /************ Registrar Actividad de Investigacion ****************/
     
     $scope.registrarInvestigacion = function(isValid){
-        if(isValid && uploader.queue.length !== 0 && $scope.descripcion.length != 0){
+//        if(isValid && uploader.queue.length !== 0 && $scope.descripcion.length != 0){
             $scope.loader = true;
             $scope.sharedService.scrollTop();
             var actividadGeneral = {
@@ -333,36 +333,42 @@
                 }
             };
             HomeService.registrarInvestigacion(actividadGeneral).then(RegistrarInvestigacionSuccess, RegistrarInvestigacionError);
-        } else {
-            $scope.sharedService.scrollTop();
-            $scope.adjuntoValidacion = true;
-            $scope.descripcionValidacion = true;
-            $scope.submitted = true;
-            angular.forEach($scope.plantillaDocumento, function(value,key){
-                console.log($scope[value.smodel]);
-            });
-        }
+//        } else {
+//            $scope.sharedService.scrollTop();
+//            $scope.adjuntoValidacion = true;
+//            $scope.descripcionValidacion = true;
+//            $scope.submitted = true;
+//            angular.forEach($scope.plantillaDocumento, function(value,key){
+//                console.log($scope[value.smodel]);
+//            });
+//        }
     };
     
-    $scope.openModalConfirmacionRegistro = function(isValid){
-        if(isValid && uploader.queue.length !== 0 && $scope.descripcion.length != 0){
+    $scope.openModalConfirmacionRegistro = function(formActividad, formDescripcion, formAdjuntos){
+        if($scope.mostrarActividad[3] && $scope.realizado){
+            formAdjuntos = 1;
+        }
+        
+        if(formActividad && formDescripcion && formAdjuntos !== 0){
             $('#modalConfirmacionRegistro').modal('show');
         } else {
             $scope.sharedService.scrollTop();
-            $scope.adjuntoValidacion = true;
-            $scope.descripcionValidacion = true;
+            $scope.adjuntoIsValido = true;
             $scope.submitted = true;
+        }
+        if($scope.mostrarActividad[3] && $scope.realizado){
+            $scope.adjuntoIsValido = false;
         }
 
     };
     
     $scope.$watch('uploader.queue.length', function() {
-       $scope.adjuntoValidacion = false;
+       $scope.adjuntoIsValido = false;
     });
     
-    $scope.$watch('descripcion', function() {
-       $scope.descripcionValidacion = false;
-    });
+//    $scope.$watch('descripcion', function() {
+//       $scope.descripcionValidacion = false;
+//    });
     
     var getValoresPlantilla = function(){
         var plantillaDocumentoActividades = [];
@@ -428,7 +434,7 @@
                 $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)(Opcional)";
                 $scope.showDescripcion = false;
                 $scope.mostrarAyuda = false;
-                $scope.descripcion = "vacio";
+//                $scope.descripcion = "vacio";
                 break;
             case "INVESTIGACIONES BASICAS Y APLICADAS":
                 $scope.mostrarActividad = [false, false, true, false];
@@ -468,13 +474,19 @@
                 $scope.realizado = true;
                 $scope.ejecucion = false;
                 $scope.pendiente = false;
+                
+                
+                $scope.adjuntar = "Adjuntar Libro o Artículo";
                 $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
-                $scope.pendienteAdjunto = true;
+                $scope.pendienteAdjunto = false;
                 break;
             case "EJECUCION":
                 $scope.realizado = false;
                 $scope.ejecucion = true;
                 $scope.pendiente = false;
+                
+                
+                $scope.adjuntar = "Adjuntar Planificación";
                 $scope.adjuntarOtros = "Adjuntar avance de Libro o Artículo (Opcional)";
                 $scope.pendienteAdjunto = true;
                 break;
@@ -482,6 +494,8 @@
                 $scope.realizado = false;
                 $scope.ejecucion = false;
                 $scope.pendiente = true;
+                
+                $scope.adjuntar = "Adjuntar Planificación";
                 $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
                 $scope.pendienteAdjunto = false;
                 break;
@@ -546,6 +560,10 @@
         $scope.nombreCurso = "";
         $scope.numeroContrato = "";
         $scope.montoFinanciamiento = "";
+        $scope.codigo = "";
+        $scope.nombrePublicacion = "";
+        $scope.fechaAceptacion = "";
+        $scope.plazoEjecucion = "";
         
         uploader.clearQueue();
         uploader2.clearQueue();
