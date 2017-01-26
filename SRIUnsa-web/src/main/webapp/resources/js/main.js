@@ -60,9 +60,9 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/ActividadesPendientes.html',
 		controller : 'ActividadesPendientesController'
 	})
-        .when('/actividadesDocentes',{
-		templateUrl : 'resources/views/ActividadesDocentes.html',
-		controller : 'ActividadesDocentesController'
+        .when('/relacionDocentes/sinActividad',{
+		templateUrl : 'resources/views/RelacionDocentesSinActividad.html',
+		controller : 'RelacionDocentesSinActividadController'
 	})
 	.when('/relacionDocentes',{
 		templateUrl : 'resources/views/RelacionDocentes.html',
@@ -176,6 +176,7 @@ investigacionApp.run(['$rootScope', '$location', 'SharedService', function ($roo
             var cadena = $location.path();
             if(!SharedService.isPermitido(cadena)){
 //                alert("no tiene permisos para esta pagina");
+                console.log("sin permisos :: ", SharedService.locationHome);
                 $location.path(SharedService.locationHome);
             }
         }

@@ -1,4 +1,4 @@
-investigacionApp.controller('ActividadesDocentesController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
+investigacionApp.controller('RelacionDocentesSinActividadController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
     'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'TipoNivelService', 'EstructuraOrganizacionService',
     'ActividadesDocentesService', 'SRIUnsaConfig', function($log, $scope, SharedService, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService,

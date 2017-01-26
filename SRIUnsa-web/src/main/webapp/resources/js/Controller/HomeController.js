@@ -25,6 +25,11 @@
     $scope.departamento = {};
     $scope.director = {};
     
+//    $scope.showVerificacion = false;
+//    $scope.realizado = false;
+//    $scope.ejecucion = false;
+//    $scope.pendiente = false;
+    
 //    $scope.responsable = $scope.sharedService.docente.snombre + " " + $scope.sharedService.docente.sapellido;
     
     $scope.facultad.snombreEstructuraOrganizacion = $scope.sharedService.usuarioHome[0].nombreFacultad;
@@ -405,7 +410,7 @@
     $scope.GetAreaInvestigaciones();
     $scope.GetFondos();
     $scope.GetTipoAsesorias();
-    $scope.GetTipoProducciones();
+//    $scope.GetTipoProducciones();
     $scope.GetTipoInvestigador();
     
     /*********** Funciones Utilitarias ************/
@@ -454,6 +459,8 @@
                 $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
                 $scope.showDescripcion = false;
                 $scope.mostrarAyuda = false;
+                $scope.GetTipoProducciones();
+//                setTipoProduccion($scope.tipoProducciones);
                 break;
             default:
                 $scope.mostrarActividad = [false, false, false, false];

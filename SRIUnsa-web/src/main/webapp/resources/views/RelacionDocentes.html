@@ -33,26 +33,9 @@
                             <option></option>
                         </select> 
                     </div>
-                    <label class="control-label col-md-2">Escuela</label>
-                    <div class="col-md-4">
-                        <select  ng-model="escuela"
-                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
-                            class="form-control" 
-                            ng-required="true"
-                            style="margin:2px;"
-                            ng-init="escuela=''">
-                            <option></option>
-                        </select> 
-                    </div>
                     <label class="control-label col-md-2">Semestre</label>
                     <div class="col-md-4">
                         <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
-                            <option></option>
-                        </select>
-                    </div>
-                    <label class="control-label col-md-2"> Fondo Concursable</label>
-                    <div class="col-md-4">
-                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
                             <option></option>
                         </select>
                     </div>
