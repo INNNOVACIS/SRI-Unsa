@@ -165,9 +165,19 @@ public class ActividadInvestigacionRevisadaRestService {
             
             String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
+            String universidad = "Universidad Nacional de San Agustín de Arequipa";
+            String vicerrectorado = "Vicerrectorado de Investigación";
+            String facultad = "Facultad de Producción y Servicios";
+            String departamento = "Departamente académico de Sistemas";
+            String actividades = "Informe de Actividades de Investigación";
+            String periodo = "Periodo";
+            String docente = "Docente: (Juan Carlos Juarez)";
+            
             GeneratePdf generadorPdf =  new GeneratePdf();            
             byte[] blobAsBytes = generadorPdf.getArrayByteFrom(respuesta, nombreColumnas.length,
-                    nombreColumnas, "Actividades de Investigación Revisadas",listaObjetosSend);
+                    nombreColumnas, "Actividades de Investigación Revisadas",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
