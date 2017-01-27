@@ -35,6 +35,44 @@ public class ReportesRestService {
     private IActividadInvestigacionBusiness actividadInvestigacionBusiness;
     
     @POST
+    @Path("/GetDocentesActivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetDocentesActivos(SRIPaginacion entidad) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetDocentesActivos(entidad);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetDocenteActivos - Success : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetDocenteActivos - Error : {0}", ex.getMessage());
+        }
+        
+        return builder.build();
+    }
+    
+    @POST
+    @Path("/GetDocentesInactivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetDocentesInactivos(SRIPaginacion entidad) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetDocentesInactivos(entidad);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetDocentesInactivos - Success : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetDocentesInactivos - Error : {0}", ex.getMessage());
+        }
+        
+        return builder.build();
+    }
+    
+    @POST
     @Path("/getActividadesDocentes")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

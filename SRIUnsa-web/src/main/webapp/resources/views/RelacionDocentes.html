@@ -50,14 +50,14 @@
         
         <div class="panel panel-primary">
             <div class="panel-heading" style="line-height: 2;">Relación de Docentes 
-                <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
+<!--                <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
                     <span class="glyphicon glyphicon-cloud-download"></span>
                     Descargar PDF
                 </button>
                 <button class="btn btn-success btn-sm pull-right" ng-click="descargarExcel()" style="margin-right: 6px;">
                     <span class="glyphicon glyphicon-cloud-download"></span>
                     Descargar Excel
-                </button>
+                </button>-->
             </div>
               <div class="panel-body">
                   <div class="dataTable_wrapper">
@@ -65,9 +65,10 @@
                         <thead>
                             <tr>
                                 <th width="5%">#</th>
-                                <th>Nombre del Docente</th>
-                                <th>DNI</th>
-                                <th>Total Duraci&oacute;n</th>
+                                <th>Facultad</th>
+                                <th>Departamento</th>
+                                <th>Docente</th>
+                                <th>Semestre</th>
                                 <th>N&uacute;mero Actividades</th>
                                 <th>Con Actividad</th>
                             </tr>
@@ -75,9 +76,10 @@
                         <tbody>
                             <tr ng-repeat="actividadDocente in actividadesDocentes">
                                 <td>{{ $index + row }}</td>
-                                <td><strong>{{ actividadDocente.nombreactividad }}</strong></td>
-                                <td>{{ actividadDocente.dni }}</td>
-                                <td>{{ actividadDocente.horas }}</td>
+                                <td><strong>{{ actividadDocente.facultad }}</strong></td>
+                                <td>{{ actividadDocente.departamento }}</td>
+                                <td>{{ actividadDocente.nombres + " " + actividadDocente.apellidos }}</td>
+                                <td width="8%">{{ actividadDocente.semestre }}</td>
                                 <td width="8%">{{ actividadDocente.cantidad }}</td>
                                 <td width="8%">Si</td>
                             </tr>

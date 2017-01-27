@@ -12,12 +12,13 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 
 
-@Dependent
+@RequestScoped
 public class UsuarioRolDaoImp implements IUsuarioRolDao {
 
     @Inject

@@ -11,10 +11,11 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 
 
 
-@Dependent
+@RequestScoped
 public class SemestreBusinessImp implements ISemestreBusiness {
 
     @Inject

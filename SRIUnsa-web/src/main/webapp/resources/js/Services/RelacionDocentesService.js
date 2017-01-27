@@ -3,6 +3,38 @@
  */
 investigacionApp.service("RelacionDocentesService", function(SRIUnsaConfig, $log, $http, $q) {
 	
+    this.GetDocenteActivos = function(request) {
+        $log.debug("RelacionDocentesService - GetDocentesActivos");
+
+        var deferred = $q.defer();
+        $http({
+            method : 'POST',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/reportes/GetDocentesActivos',
+            data : request
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {			
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+    
+    this.GetDocentesInactivos = function(request) {
+        $log.debug("RelacionDocentesService - GetDocentesInactivos");
+
+        var deferred = $q.defer();
+        $http({
+            method : 'POST',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/reportes/GetDocentesInactivos',
+            data : request
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {			
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+    
     this.GetActividadesByDocente = function(request) {
         $log.debug("RelacionDocentesService - GetDocentes");
 

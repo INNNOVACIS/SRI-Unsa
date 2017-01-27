@@ -7,10 +7,11 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 
 
-@Dependent
+@RequestScoped
 public class DetalleMasivaDaoImp implements IDetalleMasivaDao {
 
     @Inject

@@ -33,26 +33,9 @@
                             <option></option>
                         </select> 
                     </div>
-                    <label class="control-label col-md-2">Escuela</label>
-                    <div class="col-md-4">
-                        <select  ng-model="escuela"
-                            ng-options="obj as obj.snombreEstructuraOrganizacion for obj in estructuraOrganizaciones | filter : { nombreTipoNivel: 'Escuela', nidPadre: departamento.nidEstructuraOrganizacion}"
-                            class="form-control" 
-                            ng-required="true"
-                            style="margin:2px;"
-                            ng-init="escuela=''">
-                            <option></option>
-                        </select> 
-                    </div>
                     <label class="control-label col-md-2">Semestre</label>
                     <div class="col-md-4">
                         <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-init="semestre=''">
-                            <option></option>
-                        </select>
-                    </div>
-                    <label class="control-label col-md-2"> Fondo Concursable</label>
-                    <div class="col-md-4">
-                        <select class="form-control" style="margin:2px;" ng-model="fondo" ng-options="opt as opt.snombreFondoConcursable for opt in fondos" ng-init="fondo=''">
                             <option></option>
                         </select>
                     </div>
@@ -82,19 +65,23 @@
                         <thead>
                             <tr>
                                 <th width="5%">#</th>
-                                <th>Nombre del Docente</th>
-                                <th>DNI</th>
-                                <th>Total Duraci&oacute;n</th>
+                                <th>Facultad</th>
+                                <th>Departamento</th>
+                                <th>Docente</th>
+                                <th>Semestre</th>
+                                <th>N&uacute;mero Actividades</th>
                                 <th>Con Actividad</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="actividadDocente in actividadesDocentes">
-                                <td>{{ actividadDocente.idactividadinvestigacion }}</td>
-                                <td><strong>{{ actividadDocente.nombreactividad }}</strong></td>
-                                <td>{{ actividadDocente.horas }}</td>
-                                <td width="8%">{{ actividadDocente.cantidad }}</td>
-                                <td width="8%">Si</td>
+                            <tr ng-repeat="actividadDocente in actividadesDocentes" >
+                                <td>{{ $index + row }}</td>
+                                <td><strong>{{ actividadDocente.facultad }}</strong></td>
+                                <td>{{ actividadDocente.departamento }}</td>
+                                <td>{{ actividadDocente.nombres + " " + actividadDocente.apellidos }}</td>
+                                <td width="8%">{{ semestres[0].snombreSemestre }}</td>
+                                <td width="8%">0</td>
+                                <td width="8%">NO</td>
                             </tr>
                         </tbody>
                     </table>
@@ -103,7 +90,8 @@
                         current-rango="currentRango"
                         num-pages="numPages()" 
                         current-page="currentPage"
-                        max-size="maxSize" >    
+                        max-size="maxSize"
+                        total="total">
                     </pagination>
                 </div>
               </div>

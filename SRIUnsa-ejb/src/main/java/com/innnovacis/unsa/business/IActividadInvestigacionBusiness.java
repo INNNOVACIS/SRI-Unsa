@@ -53,4 +53,7 @@ public interface IActividadInvestigacionBusiness {
     List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento);
+    
+    Map<String, Object> GetDocentesActivos(SRIPaginacion entidad);
+    Map<String, Object> GetDocentesInactivos(SRIPaginacion entidad);
 }

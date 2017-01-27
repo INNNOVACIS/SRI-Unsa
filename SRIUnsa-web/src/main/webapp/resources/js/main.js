@@ -61,8 +61,8 @@ investigacionApp.config(function($routeProvider){
 		controller : 'ActividadesPendientesController'
 	})
         .when('/relacionDocentes/sinActividad',{
-		templateUrl : 'resources/views/RelacionDocentesSinActividad.html',
-		controller : 'RelacionDocentesSinActividadController'
+		templateUrl : 'resources/views/DocentesInactivos.html',
+		controller : 'DocentesInactivosController'
 	})
 	.when('/relacionDocentes',{
 		templateUrl : 'resources/views/RelacionDocentes.html',

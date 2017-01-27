@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
@@ -22,7 +23,7 @@ import javax.ws.rs.core.Response;
 
 
 
-@Dependent
+@RequestScoped
 public class ArchivoDaoImp implements IArchivoDao {
 
     @Inject

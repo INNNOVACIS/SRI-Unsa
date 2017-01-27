@@ -1,8 +1,8 @@
-investigacionApp.controller('RelacionDocentesSinActividadController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
+investigacionApp.controller('DocentesInactivosController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
     'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'TipoNivelService', 'EstructuraOrganizacionService',
-    'ActividadesDocentesService', 'SRIUnsaConfig', function($log, $scope, SharedService, FondoConcursableService, 
+    'ActividadesDocentesService', 'SRIUnsaConfig', 'RelacionDocentesService', function($log, $scope, SharedService, FondoConcursableService, 
     SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService,
-    ActividadesDocentesService, SRIUnsaConfig) {	
+    ActividadesDocentesService, SRIUnsaConfig, RelacionDocentesService) {	
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -149,7 +149,7 @@ investigacionApp.controller('RelacionDocentesSinActividadController',['$log', '$
     };
 
     $scope.$watch('currentPage + currentRango', function() {
-        $scope.GetActividadesByDocente();
+        $scope.GetDocentesInactivos();
     });
     
     var getFiltros = function(){
@@ -164,26 +164,26 @@ investigacionApp.controller('RelacionDocentesSinActividadController',['$log', '$
         return filtro;
     };
     
-    var GetActividadesByDocentesDetalleSuccess = function(response){
-        $log.debug("GetActividadByDocentesDetalle - Success");
+    var GetDocentesInactivosSuccess = function(response){
+        $log.debug("GetDocentesInactivos - Success");
         console.log("Respuesta :: ", response);
         $scope.actividadesDocentes = response.lista;
         $scope.total = response.total;
     };
-    var GetActividadesByDocentesDetalleError = function(response){
-        $log.debug("GetActividadByDocentesDetalle - Error");
+    var GetDocentesInactivosError = function(response){
+        $log.debug("GetDocentesInactivos - Error");
         console.log("Respuesta :: ", response);
     };
     
-    $scope.GetActividadesByDocentesDetalle = function(){
+    $scope.GetDocentesInactivos = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
-        ActividadesDocentesService.GetActividadesByDocentesDetalle(objPagina).then(GetActividadesByDocentesDetalleSuccess, GetActividadesByDocentesDetalleError);
+        RelacionDocentesService.GetDocentesInactivos(objPagina).then(GetDocentesInactivosSuccess, GetDocentesInactivosError);
     };
     
     $scope.filtrar = function() {
-        $scope.GetActividadesByDocente();
+        $scope.GetDocentesInactivos();
     };
     
     $scope.getListaTipoNivel();
@@ -192,6 +192,6 @@ investigacionApp.controller('RelacionDocentesSinActividadController',['$log', '$
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
     $scope.getAreaInvestigaciones();
-    $scope.GetActividadesByDocentesDetalle();
+    $scope.GetDocentesInactivos();
     
 }]);

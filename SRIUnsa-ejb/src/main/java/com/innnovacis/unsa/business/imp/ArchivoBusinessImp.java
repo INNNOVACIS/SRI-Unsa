@@ -12,11 +12,12 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Response;
 
 
 
-@Dependent
+@RequestScoped
 public class ArchivoBusinessImp implements IArchivoBusiness {
 
     @Inject

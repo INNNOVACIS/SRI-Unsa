@@ -36,6 +36,7 @@ import com.innnovacis.unsa.util.Email;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
+import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacion;
@@ -49,10 +50,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 
 
-
-@Dependent
+@RequestScoped
 public class ActividadInvestigacionBusinessImp implements IActividadInvestigacionBusiness {
 
     @Inject
@@ -907,6 +908,36 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             }
         }
         
+        return respuesta;
+    }
+
+    @Override
+    public Map<String, Object> GetDocentesActivos(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            List<SRIDocentesActividades> lstActividadGeneral = actividadInvestigacionDao.GetDocentesActivos(entidad);
+            int total = actividadInvestigacionDao.GetTotalDocentesActivos(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public Map<String, Object> GetDocentesInactivos(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            List<SRIDocentesActividades> lstActividadGeneral = actividadInvestigacionDao.GetDocentesInactivos(entidad);
+            int total = actividadInvestigacionDao.GetTotalDocentesInactivos(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
+        }
         return respuesta;
     }
     

@@ -149,7 +149,7 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
     };
 
     $scope.$watch('currentPage + currentRango', function() {
-        $scope.GetActividadesByDocente();
+        $scope.GetDocenteActivos();
         $scope.row = ($scope.currentPage - 1) * $scope.currentRango + 1;
     });
     
@@ -176,15 +176,15 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
         console.log("Respuesta :: ", response);
     };
     
-    $scope.GetActividadesByDocente = function(){
+    $scope.GetDocenteActivos = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
-        RelacionDocentesService.GetActividadesByDocente(objPagina).then(GetActividadesByDocenteSuccess, GetActividadesByDocenteError);
+        RelacionDocentesService.GetDocenteActivos(objPagina).then(GetActividadesByDocenteSuccess, GetActividadesByDocenteError);
     };
     
     $scope.filtrar = function() {
-        $scope.GetActividadesByDocente();
+        $scope.GetDocenteActivos();
     };
     
     $scope.getListaTipoNivel();
@@ -193,6 +193,6 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
     $scope.getAreaInvestigaciones();
-    $scope.GetActividadesByDocente();
+    $scope.GetDocenteActivos();
     
 }]);

@@ -11,10 +11,11 @@ import com.innnovacis.unsa.model.SRIUsuario;
 import javax.inject.Inject;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 
 
 
-@Dependent
+@RequestScoped
 public class PersonaBusinessImp implements IPersonaBusiness {
     
     @Inject

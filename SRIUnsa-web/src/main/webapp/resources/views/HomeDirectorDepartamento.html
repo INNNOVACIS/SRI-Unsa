@@ -109,7 +109,7 @@
                                             <th>DNI</th>
                                             <th>Email</th>
                                             <th ng-show="currentTipo != '0'"  width="25%">Tipo Actividad</th>
-                                            <th>Acción</th>
+<!--                                            <th>Acción</th>-->
                                             <th>Estado</th>
                                         </tr>
                                     </thead>
@@ -122,11 +122,11 @@
                                             <td>{{ user.ndni }}</td>
                                             <td>{{ user.semail }}</td>
                                             <td ng-show="currentTipo != '0'">{{ user.snombreActividadInvestigacion }}</td>
-                                            <td nowrap>
+<!--                                            <td nowrap>
                                                 <button type="button" class="btn btn-primary btn-xs" ng-click="registrar(user)" >
                                                     <span class="glyphicon glyphicon-edit"></span> Registrar
                                                 </button>
-                                            </td>
+                                            </td>-->
                                             <td nowrap>
                                                 <img ng-if="user.ncolor == '0' " style="width:30px;" src="resources/images/iconos/rojo.png">
                                                 <img ng-if="user.ncolor == '1' " style="width:30px;" src="resources/images/iconos/amarillo.png">
@@ -144,6 +144,10 @@
                                 max-size="maxSize"
                                 total="total" >    
                             </pagination>
+                            <button class="btn btn-success btn-sm pull-right" style="margin-top: 10px;" data-toggle="modal" data-target="#modalConfirmarInforme">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                Enviar Informe
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -152,3 +156,34 @@
     </div>
 </div>
 
+
+<div id="modalConfirmarInforme" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmar Env&iacute;o</h4>
+                </div>
+                <div class="modal-body">
+<!--                    <div class="container-fluid">
+-->                        <div class="row">
+                            <div class="col-md-12">
+                                <form novalidate class="form-horizontal">
+                                    <p>Esta seguro que desea enviar el informe de actividades al Director de Unidad, este no se puede volver a enviar.</p>
+                                </form>
+                            </div>
+                        </div><!--
+                     </div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="enviarInforme()">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        Enviar Informe
+                    </button>
+                    <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal" ng-click="cancel()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

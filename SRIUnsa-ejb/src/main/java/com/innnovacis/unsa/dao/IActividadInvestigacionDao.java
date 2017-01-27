@@ -7,6 +7,7 @@ package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
@@ -50,5 +51,10 @@ public interface IActividadInvestigacionDao {
     List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento);
+    
+    List<SRIDocentesActividades> GetDocentesActivos(SRIPaginacion entidad);
+    List<SRIDocentesActividades> GetDocentesInactivos(SRIPaginacion entidad);
+    int GetTotalDocentesActivos(SRIPaginacion entidad);
+    int GetTotalDocentesInactivos(SRIPaginacion entidad);
     
 }

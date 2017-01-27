@@ -121,10 +121,10 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
     
     /**************** PAGINACION *****************/
     
-    $scope.rangoPaginas = [5,10,20,100];
+    $scope.rangoPaginas = [50,100];
     $scope.currentPage = 1;
     $scope.currentRango = $scope.rangoPaginas[0];
-    $scope.maxSize = 5;
+    $scope.maxSize = 50;
     $scope.total = 0;
 
     $scope.numPages = function () {

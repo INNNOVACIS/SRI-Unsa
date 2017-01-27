@@ -11,10 +11,11 @@ import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import com.innnovacis.unsa.business.ITipoInvestigadorBusiness;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import javax.enterprise.context.RequestScoped;
 
 
 
-@Dependent
+@RequestScoped
 public class TipoInvestigadorBusinessImp implements ITipoInvestigadorBusiness {
 
     @Inject
