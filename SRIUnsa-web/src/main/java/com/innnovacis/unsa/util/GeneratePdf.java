@@ -268,6 +268,54 @@ public class GeneratePdf {
         return cellte;
     }
     
+    public void setCabecera(Document documento, String universidad, String vicerrectorado,
+            String facultad, String departamento, String actividades,
+            String periodo, String docente) throws DocumentException{
+        Font funo = new Font(FontFamily.HELVETICA,20.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph uno = new Paragraph(universidad,funo);     
+        documento.add(uno);
+        
+        Font fdos = new Font(FontFamily.HELVETICA,18.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph dos = new Paragraph(vicerrectorado,fdos);     
+        documento.add(dos);
+        
+        documento.add( Chunk.NEWLINE);
+        Font ftres = new Font(FontFamily.HELVETICA,16.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph tres = new Paragraph(facultad,ftres);     
+        documento.add(tres);
+        
+        Font fcuatro = new Font(FontFamily.HELVETICA,16.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph cuatro = new Paragraph(departamento,fcuatro);     
+        documento.add(cuatro);
+        
+        documento.add( Chunk.NEWLINE);
+        Paragraph cinco = new Paragraph(actividades,fcuatro);     
+        documento.add(cinco);
+        documento.add( Chunk.NEWLINE);
+        documento.add(line);
+        
+        documento.add( Chunk.NEWLINE);
+        Font fcinco = new Font(FontFamily.HELVETICA,14.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph seis = new Paragraph(periodo,fcinco);     
+        documento.add(seis);
+        
+        Paragraph siete = new Paragraph(docente,fcinco);     
+        documento.add(siete);
+        documento.add( Chunk.NEWLINE);
+    }
+    
+    public void setFirma(Document documento, String docente) throws DocumentException{
+        
+        Paragraph cero = new Paragraph("___________________________");     
+        documento.add(cero);
+        
+        Paragraph uno = new Paragraph(docente);     
+        documento.add(uno);
+        
+        Paragraph dos = new Paragraph("DNI");     
+        documento.add(dos);
+    }
+    
     public PdfPTable getTableInvestigaciones(int numTiposActividades, 
             String[] listNombresTiposActividades, ArrayList<ArrayList<String>> listTiposActividades){
         
@@ -388,7 +436,10 @@ public class GeneratePdf {
     
     public byte[] getArrayByteFrom(Map<String, Object> respuesta, int contador,
             String[] nombreColumnasCabeceras, String tituloPrincipal,
-            ArrayList<ArrayList<String>> listaObjetosSend) throws IOException, DocumentException {
+            ArrayList<ArrayList<String>> listaObjetosSend,
+            String universidad, String vicerrectorado,
+            String facultad, String departamento, String actividades,
+            String periodo, String docente) throws IOException, DocumentException {
 
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
         Document documento = getDocumentNew();
@@ -396,6 +447,9 @@ public class GeneratePdf {
         
         documento.open();
         
+        setCabecera(documento, universidad, vicerrectorado,facultad, departamento,
+                actividades, periodo, docente);
+                
         PdfPTable table = new PdfPTable(contador);
         table.setWidthPercentage(100);
         table.getDefaultCell().setUseAscender(true);
@@ -424,7 +478,9 @@ public class GeneratePdf {
             }
         }
         documento.add(table);
-
+        
+        setFirma(documento, docente);
+        
         documento.close();
         int longitudEnBytes = baosPDF.toByteArray().length;
         byte[] rptaBytes = new byte[longitudEnBytes];
