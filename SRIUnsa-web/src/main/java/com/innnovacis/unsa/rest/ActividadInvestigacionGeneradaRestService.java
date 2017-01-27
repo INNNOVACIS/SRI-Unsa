@@ -63,9 +63,19 @@ public class ActividadInvestigacionGeneradaRestService {
             
             String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
+            String universidad = "Universidad Nacional de San Agustín de Arequipa";
+            String vicerrectorado = "Vicerrectorado de Investigación";
+            String facultad = "Facultad de Producción y Servicios";
+            String departamento = "Departamente académico de Sistemas";
+            String actividades = "Informe de Actividades de Investigación";
+            String periodo = "Periodo";
+            String docente = "Docente: (Juan Carlos Juarez)";
+            
             GeneratePdf generador =  new GeneratePdf();            
             byte[] blobAsBytes = generador.getArrayByteFrom(respuesta, nombreColumnas.length,
-                    nombreColumnas, "Informe de Actividades de Investigación",listaObjetosSend);
+                    nombreColumnas, "Informe de Actividades de Investigación",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente);
             
             respuesta2 = actividadInvestigacionBusiness.EnviarInforme(blobAsBytes, entidad);
             
@@ -141,9 +151,20 @@ public class ActividadInvestigacionGeneradaRestService {
             
             String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
+            String universidad = "Universidad Nacional de San Agustín de Arequipa";
+            String vicerrectorado = "Vicerrectorado de Investigación";
+            String facultad = "Facultad de Producción y Servicios";
+            String departamento = "Departamente académico de Sistemas";
+            String actividades = "Informe de Actividades de Investigación";
+            String periodo = "Periodo";
+            String docente = "Docente: (Juan Carlos Juarez)";
+            
+            
             GeneratePdf generadorPDF =  new GeneratePdf();            
             byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta, nombreColumnas.length,
-                    nombreColumnas, "Actividades de Investigación Generadas",listaObjetosSend);
+                    nombreColumnas, "Actividades de Investigación Generadas",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
@@ -224,9 +245,19 @@ public class ActividadInvestigacionGeneradaRestService {
             
             String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
+            String universidad = "Universidad Nacional de San Agustín de Arequipa";
+            String vicerrectorado = "Vicerrectorado de Investigación";
+            String facultad = "Facultad de Producción y Servicios";
+            String departamento = "Departamente académico de Sistemas";
+            String actividades = "Informe de Actividades de Investigación";
+            String periodo = "Periodo";
+            String docente = "Docente: (Juan Carlos Juarez)";
+                       
             GeneratePdf generador =  new GeneratePdf();            
             byte[] blobAsBytes = generador.getArrayByteFrom(respuesta, nombreColumnas.length,
-                    nombreColumnas, "Home Docente",listaObjetosSend);
+                    nombreColumnas, "Home Docente",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
