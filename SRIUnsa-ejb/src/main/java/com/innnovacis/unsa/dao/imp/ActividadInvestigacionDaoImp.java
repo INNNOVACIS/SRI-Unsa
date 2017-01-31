@@ -582,4 +582,19 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
         }
         return total.intValue();
     }
+
+    @Override
+    public boolean EliminarActividadGenerada(int idActividad) {
+        boolean respuesta = false;
+        BigInteger total = null;
+        try {
+            Query query = em.createNativeQuery("{call EliminarActividadGenerada(?1)}")
+                        .setParameter(1, idActividad);
+            total = (BigInteger) query.getSingleResult();
+            respuesta = true;
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
 }

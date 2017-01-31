@@ -8,6 +8,7 @@
     ActividadesGeneradasService, PlantillaDocumentoService, FileUploader, $sce) {
     
     $scope.sharedService = SharedService;
+    $scope.disabled = true;
     $scope.tipoInvestigaciones = [];
     $scope.estructuraOrganizaciones = [];
     $scope.semestres = [];
@@ -592,6 +593,19 @@
     var uploader2 = $scope.uploader2 = new FileUploader({
         url: SRIUnsaConfig.SRIUnsaUrlServicio + '/files/subirArchivos'
     });
+    uploader.filters.push({
+        name: 'enforceMaxFileSize',
+        fn: function(item) {
+            return this.queue.length < 10;
+        }
+    });
+    console.log("filtro :: ", uploader.filters);
+    uploader2.filters.push({
+        name: 'customFilter2',
+        fn: function(item , options) {
+            return this.queue.length < 10;
+        }
+    });
 
 
     var homeServiceSuccess = function(response) {        
@@ -609,18 +623,7 @@
         HomeService.sendFile(formData, true).then(homeServiceSuccess, homeServiceError);
     };
     
-    uploader.filters.push({
-        name: 'customFilter',
-        fn: function(item , options) {
-            return this.queue.length < 10;
-        }
-    });
-    uploader2.filters.push({
-        name: 'customFilter2',
-        fn: function(item , options) {
-            return this.queue.length < 10;
-        }
-    });
+    
 //
 //    $scope.uploadAll = function(){
 //        addPlanificacion();
@@ -665,6 +668,10 @@
         console.info('onSuccessItem', fileItem, response, status, headers);
     };
     uploader.onErrorItem = function(fileItem, response, status, headers) {
+        console.log("Error fileitem  -----> ", fileItem);
+        console.log("Error response  -----> ", response);
+        console.log("Error status  -----> ", status);
+        console.log("Error headers  -----> ", headers);
         console.info('onErrorItem', fileItem, response, status, headers);
     };
     uploader.onCancelItem = function(fileItem, response, status, headers) {

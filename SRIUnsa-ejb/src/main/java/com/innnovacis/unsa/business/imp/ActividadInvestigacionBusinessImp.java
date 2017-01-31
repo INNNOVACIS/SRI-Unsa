@@ -940,5 +940,16 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         }
         return respuesta;
     }
+
+    @Override
+    public boolean EliminarActividadGenerada(int idActividad) {
+        boolean respuesta = false;
+        try{
+            respuesta = actividadInvestigacionDao.EliminarActividadGenerada(idActividad);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
     
 }

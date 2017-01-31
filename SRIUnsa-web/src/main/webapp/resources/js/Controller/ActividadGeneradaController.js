@@ -85,10 +85,12 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     var descargarArchivoSuccess = function(response){
         $log.debug("descargarArchivo - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarArchivoError = function(response){
         $log.debug("descargarArchivo - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     var AprobarActividadSuccess = function(response){
@@ -145,6 +147,7 @@ investigacionApp.controller('ActividadGeneradaController',['$log', '$scope',
     };
     
     $scope.descargarArchivo = function(archivo){
+        $scope.loader = true;
         ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
     };
     

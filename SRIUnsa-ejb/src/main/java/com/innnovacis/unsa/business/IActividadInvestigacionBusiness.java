@@ -56,4 +56,5 @@ public interface IActividadInvestigacionBusiness {
     
     Map<String, Object> GetDocentesActivos(SRIPaginacion entidad);
     Map<String, Object> GetDocentesInactivos(SRIPaginacion entidad);
+    boolean EliminarActividadGenerada(int idActividad);
 }

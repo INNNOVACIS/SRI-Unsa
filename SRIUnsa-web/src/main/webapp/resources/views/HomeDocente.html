@@ -142,6 +142,7 @@
                                             <td >{{ actividadGenerada.cantidad }}</td>
                                             <td nowrap>
                                                 <img style="width:30px; cursor: pointer" ng-click="verActividadById(actividadGenerada)" src="resources/images/iconos/ver.png">
+                                                <img style="width:30px; cursor: pointer" data-toggle="modal" data-target="#modalConfirmarEliminacion" ng-click="eliminar(actividadGenerada.idactividadinvestigacion)" src="resources/images/iconos/eliminar.png">
 <!--                                                <img style="width:30px; cursor: pointer" ng-click="updateActividadById(actividadGenerada)" src="resources/images/iconos/editar.png">
                                                 <img style="width:30px; cursor: pointer" ng-click="EnviarEmail(actividadGenerada)" src="resources/images/iconos/enviar.png">-->
                                             </td>
@@ -226,9 +227,6 @@
             </div>
         </div>
     </div>
-    
-    
-    
         
     <div id="modalEnvioExitoso" class="modal fade">
         <div class="modal-dialog modal-sm">
@@ -258,6 +256,65 @@
         </div>
     </div>
     
+    <div id="modalConfirmarInforme" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmar Env&iacute;o</h4>
+                </div>
+                <div class="modal-body">
+<!--                    <div class="container-fluid">
+-->                        <div class="row">
+                            <div class="col-md-12">
+                                <form novalidate class="form-horizontal">
+                                    <p>Esta seguro que desea enviar el informe de actividades, este no se puede volver a enviar.</p>
+                                </form>
+                            </div>
+                        </div><!--
+                     </div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="enviarInforme()">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        Enviar Informe
+                    </button>
+                    <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal" ng-click="cancel()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modalConfirmarEliminacion" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmar Eliminaci&oacute;n</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form novalidate class="form-horizontal">
+                                <p>Esta seguro que desea eliminar su Actividad de Investigaci&oacute;n.</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="EliminarActividadGenerada()">
+                        <span class="glyphicon glyphicon-ok"></span>
+                        Aceptar
+                    </button>
+                    <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal" ng-click="cancel()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     
 </div>
 

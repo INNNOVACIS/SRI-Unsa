@@ -17,7 +17,6 @@ investigacionApp.factory('SharedService', function($location, $localStorage ) {
         stringMenuVertical : sessvars.stringMenuVertical,
         tipoInvestigacion : sessvars.tipoInvestigacion,
         
-        
         dateToString: function(date){
             var nDate = Number(date); 
             var dDate = new Date(nDate);

@@ -34,6 +34,21 @@ investigacionApp.service("ActividadesGeneradasService", function (SRIUnsaConfig,
         });
         return deferred.promise;
     };
+    
+    this.EliminarActividadGenerada = function (idActividad) {
+        $log.debug("ActividadesGeneradasService - EliminarActividadGenerada");
+
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/EliminarActividadGenerada/' + idActividad
+        }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
 
     this.GetActividadesGeneradas = function (request) {
         $log.debug("ActividadesGeneradasService - GetActividadesGeneradas");

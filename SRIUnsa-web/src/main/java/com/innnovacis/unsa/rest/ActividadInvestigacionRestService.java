@@ -309,4 +309,23 @@ public class ActividadInvestigacionRestService {
         return null;
     }
     
+    @GET
+    @Path("EliminarActividadGenerada/{idActividad:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response EliminarActividadGenerada(@PathParam("idActividad") int idActividad){
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        boolean actualizar = false;
+        try {
+            actualizar = actividadInvestigacionBusiness.EliminarActividadGenerada(idActividad);
+            respuesta.put("body", actualizar);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "EliminarActividadGenerada Success : {0}", actualizar);
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "EliminarActividadGenerada Error : {0}", ex.getMessage());
+        }
+        return builder.build();
+    }
+    
 }

@@ -170,7 +170,15 @@
                                     <label class="control-label col-md-4">Fecha de Resoluci&oacute;n</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaAceptacion" is-open="popupAceptacion.opened" datepicker-options="dateOptions" close-text="Close" />
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   uib-datepicker-popup  
+                                                   show-button-bar="false" 
+                                                   ng-model="fechaAceptacion" 
+                                                   is-open="popupAceptacion.opened" 
+                                                   datepicker-options="dateOptions" 
+                                                   close-text="Close"
+                                                   /> <!-- ng-disabled="false" -->
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="openAceptacion()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -324,7 +332,8 @@
                                                            style="display:none;" 
                                                            type="file" 
                                                            nv-file-select=""
-                                                           uploader="uploader" 
+                                                           uploader="uploader"
+                                                           max-size="20485760"
                                                            multiple
                                                            required/><br/>
                                                 </div>

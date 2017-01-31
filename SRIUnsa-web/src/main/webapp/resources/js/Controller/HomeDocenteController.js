@@ -1,7 +1,7 @@
 investigacionApp.controller('HomeDocenteController',['$log', '$scope', '$location',  'TipoInvestigacionService', 'SharedService',
-    'ActividadesGeneradasService', 'SRIUnsaConfig', 'SemestreService', 'UsuariosService', 'ngToast', 
-function($log, $scope, $location,  TipoInvestigacionService, SharedService,
-    ActividadesGeneradasService, SRIUnsaConfig, SemestreService, UsuariosService, ngToast) {
+    'ActividadesGeneradasService', 'SRIUnsaConfig', 'SemestreService', 'UsuariosService', 'ngToast', '$localStorage'
+,function($log, $scope, $location,  TipoInvestigacionService, SharedService,
+    ActividadesGeneradasService, SRIUnsaConfig, SemestreService, UsuariosService, ngToast, $localStorage) {
 
     $scope.sharedService = SharedService;
     $scope.sortType     = 'id'; // set the default sort type
@@ -34,6 +34,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         $scope.actividadesGeneradas = [];
         $scope.actividadesGeneradas = response.lista;
         $scope.total = response.total;
+        $scope.loader = false;
 //        $scope.loadTable = false;
     };
     var GetActividadesGeneradasHomeDocenteError = function(response){
@@ -70,6 +71,16 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         $scope.loader = false;
     };
     
+    var EliminarActividadGeneradaSuccess = function(response){
+        $log.debug("EliminarActividadGenerada - Success");
+        console.log("Respuesta :: ", response);
+         $scope.getActividades();
+    };
+    var EliminarActividadGeneradaError = function(response){
+        $log.debug("EliminarActividadGenerada - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
     
     $scope.getSemestres = function(){
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
@@ -114,6 +125,17 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         $scope.loader = true;
         $location.path("/actividad/Generadas/" + actividadGenerada.idactividadinvestigacion);
     };
+    
+    $scope.EliminarActividadGenerada = function(){
+        $scope.loader = true;
+        ActividadesGeneradasService.EliminarActividadGenerada($scope.idActividad).then(EliminarActividadGeneradaSuccess, EliminarActividadGeneradaError);
+    };
+    
+    $scope.eliminar = function(idActividad){
+        $scope.idActividad = idActividad;
+        console.log("Eliminar actividad :: ", idActividad);
+    };
+    
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];
@@ -159,6 +181,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
         $scope.sharedService.docente.nidPersona = $scope.sharedService.usuarioLogin.idPersona;
         $scope.sharedService.docente.snombre = $scope.sharedService.usuarioLogin.nombre;
         $scope.sharedService.docente.sapellido = $scope.sharedService.usuarioLogin.apellido;
+        $localStorage.docente = $scope.sharedService.docente;
         $scope.GetUsuarioHome($scope.sharedService.docente.nidUsuario, 0);
     } else {
         if($scope.sharedService.idUsuarioRegistrar === "" || $scope.sharedService.idUsuarioRegistrar === undefined){
@@ -168,6 +191,7 @@ function($log, $scope, $location,  TipoInvestigacionService, SharedService,
             $scope.sharedService.docente.nidPersona = $scope.sharedService.usuarioLogin.idPersona;
             $scope.sharedService.docente.snombre = $scope.sharedService.usuarioLogin.nombre;
             $scope.sharedService.docente.sapellido = $scope.sharedService.usuarioLogin.apellido;
+            $localStorage.docente = $scope.sharedService.docente;
         }
         $scope.GetUsuarioHome($scope.sharedService.idUsuarioRegistrar, $scope.sharedService.usuarioLogin.idUsuario);
     }

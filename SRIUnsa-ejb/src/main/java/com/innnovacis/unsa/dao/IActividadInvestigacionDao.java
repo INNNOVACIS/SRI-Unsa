@@ -56,5 +56,5 @@ public interface IActividadInvestigacionDao {
     List<SRIDocentesActividades> GetDocentesInactivos(SRIPaginacion entidad);
     int GetTotalDocentesActivos(SRIPaginacion entidad);
     int GetTotalDocentesInactivos(SRIPaginacion entidad);
-    
+    boolean EliminarActividadGenerada(int idActividad);
 }

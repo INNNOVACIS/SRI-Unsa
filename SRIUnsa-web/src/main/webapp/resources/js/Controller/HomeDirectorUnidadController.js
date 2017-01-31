@@ -61,21 +61,21 @@ function($log, $scope, UsuariosService, $location,
 
     $scope.registrar = function(usuario){
         console.log("USUARIO :: ", usuario);
-        $localStorage.docente = usuario;
-        sessvars.idDocente = usuario.nidUsuario;
-        $scope.sharedService.idDocente = sessvars.idDocente;
-        $scope.sharedService.docente = sessvars.docente;
+        $scope.sharedService.docente = {};
+        $scope.sharedService.docente.nidUsuario = usuario.nidUsuario;
+        $scope.sharedService.docente.nidPersona = usuario.nidPersona;
+        $scope.sharedService.docente.snombre = usuario.snombre;
+        $scope.sharedService.docente.sapellido = usuario.sapellido;
+        $localStorage.docente = $scope.sharedService.docente;
+//        sessvars.idDocente = usuario.nidUsuario;
+        $scope.sharedService.idDocente = $scope.sharedService.docente.nidUsuario;
         
         /*
          * Asignamos el id del docente para registrar su actividad
          * 
          * */
-        sessvars.idUsuarioRegistrar = sessvars.idDocente;
-//        sessvars.idUsuarioDirector = $scope.sharedService.usuarioLogin.idUsuario;
-        $scope.sharedService.idUsuarioRegistrar = sessvars.idUsuarioRegistrar;
-//        $scope.sharedService.idUsuarioDirector = sessvars.idUsuarioDirector;
-        
-        
+        $localStorage.idUsuarioRegistrar = $scope.sharedService.docente.nidUsuario;
+        $scope.sharedService.idUsuarioRegistrar = $scope.sharedService.docente.nidUsuario;
         $location.path("/homedocente");
     };
     
