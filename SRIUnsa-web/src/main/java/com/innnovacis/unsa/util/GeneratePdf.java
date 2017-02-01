@@ -25,6 +25,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class GeneratePdf {
     final BaseColor colorFondoTableClaro = new BaseColor(243, 224, 226);
     final BaseColor colorTextoTableClaro = new BaseColor(70, 70, 70);
     final Font fuenteTextoTableClaro = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, colorTextoTableClaro);
-    final Font fuentePrincipal = new Font(FontFamily.HELVETICA, 14, Font.NORMAL,  GrayColor.GRAYWHITE);
+    final Font fuentePrincipal = new Font(FontFamily.HELVETICA, 12, Font.NORMAL,  GrayColor.GRAYWHITE);
     
     final LineSeparator line = new LineSeparator();
     
@@ -271,31 +272,39 @@ public class GeneratePdf {
     public void setCabecera(Document documento, String universidad, String vicerrectorado,
             String facultad, String departamento, String actividades,
             String periodo, String docente) throws DocumentException{
-        Font funo = new Font(FontFamily.HELVETICA,20.0f,Font.NORMAL,colorTextoTableClaro);
-        Paragraph uno = new Paragraph(universidad,funo);     
+        
+        Chunk glue = new Chunk(new VerticalPositionMark());
+        
+        Font funo = new Font(FontFamily.HELVETICA,8.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph uno = new Paragraph(universidad,funo);
+        uno.add(new Chunk(glue));
+        uno.add(facultad);
         documento.add(uno);
         
-        Font fdos = new Font(FontFamily.HELVETICA,18.0f,Font.NORMAL,colorTextoTableClaro);
-        Paragraph dos = new Paragraph(vicerrectorado,fdos);     
+        Font fdos = new Font(FontFamily.HELVETICA,8.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph dos = new Paragraph(vicerrectorado,fdos);
+        dos.add(new Chunk(glue));
+        dos.add(departamento);
         documento.add(dos);
+
+//        documento.add( Chunk.NEWLINE);
+//        Font ftres = new Font(FontFamily.HELVETICA,8.0f,Font.NORMAL,colorTextoTableClaro);
+//        Paragraph tres = new Paragraph(facultad,ftres);     
+//        documento.add(tres);
         
-        documento.add( Chunk.NEWLINE);
-        Font ftres = new Font(FontFamily.HELVETICA,16.0f,Font.NORMAL,colorTextoTableClaro);
-        Paragraph tres = new Paragraph(facultad,ftres);     
-        documento.add(tres);
-        
-        Font fcuatro = new Font(FontFamily.HELVETICA,16.0f,Font.NORMAL,colorTextoTableClaro);
-        Paragraph cuatro = new Paragraph(departamento,fcuatro);     
-        documento.add(cuatro);
-        
-        documento.add( Chunk.NEWLINE);
-        Paragraph cinco = new Paragraph(actividades,fcuatro);     
-        documento.add(cinco);
+//        Font fcuatro = new Font(FontFamily.HELVETICA,8.0f,Font.NORMAL,colorTextoTableClaro);
+//        Paragraph cuatro = new Paragraph(departamento,fcuatro);     
+//        documento.add(cuatro);
         documento.add( Chunk.NEWLINE);
         documento.add(line);
         
+        Font fTitulo = new Font(FontFamily.HELVETICA,11.0f,Font.NORMAL,colorTextoTableClaro);
         documento.add( Chunk.NEWLINE);
-        Font fcinco = new Font(FontFamily.HELVETICA,14.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph cinco = new Paragraph(actividades,fTitulo);     
+        documento.add(cinco);
+        
+        documento.add( Chunk.NEWLINE);
+        Font fcinco = new Font(FontFamily.HELVETICA,11.0f,Font.NORMAL,colorTextoTableClaro);
         Paragraph seis = new Paragraph(periodo,fcinco);     
         documento.add(seis);
         
@@ -306,13 +315,17 @@ public class GeneratePdf {
     
     public void setFirma(Document documento, String docente, String dni) throws DocumentException{
         
-        Paragraph cero = new Paragraph("___________________________");     
+        documento.add( Chunk.NEWLINE);
+        documento.add( Chunk.NEWLINE);
+        documento.add( Chunk.NEWLINE);
+        Paragraph cero = new Paragraph("____________________________________");     
         documento.add(cero);
         
-        Paragraph uno = new Paragraph(docente);     
+        Font fFirma = new Font(FontFamily.HELVETICA,10.0f,Font.NORMAL,colorTextoTableClaro);
+        Paragraph uno = new Paragraph(docente, fFirma);     
         documento.add(uno);
         
-        Paragraph dos = new Paragraph(dni);     
+        Paragraph dos = new Paragraph(dni, fFirma);     
         documento.add(dos);
     }
     
@@ -489,7 +502,7 @@ public class GeneratePdf {
     }
     
     private Document getDocumentNew(){
-        Document documento = new Document(PageSize.A4.rotate());
+        Document documento = new Document(PageSize.A4.rotate());//, 30,20,20,30);
         // Propiedades del documento
         documento.addAuthor("Innnóvacis");
         documento.addCreationDate();

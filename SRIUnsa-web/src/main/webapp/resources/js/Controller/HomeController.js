@@ -58,7 +58,7 @@
         $log.debug("GetSemestres - Success");
         console.log("Respuesta :: ", response);
         $scope.semestres = response;
-        $scope.semestre = verificarSemestre($scope.semestres);        
+        $scope.semestre = verificarSemestre($scope.semestres);
     };
     var GetSemestresError = function(response){
         $log.debug("GetSemestres - Error");

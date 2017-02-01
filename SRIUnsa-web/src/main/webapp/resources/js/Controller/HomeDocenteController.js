@@ -11,7 +11,9 @@ investigacionApp.controller('HomeDocenteController',['$log', '$scope', '$locatio
     	$log.debug("GetSemestre - Success");
         console.log("Respuesta :: ", response);
     	$scope.semestres = response;
-        setPeriodo();
+        $scope.semestre = verificarSemestre($scope.semestres);
+//        setPeriodo();
+        $scope.getActividades();
     };
     var getSemestreServiceError = function(response){
      	$log.debug("GetSemestre - Error");
@@ -71,10 +73,21 @@ investigacionApp.controller('HomeDocenteController',['$log', '$scope', '$locatio
         $scope.loader = false;
     };
     
+    var imprimirInformeSuccess = function(response){
+        $log.debug("imprimirInforme - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var imprimirInformeError = function(response){
+        $log.debug("imprimirInforme - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    
     var EliminarActividadGeneradaSuccess = function(response){
         $log.debug("EliminarActividadGenerada - Success");
         console.log("Respuesta :: ", response);
-         $scope.getActividades();
+        $scope.getActividades();
     };
     var EliminarActividadGeneradaError = function(response){
         $log.debug("EliminarActividadGenerada - Error");
@@ -106,18 +119,37 @@ investigacionApp.controller('HomeDocenteController',['$log', '$scope', '$locatio
         ActividadesGeneradasService.enviarInforme(pagina).then(enviarInformeSuccess, enviarInformeError);
     };
     
+    $scope.imprimirInforme = function(){
+        $scope.loader = true;
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        ActividadesGeneradasService.imprimirInforme(pagina).then(imprimirInformeSuccess, imprimirInformeError);
+    };
+    
     $scope.changeSemestre = function(semestre){
         $scope.semestre = semestre;
         $scope.getActividades();
     };
     
-    var setPeriodo = function(){
-        angular.forEach($scope.semestres, function(value, key){
-            if(value.snombreSemestre === "2016-II Semestre II"){
-                $scope.semestre = value;
+//    var setPeriodo = function(){
+//        angular.forEach($scope.semestres, function(value, key){
+//            if(value.snombreSemestre === "2016-II Semestre II"){
+//                $scope.semestre = value;
+//            }
+//        });
+//         $scope.getActividades();
+//    };
+    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
             }
         });
-         $scope.getActividades();
+        return semestre;
     };
     
     $scope.verActividadById = function(actividadGenerada){

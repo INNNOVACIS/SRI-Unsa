@@ -96,6 +96,58 @@ public class ActividadInvestigacionGeneradaRestService {
     }
     
     @POST
+    @Path("/imprimirInforme")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response imprimirInforme(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetActividadesGeneradas(entidad);
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            ArrayList<SRIActividadGeneralPaginacion> listaObjetos
+                = (ArrayList<SRIActividadGeneralPaginacion>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
+            
+            SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
+            String universidad = "Universidad Nacional de San Agustín de Arequipa";
+            String vicerrectorado = "Vicerrectorado de Investigación";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = docenteReporte.getDepartamento();
+            String actividades = "Informe de Actividades de Investigación";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
+            String dni = "DNI: " + docenteReporte.getDni();
+            
+            
+            GeneratePdf generadorPDF =  new GeneratePdf();            
+            byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Informe de Actividades de Investigación",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente, dni);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "Actividades Generadas.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.pdf")
+                .build();
+    }
+    
+    @POST
     @Path("/actividades")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

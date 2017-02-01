@@ -22,6 +22,9 @@ import org.hibernate.annotations.Subselect;
 @Subselect("")
 public class SRIDocentesActividades implements Serializable {
     
+    @Id
+    @Column(name = "idpersona")
+    private int idpersona;
     
     @Column(name = "idactividadinvestigacion" )
     private int idactividadinvestigacion;
@@ -38,15 +41,14 @@ public class SRIDocentesActividades implements Serializable {
     @Column(name = "semestre")
     private String semestre;
     
-    @Id
-    @Column(name = "idpersona")
-    private int idpersona;
-    
     @Column(name = "nombre")
     private String nombres;
     
     @Column(name = "apellido")
     private String apellidos;
+    
+//    @Column(name = "dni")
+//    private String dni;
     
     @Column(name = "cantidad")
     private int cantidad;
@@ -111,6 +113,14 @@ public class SRIDocentesActividades implements Serializable {
         return apellidos;
     }
 
+//    public String getDni() {
+//        return dni;
+//    }
+//
+//    public void setDni(String dni) {
+//        this.dni = dni;
+//    }
+
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
@@ -122,6 +132,5 @@ public class SRIDocentesActividades implements Serializable {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
     
 }

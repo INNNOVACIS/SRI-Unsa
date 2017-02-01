@@ -36,18 +36,6 @@ function($log, $scope, UsuarioFlujoService, FlujoActorService,
         $log.debug("actualizarUsuarioActor - Error");
         console.log("Respuesta :: ", response);
     };
-
-    var deleteUsuarioActorSuccess = function(response){
-    	$log.debug("Delete Usuario Actor - Success");
-    	$scope.usuarioActor = response;
-        $scope.getUsuarioFlujoByPagina();
-        var user = $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario;
-        UsuarioFlujoService.getUsuarioFlujoActorByIdUsuario(user.nidUsuario).then(getUsuarioFlujoActorByIdUsuarioSuccess, getUsuarioFlujoActorByIdUsuarioError);
-    };
-    var deleteUsuarioActorError = function(response){
-        $log.debug("Delete Usuario Actor - Error");
-        console.log("Respuesta :: ", response);
-    };
     
     var getUsuariosServiceSuccess = function(response){
         $log.debug("GetUsuarios - Success");
@@ -120,7 +108,10 @@ function($log, $scope, UsuarioFlujoService, FlujoActorService,
     
     $scope.actualizarUsuarioActor = function(){
         var usuarioFlujos = [];
-        angular.forEach($scope.listaActores, function(value, key){
+        if($scope.listaActores.length !== 0){
+            $scope.emptyActor = false;
+            $('#popUpdateUsuarioActor').modal('hide');
+            angular.forEach($scope.listaActores, function(value, key){
             var usuarioFlujo = {
                 nidFlujoActor : value.nidFlujoActor,
                 nidUsuario : $scope.usuario === undefined ? $scope.usuarioActor.nidUsuario : $scope.usuario.nidUsuario,
@@ -130,6 +121,9 @@ function($log, $scope, UsuarioFlujoService, FlujoActorService,
             usuarioFlujos.push(usuarioFlujo);
         });
         UsuarioFlujoService.actualizarUsuarioActor(usuarioFlujos).then(actualizarUsuarioActorSuccess, actualizarUsuarioActorError);
+        } else {
+            $scope.emptyActor = true;
+        }
     };
       
     $scope.deleteUsuarioFlujo = function(actorById) {
@@ -141,11 +135,15 @@ function($log, $scope, UsuarioFlujoService, FlujoActorService,
     
     $scope.agregarUsuarioActorLista = function(){
         $scope.listaActores.push($scope.actor);
+        $scope.emptyActor = false;
     };
     
     $scope.eliminarUsuarioActorLista = function(actor){
         var indice = $scope.listaActores.indexOf(actor);
         $scope.listaActores.splice( indice, 1 );
+        if($scope.listaActores.length === 0){
+            $scope.emptyActor = true;
+        }
     };
 
     $scope.update = function(usuarioActor){
@@ -158,6 +156,9 @@ function($log, $scope, UsuarioFlujoService, FlujoActorService,
         $scope.usuario = {};
         $scope.listaActores = [];
         $scope.getUsuarioFlujoByPagina();
+    };
+    $scope.close = function(){
+        $scope.emptyActor = false;
     };
     
     /**************** PAGINACION *****************/
