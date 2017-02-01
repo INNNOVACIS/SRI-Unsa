@@ -25,6 +25,7 @@ public class PersonaDaoImp implements IPersonaDao {
     public SRIPersona Insert(SRIPersona entidad) {
         try {
             entidad.setDFechaCreacion(new Date());
+            entidad.setDFechaModificacion(new Date());
             em.persist(entidad);
         } catch(Exception ex) {
             throw ex;

@@ -7,6 +7,7 @@ package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIDocente;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
@@ -48,4 +49,5 @@ public interface IUsuarioBusiness {
     List<SRIUsuarioHome> GetUsuarioHome(int idUsuario, int idUsuarioDirector);
     boolean enviarCodigo(int idUsuario);
     SRIUsuario verificarCodigo(SRIUsuario entidad);
+    SRIDocente GetDocenteReporte(int idUsuario);
 }

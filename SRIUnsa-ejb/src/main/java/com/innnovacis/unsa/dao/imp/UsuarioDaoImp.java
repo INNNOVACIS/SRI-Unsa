@@ -5,6 +5,7 @@ import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.GenerarCodigo;
+import com.innnovacis.unsa.util.SRIDocente;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
@@ -298,6 +299,19 @@ public class UsuarioDaoImp implements IUsuarioDao {
             throw ex;
         }
         return lstUsuarioPersona;
+    }
+
+    @Override
+    public SRIDocente GetDocenteReporte(int idUsuario) {
+        SRIDocente docente = null;
+        try {
+            Query query = em.createNativeQuery("{call GetDocenteReporte(?1)}", SRIDocente.class)
+                        .setParameter(1, idUsuario);
+            docente = (SRIDocente)query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return docente;
     }
 
 }

@@ -6,11 +6,13 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
+import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.util.GenerateExcel;
 import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
+import com.innnovacis.unsa.util.SRIDocente;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +44,9 @@ public class ActividadInvestigacionRevisadaRestService {
     
     @Inject
     private IActividadInvestigacionBusiness actividadInvestigacionBusiness;
+    
+    @Inject
+    private IUsuarioBusiness usuarioBusiness;
     
     @POST
     @Path("/actividades")
@@ -165,19 +170,22 @@ public class ActividadInvestigacionRevisadaRestService {
             
             String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
+            SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
             String universidad = "Universidad Nacional de San Agustín de Arequipa";
             String vicerrectorado = "Vicerrectorado de Investigación";
-            String facultad = "Facultad de Producción y Servicios";
-            String departamento = "Departamente académico de Sistemas";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = docenteReporte.getDepartamento();
             String actividades = "Informe de Actividades de Investigación";
-            String periodo = "Periodo";
-            String docente = "Docente: (Juan Carlos Juarez)";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
+            String dni = "DNI: " + docenteReporte.getDni();
             
             GeneratePdf generadorPdf =  new GeneratePdf();            
             byte[] blobAsBytes = generadorPdf.getArrayByteFrom(respuesta, nombreColumnas.length,
                     nombreColumnas, "Actividades de Investigación Revisadas",listaObjetosSend,
                     universidad, vicerrectorado,facultad, departamento, actividades,
-                    periodo, docente);
+                    periodo, docente, dni);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)

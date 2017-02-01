@@ -178,6 +178,7 @@
                                                    is-open="popupAceptacion.opened" 
                                                    datepicker-options="dateOptions" 
                                                    close-text="Close"
+                                                   readonly
                                                    /> <!-- ng-disabled="false" -->
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="openAceptacion()"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -230,7 +231,15 @@
                                     <label class="control-label col-md-4">Fecha de contrato o inicio del proyecto</label>
                                     <div class="col-md-8">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaAceptacion" is-open="popupAceptacion.opened" datepicker-options="dateOptions" close-text="Close" />
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   uib-datepicker-popup  
+                                                   show-button-bar="false" 
+                                                   ng-model="fechaAceptacion" 
+                                                   is-open="popupAceptacion.opened" 
+                                                   datepicker-options="dateOptions" 
+                                                   close-text="Close"
+                                                   readonly/>
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="openAceptacion()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
@@ -253,7 +262,15 @@
                                     <label class="control-label col-md-2">{{ fechaTipoProduccion }}</label>
                                     <div class="col-md-10">
                                         <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup  show-button-bar="false" ng-model="fechaAceptacion" is-open="popupAceptacion.opened" datepicker-options="dateOptions" close-text="Close" />
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   uib-datepicker-popup  
+                                                   show-button-bar="false" 
+                                                   ng-model="fechaAceptacion" 
+                                                   is-open="popupAceptacion.opened" 
+                                                   datepicker-options="dateOptions" 
+                                                   close-text="Close" 
+                                                   readonly/>
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" ng-click="openAceptacion()"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>

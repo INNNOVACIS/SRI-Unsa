@@ -59,7 +59,8 @@ function($log, $scope, UsuariosService, EstructuraOrganizacionService, SharedSer
             ndni : $scope.usuario.ndni,
             nidEstructuraOrganizacion : $scope.organizacion.nidPadre,
             nidDepartamento : $scope.organizacion.nidEstructuraOrganizacion,
-            suserCreacion : $scope.sharedService.nombreUsuario,
+            suserCreacion : $scope.sharedService.usuarioLogin.nombreUsuario,
+            suserModificacion : $scope.sharedService.usuarioLogin.nombreUsuario,
             sestado : 'A'
         };
 	UsuariosService.registrarUsuario(usuariopersona).then(registrarUsuarioSuccess, registrarUsuarioError);
@@ -79,7 +80,7 @@ function($log, $scope, UsuariosService, EstructuraOrganizacionService, SharedSer
             sapellido : $scope.usuario.sapellido,
             suserCreacion : $scope.usuario.suserCreacion,
             dfechaCreacion : $scope.usuario.dfechaCreacion,
-            suserModificacion : $scope.sharedService.nombreUsuario,
+            suserModificacion : $scope.sharedService.usuarioLogin.nombreUsuario,
             sestado : $scope.usuario.sestado
         };
     	UsuariosService.updateUsuario(usuariopersona).then(updateUsuarioSuccess, updateUsuarioError);

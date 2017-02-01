@@ -6,9 +6,11 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
+import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.util.GenerateExcel;
 import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIDocente;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.ArrayList;
 
@@ -39,6 +41,9 @@ public class ActividadInvestigacionGeneradaRestService {
 
     @Inject
     private IActividadInvestigacionBusiness actividadInvestigacionBusiness;
+    
+    @Inject
+    private IUsuarioBusiness usuarioBusiness;
 
     @POST
     @Path("/enviarInforme")
@@ -63,19 +68,22 @@ public class ActividadInvestigacionGeneradaRestService {
             
             String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
+           SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
             String universidad = "Universidad Nacional de San Agustín de Arequipa";
             String vicerrectorado = "Vicerrectorado de Investigación";
-            String facultad = "Facultad de Producción y Servicios";
-            String departamento = "Departamente académico de Sistemas";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = docenteReporte.getDepartamento();
             String actividades = "Informe de Actividades de Investigación";
-            String periodo = "Periodo";
-            String docente = "Docente: (Juan Carlos Juarez)";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
+            String dni = "DNI: " + docenteReporte.getDni();
             
             GeneratePdf generador =  new GeneratePdf();            
             byte[] blobAsBytes = generador.getArrayByteFrom(respuesta, nombreColumnas.length,
                     nombreColumnas, "Informe de Actividades de Investigación",listaObjetosSend,
                     universidad, vicerrectorado,facultad, departamento, actividades,
-                    periodo, docente);
+                    periodo, docente, dni);
             
             respuesta2 = actividadInvestigacionBusiness.EnviarInforme(blobAsBytes, entidad);
             
@@ -151,24 +159,27 @@ public class ActividadInvestigacionGeneradaRestService {
             
             String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
+            SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
             String universidad = "Universidad Nacional de San Agustín de Arequipa";
             String vicerrectorado = "Vicerrectorado de Investigación";
-            String facultad = "Facultad de Producción y Servicios";
-            String departamento = "Departamente académico de Sistemas";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = docenteReporte.getDepartamento();
             String actividades = "Informe de Actividades de Investigación";
-            String periodo = "Periodo";
-            String docente = "Docente: (Juan Carlos Juarez)";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
+            String dni = "DNI: " + docenteReporte.getDni();
             
             
             GeneratePdf generadorPDF =  new GeneratePdf();            
             byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta, nombreColumnas.length,
                     nombreColumnas, "Actividades de Investigación Generadas",listaObjetosSend,
                     universidad, vicerrectorado,facultad, departamento, actividades,
-                    periodo, docente);
+                    periodo, docente, dni);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
-                    .header("content-disposition", "documento.pdf")
+                    .header("content-disposition", "Reporte de Actividades.pdf")
                     .build();
 
         } catch (Exception ex) {
@@ -245,19 +256,22 @@ public class ActividadInvestigacionGeneradaRestService {
             
             String[] nombreColumnas = SRIActividadGeneralPaginacion.getArrayHeaders();
             
+            SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
             String universidad = "Universidad Nacional de San Agustín de Arequipa";
             String vicerrectorado = "Vicerrectorado de Investigación";
-            String facultad = "Facultad de Producción y Servicios";
-            String departamento = "Departamente académico de Sistemas";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = docenteReporte.getDepartamento();
             String actividades = "Informe de Actividades de Investigación";
-            String periodo = "Periodo";
-            String docente = "Docente: (Juan Carlos Juarez)";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
+            String dni = "DNI: " + docenteReporte.getDni();
                        
             GeneratePdf generador =  new GeneratePdf();            
             byte[] blobAsBytes = generador.getArrayByteFrom(respuesta, nombreColumnas.length,
                     nombreColumnas, "Home Docente",listaObjetosSend,
                     universidad, vicerrectorado,facultad, departamento, actividades,
-                    periodo, docente);
+                    periodo, docente, dni);
             
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)

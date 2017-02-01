@@ -304,7 +304,7 @@ public class GeneratePdf {
         documento.add( Chunk.NEWLINE);
     }
     
-    public void setFirma(Document documento, String docente) throws DocumentException{
+    public void setFirma(Document documento, String docente, String dni) throws DocumentException{
         
         Paragraph cero = new Paragraph("___________________________");     
         documento.add(cero);
@@ -312,7 +312,7 @@ public class GeneratePdf {
         Paragraph uno = new Paragraph(docente);     
         documento.add(uno);
         
-        Paragraph dos = new Paragraph("DNI");     
+        Paragraph dos = new Paragraph(dni);     
         documento.add(dos);
     }
     
@@ -439,7 +439,7 @@ public class GeneratePdf {
             ArrayList<ArrayList<String>> listaObjetosSend,
             String universidad, String vicerrectorado,
             String facultad, String departamento, String actividades,
-            String periodo, String docente) throws IOException, DocumentException {
+            String periodo, String docente, String dni) throws IOException, DocumentException {
 
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
         Document documento = getDocumentNew();
@@ -479,7 +479,7 @@ public class GeneratePdf {
         }
         documento.add(table);
         
-        setFirma(documento, docente);
+        setFirma(documento, docente, dni);
         
         documento.close();
         int longitudEnBytes = baosPDF.toByteArray().length;

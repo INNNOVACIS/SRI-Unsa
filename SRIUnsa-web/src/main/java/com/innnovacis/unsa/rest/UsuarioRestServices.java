@@ -12,7 +12,6 @@ import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.GenerateExcel;
 import com.innnovacis.unsa.util.GeneratePdf;
-import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
@@ -54,6 +53,7 @@ public class UsuarioRestServices {
 
     @Inject
     private IUsuarioBusiness usuarioBusiness;
+    
     @Inject
     private IActividadInvestigacionBusiness actividadInvestigacionBusiness;
     

@@ -10,6 +10,7 @@ import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIPersona;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.Email;
+import com.innnovacis.unsa.util.SRIDocente;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
@@ -148,6 +149,7 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
             persona.setNDni(usuariopersona.getNDni());
             persona.setSEmail(usuariopersona.getSUsuarioEmail());
             persona.setSUserCreacion(usuariopersona.getSUserCreacion());
+            persona.setSUserModificacion(usuariopersona.getSUserCreacion());
             persona.setSEstado(usuariopersona.getSEstado());
             
             usuario.setSUsuarioLogin(usuariopersona.getSUsuarioLogin());
@@ -156,6 +158,7 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
             usuario.setNIdEstructuraOrganizacion(usuariopersona.getNIdEstructuraOrganizacion());
             usuario.setNIdDepartamento(usuariopersona.getNidDepartamento());
             usuario.setSUserCreacion(usuariopersona.getSUserCreacion());
+            usuario.setSUserModificacion(usuariopersona.getSUserCreacion());
             usuario.setSEstado(usuariopersona.getSEstado());
             
             persona = personaDao.Insert(persona);
@@ -355,6 +358,18 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         catch(Exception ex){
                 throw ex;
 
+        }
+        return respuesta;
+    }
+
+    @Override
+    public SRIDocente GetDocenteReporte(int idUsuario) {
+        SRIDocente respuesta = null;
+        try{
+            respuesta = usuarioDao.GetDocenteReporte(idUsuario);
+        }
+        catch(Exception ex){
+                throw ex;
         }
         return respuesta;
     }
