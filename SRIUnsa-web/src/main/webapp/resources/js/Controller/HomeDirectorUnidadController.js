@@ -1,7 +1,7 @@
 investigacionApp.controller('HomeDirectorUnidadController',['$log', '$scope', 'UsuariosService', '$location', 
-    'HomeVicerectorService', 'SharedService', '$localStorage', 'SRIUnsaConfig',
-function($log, $scope, UsuariosService, $location, 
-    HomeVicerectorService, SharedService, $localStorage, SRIUnsaConfig) {
+    'HomeVicerectorService', 'SharedService', '$localStorage', 'SRIUnsaConfig', 'SemestreService',
+function($log, $scope, UsuariosService, $location, HomeVicerectorService, SharedService,
+         $localStorage, SRIUnsaConfig, SemestreService) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
@@ -11,6 +11,7 @@ function($log, $scope, UsuariosService, $location,
     $scope.idDepartamento = 0;
     $scope.currentTipo = 0;
     $scope.currentDepartamento = false;
+    $scope.loader = false;
     
     var GetTotalActivosInactivosByFacultadSuccess = function(response){
         $log.debug("GetTotalActivosInactivosByFacultad - Success");
@@ -50,23 +51,39 @@ function($log, $scope, UsuariosService, $location,
     var imprimirDocentesInvestigandoSuccess = function(response){
         $log.debug("imprimirDocentesInvestigando - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var imprimirDocentesInvestigandoError = function(response){
         $log.debug("imprimirDocentesInvestigando - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     var imprimirDocentesNoInvestigandoSuccess = function(response){
         $log.debug("imprimirDocentesNoInvestigando - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var imprimirDocentesNoInvestigandoError = function(response){
         $log.debug("imprimirDocentesNoInvestigando - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
+    var getSemestreServiceSuccess = function(response){
+    	$log.debug("GetSemestre - Success");
+        console.log("Respuesta :: ", response);
+    	$scope.semestres = response;
+        $scope.semestre = verificarSemestre($scope.semestres);
+    };
+    var getSemestreServiceError = function(response){
+     	$log.debug("GetSemestre - Error");
+        console.log("Respuesta :: ", response);
+    };
     
-    
+    $scope.getSemestres = function(){
+      	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
+    };
     $scope.GetTotalActivosInactivosByDepartamento = function(idFacultad, idTipoInvestigacion){
         HomeVicerectorService.GetTotalActivosInactivosByDepartamento(idFacultad, idTipoInvestigacion).then(GetTotalActivosInactivosByDepartamentoSuccess, GetTotalActivosInactivosByDepartamentoError);
     };
@@ -125,6 +142,8 @@ function($log, $scope, UsuariosService, $location,
     };
     
     $scope.imprimirDocentesInvestigando = function(){
+        $scope.loader = true;
+//        $scope.sharedService.scrollTop();
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
@@ -132,6 +151,8 @@ function($log, $scope, UsuariosService, $location,
     };
     
     $scope.imprimirDocentesNoInvestigando = function(){
+        $scope.loader = true;
+        $scope.sharedService.scrollTop();
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
@@ -144,7 +165,7 @@ function($log, $scope, UsuariosService, $location,
             sfacultad : $scope.sharedService.usuarioLogin.facultad,
             sdepartamento : "",
             sescuela : "",
-            ssemestre : "",
+            ssemestre : ($scope.semestre === null || $scope.semestre === undefined || $scope.semestre === "") ? "" : $scope.semestre.snombreSemestre,
             sfondoConcursable : ""
         };
         return filtro;
@@ -163,6 +184,17 @@ function($log, $scope, UsuariosService, $location,
             
         }
         return porcentaje;
+    };
+    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
     };
     
     /**************** PAGINACION *****************/
@@ -211,6 +243,7 @@ function($log, $scope, UsuariosService, $location,
     $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0);
     $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad);
     $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad);
+    $scope.getSemestres();
     
     /******************* EXPORTAR ARCHIVOS *****************/
     

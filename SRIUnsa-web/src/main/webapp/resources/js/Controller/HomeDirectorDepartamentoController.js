@@ -1,6 +1,6 @@
 investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scope', 'UsuariosService', '$location', 
-    'HomeVicerectorService', 'SharedService', 'HomeDirectorDepartamentoService', function($log, $scope, UsuariosService, $location, 
-    HomeVicerectorService, SharedService, HomeDirectorDepartamentoService) {
+    'SharedService', 'HomeDirectorDepartamentoService', function($log, $scope, UsuariosService, $location, 
+    SharedService, HomeDirectorDepartamentoService) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
