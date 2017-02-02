@@ -1,7 +1,7 @@
 investigacionApp.controller('HomeDirectorUnidadController',['$log', '$scope', 'UsuariosService', '$location', 
-    'HomeVicerectorService', 'SharedService', '$localStorage',
+    'HomeVicerectorService', 'SharedService', '$localStorage', 'SRIUnsaConfig',
 function($log, $scope, UsuariosService, $location, 
-    HomeVicerectorService, SharedService, $localStorage) {
+    HomeVicerectorService, SharedService, $localStorage, SRIUnsaConfig) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
@@ -46,6 +46,25 @@ function($log, $scope, UsuariosService, $location,
         $log.debug("GetTotalActivosInactivosByDepartamento - Error");
         console.log("Respuesta :: ", response);
     };
+    
+    var imprimirDocentesInvestigandoSuccess = function(response){
+        $log.debug("imprimirDocentesInvestigando - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var imprimirDocentesInvestigandoError = function(response){
+        $log.debug("imprimirDocentesInvestigando - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var imprimirDocentesNoInvestigandoSuccess = function(response){
+        $log.debug("imprimirDocentesNoInvestigando - Success");
+        console.log("Respuesta :: ", response);
+    };
+    var imprimirDocentesNoInvestigandoError = function(response){
+        $log.debug("imprimirDocentesNoInvestigando - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
     
     
     $scope.GetTotalActivosInactivosByDepartamento = function(idFacultad, idTipoInvestigacion){
@@ -103,6 +122,32 @@ function($log, $scope, UsuariosService, $location,
             $scope.idDepartamento = docenteDepartamento.nidEstructuraOrganizacion;
         }
         $scope.getUsuariosByPagina();
+    };
+    
+    $scope.imprimirDocentesInvestigando = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        UsuariosService.imprimirDocentesInvestigando(objPagina).then(imprimirDocentesInvestigandoSuccess, imprimirDocentesInvestigandoError);
+    };
+    
+    $scope.imprimirDocentesNoInvestigando = function(){
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        UsuariosService.imprimirDocentesNoInvestigando(objPagina).then(imprimirDocentesNoInvestigandoSuccess, imprimirDocentesNoInvestigandoError);
+    };
+    
+    var getFiltros = function(){
+        var filtro = {
+            nidTipoActividadInvestigacion : "",
+            sfacultad : $scope.sharedService.usuarioLogin.facultad,
+            sdepartamento : "",
+            sescuela : "",
+            ssemestre : "",
+            sfondoConcursable : ""
+        };
+        return filtro;
     };
     
     var GetPorcentaje = function(docentes){

@@ -133,4 +133,21 @@ public class SRIDocentesActividades implements Serializable {
         this.cantidad = cantidad;
     }
     
+    public ArrayList<String> getArrayDatos() {
+        ArrayList<String> respuesta = new ArrayList<String>();
+        respuesta.add(this.getFacultad());
+        respuesta.add(this.getDepartamento());
+        respuesta.add(this.getSemestre());
+        respuesta.add(this.getNombres());
+        respuesta.add(this.getApellidos());
+        respuesta.add(Integer.toString(this.getCantidad()));
+        
+        return respuesta;
+    }
+    public static String[] getArrayHeaders() {
+        String[] nombreColumnas = {"Facultad", "Departamento", "Semestre", "Nombres",
+            "Apellidos", "N° de Actividades"};
+        return nombreColumnas;
+    }
+    
 }

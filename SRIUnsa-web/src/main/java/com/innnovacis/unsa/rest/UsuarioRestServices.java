@@ -12,8 +12,12 @@ import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.GenerateExcel;
 import com.innnovacis.unsa.util.GeneratePdf;
+import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIDocente;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
+import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
+import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
@@ -472,5 +476,106 @@ public class UsuarioRestServices {
     public SRIUsuario verificarCodigo(SRIUsuario usuario) {
         SRIUsuario respuesta = usuarioBusiness.verificarCodigo(usuario);
         return respuesta;
+    }
+    
+    @POST
+    @Path("/imprimirDocentesInvestigando")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response imprimirDocentesInvestigando(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetDocentesActivos(entidad);
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            ArrayList<SRIDocentesActividades> listaObjetos = (ArrayList<SRIDocentesActividades>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIDocentesActividades.getArrayHeaders();
+            
+            SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
+            String universidad = "UNIVERSIDAD NACIONAL DE SAN AGUSTÍN DE AREQUIPA";
+            String vicerrectorado = "VICERRECTORADO DE INVESTIGACIÓN";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = "DIRECCIÓN DE UNIDAD DE INVESTIGACIÓN";//docenteReporte.getDepartamento();
+            String actividades = "Informe de Docentes Investigando";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
+            String dni = "DNI: " + docenteReporte.getDni();
+            
+            
+            GeneratePdf generadorPDF =  new GeneratePdf();            
+            byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Informe de Docentes con Actividad",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente, dni);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "Docentes con Actividad.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.pdf")
+                .build();
+    }
+    
+    @POST
+    @Path("/imprimirDocentesNoInvestigando")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response imprimirDocentesNoInvestigando(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetDocentesInactivos(entidad);
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            ArrayList<SRIDocentesActividades> listaObjetos = (ArrayList<SRIDocentesActividades>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIDocentesActividades.getArrayHeaders();
+            
+            SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
+            String universidad = "UNIVERSIDAD NACIONAL DE SAN AGUSTÍN DE AREQUIPA";
+            String vicerrectorado = "VICERRECTORADO DE INVESTIGACIÓN";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = "DIRECCIÓN DE UNIDAD DE INVESTIGACIÓN";//docenteReporte.getDepartamento();
+            String actividades = "Informe de Docentes NO Investigando";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
+            String dni = "DNI: " + docenteReporte.getDni();
+            
+            GeneratePdf generadorPDF =  new GeneratePdf();            
+            byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Informe de Docentes NO Investigando",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente, dni);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "Docentes sin Actividad.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.pdf")
+                .build();
     }
 }

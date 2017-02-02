@@ -145,11 +145,15 @@
                                 total="total" >    
                             </pagination>
                             <div class="col-md-12">
-                                <button class="btn btn-success btn-sm pull-right" style="margin-top: 10px;" data-toggle="modal" data-target="#modalConfirmarInforme">
+                                <button class="btn btn-success btn-sm pull-right" 
+                                        style="margin-top: 10px;" 
+                                        ng-click="imprimirDocentesInvestigando()">
                                     <span class="glyphicon glyphicon-envelope"></span>
                                     Imprimir Informe de Docentes Investigando
                                 </button>
-                                <button class="btn btn-danger btn-sm pull-right" style="margin-top: 10px; margin-right: 10px;" data-toggle="modal" data-target="#modalConfirmarInforme">
+                                <button class="btn btn-danger btn-sm pull-right" 
+                                        style="margin-top: 10px; margin-right: 10px;"
+                                        ng-click="imprimirDocentesNoInvestigando()">
                                     <span class="glyphicon glyphicon-envelope"></span>
                                     Imprimir Informe de Docentes NO Investigando
                                 </button>

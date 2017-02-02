@@ -54,6 +54,17 @@ public class SRIUsuarioLogin implements Serializable{
     
     @Column(name = "codigo" )
     private String codigo;
+    
+    @Column(name = "facultad" )
+    private String facultad;
+
+    public String getFacultad() {
+        return facultad;
+    }
+
+    public void setFacultad(String facultad) {
+        this.facultad = facultad;
+    }
 
     public int getIdPersona() {
         return idPersona;
