@@ -1,8 +1,9 @@
 investigacionApp.controller('DocentesInactivosController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
-    'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'TipoNivelService', 'EstructuraOrganizacionService',
-    'ActividadesDocentesService', 'SRIUnsaConfig', 'RelacionDocentesService', function($log, $scope, SharedService, FondoConcursableService, 
-    SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService,
-    ActividadesDocentesService, SRIUnsaConfig, RelacionDocentesService) {	
+    'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'TipoNivelService', 
+    'EstructuraOrganizacionService', 'ActividadesDocentesService', 'SRIUnsaConfig', 'RelacionDocentesService',
+    'UsuariosService', function($log, $scope, SharedService, FondoConcursableService, 
+    SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, 
+    EstructuraOrganizacionService, ActividadesDocentesService, SRIUnsaConfig, RelacionDocentesService, UsuariosService) {	
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -56,6 +57,7 @@ investigacionApp.controller('DocentesInactivosController',['$log', '$scope', 'Sh
     	$log.debug("GetSemestre - Success");
         console.log("Respuesta :: ", response);
     	$scope.semestres = response;
+        $scope.semestre = verificarSemestre($scope.semestres);
     };
     var getSemestreServiceError = function(response){
      	$log.debug("GetSemestre - Error");
@@ -126,7 +128,13 @@ investigacionApp.controller('DocentesInactivosController',['$log', '$scope', 'Sh
     };
     $scope.descargarPDF = function(){
         $scope.loader = true;
-        ActividadesDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
+        $scope.sharedService.scrollTop();
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        UsuariosService.imprimirDocentesNoInvestigando(objPagina).then(descargarPDFSuccess, descargarPDFError);
+//        $scope.loader = true;
+//        ActividadesDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
     };
     $scope.descargarExcel = function(){
         $scope.loader = true;
@@ -139,6 +147,17 @@ investigacionApp.controller('DocentesInactivosController',['$log', '$scope', 'Sh
     };
     $scope.departamentoChange = function(){
         $scope.escuela = {};
+    };
+    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
     };
     
     

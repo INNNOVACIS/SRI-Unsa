@@ -253,18 +253,18 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
     
     $scope.descargarPDF = function(){
         $scope.loader = true;
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};
-        UsuariosService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+        UsuariosService.descargarHomeDirectorDepartamentoPDF(objPagina).then(descargarPDFSuccess, descargarPDFError);
     };
     
     $scope.descargarExcel = function(){
         $scope.loader = true;
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};
-        UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
+        UsuariosService.descargarHomeDirectorDepartamentoExcel(objPagina).then(descargarExcelSuccess, descargarExcelError);
     };
     
 }]);

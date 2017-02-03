@@ -272,26 +272,18 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     
     $scope.descargarPDF = function(){
         $scope.loader = true;
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};
-        UsuariosService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+        UsuariosService.descargarHomeDirectorUnidadPDF(objPagina).then(descargarPDFSuccess, descargarPDFError);
     };
     
     $scope.descargarExcel = function(){
         $scope.loader = true;
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};
-        UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
-    };
-    
-    $scope.descargarHomeDirectorUnidadPDF = function() {
-        $scope.loader = true;
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
-                          idTipoInvestigacion : $scope.idTipoInvestigacion};
-        UsuariosService.descardescargarHomeDirectorUnidadPDFgarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
+        UsuariosService.descargarHomeDirectorUnidadExcel(objPagina).then(descargarExcelSuccess, descargarExcelError);
     };
     
 }]);

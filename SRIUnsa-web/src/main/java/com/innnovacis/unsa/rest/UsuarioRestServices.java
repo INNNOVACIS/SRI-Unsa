@@ -378,6 +378,151 @@ public class UsuarioRestServices {
     }
     
     @POST
+    @Path("/descargarHomeDirectorUnidadPDF")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarHomeDirectorUnidadPDF(SRIPaginacionObject entidad) {
+              
+        try {
+            // Establecemos un rango grande para traer todos los elementos
+            entidad.setRango(2000);
+            int total = usuarioBusiness.GetTotalUsuariosColor(entidad);
+            List<SRIUsuarioColor> listaUsuarios = usuarioBusiness.GetUsuariosColor(entidad);
+            
+            // Usuarios activos e inactivos
+            SRIDocenteActivosInactivos docenteActivosInactivos = 
+                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad());
+            
+            // Obtenemos el total de actividades por tipo
+            List<SRITotalTipoActividad>  totalTipoActividades = 
+                    //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+            
+            // Lista  de las facultades
+            List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosByDepartamento(entidad.getIdFacultad(), entidad.getIdTipoInvestigacion());
+//                    actividadInvestigacionBusiness
+//                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
+            
+            //Transformando las vistas
+            ArrayList<ArrayList<String>> listaUsuariosSend = new ArrayList<>();            
+            for(int i = 0; i < listaUsuarios.size(); i++){
+                listaUsuariosSend.add(listaUsuarios.get(i).getArrayDatos());
+            }            
+            String[] listaUsuariosSendNombreColumnas = SRIUsuarioColor.getArrayHeaders();
+            
+            ArrayList<ArrayList<Integer>> docenteActivosInactivosSend = new ArrayList<>();            
+            docenteActivosInactivosSend.add(docenteActivosInactivos.getArrayDatos());
+            String[] docenteActivosInactivosNombreColumnas = docenteActivosInactivos.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> totalTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < totalTipoActividades.size(); i++){
+                totalTipoActividadesSend.add(totalTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] totalTipoActividadesSendNombreColumnas = SRITotalTipoActividad.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> facultadesPorTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < facultadesPorTipoActividades.size(); i++){
+                facultadesPorTipoActividadesSend.add(facultadesPorTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] facultadesPorTipoActividadesSendNombreColumnas = SRIDocentesActivosInactivosFacultad.getArrayHeaders();
+            
+            GeneratePdf generadorPDF =  new GeneratePdf();            
+            byte[] blobAsBytes = generadorPDF.getArrayByteFromPDFMultiplesTablas( "Resumen Actividades",
+                    listaUsuariosSendNombreColumnas.length,listaUsuariosSendNombreColumnas,listaUsuariosSend,
+                    totalTipoActividadesSendNombreColumnas.length,totalTipoActividadesSendNombreColumnas,totalTipoActividadesSend,
+                    facultadesPorTipoActividadesSendNombreColumnas.length,facultadesPorTipoActividadesSendNombreColumnas,facultadesPorTipoActividadesSend,
+                    docenteActivosInactivosNombreColumnas.length,docenteActivosInactivosNombreColumnas,docenteActivosInactivosSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "documentoModelo.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.pdf")
+                .build();
+    }
+    
+    @POST
+    @Path("/descargarHomeDirectorDepartamentoPDF")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarHomeDirectorDepartamentoPDF(SRIPaginacionObject entidad) {
+              
+        try {
+            // Establecemos un rango grande para traer todos los elementos
+            entidad.setRango(2000);
+            int total = usuarioBusiness.GetTotalUsuariosColor(entidad);
+            List<SRIUsuarioColor> listaUsuarios = usuarioBusiness.GetUsuariosColor(entidad);
+            
+            
+             SRIDocenteActivosInactivos docenteActivosInactivos = new SRIDocenteActivosInactivos();
+            // Usuarios activos e inactivos
+            List<SRIDocentesActivosInactivosFacultad> lstDocenteActivosInactivos = 
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion());
+            
+            docenteActivosInactivos.setNActivos(lstDocenteActivosInactivos.get(0).getNActivos());
+            docenteActivosInactivos.setNInactivos(lstDocenteActivosInactivos.get(0).getNInactivos());
+            
+            // Obtenemos el total de actividades por tipo
+            List<SRITotalTipoActividad>  totalTipoActividades = 
+                    //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+            
+            // Lista  de las facultades
+            List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion());
+//                    actividadInvestigacionBusiness
+//                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
+            
+            //Transformando las vistas
+            ArrayList<ArrayList<String>> listaUsuariosSend = new ArrayList<>();            
+            for(int i = 0; i < listaUsuarios.size(); i++){
+                listaUsuariosSend.add(listaUsuarios.get(i).getArrayDatos());
+            }            
+            String[] listaUsuariosSendNombreColumnas = SRIUsuarioColor.getArrayHeaders();
+            
+            ArrayList<ArrayList<Integer>> docenteActivosInactivosSend = new ArrayList<>();            
+            docenteActivosInactivosSend.add(docenteActivosInactivos.getArrayDatos());
+            String[] docenteActivosInactivosNombreColumnas = docenteActivosInactivos.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> totalTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < totalTipoActividades.size(); i++){
+                totalTipoActividadesSend.add(totalTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] totalTipoActividadesSendNombreColumnas = SRITotalTipoActividad.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> facultadesPorTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < facultadesPorTipoActividades.size(); i++){
+                facultadesPorTipoActividadesSend.add(facultadesPorTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] facultadesPorTipoActividadesSendNombreColumnas = SRIDocentesActivosInactivosFacultad.getArrayHeaders();
+            
+            GeneratePdf generadorPDF =  new GeneratePdf();            
+            byte[] blobAsBytes = generadorPDF.getArrayByteFromPDFMultiplesTablas( "Resumen Actividades",
+                    listaUsuariosSendNombreColumnas.length,listaUsuariosSendNombreColumnas,listaUsuariosSend,
+                    totalTipoActividadesSendNombreColumnas.length,totalTipoActividadesSendNombreColumnas,totalTipoActividadesSend,
+                    facultadesPorTipoActividadesSendNombreColumnas.length,facultadesPorTipoActividadesSendNombreColumnas,facultadesPorTipoActividadesSend,
+                    docenteActivosInactivosNombreColumnas.length,docenteActivosInactivosNombreColumnas,docenteActivosInactivosSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "documentoModelo.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.pdf")
+                .build();
+    }
+    
+    @POST
     @Path("/descargarExcel")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response descargarExcel(SRIPaginacionObject entidad) {
@@ -432,6 +577,157 @@ public class UsuarioRestServices {
             return Response
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
                     .header("content-disposition", "documento.xlsx")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.xlsx")
+                .build();
+    }
+    
+    @POST
+    @Path("/descargarHomeDirectorUnidadExcel")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarHomeDirectorUnidadExcel(SRIPaginacionObject entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            // Establecemos un rango grande para traer todos los elementos
+            entidad.setRango(2000);
+            int total = usuarioBusiness.GetTotalUsuariosColor(entidad);
+            List<SRIUsuarioColor> listaUsuarios = usuarioBusiness.GetUsuariosColor(entidad);
+            
+            // Usuarios activos e inactivos
+            SRIDocenteActivosInactivos docenteActivosInactivos = 
+                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad());
+            
+            // Obtenemos el total de actividades por tipo
+            List<SRITotalTipoActividad>  totalTipoActividades = 
+                    //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+            
+            // Lista  de las facultades
+            List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosByDepartamento(entidad.getIdFacultad(), entidad.getIdTipoInvestigacion());
+//                    actividadInvestigacionBusiness
+//                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
+            
+            //Transformando las vistas
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<>();            
+            for(int i = 0; i < listaUsuarios.size(); i++){
+                listaObjetosSend.add(listaUsuarios.get(i).getArrayDatos());
+            }            
+            String[] nombreColumnas = SRIUsuarioColor.getArrayHeaders();
+            
+            ArrayList<ArrayList<Integer>> docenteActivosInactivosSend = new ArrayList<>();            
+            docenteActivosInactivosSend.add(docenteActivosInactivos.getArrayDatos());
+            String[] docenteActivosInactivosNombreColumnas = docenteActivosInactivos.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> totalTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < totalTipoActividades.size(); i++){
+                totalTipoActividadesSend.add(totalTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] totalTipoActividadesSendNombreColumnas = SRITotalTipoActividad.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> facultadesPorTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < facultadesPorTipoActividades.size(); i++){
+                facultadesPorTipoActividadesSend.add(facultadesPorTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] facultadesPorTipoActividadesSendNombreColumnas = SRIDocentesActivosInactivosFacultad.getArrayHeaders();
+            
+            GenerateExcel generadorExcel =  new GenerateExcel();            
+            byte[] blobAsBytes = generadorExcel.getArrayByteFrom2(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Actividades de Investigación Generadas",listaObjetosSend,
+                    docenteActivosInactivos,totalTipoActividadesSendNombreColumnas.length,
+                    totalTipoActividadesSendNombreColumnas,totalTipoActividadesSend,
+                    facultadesPorTipoActividadesSendNombreColumnas.length,
+                    facultadesPorTipoActividadesSendNombreColumnas,facultadesPorTipoActividadesSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "documento.xlsx")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.xlsx")
+                .build();
+    }
+    
+    @POST
+    @Path("/descargarHomeDirectorDepartamentoExcel")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarHomeDirectorDepartamentoExcel(SRIPaginacionObject entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            // Establecemos un rango grande para traer todos los elementos
+            entidad.setRango(2000);
+            int total = usuarioBusiness.GetTotalUsuariosColor(entidad);
+            List<SRIUsuarioColor> listaUsuarios = usuarioBusiness.GetUsuariosColor(entidad);
+            
+            
+             SRIDocenteActivosInactivos docenteActivosInactivos = new SRIDocenteActivosInactivos();
+            // Usuarios activos e inactivos
+            List<SRIDocentesActivosInactivosFacultad> lstDocenteActivosInactivos = 
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion());
+            
+            docenteActivosInactivos.setNActivos(lstDocenteActivosInactivos.get(0).getNActivos());
+            docenteActivosInactivos.setNInactivos(lstDocenteActivosInactivos.get(0).getNInactivos());
+            
+            // Obtenemos el total de actividades por tipo
+            List<SRITotalTipoActividad>  totalTipoActividades = 
+                    //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+            
+            // Lista  de las facultades
+            List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion());
+//                    actividadInvestigacionBusiness
+//                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
+            
+            //Transformando las vistas
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<>();            
+            for(int i = 0; i < listaUsuarios.size(); i++){
+                listaObjetosSend.add(listaUsuarios.get(i).getArrayDatos());
+            }            
+            String[] nombreColumnas = SRIUsuarioColor.getArrayHeaders();
+            
+            ArrayList<ArrayList<Integer>> docenteActivosInactivosSend = new ArrayList<>();            
+            docenteActivosInactivosSend.add(docenteActivosInactivos.getArrayDatos());
+            String[] docenteActivosInactivosNombreColumnas = docenteActivosInactivos.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> totalTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < totalTipoActividades.size(); i++){
+                totalTipoActividadesSend.add(totalTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] totalTipoActividadesSendNombreColumnas = SRITotalTipoActividad.getArrayHeaders();
+            
+            ArrayList<ArrayList<String>> facultadesPorTipoActividadesSend = new ArrayList<>();            
+            for(int i = 0; i < facultadesPorTipoActividades.size(); i++){
+                facultadesPorTipoActividadesSend.add(facultadesPorTipoActividades.get(i).getArrayDatos());
+            }            
+            String[] facultadesPorTipoActividadesSendNombreColumnas = SRIDocentesActivosInactivosFacultad.getArrayHeaders();
+            
+            GenerateExcel generadorExcel =  new GenerateExcel();            
+            byte[] blobAsBytes = generadorExcel.getArrayByteFrom2(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Actividades de Investigación Generadas",listaObjetosSend,
+                    docenteActivosInactivos,totalTipoActividadesSendNombreColumnas.length,
+                    totalTipoActividadesSendNombreColumnas,totalTipoActividadesSend,
+                    facultadesPorTipoActividadesSendNombreColumnas.length,
+                    facultadesPorTipoActividadesSendNombreColumnas,facultadesPorTipoActividadesSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "ReporteActividades.xlsx")
                     .build();
 
         } catch (Exception ex) {
@@ -502,7 +798,7 @@ public class UsuarioRestServices {
             String universidad = "UNIVERSIDAD NACIONAL DE SAN AGUSTÍN DE AREQUIPA";
             String vicerrectorado = "VICERRECTORADO DE INVESTIGACIÓN";
             String facultad = docenteReporte.getFacultad();
-            String departamento = "DIRECCIÓN DE UNIDAD DE INVESTIGACIÓN";//docenteReporte.getDepartamento();
+            String departamento = docenteReporte.getDepartamento(); //"DIRECCIÓN DE UNIDAD DE INVESTIGACIÓN";//docenteReporte.getDepartamento();
             String actividades = "Informe de Docentes Investigando";
             String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
             String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
@@ -553,7 +849,7 @@ public class UsuarioRestServices {
             String universidad = "UNIVERSIDAD NACIONAL DE SAN AGUSTÍN DE AREQUIPA";
             String vicerrectorado = "VICERRECTORADO DE INVESTIGACIÓN";
             String facultad = docenteReporte.getFacultad();
-            String departamento = "DIRECCIÓN DE UNIDAD DE INVESTIGACIÓN";//docenteReporte.getDepartamento();
+            String departamento = docenteReporte.getDepartamento();//"DIRECCIÓN DE UNIDAD DE INVESTIGACIÓN";
             String actividades = "Informe de Docentes NO Investigando";
             String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
             String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();

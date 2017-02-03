@@ -197,7 +197,6 @@ investigacionApp.service("UsuariosService", function (SRIUnsaConfig, $log, $http
         $http({
             method: 'POST',
             url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/descargarPdf',
-            //url : 'generadorpdfss/descargarPdf',
             data: request,
             responseType: 'arraybuffer'
         }).success(function (data, status, headers) {
@@ -229,7 +228,7 @@ investigacionApp.service("UsuariosService", function (SRIUnsaConfig, $log, $http
         });
         return deferred.promise;
     };
-
+    
     this.descargarHomeDirectorUnidadPDF = function (request) {
         $log.debug("Usuarios - descargarHomeDirectorUnidadPDF");
 
@@ -237,7 +236,45 @@ investigacionApp.service("UsuariosService", function (SRIUnsaConfig, $log, $http
         $http({
             method: 'POST',
             url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/descargarHomeDirectorUnidadPDF',
-            //url : 'generadorpdfss/descargarPdf',
+            data: request,
+            responseType: 'arraybuffer'
+        }).success(function (data, status, headers) {
+            headers = headers();
+
+            var filename = headers['content-disposition'];//['x-filename'];
+            var contentType = headers['content-type'];
+
+            var linkElement = document.createElement('a');
+            try {
+                var blob = new Blob([data], {type: contentType});
+                var url = window.URL.createObjectURL(blob);
+
+                linkElement.setAttribute('href', url);
+                linkElement.setAttribute("download", filename);
+
+                var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+                linkElement.dispatchEvent(clickEvent);
+            } catch (ex) {
+                console.log(ex);
+            }
+            deferred.resolve(data);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+    
+    this.descargarHomeDirectorDepartamentoPDF = function (request) {
+        $log.debug("Usuarios - descargarHomeDirectorDepartamentoPDF");
+
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/descargarHomeDirectorDepartamentoPDF',
             data: request,
             responseType: 'arraybuffer'
         }).success(function (data, status, headers) {
@@ -278,6 +315,85 @@ investigacionApp.service("UsuariosService", function (SRIUnsaConfig, $log, $http
             method: 'POST',
             url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/descargarExcel',
             //url : 'generadorpdfss/descargarPdf',
+            data: request,
+            responseType: 'arraybuffer'
+        }).success(function (data, status, headers) {
+            headers = headers();
+
+            var filename = headers['content-disposition'];//['x-filename'];
+            var contentType = headers['content-type'];
+
+            var linkElement = document.createElement('a');
+            try {
+                var blob = new Blob([data], {type: contentType});
+                var url = window.URL.createObjectURL(blob);
+
+                linkElement.setAttribute('href', url);
+                linkElement.setAttribute("download", filename);
+
+                var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+                linkElement.dispatchEvent(clickEvent);
+            } catch (ex) {
+                console.log(ex);
+            }
+            deferred.resolve(data);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+    
+    this.descargarHomeDirectorUnidadExcel = function (request) {
+        $log.debug("Usuarios - descargarHomeDirectorUnidadExcel");
+
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/descargarHomeDirectorUnidadExcel',
+            //url : 'generadorpdfss/descargarPdf',
+            data: request,
+            responseType: 'arraybuffer'
+        }).success(function (data, status, headers) {
+            headers = headers();
+
+            var filename = headers['content-disposition'];//['x-filename'];
+            var contentType = headers['content-type'];
+
+            var linkElement = document.createElement('a');
+            try {
+                var blob = new Blob([data], {type: contentType});
+                var url = window.URL.createObjectURL(blob);
+
+                linkElement.setAttribute('href', url);
+                linkElement.setAttribute("download", filename);
+
+                var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+                linkElement.dispatchEvent(clickEvent);
+            } catch (ex) {
+                console.log(ex);
+            }
+            deferred.resolve(data);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+    
+    this.descargarHomeDirectorDepartamentoExcel = function (request) {
+        $log.debug("Usuarios - descargarExcel");
+
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/descargarHomeDirectorDepartamentoExcel',
             data: request,
             responseType: 'arraybuffer'
         }).success(function (data, status, headers) {

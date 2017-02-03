@@ -1,8 +1,9 @@
 investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
-    'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'TipoNivelService', 'EstructuraOrganizacionService',
-    'RelacionDocentesService', 'SRIUnsaConfig', function($log, $scope, SharedService, FondoConcursableService, 
-    SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService,
-    RelacionDocentesService, SRIUnsaConfig) {	
+    'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'TipoNivelService', 
+    'EstructuraOrganizacionService', 'RelacionDocentesService', 'SRIUnsaConfig', 'UsuariosService', 
+    function($log, $scope, SharedService, FondoConcursableService, SemestreService, TipoInvestigacionService, 
+    EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService, 
+    RelacionDocentesService, SRIUnsaConfig, UsuariosService) {	
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -56,6 +57,8 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
     	$log.debug("GetSemestre - Success");
         console.log("Respuesta :: ", response);
     	$scope.semestres = response;
+        $scope.semestre = verificarSemestre($scope.semestres);
+        $scope.GetDocenteActivos();
     };
     var getSemestreServiceError = function(response){
      	$log.debug("GetSemestre - Error");
@@ -119,6 +122,7 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
       	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
     };   
     $scope.getSemestres = function(){
+        $scope.loader = true;
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
     $scope.getTipoInvestigacion = function(){
@@ -126,7 +130,12 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
     };
     $scope.descargarPDF = function(){
         $scope.loader = true;
-        RelacionDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
+        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        UsuariosService.imprimirDocentesInvestigando(objPagina).then(descargarPDFSuccess, descargarPDFError);
+//        $scope.loader = true;
+//        RelacionDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
     };
     $scope.descargarExcel = function(){
         $scope.loader = true;
@@ -139,6 +148,17 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
     };
     $scope.departamentoChange = function(){
         $scope.escuela = {};
+    };
+    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
     };
     
     
@@ -202,6 +222,5 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
     $scope.getSemestres();
     $scope.getTipoInvestigacion();
     $scope.getAreaInvestigaciones();
-    $scope.GetDocenteActivos();
     
 }]);
