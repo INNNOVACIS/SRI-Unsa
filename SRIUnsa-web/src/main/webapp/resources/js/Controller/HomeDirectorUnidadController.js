@@ -84,6 +84,7 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     $scope.getSemestres = function(){
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
+    
     $scope.GetTotalActivosInactivosByDepartamento = function(idFacultad, idTipoInvestigacion){
         HomeVicerectorService.GetTotalActivosInactivosByDepartamento(idFacultad, idTipoInvestigacion).then(GetTotalActivosInactivosByDepartamentoSuccess, GetTotalActivosInactivosByDepartamentoError);
     };
@@ -250,23 +251,27 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     var descargarPDFSuccess = function (response){
         $log.debug("descargarPDF - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarPDFError = function (response){
         $log.debug("descargarPDF - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     var descargarExcelSuccess = function (response){
         $log.debug("descargarExcel - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarExcelError = function (response){
         $log.debug("descargarExcel - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     $scope.descargarPDF = function(){
-        console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};
@@ -274,7 +279,7 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     };
     
     $scope.descargarExcel = function(){
-        console.log("Empezando descarga de Excel...");
+        $scope.loader = true;
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};
@@ -282,7 +287,7 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     };
     
     $scope.descargarHomeDirectorUnidadPDF = function() {
-        console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};

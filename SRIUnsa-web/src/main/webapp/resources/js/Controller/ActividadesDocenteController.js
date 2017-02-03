@@ -7,12 +7,14 @@ investigacionApp.controller('ActividadesDocenteController',['$log', '$scope', '$
     $scope.sortType     = 'id'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
     $scope.nombreCompleto = $scope.sharedService.docente.snombre + " " + $scope.sharedService.docente.sapellido;
+    $scope.loader = true;
     
     var getSemestreServiceSuccess = function(response){
     	$log.debug("GetSemestre - Success");
         console.log("Respuesta :: ", response);
     	$scope.semestres = response;
-        setPeriodo();
+        $scope.semestre = verificarSemestre($scope.semestres);
+        $scope.getActividades();
     };
     var getSemestreServiceError = function(response){
      	$log.debug("GetSemestre - Error");
@@ -35,15 +37,16 @@ investigacionApp.controller('ActividadesDocenteController',['$log', '$scope', '$
         $scope.actividadesGeneradas = [];
         $scope.actividadesGeneradas = response.lista;
         $scope.total = response.total;
-//        $scope.loadTable = false;
+        $scope.loader =  false;
     };
     var GetActividadesGeneradasError = function(response){
         $log.debug("GetActividadesGeneradas - Error");
         console.log("Respuesta :: ", response);
-//        $scope.loadTable = false;
+        $scope.loader =  false;
     };
     
     $scope.getSemestres = function(){
+        $scope.loader = true;
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
     $scope.GetTipoInvestigaciones = function(){
@@ -61,22 +64,22 @@ investigacionApp.controller('ActividadesDocenteController',['$log', '$scope', '$
         $scope.getActividades();
     };
     
-    var setPeriodo = function(){
-        angular.forEach($scope.semestres, function(value, key){
-            if(value.snombreSemestre === "2016-II Semestre II"){
-                $scope.semestre = value;
-            }
-        });
-        $scope.getActividades();
-    };
-    
     $scope.verActividadById = function(actividadGenerada){
         $scope.sharedService.scrollTop();
         $scope.loader = true;
         $location.path("/actividad/Generadas/" + actividadGenerada.idactividadinvestigacion);
     };
     
-    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
+    };
     
     /**************** PAGINACION *****************/
     
@@ -108,6 +111,7 @@ investigacionApp.controller('ActividadesDocenteController',['$log', '$scope', '$
     };
     
     $scope.getActividades = function(){
+        $scope.loader = true;
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.docente.nidUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
@@ -122,23 +126,27 @@ investigacionApp.controller('ActividadesDocenteController',['$log', '$scope', '$
     var descargarPDFSuccess = function (response){
         $log.debug("descargarPDF - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarPDFError = function (response){
         $log.debug("descargarPDF - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     var descargarExcelSuccess = function (response){
         $log.debug("descargarExcel - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarExcelError = function (response){
         $log.debug("descargarExcel - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     $scope.descargarPDF = function(){
-        console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idDocente, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
@@ -146,7 +154,7 @@ investigacionApp.controller('ActividadesDocenteController',['$log', '$scope', '$
     };
     
     $scope.descargarExcel = function(){
-        console.log("Empezando descarga de Excel...");
+        $scope.loader = true;
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idDocente, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};

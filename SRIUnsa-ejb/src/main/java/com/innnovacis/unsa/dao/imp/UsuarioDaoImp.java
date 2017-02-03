@@ -197,10 +197,11 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public int GetTotalUsuariosColor(SRIPaginacionObject entidad) {
         BigInteger total = null;
         try{
-            Query query = em.createNativeQuery("{call GetTotalUsuarioColor(?1, ?2, ?3)}")
+            Query query = em.createNativeQuery("{call GetTotalUsuarioColor(?1, ?2, ?3, ?4)}")
                     .setParameter(1, entidad.getIdFacultad())
                     .setParameter(2, entidad.getFiltro())
-                    .setParameter(3, entidad.getIdTipoInvestigacion());
+                    .setParameter(3, entidad.getIdTipoInvestigacion())
+                    .setParameter(4, entidad.getIdDepartamento());
             total = (BigInteger)query.getSingleResult();
         } catch(Exception ex) {
             throw ex;
@@ -293,6 +294,19 @@ public class UsuarioDaoImp implements IUsuarioDao {
         List<SRIUsuarioPersona> lstUsuarioPersona = null;
         try {
             Query query = em.createNativeQuery("{call GetDirectorDepartamentoByIdDocente(?1)}", SRIUsuarioPersona.class)
+                        .setParameter(1, idUsuario);
+            lstUsuarioPersona = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return lstUsuarioPersona;
+    }
+    
+    @Override
+    public List<SRIUsuarioPersona> GetDirectorUnidadByIdDocente(int idUsuario) {
+        List<SRIUsuarioPersona> lstUsuarioPersona = null;
+        try {
+            Query query = em.createNativeQuery("{call GetDirectorUnidadByIdDocente(?1)}", SRIUsuarioPersona.class)
                         .setParameter(1, idUsuario);
             lstUsuarioPersona = query.getResultList();
         } catch(Exception ex) {

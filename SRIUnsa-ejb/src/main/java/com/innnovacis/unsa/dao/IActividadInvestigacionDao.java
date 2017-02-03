@@ -9,6 +9,7 @@ import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
+import com.innnovacis.unsa.util.SRIEnviarInformeDepartamento;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import java.util.List;
@@ -57,4 +58,5 @@ public interface IActividadInvestigacionDao {
     int GetTotalDocentesActivos(SRIPaginacion entidad);
     int GetTotalDocentesInactivos(SRIPaginacion entidad);
     boolean EliminarActividadGenerada(int idActividad);
+    List<SRIEnviarInformeDepartamento> GetInformeDepartamento(SRIPaginacion entidad);
 }

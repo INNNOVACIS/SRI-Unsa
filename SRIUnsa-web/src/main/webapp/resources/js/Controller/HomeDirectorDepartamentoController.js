@@ -1,6 +1,7 @@
 investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scope', 'UsuariosService', '$location', 
-    'SharedService', 'HomeDirectorDepartamentoService', function($log, $scope, UsuariosService, $location, 
-    SharedService, HomeDirectorDepartamentoService) {
+    'SharedService', 'HomeDirectorDepartamentoService', 'SRIUnsaConfig', 'ActividadesGeneradasService', 'SemestreService',
+    function($log, $scope, UsuariosService, $location, SharedService, HomeDirectorDepartamentoService, 
+    SRIUnsaConfig, ActividadesGeneradasService, SemestreService) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
@@ -46,6 +47,32 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
         console.log("Respuesta :: ", response);
     };
     
+    var enviarInformeDepartamentoSuccess = function(response){
+        $log.debug("enviarInformeDepartamento - Success");
+        console.log("Respuesta :: ", response);
+        $('#modalEnvioExitoso').modal('show');
+        $scope.loader = false;
+    };
+    var enviarInformeDepartamentoError = function(response){
+        $log.debug("enviarInformeDepartamento - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    
+    var getSemestreServiceSuccess = function(response){
+    	$log.debug("GetSemestre - Success");
+        console.log("Respuesta :: ", response);
+    	$scope.semestres = response;
+        $scope.semestre = verificarSemestre($scope.semestres);
+    };
+    var getSemestreServiceError = function(response){
+     	$log.debug("GetSemestre - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.getSemestres = function(){
+      	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
+    };
     
     $scope.GetTotalActivosInactivosByDepartamento = function(idDepartamento, idTipoInvestigacion){
         HomeDirectorDepartamentoService.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion).then(GetTotalActivosInactivosByDepartamentoSuccess, GetTotalActivosInactivosByDepartamentoError);
@@ -109,7 +136,8 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
         $scope.activo = (docentes.nactivos * 100 / total) + "%";
         $scope.inactivo = (docentes.ninactivos * 100 / total) + "%";
     };
-     var GetPorcentajeDepartamento = function(total, valor){
+    
+    var GetPorcentajeDepartamento = function(total, valor){
         var porcentaje = "50%";
         if(total !== 0 ){
             porcentaje = (valor * 100 / total) + "%";
@@ -117,6 +145,17 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
             
         }
         return porcentaje;
+    };
+    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
     };
     
     /**************** PAGINACION *****************/
@@ -161,33 +200,59 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
         $scope.getUsuariosByPagina();
     };
     
+    $scope.enviarInforme = function(){
+        $scope.loader = true;
+        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        ActividadesGeneradasService.enviarInformeDepartamento(pagina).then(enviarInformeDepartamentoSuccess, enviarInformeDepartamentoError);
+    };
+    
     $scope.getUsuariosByPagina();
     $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0);
     $scope.GetTotalActivosInactivosHomeDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0);
     $scope.GetTotalActividadesByTipoActividadDepartamento($scope.sharedService.usuarioLogin.idDepartamento);
+    $scope.getSemestres();
     
+    var getFiltros = function(){
+        var filtro = {
+            nidTipoActividadInvestigacion : ($scope.tipoInvestigacion === null || $scope.tipoInvestigacion === undefined || $scope.tipoInvestigacion === "") ? "" : $scope.tipoInvestigacion.nidTipoActividadInvestigacion,
+            sfacultad : ( $scope.facultad === null || $scope.facultad === undefined || $scope.facultad === "") ? "" : $scope.facultad.snombreEstructuraOrganizacion,
+            sdepartamento : ($scope.departamento === null || $scope.departamento === undefined || $scope.departamento === "") ? "" : $scope.departamento.snombreEstructuraOrganizacion,
+            sescuela : ($scope.escuela === null || $scope.escuela === undefined || $scope.escuela === "") ? "" : $scope.escuela.snombreEstructuraOrganizacion,
+            ssemestre : ($scope.semestre === null || $scope.semestre === undefined || $scope.semestre === "") ? "" : $scope.semestre.snombreSemestre,
+            sfondoConcursable : ($scope.fondo === null || $scope.fondo === undefined || $scope.fondo === "") ? "" : $scope.fondo.snombreFondoConcursable
+        };
+        return filtro;
+    };
+        
+        
     /******************* EXPORTAR ARCHIVOS *****************/
     
     var descargarPDFSuccess = function (response){
         $log.debug("descargarPDF - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarPDFError = function (response){
         $log.debug("descargarPDF - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     var descargarExcelSuccess = function (response){
         $log.debug("descargarExcel - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarExcelError = function (response){
         $log.debug("descargarExcel - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     $scope.descargarPDF = function(){
-        console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};
@@ -195,7 +260,7 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
     };
     
     $scope.descargarExcel = function(){
-        console.log("Empezando descarga de Excel...");
+        $scope.loader = true;
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
                           idTipoInvestigacion : $scope.idTipoInvestigacion};

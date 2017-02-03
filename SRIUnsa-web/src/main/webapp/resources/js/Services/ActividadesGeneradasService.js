@@ -3,6 +3,21 @@
  */
 investigacionApp.service("ActividadesGeneradasService", function (SRIUnsaConfig, $log, $http, $q) {
 
+    this.enviarInformeDepartamento = function (request) {
+        $log.debug("ActividadesGeneradas Service - enviarInformeDepartamento");
+
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacionGenerada/enviarInformeDepartamento',
+            data: request
+        }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
     
     this.enviarInforme = function (request) {
         $log.debug("ActividadesGeneradas Service - enviarInforme");

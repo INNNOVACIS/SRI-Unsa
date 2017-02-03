@@ -48,5 +48,6 @@ public interface IUsuarioDao {
     SRIUsuario enviarCodigo(int idUsuario);
     SRIUsuario verificarCodigo(SRIUsuario entidad);
     List<SRIUsuarioPersona> GetDirectorDepartamentoByIdDocente(int idUsuario);
+    List<SRIUsuarioPersona> GetDirectorUnidadByIdDocente(int idUsuario);
     SRIDocente GetDocenteReporte(int idUsuario);
 }

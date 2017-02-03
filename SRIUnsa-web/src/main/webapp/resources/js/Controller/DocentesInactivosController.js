@@ -85,19 +85,23 @@ investigacionApp.controller('DocentesInactivosController',['$log', '$scope', 'Sh
     var descargarPDFSuccess = function(response){
         $log.debug("descargarPDF - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarPDFError = function(response){
         $log.debug("descargarPDF - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     var descargarExcelSuccess = function(response){
         $log.debug("descargarExcel - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarExcelError = function(response){
         $log.debug("descargarExcel - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     /******************* Servicios *******************/
@@ -121,9 +125,11 @@ investigacionApp.controller('DocentesInactivosController',['$log', '$scope', 'Sh
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
     };
     $scope.descargarPDF = function(){
+        $scope.loader = true;
         ActividadesDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
     };
     $scope.descargarExcel = function(){
+        $scope.loader = true;
         ActividadesDocentesService.descargarExcel().then(descargarExcelSuccess, descargarExcelError);
     };
     
@@ -169,13 +175,16 @@ investigacionApp.controller('DocentesInactivosController',['$log', '$scope', 'Sh
         console.log("Respuesta :: ", response);
         $scope.actividadesDocentes = response.lista;
         $scope.total = response.total;
+        $scope.loader = false;
     };
     var GetDocentesInactivosError = function(response){
         $log.debug("GetDocentesInactivos - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     $scope.GetDocentesInactivos = function(){
+        $scope.loader = true;
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};

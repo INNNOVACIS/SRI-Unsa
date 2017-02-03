@@ -11,6 +11,7 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     $scope.idDepartamento = 0;
     $scope.currentTipo = 0;
     $scope.currentFacultad = false;
+    $scope.loader = false;
     
     var GetTotalDocentesActivosInactivosSuccess = function(response){
         $log.debug("GetTotalDocentesActivosInactivos - Success");
@@ -141,14 +142,17 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
         $scope.users = [];
         $scope.users = response.lista;
         $scope.total = response.total;
+        $scope.loader = false;
     };
     
     var paginacionUsuarioError = function(response){
         $log.debug("Get paginacionUsuario - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     $scope.getUsuariosByPagina = function(){
+        $scope.loader = true;
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
@@ -164,30 +168,36 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     var descargarPDFSuccess = function (response){
         $log.debug("descargarPDF - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarPDFError = function (response){
         $log.debug("descargarPDF - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     var descargarExcelSuccess = function (response){
         $log.debug("descargarExcel - Success");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     var descargarExcelError = function (response){
         $log.debug("descargarExcel - Error");
         console.log("Respuesta :: ", response);
+        $scope.loader = false;
     };
     
     $scope.descargarPDF = function(){
-        console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
+        $scope.sharedService.scrollTop();
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion};
         UsuariosService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
     };
     
     $scope.descargarExcel = function(){
-        console.log("Empezando descarga de Excel...");
+        $scope.loader = true;
+        $scope.sharedService.scrollTop();
         var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion};
         UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);

@@ -136,7 +136,7 @@ public class Email {
 +"								</tr>"
 +"								<tr>"
 +"									<td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>"
-+"										Estimado " + nombreCompleto + ":"
++"										Estimado(a) " + nombreCompleto + ":"
 +"									</td>"              
 +"								</tr>"
 +"								<tr>"
@@ -405,7 +405,7 @@ public class Email {
             messageBodyPart = new MimeBodyPart();
             
             //ADJUNTAR IMAGE
-            DataSource fds = new FileDataSource("/home/logo/logo-unsa-2.jpg");
+            DataSource fds = new FileDataSource("/home/innnovacis/logo/logo-unsa-2.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<LogoUnsa>");
             multipart.addBodyPart(messageBodyPart);

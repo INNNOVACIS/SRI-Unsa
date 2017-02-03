@@ -11,6 +11,7 @@ import com.innnovacis.unsa.util.GenerateExcel;
 import com.innnovacis.unsa.util.GeneratePdf;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIDocente;
+import com.innnovacis.unsa.util.SRIEnviarInformeDepartamento;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.ArrayList;
 
@@ -45,6 +46,54 @@ public class ActividadInvestigacionGeneradaRestService {
     @Inject
     private IUsuarioBusiness usuarioBusiness;
 
+    @POST
+    @Path("/enviarInformeDepartamento")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean EnviarInformeDepartamento(SRIPaginacion entidad) {
+        Map<String, Object> respuesta = new HashMap<>();
+        boolean respuesta2 = false;
+        try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetInformeDepartamento(entidad);
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            ArrayList<SRIEnviarInformeDepartamento> listaObjetos = (ArrayList<SRIEnviarInformeDepartamento>)respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIEnviarInformeDepartamento.getArrayHeaders();
+            
+           SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
+            String universidad = "Universidad Nacional de San Agustín de Arequipa";
+            String vicerrectorado = "Vicerrectorado de Investigación";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = docenteReporte.getDepartamento();
+            String actividades = "Reporte de Actividades";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Docente: " + docenteReporte.getNombres() + " " + docenteReporte.getApellidos();
+            String dni = "DNI: " + docenteReporte.getDni();
+            
+            GeneratePdf generador =  new GeneratePdf();            
+            byte[] blobAsBytes = generador.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Informe de Actividades de Investigación",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente, dni);
+            
+            respuesta2 = actividadInvestigacionBusiness.EnviarInformeDepartamento(blobAsBytes, entidad);
+            
+            return respuesta2;
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     @POST
     @Path("/enviarInforme")
     @Produces(MediaType.APPLICATION_JSON)

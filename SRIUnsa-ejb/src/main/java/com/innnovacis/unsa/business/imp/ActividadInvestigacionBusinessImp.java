@@ -38,6 +38,7 @@ import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
 import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
+import com.innnovacis.unsa.util.SRIEnviarInformeDepartamento;
 import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
@@ -797,43 +798,6 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         }
         return respuesta;
     }
-    
-    @Override
-    public boolean EnviarInforme(byte[] adjunto, SRIPaginacion entidad) {
-        boolean respuesta = false;
-        List<String> nombreDestinatarios = new ArrayList<String>();
-        List<String> emailDestinatarios = new ArrayList<String>();
-        try {
-            //Get Remitente y destinatarios
-            List<SRIUsuarioPersona> lstUsuarioPersonas = usuarioDao.GetDirectorDepartamentoByIdDocente(entidad.getIdUsuario());
-            List<SRIUsuarioPersona> remitente = usuarioDao.GetUsuarioPersonaByIdUsuario(entidad.getIdUsuario());
-            
-            for(SRIUsuarioPersona usuarioPersona : lstUsuarioPersonas){
-                nombreDestinatarios.add(usuarioPersona.getSNombre() + " " + usuarioPersona.getSApellido());
-                emailDestinatarios.add(usuarioPersona.getSUsuarioEmail());
-            }
-            String nombreRemitente = remitente.get(0).getSNombre() + " " + remitente.get(0).getSApellido();
-            String emailRemitente = remitente.get(0).getSUsuarioEmail();
-            String cuerpo = "Le envio las actividades de investigación generadas para el semestre actual.";
-            String asunto = "SRI-UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
-            String titulo = "Actividades de Investigación Registradas";
-            
-            Email email = new Email();
-            log.log(Level.INFO, "Email enable : {0}", email.recuperar());
-            
-            email.enviarInforme(nombreDestinatarios, nombreRemitente, cuerpo, emailDestinatarios, emailRemitente, titulo, asunto, adjunto);
-            respuesta = true;  
-
-        } catch(Exception ex) {
-            try {
-                throw ex;
-            } catch (Exception ex1) {
-                respuesta = false;
-                Logger.getLogger(ActividadInvestigacionBusinessImp.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        }
-        return respuesta;
-    }
 
     @Override
     public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion) {
@@ -952,4 +916,90 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         return respuesta;
     }
     
+    @Override
+    public boolean EnviarInforme(byte[] adjunto, SRIPaginacion entidad) {
+        boolean respuesta = false;
+        List<String> nombreDestinatarios = new ArrayList<String>();
+        List<String> emailDestinatarios = new ArrayList<String>();
+        try {
+            //Get Remitente y destinatarios
+            List<SRIUsuarioPersona> lstUsuarioPersonas = usuarioDao.GetDirectorDepartamentoByIdDocente(entidad.getIdUsuario());
+            List<SRIUsuarioPersona> remitente = usuarioDao.GetUsuarioPersonaByIdUsuario(entidad.getIdUsuario());
+            
+            for(SRIUsuarioPersona usuarioPersona : lstUsuarioPersonas){
+                nombreDestinatarios.add(usuarioPersona.getSNombre() + " " + usuarioPersona.getSApellido());
+                emailDestinatarios.add(usuarioPersona.getSUsuarioEmail());
+            }
+            String nombreRemitente = remitente.get(0).getSNombre() + " " + remitente.get(0).getSApellido();
+            String emailRemitente = remitente.get(0).getSUsuarioEmail();
+            String cuerpo = "Le envio las actividades de investigación generadas para el semestre actual.";
+            String asunto = "SIRI UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
+            String titulo = "Actividades de Investigación Registradas";
+            
+            Email email = new Email();
+            log.log(Level.INFO, "Email enable : {0}", email.recuperar());
+            
+            email.enviarInforme(nombreDestinatarios, nombreRemitente, cuerpo, emailDestinatarios, emailRemitente, titulo, asunto, adjunto);
+            respuesta = true;  
+
+        } catch(Exception ex) {
+            try {
+                throw ex;
+            } catch (Exception ex1) {
+                respuesta = false;
+                Logger.getLogger(ActividadInvestigacionBusinessImp.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        return respuesta;
+    }
+    
+    @Override
+    public boolean EnviarInformeDepartamento(byte[] adjunto, SRIPaginacion entidad) {
+        boolean respuesta = false;
+        List<String> nombreDestinatarios = new ArrayList<String>();
+        List<String> emailDestinatarios = new ArrayList<String>();
+        try {
+            //Get Remitente y destinatarios
+            List<SRIUsuarioPersona> lstUsuarioPersonas = usuarioDao.GetDirectorUnidadByIdDocente(entidad.getIdUsuario());
+            List<SRIUsuarioPersona> remitente = usuarioDao.GetUsuarioPersonaByIdUsuario(entidad.getIdUsuario());
+            
+            for(SRIUsuarioPersona usuarioPersona : lstUsuarioPersonas){
+                nombreDestinatarios.add(usuarioPersona.getSNombre() + " " + usuarioPersona.getSApellido());
+                emailDestinatarios.add(usuarioPersona.getSUsuarioEmail());
+            }
+            String nombreRemitente = remitente.get(0).getSNombre() + " " + remitente.get(0).getSApellido();
+            String emailRemitente = remitente.get(0).getSUsuarioEmail();
+            String cuerpo = "Adjunto las Actividades de Investigación de los Docentes de mi Departamento,"
+                            + " para su aprobación.";
+            String asunto = "SIRI UNSA - SISTEMA DE REGISTRO DE ACTIVIDADES DE INVESTIGACION";
+            String titulo = "Actividades de Investigación Registradas";
+            
+            Email email = new Email();
+            log.log(Level.INFO, "Email enable : {0}", email.recuperar());
+            
+            email.enviarInforme(nombreDestinatarios, nombreRemitente, cuerpo, emailDestinatarios, emailRemitente, titulo, asunto, adjunto);
+            respuesta = true;  
+
+        } catch(Exception ex) {
+            try {
+                throw ex;
+            } catch (Exception ex1) {
+                respuesta = false;
+                Logger.getLogger(ActividadInvestigacionBusinessImp.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        return respuesta;
+    }
+
+    @Override
+    public Map<String, Object> GetInformeDepartamento(SRIPaginacion entidad) {
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            List<SRIEnviarInformeDepartamento> informeDepartamento = actividadInvestigacionDao.GetInformeDepartamento(entidad);
+            respuesta.put("lista", informeDepartamento);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
 }

@@ -7,6 +7,7 @@ import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
+import com.innnovacis.unsa.util.SRIEnviarInformeDepartamento;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
 import java.math.BigInteger;
@@ -596,5 +597,18 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
             throw ex;
         }
         return respuesta;
+    }
+
+    @Override
+    public List<SRIEnviarInformeDepartamento> GetInformeDepartamento(SRIPaginacion entidad) {
+        List<SRIEnviarInformeDepartamento> informeDepartamento = null;
+        try {
+             Query query = em.createNativeQuery("{call GetInformeDepartamento(?1)}", SRIEnviarInformeDepartamento.class)
+                             .setParameter(1, entidad.getIdUsuario());
+            informeDepartamento = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return informeDepartamento;
     }
 }

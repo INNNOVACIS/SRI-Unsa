@@ -1,3 +1,6 @@
+<div ng-show="loader" class="SRI-loader-open">
+    <div class="SRI-loader"></div>
+</div>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12" style="margin-top:20px;">   
@@ -182,6 +185,32 @@
                     <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal" ng-click="cancel()">
                         <span class="glyphicon glyphicon-remove"></span>
                         Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalEnvioExitoso" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Envio Exitoso</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                         <div class="col-md-12">
+                             <form novalidate class="form-horizontal">
+                                 <p>El informe de Actividades de Investigación ha sido enviado al Director de Unidad.</p>
+                                 <p>¡Gracias!.</p>
+                             </form>
+                         </div>
+                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal" ng-click="cancel()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cerrar
                     </button>
                 </div>
             </div>
