@@ -685,6 +685,11 @@
         $scope.loader = false;
         $scope.openCloseModal(true,false);
     };
+     uploader2.onCompleteAll = function() {
+        console.info('onCompleteAll');
+        $scope.loader = false;
+        $scope.openCloseModal(true,false);
+    };
     
     
     

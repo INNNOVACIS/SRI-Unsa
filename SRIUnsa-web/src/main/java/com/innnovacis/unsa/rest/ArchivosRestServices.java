@@ -82,6 +82,13 @@ public class ArchivosRestServices {
         return archivoBusiness.GetArchivosById(id);
     }
     
+    @GET
+    @Path("/eliminar/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Boolean getEliminarById(@PathParam("id") int id) {
+        return archivoBusiness.Delete(id);
+    }
+    
     @POST
     @Path("/actualizarArchivos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)

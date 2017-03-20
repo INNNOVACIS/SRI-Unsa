@@ -5,96 +5,75 @@ function($log, $scope, $location, $routeParams, FondoConcursableService,
     SemestreService, TipoInvestigacionService, EstructuraAreaInvestigacionService, HomeService, PersonasService, PlantillaDocumentoService,
     TipoNivelService, EstructuraOrganizacionService, ArchivosService, SharedService, FileUploader, SRIUnsaConfig, $sce) {
     
-    $scope.loader = true;
-    $scope.idActividad = $routeParams.ID;
     $scope.sharedService = SharedService;
+    $scope.sharedService.scrollTop();
+    $scope.loader = false;
+    $scope.idActividad = $routeParams.ID;
+    $scope.revisado   = false;
+    $scope.generado   = false;
+    $scope.estadoPendiente  = false;
+    $scope.vicerector = false;
+    $scope.idArchivoAdjunto = 0;
+    
 
-    /******************* Servicios Callback *******************/
-    
-    var getTipoNivelServiceSuccess = function(response){
-    	$log.debug("GettipoNivel - Success");
-        console.log("Respuesta :: ", response);
-    	$scope.niveles = response;
-        $scope.getEstructuraOrganizaciones();
-    };
-    var getTipoNivelServiceError = function(response){
-     	$log.debug("Get TipoNivel - Error");
-        console.log("Respuesta :: ", response);
-    };
+    $scope.generado = true;
 
-    var getEstructuraOrganizacionServiceSuccess = function(response){
-    	$log.debug("Get EstructuraOrganizacion - Success");
-        console.log("Respuesta :: ", response);
-        angular.forEach(response, function(superior, key) {
-            angular.forEach(response, function(value, key) {
-                if(superior.nidPadre === value.nidEstructuraOrganizacion){
-                    superior.nombrePadre = value.snombreEstructuraOrganizacion;
-                }
-            });
-            angular.forEach($scope.niveles, function(nivel, key) {
-                if(superior.nidTipoNivel === nivel.nidTipoNivel){
-                    
-                    superior.nombreTipoNivel = nivel.snombreTipoNivel;
-                }
-            });
-        });
-        
-    	$scope.estructuraOrganizaciones = response;
-    };
-    var getEstructuraOrganizacionServiceError = function(response){
-     	$log.debug("Get EstructuraOrganizacion - Error");
-        console.log("Respuesta :: ", response);
-    };
     
-    var getFondoServiceSuccess = function(response){
-    	$log.debug("Get Fondo - Success");
-        console.log("Respuesta :: ", response);
-    	$scope.fondos = response;
-    };
-    var getFondoServiceError = function(response){
-     	$log.debug("Get Fondo - Error", response);
-        console.log("Respuesta :: ", response);
-    };
+    /******************* CALLBACK FUNCTION *******************/
     
-    var getSemestreServiceSuccess = function(response){
-    	$log.debug("Get Semestre - Success");
+    var actualizarActividadInvestigacionSuccess = function(response){
+        $scope.loader = false;
+        $log.debug("ActualizarActividadInvestigacion - Success");
         console.log("Respuesta :: ", response);
-    	$scope.semestres = response;
+        addPlanificacion($scope.updateInvestigacion.idPlanificacion);
+        if(uploader.queue.length === 0){            
+            $scope.loader = false;
+            $scope.openCloseModal(true,false);
+            $scope.getActividadById($scope.idActividad);
+        } else {
+            uploader.uploadAll();
+            uploader2.uploadAll();
+        }
     };
-    var getSemestreServiceError = function(response){
-     	$log.debug("Get Semestre - Error");
+    var actualizarActividadInvestigacionError = function(response){
+        $scope.loader = false;
+        $log.debug("ActualizarActividadInvestigacion - Error");
         console.log("Respuesta :: ", response);
+        $scope.getActividadById($scope.idActividad);
     };
     
     var getTipoInvestigacionSuccess = function(response){
-    	$log.debug("Get Investigacion - Success");
+        $log.debug("GetTipoInvestigacion - Success");
         console.log("Respuesta :: ", response);
-    	$scope.tipoInvestigaciones = response;
+        $scope.tipoInvestigaciones = response;
+        BuscarTipoInvestigacion($scope.actividadInvestigacion.nidTipoActividadInvestigacion);
     };
     var getTipoInvestigacionError = function(response){
-     	$log.debug("Get Investigacion - Error");
+        $log.debug("GetTipoInvestigacion - Error");
         console.log("Respuesta :: ", response);
     };
     
-    var getActividadInvestigacionByIdSuccess = function(response){
-        $log.debug("getActividadInvestigacionById - Success");
+    var getActividadByIdSuccess = function(response){
+        $log.debug("getActividadById - Success");
         console.log("Respuesta :: ", response);
+        $scope.updateInvestigacion = response.body;
+        $scope.actividadInvestigacion = response.body.actividadInvestigacion;
         
-        $scope.plantillaDocumentoActividades = response.body.plantillaDocumentoActividad;
-        $scope.actividadGeneradaVista = response.body.actividadInvestigacion;
-        $scope.actividadGeneradaVista.fechaRegistro = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaRegistro);
-        $scope.actividadGeneradaVista.fechaFin = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaFin);
-        $scope.actividadGeneradaVista.fechaInicio = $scope.sharedService.dateToString($scope.actividadGeneradaVista.dfechaInicio);
-        $scope.colaboradores = response.body.colaboradores;
+//        $scope.actividadInvestigacion.s_fechaRegistro = $scope.sharedService.dateToString($scope.actividadInvestigacion.dfechaRegistro);
+//        $scope.actividadInvestigacion.s_fechaFin = $scope.sharedService.dateToString($scope.actividadInvestigacion.dfechaFin);
+//        $scope.actividadInvestigacion.s_fechaAceptacion = $scope.actividadInvestigacion.dfechaAceptacion;
+         
+        if($scope.actividadInvestigacion.sritipoProduccion !== null){
+            $scope.changeTipoProduccion($scope.actividadInvestigacion.sritipoProduccion);
+            $scope.changeEstadoProduccion($scope.actividadInvestigacion.sestadoProduccion);
+        }
         
-        editarActividad(response.body.actividadInvestigacion);
-        $scope.changeTipoActividad($scope.actividadGeneradaVista.tipoInvestigacion.snombreActividadInvestigacion);
-        $scope.facultadChange();
-        $scope.getArchivosByIdActividad($scope.actividadGeneradaVista.nidActividadInvestigacion);
-        console.log("ActividadGeneradaModificada :::::: ", $scope.actividadGeneradaVista);
+        setResponsableDirector(response.body.actividadInvestigacion, response.body.colaboradores);
+        $scope.getTipoInvestigacion();
+        $scope.getArchivosByIdActividad($scope.actividadInvestigacion.nidActividadInvestigacion);
     };
-    var getActividadInvestigacionByIdError = function(response){
-        $log.debug("getActividadInvestigacionById - Error");
+    var getActividadByIdError = function(response){
+        $log.debug("GetInvestigacionById - Error");
         console.log("Respuesta :: ", response);
         $scope.loader = false;  
     };
@@ -103,372 +82,414 @@ function($log, $scope, $location, $routeParams, FondoConcursableService,
         $log.debug("getArchivoByIdActividad - Success");
         console.log("Respuesta :: ", response);
         $scope.archivos = response;
-    };
-    
-    var getArchivoByIdActividadError = function(response){
-        $log.debug("getArchivoByIdActividad - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var getAreaInvestigacionServiceSuccess = function(response){
-    	$log.debug("Get AreaInvestigacion - Success");
-        console.log("Respuesta :: ", response);
-    	$scope.areaInvestigaciones = response;
-    };
-    var getAreaInvestigacionServiceError = function(response){
-     	$log.debug("Get AreaInvestigacion - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var descargarArchivoSuccess = function(response){
-        $log.debug("DescargarArchivo - Success");
-        console.log("Respuesta :: ", response);
-    };
-    var descargarArchivoError = function(response){
-        $log.debug("DescargarArchivo - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var actualizarActividadInvestigacionSuccess = function(response){
-        $log.debug("ActualizarActividadInvestigacion - Success");
-        console.log("Respuesta :: ", response);
-        $scope.sharedService.scrollTop();
         setTimeout(function(){
-            $scope.$apply(function(){ 
-                var popUp = SharedService.popUp;
-                var titulo = "Actualización Exitosa!";
-                var mensaje = "La Actividad de Investigación se actualizo correctamente.";
-                var url = "/actividad/Generadas";
-                var op1 = {open:true, txt:'Ir a Bandeja', fun:function(){
-                    popUp.irPopUp();
-                }};
-                popUp.showPopUp(titulo, mensaje, url, op1);
+            $scope.$apply(function(){
                 $scope.loader = false;
             });
         }, 1000);
     };
-    var actualizarActividadInvestigacionError = function(response){
-        $log.debug("ActualizarActividadInvestigacion - Error");
+    var getArchivoByIdActividadError = function(response){
+        $log.debug("getArchivoByIdActividad - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;  
+    };
+    
+    var descargarArchivoSuccess = function(response){
+        $log.debug("descargarArchivo - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var descargarArchivoError = function(response){
+        $log.debug("descargarArchivo - Error");
         console.log("Respuesta :: ", response);
         $scope.loader = false;
     };
     
-    var GetPersonasSuccess = function(response){
-        $log.debug("GetPersonas - Success");
-        console.log("Respuesta :: ", response);
-        $scope.personas = response;
-    };
-    var GetPersonasError = function(response){
-        $log.debug("GetPersonas - Error");
-        console.log("Respuesta :: ", response);
-    };
-    
-    var GetPlantillaDocumentoByFacultadSuccess = function(response){
-        $log.debug("GetPlantillaDocumentoByFacultad - Success");
-        console.log("Respuesta :: ", response);
-        $scope.plantillaDocumento = response.body;
-        $scope.campos = "";
-        var buildCampos = "";
-        var formGroupInicio = '<div class="form-group">';
-        var formGroupFin = '</div>';
-        angular.forEach(response.body, function(value, key){
-            if((key) % 2 === 0 ){
-                if(buildCampos === ""){
-                    buildCampos = formGroupInicio + value.splantilla;
-                } else {
-                    buildCampos = buildCampos + formGroupFin + formGroupInicio + value.splantilla;
-                }
-            } else {
-                buildCampos = buildCampos + value.splantilla;
-            }
-            if(value.stipo === "combobox"){
-                generarOpciones(value);
-            }
-        });
-        
-        buildCampos = buildCampos + formGroupFin;
-        
-        $scope.campos = $sce.trustAsHtml(buildCampos);
-        setValoresPlantilla($scope.plantillaDocumentoActividades);
-        $scope.loader = false;
-    };
-    var GetPlantillaDocumentoByFacultadError = function(response){
-        $log.debug("GetPlantillaDocumentoByFacultad - Error");
+    var eliminarAdjuntoSuccess = function(response) {
+        $log.debug("eliminarArchivo - Success");
         console.log("Respuesta :: ", response);
         $scope.loader = false;
+        $scope.getActividadById($scope.idActividad);
     };
+    var eliminarAdjuntoError = function(response) {
+        $log.debug("eliminarArchivo - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+        $scope.getActividadById($scope.idActividad);
+    }
     
-    /******************* Servicios *******************/
     
-    $scope.getListaTipoNivel = function(){
-      	TipoNivelService.getListaTipoNivel().then(getTipoNivelServiceSuccess, getTipoNivelServiceError);
-    };
+    /******************* LLAMADA A LOS SERVICIOS *******************/
 
-    $scope.getEstructuraOrganizaciones = function(){
-      	EstructuraOrganizacionService.getEstructuraOrganizaciones().then(getEstructuraOrganizacionServiceSuccess, getEstructuraOrganizacionServiceError);
-    };
-    
-    $scope.getAreaInvestigaciones = function(){
-      	EstructuraAreaInvestigacionService.getAreaInvestigaciones().then(getAreaInvestigacionServiceSuccess, getAreaInvestigacionServiceError);
-    };
-    
-    $scope.getFondos = function(){
-      	FondoConcursableService.getFondos().then(getFondoServiceSuccess, getFondoServiceError);
-    };
-    
-    $scope.getSemestres = function(){
-      	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
-    };
-    
-    $scope.getArchivosByIdActividad = function(idActividad){
-      	ArchivosService.getArchivosByIdActividad(idActividad).then(getArchivoByIdActividadSuccess, getArchivoByIdActividadError);
+    $scope.getActividadById = function(idActividad){
+        TipoInvestigacionService.getInvestigacionesById(idActividad).then(getActividadByIdSuccess, getActividadByIdError);
     };
     
     $scope.getTipoInvestigacion = function(){
       	TipoInvestigacionService.getInvestigaciones().then(getTipoInvestigacionSuccess, getTipoInvestigacionError);
     };
-
+    
+    $scope.getArchivosByIdActividad = function(idActividad){
+        $scope.loader = true;
+      	ArchivosService.getArchivosByIdActividad(idActividad).then(getArchivoByIdActividadSuccess, getArchivoByIdActividadError);
+    };
+    
     $scope.descargarArchivo = function(archivo){
+        $scope.loader = true;
         ArchivosService.descargarArchivo(archivo.id).then(descargarArchivoSuccess, descargarArchivoError);
     };
-    $scope.facultadChange = function(){
-        $scope.departamento = {};
-        $scope.escuela = {};
-    };
-    $scope.departamentoChange = function(){
-        $scope.escuela = {};
+    
+    $scope.eliminarAdjuntoRow = function(archivo) {
+        $scope.idArchivoAdjunto = archivo.id;
     };
     
-    $scope.GetPersonas = function(){
-      	PersonasService.getPersonas().then(GetPersonasSuccess, GetPersonasError);
+    $scope.eliminarAdjunto = function(){
+       ArchivosService.eliminarArchivo($scope.idArchivoAdjunto).then(eliminarAdjuntoSuccess, eliminarAdjuntoError);
     };
     
-    $scope.facultadChange = function(){
-        var estructuraOrganizacion = {
-            snombreEstructuraOrganizacion : $scope.actividadGeneradaVista.sfacultad
-        };
-        PlantillaDocumentoService.GetPlantillaDocumentoByFacultad(estructuraOrganizacion).then(GetPlantillaDocumentoByFacultadSuccess, GetPlantillaDocumentoByFacultadError);
-    };
-      
-    $scope.getActividadInvestigacionById = function(idActividad){
-        TipoInvestigacionService.getInvestigacionesById(idActividad).then(getActividadInvestigacionByIdSuccess, getActividadInvestigacionByIdError);
-    };
-    
-    /************ Editar Actividad Investigacion ***************/
-    $scope.AgregarColaborador = function(){
-        if(!isRepetido($scope.colaboradores, $scope.persona)){
-            $scope.colaboradores.push($scope.persona);
-            $scope.colaborador = {};
-        }
-    };
-    $scope.DeleteColaborador = function(colaborador){
-        var index = -1;
-        angular.forEach($scope.colaboradores, function(valor, key){
-            if(valor.nidPersona === colaborador.nidPersona){
-                index = key;
-            }
-        });
-        $scope.colaboradores.splice(index, 1);
-    };
-    
-    
-    var editarActividad = function(actividad){
-        $scope.actividadGeneradaVista.semestre = $scope.semestres[seleccionarSemestre(actividad.ssemestre)];
-        $scope.actividadGeneradaVista.tipoInvestigacion = seleccionarTipoInvestigacion(actividad.nidTipoActividadInvestigacion);
-        $scope.actividadGeneradaVista.areaInvestigacion = seleccionarArea(actividad.sareaInvestigacion);
-        $scope.actividadGeneradaVista.subareaInvestigacion = seleccionarArea(actividad.ssubAreaInvestigacion);
-        $scope.actividadGeneradaVista.disciplinaInvestigacion = seleccionarArea(actividad.sdisciplina);
-        $scope.actividadGeneradaVista.responsable =  seleccionarResponsable(actividad.nidResponsable);
-    };
-    
-    var seleccionarSemestre = function(nombre){
-        var respuesta = -1;
-        angular.forEach($scope.semestres, function(obj, key) {
-            if(obj.snombreSemestre === nombre){
-                respuesta = key;
-            }
-        });
-        return respuesta;
-    };
-    
-    var seleccionarTipoInvestigacion = function(idTipoActividad){
-        var respuesta = null;
-        angular.forEach($scope.tipoInvestigaciones, function(obj, key){
-            if(obj.nidTipoActividadInvestigacion === idTipoActividad){
-                respuesta = obj;
-            }
-        });
-        return respuesta;
-    };
-    
-    var seleccionarArea = function(nombre){
-        var respuesta = null;
-        angular.forEach($scope.areaInvestigaciones, function(obj, key){
-            if(obj.sNombre === nombre){
-                respuesta = obj;
-            }
-        });
-        return respuesta;
-    };
-    
-    var seleccionarResponsable = function(idResponsable){
-        var respuesta = null;
-        angular.forEach($scope.personas, function(value, key){
-            if(value.nidPersona === idResponsable){
-                respuesta = value.snombre + " " + value.sapellido;
-            }
-        });
-        return respuesta;
-    };
-    
-    var generarOpciones = function(value){
-        $scope[value.sopciones] = value.sdata.split(",");
-    };
-     var isRepetido = function(lista, objeto){
-        var repetido = false;
-        angular.forEach(lista, function(valor, key){
-            if(valor.nidPersona === objeto.nidPersona){
-                repetido = true;
-            }
-        });
-        return repetido;
-    };
-    var getValoresPlantilla = function(){
-        var plantillaDocumentoActividades = [];
-        angular.forEach($scope.plantillaDocumentoActividades, function(plantillaDocumentoActividad,key){
-            angular.forEach($scope.plantillaDocumento, function(value, key){
-                if(plantillaDocumentoActividad.nidPlantillaDocumento === value.nidPlantillaDocumento){
-                    var plantilla = {
-                        nidPlantillaDocumentoActividad : plantillaDocumentoActividad.nidPlantillaDocumentoActividad,
-                        nidPlantillaDocumento : value.nidPlantillaDocumento,
-                        svalor : $scope[value.smodel],
-                        dfechaCreacion : plantillaDocumentoActividad.dfechaCreacion,
-                        suserCreacion : plantillaDocumentoActividad.suserCreacion,
-                        sestado : "A"
-                    };
-                    plantillaDocumentoActividades.push(plantilla);
-                }
-            });
-        });
-        return plantillaDocumentoActividades;
-    };
-    var setValoresPlantilla = function(plantillaDocumentoActividades){
-        angular.forEach(plantillaDocumentoActividades, function(plantillaDocumentoActividad,key){
-            angular.forEach($scope.plantillaDocumento, function(value, key){
-                if(plantillaDocumentoActividad.nidPlantillaDocumento === value.nidPlantillaDocumento){
-                    $scope[value.smodel] = plantillaDocumentoActividad.svalor;
-                }
-            });
-        });
-    };
-    
-    $scope.getListaTipoNivel();
-    $scope.getEstructuraOrganizaciones();
-    $scope.getFondos();
-    $scope.getSemestres();
-    $scope.getTipoInvestigacion();
-    $scope.getAreaInvestigaciones();
-    $scope.GetPersonas();
- 
-    setTimeout(function(){
-        $scope.getActividadInvestigacionById($scope.idActividad);
-    }, 1000);
+    /******************** ACCIONES DEL FORMULARIO APROBAR O RECHAZAR ACTIVIDAD **********************/
     
     $scope.actualizarActividadInvestigacion = function() {
         $scope.loader = true;
         $scope.sharedService.scrollTop();
-        var actividadGeneral = {
-            idUsuario : $scope.sharedService.idUsuario,
-            idFlujoActorOrigen : SRIUnsaConfig.DOCE,
-            idEstado : SRIUnsaConfig.CREADO,
-            idPlanificacion : -1,
-            colaboradores : $scope.colaboradores === undefined ? [] : $scope.colaboradores,
-            plantillaDocumentoActividad : getValoresPlantilla(),
-            actividadInvestigacion : {
-                nidActividadInvestigacion : $scope.actividadGeneradaVista.nidActividadInvestigacion,
-                nidResponsable : $scope.actividadGeneradaVista.nidResponsable,
-                nidTipoActividadInvestigacion : $scope.actividadGeneradaVista.tipoInvestigacion.nidTipoActividadInvestigacion,
-                nhoras : $scope.actividadGeneradaVista.nhoras,
-                sritipoProduccion : $scope.actividadGeneradaVista.tipoProduccion === undefined ? "" : $scope.actividadGeneradaVista.tipoProduccion,
-                sfondoConcursable : $scope.actividadGeneradaVista.snombreFondoConcursable,
-                stipoAsesoria : $scope.actividadGeneradaVista.tipoAsesoria === undefined ? "" : $scope.actividadGeneradaVista.tipoAsesoria,
-                ssemestre : $scope.actividadGeneradaVista.ssemestre,
-                sfacultad : $scope.actividadGeneradaVista.sfacultad,
-                sescuela : $scope.actividadGeneradaVista.sescuela,
-                sdepartamento : $scope.actividadGeneradaVista.sdepartamento,
-                sareaInvestigacion: $scope.actividadGeneradaVista.sareaInvestigacion,
-                ssubAreaInvestigacion : $scope.actividadGeneradaVista.ssubAreaInvestigacion,
-                sdisciplina : $scope.actividadGeneradaVista.sdisciplina,
-                stipoLabor : $scope.actividadGeneradaVista.stipoLabor === undefined ? "" : $scope.actividadGeneradaVista.stipoLabor,
-                snombreActividadInvestigacion : $scope.actividadGeneradaVista.snombreActividadInvestigacion,
-                sdescripcionActividad : $scope.actividadGeneradaVista.sdescripcionActividad,
-                navance: $scope.actividadGeneradaVista.navance,
-                dfechaRegistro : $scope.actividadGeneradaVista.dfechaRegistro,
-                dfechaInicio : $scope.actividadGeneradaVista.dfechaInicio,
-                dfechaFin : $scope.actividadGeneradaVista.dfechaFin,
-                suserCreacion : $scope.actividadGeneradaVista.suserCreacion,
-                suserModificacion : $scope.sharedService.nombreUsuario,
-                sestado : 'A'
-            }
-        };
         
-        console.log("actualizacion data :::::  ", actividadGeneral);
-        HomeService.actualizarInvestigacion(actividadGeneral).then(actualizarActividadInvestigacionSuccess, actualizarActividadInvestigacionError);
+        delete $scope.actividadInvestigacion.s_fechaAceptacion;
+        delete $scope.actividadInvestigacion.s_fechaFin
+        delete $scope.actividadInvestigacion.s_fechaRegistro;
+        
+        $scope.updateInvestigacion.actividadInvestigacion = $scope.actividadInvestigacion;
+        console.log("ACTUALIZACION :::::::::::: ", $scope.updateInvestigacion);
+        HomeService.actualizarInvestigacion($scope.updateInvestigacion)
+                .then(actualizarActividadInvestigacionSuccess, actualizarActividadInvestigacionError);
+    };
+   
+    
+    /************ FUNCIONES UTILITARIAS ************/
+
+    var addPlanificacion = function(idPlanificacion){
+        angular.forEach(uploader.queue, function(value, key) {
+            console.log(value.file.name);
+            value.formData.push({
+                idPlanificacion: idPlanificacion
+            });
+        });
+        angular.forEach(uploader2.queue, function(value, key) {
+            console.log(value.file.name);
+            value.formData.push({
+                idPlanificacion: idPlanificacion
+            });
+        });
+    };
+
+    var setResponsableDirector = function(actividadInvestigacion, colaboradores){
+        angular.forEach(colaboradores, function(value, key){
+            if(actividadInvestigacion.nidResponsable === value.nidPersona){
+                $scope.responsable = value.snombre + " " + value.sapellido;
+            }
+            if(actividadInvestigacion.nidDirector === value.nidPersona){
+                $scope.director = value.snombre + " " + value.sapellido;
+            }
+        });
+    };
+
+    var BuscarTipoInvestigacion = function(idTipoInvestigacion){
+        angular.forEach($scope.tipoInvestigaciones, function(valor, key){
+            if(valor.nidTipoActividadInvestigacion === idTipoInvestigacion){
+                $scope.nombreTipoActividad = valor.snombreActividadInvestigacion;
+            }
+        });
+        $scope.changeTipoActividad($scope.nombreTipoActividad);
     };
     
-    /************ Funciones Utilitarias ************/
-    
-    $scope.uploadFile = function(){
-        var file = $scope.archivo;
-        var formData = new FormData();
-        formData.append('file', file);
-//        HomeService.sendFile(formData, true).then(homeServiceSuccess, homeServiceError);
+    $scope.changeTipoProduccion = function(tipoProduccion){
+        if(tipoProduccion.toUpperCase() === "ARTICULO"){
+            $scope.showVerificacion = true;
+            $scope.fechaTipoProduccion = "Fecha de Aceptación";
+            $scope.labelCodigo = "DOI o URL";
+            $scope.labelNombrePublicacion = "Nombre de la Revista";
+        } 
+        if (tipoProduccion.toUpperCase() === "TEXTO" || tipoProduccion.toUpperCase() === "LIBRO" ){
+            $scope.showVerificacion = true;
+            $scope.fechaTipoProduccion = "Fecha de Publicación";
+            $scope.labelCodigo = "ISBN";
+            $scope.labelNombrePublicacion = "Nombre de la Editorial";
+        }
     };
     
+    $scope.changeEstadoProduccion = function(estadoProduccion){        
+        $scope.realizado = false;
+        $scope.ejecucion = false;
+        $scope.pendiente = false;
+        switch(estadoProduccion) {
+            case "REALIZADO":
+                $scope.realizado = true;
+                $scope.ejecucion = false;
+                $scope.pendiente = false;
+                
+
+                $scope.adjuntar = "Adjuntar Libro o Artículo";
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
+                $scope.pendienteAdjunto = false;
+                break;
+            case "EJECUCION":
+                $scope.realizado = false;
+                $scope.ejecucion = true;
+                $scope.pendiente = false;
+                
+                
+                $scope.adjuntar = "Adjuntar Planificación";
+                $scope.adjuntarOtros = "Adjuntar avance de Libro o Artículo (Opcional)";
+                $scope.pendienteAdjunto = true;
+                break;
+            case "PENDIENTE":
+                $scope.realizado = false;
+                $scope.ejecucion = false;
+                $scope.pendiente = true;
+                
+                $scope.adjuntar = "Adjuntar Planificación";
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
+                $scope.pendienteAdjunto = false;
+                $scope.actividadInvestigacion.sestadoProduccion = "POR REALIZAR"; //SOLO PARA FINES DE VISUALIZACIÓN
+                break;
+        };
+    };
+    
+    $scope.irBandejaRevisados = function(){
+        $scope.loader = true;
+        if($scope.generado && !$scope.vicerector){ $location.path("/actividad/Generadas"); }
+        if($scope.revisado){ $location.path("/actividad/Revisadas"); }
+        if($scope.vicerector){ $location.path("/actividadesDocente"); }
+    };
+    
+    $scope.changeTipoActividad = function(tipoActividad){
+        $scope.mostrarActividad = [false, false, false, false]; //case1 , case2, case3, case4
+        $scope.realizado = true;
+        $scope.ejecucion = true;
+        $scope.pendiente = true;
+        $scope.pendienteAdjunto = true;
+        $scope.mostrarAyuda = false;
+        switch(tipoActividad.toUpperCase()) {
+            case "INVESTIGACION FORMATIVA":
+                $scope.mostrarActividad = [true, false, false, false];
+                $scope.descripcionLabel = "Breve descripción de la Actividad Formativa";
+                $scope.tituloLabel = "Nombre del curso o Asignatura";
+                $scope.adjuntar = "Adjuntar Sílabo del Curso";
+                $scope.adjuntarOtros = "Adjuntar Resultados de Investigación";
+                $scope.showDescripcion = true;
+                break;
+            case "ASESORIA DE TESIS":
+                $scope.mostrarActividad = [false, true, false, false];
+                $scope.descripcionLabel = "Resumen de Tesis";
+                $scope.tituloLabel = "Título de Tesis";
+                $scope.adjuntar = "Adjuntar Resolución";
+                $scope.adjuntarOtros = "Otros Medios (Plan de Tesis, Avances, Otros)";
+                $scope.showDescripcion = false;
+                break;
+            case "INVESTIGACIONES BASICAS Y APLICADAS":
+                $scope.mostrarActividad = [false, false, true, false];
+                $scope.descripcionLabel = "Resumen de Investigación";
+                $scope.tituloLabel = "Título del Proyecto de Investigación";
+                $scope.adjuntar = "Adjuntar Contrato";
+                $scope.adjuntarOtros = "Adjuntar Ficha de Postulación";
+                $scope.showDescripcion = true;
+                break;
+            case "PRODUCCION INTELECTUAL":
+                $scope.mostrarActividad = [false, false, false, true];
+                $scope.descripcionLabel = "Resumen";
+                $scope.tituloLabel = "Título";
+                $scope.adjuntar = "Adjuntar Planificación";
+                $scope.adjuntarOtros = "Adjuntar Libro o Artículo (Opcional)";
+                $scope.showDescripcion = false;
+                $scope.pendienteAdjunto = false;
+                break;
+            default:
+                $scope.mostrarActividad = [false, false, false, false];
+                $scope.descripcionLabel = "Resumen";
+                $scope.tituloLabel = "Nombre";
+                $scope.adjuntar = "Adjuntar";
+                $scope.adjuntarOtros = "Adjuntar Otros";
+                $scope.showDescripcion = true;
+        };
+    };
+    
+    $scope.getActividadById($scope.idActividad);
+    
+    /******************* EXPORTAR ARCHIVOS *****************/
+    
+    var descargarPDFSuccess = function (response){
+        $log.debug("descargarPDF - Success");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    var descargarPDFError = function (response){
+        $log.debug("descargarPDF - Error");
+        console.log("Respuesta :: ", response);
+        $scope.loader = false;
+    };
+    
+    $scope.descargarPDF = function(){
+        console.log("Empezando descarga de PDF...");
+        $scope.loader = true;
+        TipoInvestigacionService.descargarPDF($scope.idActividad).then(descargarPDFSuccess, descargarPDFError);
+    };
+
+
+    /********** FILE UPLOAD **********/
+    
+    $scope.files = [];
     var uploader = $scope.uploader = new FileUploader({
         url: SRIUnsaConfig.SRIUnsaUrlServicio + '/files/subirArchivos'
     });
-    
+    var uploader2 = $scope.uploader2 = new FileUploader({
+        url: SRIUnsaConfig.SRIUnsaUrlServicio + '/files/subirArchivos'
+    });
     uploader.filters.push({
-        name: 'customFilter',
+        name: 'enforceMaxFileSize',
+        fn: function(item) {
+            return this.queue.length < 10;
+        }
+    });
+    console.log("filtro :: ", uploader.filters);
+    uploader2.filters.push({
+        name: 'customFilter2',
         fn: function(item , options) {
             return this.queue.length < 10;
         }
     });
 
-    $scope.uploadAll = function(){
-        addPlanificacion();
-        uploader.uploadAll();
+    // CALLBACKS
+
+    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+    uploader.onAfterAddingFile = function(fileItem) {
+        console.info('onAfterAddingFile', fileItem);
+    };
+    uploader.onAfterAddingAll = function(addedFileItems) {
+        console.info('onAfterAddingAll', addedFileItems);
+    };
+    uploader.onBeforeUploadItem = function(item) {
+        console.info('onBeforeUploadItem', item);
+    };
+    uploader.onProgressItem = function(fileItem, progress) {
+        console.info('onProgressItem', fileItem, progress);
+    };
+    uploader.onProgressAll = function(progress) {
+        console.info('onProgressAll', progress);
+    };
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        console.info('onSuccessItem', fileItem, response, status, headers);
+    };
+    uploader.onErrorItem = function(fileItem, response, status, headers) {
+        console.log("Error fileitem  -----> ", fileItem);
+        console.log("Error response  -----> ", response);
+        console.log("Error status  -----> ", status);
+        console.log("Error headers  -----> ", headers);
+        console.info('onErrorItem', fileItem, response, status, headers);
+    };
+    uploader.onCancelItem = function(fileItem, response, status, headers) {
+        console.info('onCancelItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        console.info('onCompleteItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteAll = function() {
+        console.info('onCompleteAll');
+        $scope.loader = false;
+        $scope.getActividadById($scope.idActividad);
+        $scope.openCloseModal(true,false);
+    };
+     uploader2.onCompleteAll = function() {
+        console.info('onCompleteAll');
+        $scope.loader = false;
+        $scope.getActividadById($scope.idActividad);
+        $scope.openCloseModal(true,false);
     };
     
-    $scope.irBandeja = function(){
-        $scope.loader = true;
-        $location.path("/actividad/Generadas");
+    
+    
+    /********** DataPicker ************/
+    
+    $scope.today = function() {
+        $scope.fechaRegistro = new Date();
+        $scope.fechaShowRegistro = $scope.sharedService.dateToString($scope.fechaRegistro);
+    };
+    $scope.today();
+
+    $scope.inlineOptions = {
+      customClass: getDayClass,
+      minDate: new Date()
     };
 
-    $scope.totalColaboradores = function(){
-        var total = $scope.colaboradores ===  undefined ? 0 : $scope.colaboradores.length;
-        return total + " seleccionados";
+    $scope.dateOptions = {
+      dateDisabled: disabled,
+      formatYear: "yy",
+      maxDate: new Date(2020, 5, 22),
+      minDate: new Date(),
+      startingDay: 1,
+      showWeeks:false,
+      showButtonBar:false
+    };
+
+    // Disable weekend selection
+    function disabled(data) {
+      var date = data.date,
+        mode = data.mode;
+      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    }
+
+    $scope.toggleMin = function() {
+      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.toggleMin();
+
+    $scope.openAceptacion = function() {
+      $scope.popupAceptacion.opened = true;
+    };
+    $scope.openFin = function() {
+      $scope.popupFin.opened = true;
+    };
+    $scope.openRegistro = function() {
+      $scope.popupRegistro.opened = true;
+    };
+
+    $scope.setDate = function(year, month, day) {
+      $scope.dtRegistro = new Date(year, month, day);
+    };
+
+    $scope.formats = ['dd/MMMM/yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    
+    $scope.popupAceptacion = {
+      opened: false
     };
     
-    $scope.changeTipoActividad = function(tipoActividad){
-        $scope.mostrarActividad = [false, false, false, false]; //case1 , case2, case3, case4
-        switch(tipoActividad.toUpperCase()) {
-            case "INVESTIGACION FORMATIVA":
-                $scope.mostrarActividad = [true, false, false, false];
-                break;
-            case "ASESORIA DE TESIS":
-                $scope.mostrarActividad = [false, true, false, false];
-                break;
-            case "INVESTIGACIONES BASICAS Y APLICADAS":
-                $scope.mostrarActividad = [false, false, true, false];
-                break;
-            case "PRODUCCION INTELECTUAL":
-                $scope.mostrarActividad = [false, false, false, true];
-                break;
-            default:
-                $scope.mostrarActividad = [false, false, false, false];
-        };
+    $scope.popupFin = {
+      opened: false
     };
+    
+    $scope.popupRegistro = {
+      opened: false
+    };
+
+    function getDayClass(data) {
+        var date = data.date;
+        var mode = data.mode;
+        if (mode === 'day') {
+            var dayToCheck = new Date(date).setHours(0,0,0,0);
+            for (var i = 0; i < $scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+                if (dayToCheck === currentDay) {
+                    return $scope.events[i].status;
+                }
+            }
+        }
+        return '';
+    }
+    
     
 }]);

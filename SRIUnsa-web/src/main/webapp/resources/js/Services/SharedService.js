@@ -20,7 +20,8 @@ investigacionApp.factory('SharedService', function($location, $localStorage ) {
         dateToString: function(date){
             var nDate = Number(date); 
             var dDate = new Date(nDate);
-            var sDate = ("0" + dDate.getDate()).slice(-2) + "/" + ("0"+(dDate.getMonth()+1)).slice(-2) + "/" + dDate.getFullYear();
+//            var sDate = ("0" + dDate.getDate()).slice(-2) + "/" + ("0"+(dDate.getMonth()+1)).slice(-2) + "/" + dDate.getFullYear();
+            var sDate = dDate.getFullYear() + "-" + ("0"+(dDate.getMonth()+1)).slice(-2) + "-" + ("0" + dDate.getDate()).slice(-2) ;
             return sDate;
         },
         scrollTop : function(){

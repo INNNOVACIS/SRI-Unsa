@@ -49,6 +49,21 @@ investigacionApp.service("ArchivosService", function(SRIUnsaConfig, $log, $http,
 		return deferred.promise;
 	};
         
+        this.eliminarArchivo = function(id) {
+            $log.debug("Archivo Service - eliminarArchivo");
+
+            var deferred = $q.defer();
+            $http({
+                    method : 'GET',
+                    url : SRIUnsaConfig.SRIUnsaUrlServicio + '/files/eliminar/' + id,
+            }).success(function(response) {
+                    deferred.resolve(response);
+            }).error(function(response) {			
+                    deferred.reject(response);
+            });
+            return deferred.promise;
+        };
+        
         this.descargarArchivo = function(id) {
             var deferred = $q.defer();
 		$http({

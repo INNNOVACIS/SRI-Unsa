@@ -168,6 +168,12 @@ investigacionApp.controller('HomeDocenteController',['$log', '$scope', '$locatio
         console.log("Eliminar actividad :: ", idActividad);
     };
     
+    $scope.updateActividadById = function(actividadGenerada){
+        $scope.sharedService.scrollTop();
+        $scope.loader = true;
+        $location.path("/actividad/Generadas/update/" + actividadGenerada.idactividadinvestigacion);
+    };
+    
     /**************** PAGINACION *****************/
     
     $scope.rangoPaginas = [5,10,20,100];
