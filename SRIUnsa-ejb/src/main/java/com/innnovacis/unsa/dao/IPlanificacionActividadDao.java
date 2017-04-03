@@ -19,6 +19,7 @@ public interface IPlanificacionActividadDao {
     SRIPlanificacionActividad Update(SRIPlanificacionActividad entidad);
     boolean Delete(SRIPlanificacionActividad entidad);
     SRIPlanificacionActividad GetById(int idEntidad);
+    SRIPlanificacionActividad GetByIdActividad(int idActividad);
     List<SRIPlanificacionActividad> GetAll();
     
 }

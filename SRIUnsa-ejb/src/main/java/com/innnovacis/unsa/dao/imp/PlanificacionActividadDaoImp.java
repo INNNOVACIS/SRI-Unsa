@@ -49,6 +49,13 @@ public class PlanificacionActividadDaoImp implements IPlanificacionActividadDao 
         SRIPlanificacionActividad entidad = em.createNamedQuery("SRIPlanificacionActividad.GetById", SRIPlanificacionActividad.class).setParameter("idEntidad", idEntidad).getSingleResult();
         return entidad;
     }
+    
+    @Override
+    public SRIPlanificacionActividad GetByIdActividad(int idActividad) {
+        SRIPlanificacionActividad entidad = em.createNamedQuery("SRIPlanificacionActividad.GetByIdActividad", SRIPlanificacionActividad.class)
+                .setParameter("idActividad", idActividad).getSingleResult();
+        return entidad;
+    }
 
     @Override
     public List<SRIPlanificacionActividad> GetAll() {

@@ -161,9 +161,11 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         List<SRIPersona> persona = new ArrayList<SRIPersona>();
         SRIPersona responsable = null;
         SRIPersona director = null;
+        SRIPlanificacionActividad planificacion = null;
         List<SRIPlantillaDocumentoActividad> plantillaDocumentoActividad = null;
         try{
             actividadInvestigacion = actividadInvestigacionDao.GetById(idEntidad);
+            planificacion = planificacionActividadDao.GetByIdActividad(idEntidad);
 //            persona = personaDao.GetPersonasByIdActividadInvestigacion(actividadInvestigacion.getNIdActividadInvestigacion());
             responsable = personaDao.GetById(actividadInvestigacion.getNIdResponsable());
             director = personaDao.GetById(actividadInvestigacion.getNIdDirector());
@@ -174,6 +176,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             persona.add(responsable);
             respuesta.setColaboradores(persona);
             respuesta.setActividadInvestigacion(actividadInvestigacion);
+            respuesta.setIdPlanificacion(planificacion.getNIdPlanificacionActividad());
         }
         catch(Exception ex){
             throw ex;

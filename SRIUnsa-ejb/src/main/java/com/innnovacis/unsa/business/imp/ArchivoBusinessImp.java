@@ -55,14 +55,13 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
     }
 
     @Override
-    public boolean Delete(SRIArchivo entidad) {
+    public boolean Delete(int idEntidad) {
         boolean respuesta = false;
          try{
-            archivoDao.Delete(entidad);
-            respuesta = true;
+            respuesta = archivoDao.Delete(idEntidad);
         }
         catch(Exception ex){
-            
+            System.out.println("Error ---> " + ex.getMessage());
         }
          return respuesta;
     }

@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 public interface IArchivoDao {
     SRIArchivo Insert(SRIArchivo entidad);
     SRIArchivo Update(SRIArchivo entidad);
-    boolean Delete(SRIArchivo entidad);
+    boolean Delete(int idEntidad);
     SRIArchivo GetById(int idEntidad);
     List<SRIArchivoUtil> GetAll();
     List<SRIArchivoUtil> GetArchivosById(int id);

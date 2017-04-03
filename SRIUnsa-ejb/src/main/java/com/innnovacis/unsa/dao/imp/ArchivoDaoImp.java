@@ -14,7 +14,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
@@ -33,8 +32,10 @@ public class ArchivoDaoImp implements IArchivoDao {
     @Transactional
     public SRIArchivo  Insert(SRIArchivo entidad) {
         entidad.setDFechaCreacion(new Date());
-         em.persist(entidad);
-         return entidad;
+        entidad.setDFechaModificacion(new Date());
+        entidad.setSEstado("A");
+        em.persist(entidad);
+        return entidad;
     }
 
     @Override
@@ -47,11 +48,17 @@ public class ArchivoDaoImp implements IArchivoDao {
 
     @Override
     @Transactional
-    public boolean Delete(SRIArchivo entidad) {
-        entidad.setDFechaModificacion(new Date());
-        entidad.setSEstado("I");
-        em.merge(entidad);
-        return true;
+    public boolean Delete(int idEntidad) {
+        SRIArchivo respuesta = null;
+        Query query = em.createNativeQuery("{call eliminarArchivo(?1)}", SRIArchivo.class)
+                        .setParameter(1, idEntidad);
+        respuesta = (SRIArchivo)query.getSingleResult();
+       
+        if(respuesta != null){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

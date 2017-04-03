@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 public interface IArchivoBusiness {
     int Insertar(SRIArchivo entidad);
     boolean Update(SRIArchivo entidad);
-    boolean Delete(SRIArchivo entidad);
+    boolean Delete(int idArchivo);
     SRIArchivo Get(int idEntidad);
     List<SRIArchivoUtil> GetAll();
     List<SRIArchivoUtil> GetArchivosById(int id);
