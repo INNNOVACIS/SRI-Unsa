@@ -263,10 +263,10 @@ public class UsuarioRestServices {
     }
     
     @GET
-    @Path("/GetTotalDocentesActivosInactivos")
+    @Path("/GetTotalDocentesActivosInactivos/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetTotalDocentesActivosInactivos() {
-        SRIDocenteActivosInactivos docenteActivosInactivos = usuarioBusiness.GetTotalDocentesActivosInactivos();
+    public Response GetTotalDocentesActivosInactivos(@PathParam("id") int idSemestre) {
+        SRIDocenteActivosInactivos docenteActivosInactivos = usuarioBusiness.GetTotalDocentesActivosInactivos(idSemestre);
         Map<String, Object> response = new HashMap<>();
         response.put("body", docenteActivosInactivos);
         Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(response);
@@ -326,12 +326,12 @@ public class UsuarioRestServices {
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
                     //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
-                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad(), entidad.getIdSemestre());
             
             // Lista  de las facultades
             List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
                     actividadInvestigacionBusiness
-                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
+                            .GetActivosInactivosByFacultad(entidad.getIdFacultad(), 0);
             
             //Transformando las vistas
             ArrayList<ArrayList<String>> listaUsuariosSend = new ArrayList<>();            
@@ -395,11 +395,11 @@ public class UsuarioRestServices {
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
                     //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
-                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad(), entidad.getIdSemestre());
             
             // Lista  de las facultades
             List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
-                    actividadInvestigacionBusiness.GetTotalActivosInactivosByDepartamento(entidad.getIdFacultad(), entidad.getIdTipoInvestigacion());
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosByDepartamento(entidad.getIdFacultad(), entidad.getIdTipoInvestigacion(), entidad.getIdSemestre());
 //                    actividadInvestigacionBusiness
 //                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
             
@@ -462,7 +462,7 @@ public class UsuarioRestServices {
              SRIDocenteActivosInactivos docenteActivosInactivos = new SRIDocenteActivosInactivos();
             // Usuarios activos e inactivos
             List<SRIDocentesActivosInactivosFacultad> lstDocenteActivosInactivos = 
-                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion());
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion(), entidad.getIdSemestre());
             
             docenteActivosInactivos.setNActivos(lstDocenteActivosInactivos.get(0).getNActivos());
             docenteActivosInactivos.setNInactivos(lstDocenteActivosInactivos.get(0).getNInactivos());
@@ -470,11 +470,11 @@ public class UsuarioRestServices {
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
                     //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
-                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad(), entidad.getIdSemestre());
             
             // Lista  de las facultades
             List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
-                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion());
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion(), entidad.getIdSemestre());
 //                    actividadInvestigacionBusiness
 //                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
             
@@ -542,11 +542,11 @@ public class UsuarioRestServices {
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
                     //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
-                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad(), entidad.getIdSemestre());
             // Lista  de las facultades
             List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
                     actividadInvestigacionBusiness
-                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
+                            .GetActivosInactivosByFacultad(entidad.getIdFacultad(), 0);
             
             ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<>();            
             for(int i = 0; i < listaUsuarios.size(); i++) {
@@ -608,11 +608,11 @@ public class UsuarioRestServices {
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
                     //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
-                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad(), entidad.getIdSemestre());
             
             // Lista  de las facultades
             List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
-                    actividadInvestigacionBusiness.GetTotalActivosInactivosByDepartamento(entidad.getIdFacultad(), entidad.getIdTipoInvestigacion());
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosByDepartamento(entidad.getIdFacultad(), entidad.getIdTipoInvestigacion(), entidad.getIdSemestre());
 //                    actividadInvestigacionBusiness
 //                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
             
@@ -678,7 +678,7 @@ public class UsuarioRestServices {
              SRIDocenteActivosInactivos docenteActivosInactivos = new SRIDocenteActivosInactivos();
             // Usuarios activos e inactivos
             List<SRIDocentesActivosInactivosFacultad> lstDocenteActivosInactivos = 
-                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion());
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion(), entidad.getIdSemestre());
             
             docenteActivosInactivos.setNActivos(lstDocenteActivosInactivos.get(0).getNActivos());
             docenteActivosInactivos.setNInactivos(lstDocenteActivosInactivos.get(0).getNInactivos());
@@ -686,11 +686,11 @@ public class UsuarioRestServices {
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
                     //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
-                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad());
+                    actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(entidad.getIdFacultad(), entidad.getIdSemestre());
             
             // Lista  de las facultades
             List<SRIDocentesActivosInactivosFacultad>  facultadesPorTipoActividades =
-                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion());
+                    actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(entidad.getIdDepartamento(), entidad.getIdTipoInvestigacion(), entidad.getIdSemestre());
 //                    actividadInvestigacionBusiness
 //                            .GetActivosInactivosByFacultad(entidad.getIdFacultad());
             

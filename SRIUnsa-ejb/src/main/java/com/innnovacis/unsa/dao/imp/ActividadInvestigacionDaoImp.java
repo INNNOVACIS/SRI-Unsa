@@ -428,7 +428,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     }
 
     @Override
-    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad() {
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad(int idSemestre) {
         List<SRITotalTipoActividad> totalTipoActividad = null;
         try {
             Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividad()}", SRITotalTipoActividad.class);
@@ -440,8 +440,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     }
 
     @Override
-    public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion) {
-        System.out.println("idTipoInvestigacion  ========>  " + idTipoInvestigacion);
+    public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> totalTipoActividad = null;
         try {
             Query query = em.createNativeQuery("{call GetActivosInactivosByFacultad(?1)}", SRIDocentesActivosInactivosFacultad.class)
@@ -454,7 +453,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     }
 
     @Override
-    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad) {
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad, int idSemestre) {
         List<SRITotalTipoActividad> totalTipoActividad = null;
         try {
             Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividadFacultad(?1)}", SRITotalTipoActividad.class)
@@ -467,7 +466,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     }
 
     @Override
-    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion) {
+    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> totalTipoActividad = null;
         try {
             Query query = em.createNativeQuery("{call GetTotalActivosInactivosByDepartamento(?1, ?2)}", SRIDocentesActivosInactivosFacultad.class)
@@ -481,7 +480,7 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     }
 
     @Override
-    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion) {
+    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> totalTipoActividad = null;
         try {
             Query query = em.createNativeQuery("{call GetTotalActivosInactivosHomeDepartamento(?1, ?2)}", SRIDocentesActivosInactivosFacultad.class)

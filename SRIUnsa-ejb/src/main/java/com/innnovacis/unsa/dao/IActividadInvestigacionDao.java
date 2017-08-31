@@ -46,11 +46,11 @@ public interface IActividadInvestigacionDao {
     List<SRIActividadGeneralPaginacion> GetActividadesByDocenteColaboradores (SRIPaginacion entidad);
     List<SRIActividadInvestigacion> GetActividadesByDocenteDetalle (SRIPaginacion entidad);
     
-    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad();
-    List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion);
-    List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion);
-    List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion);
-    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad);
+    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad(int idSemestre);
+    List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion, int idSemestre);
+    List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion, int idSemestre);
+    List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion, int idSemestre);
+    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad, int idSemestre);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento);
     
     List<SRIDocentesActividades> GetDocentesActivos(SRIPaginacion entidad);

@@ -85,15 +85,15 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
     
-    $scope.GetTotalActivosInactivosByDepartamento = function(idFacultad, idTipoInvestigacion){
-        HomeVicerectorService.GetTotalActivosInactivosByDepartamento(idFacultad, idTipoInvestigacion).then(GetTotalActivosInactivosByDepartamentoSuccess, GetTotalActivosInactivosByDepartamentoError);
+    $scope.GetTotalActivosInactivosByDepartamento = function(idFacultad, idTipoInvestigacion, idSemestre){
+        HomeVicerectorService.GetTotalActivosInactivosByDepartamento(idFacultad, idTipoInvestigacion, idSemestre).then(GetTotalActivosInactivosByDepartamentoSuccess, GetTotalActivosInactivosByDepartamentoError);
     };
     $scope.GetTotalActivosInactivosByFacultad = function(idFacultad){
         UsuariosService.GetTotalActivosInactivosByFacultad(idFacultad).then(GetTotalActivosInactivosByFacultadSuccess, GetTotalActivosInactivosByFacultadError);
     };
         
-    $scope.GetTotalActividadesByTipoActividadFacultad = function(idFacultad){
-        HomeVicerectorService.GetTotalActividadesByTipoActividadFacultad(idFacultad).then(GetTotalActividadesByTipoActividadFacultadSuccess, GetTotalActividadesByTipoActividadFacultadError);
+    $scope.GetTotalActividadesByTipoActividadFacultad = function(idFacultad, idSemestre){
+        HomeVicerectorService.GetTotalActividadesByTipoActividadFacultad(idFacultad, idSemestre).then(GetTotalActividadesByTipoActividadFacultadSuccess, GetTotalActividadesByTipoActividadFacultadError);
     };
 
     $scope.registrar = function(usuario){
@@ -197,6 +197,7 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
         });
         return semestre;
     };
+  
     
     /**************** PAGINACION *****************/
     
@@ -240,10 +241,17 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
         $scope.getUsuariosByPagina();
     };
     
+    $scope.changeSemestre = function(semestre){
+        $scope.semestre = semestre;
+        $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0, $scope.semestre.nidSemestre);
+        $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad, $scope.semestre.nidSemestre);
+        $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad, $scope.semestre.nidSemestre);
+    };
+    
     $scope.getUsuariosByPagina();
-    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0);
-    $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad);
-    $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad);
+    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0, 0);
+    $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad, 0);
+    $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad, 0);
     $scope.getSemestres();
     
     /******************* EXPORTAR ARCHIVOS *****************/

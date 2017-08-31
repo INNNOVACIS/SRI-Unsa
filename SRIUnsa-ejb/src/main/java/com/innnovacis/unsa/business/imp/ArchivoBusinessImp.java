@@ -28,6 +28,7 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
 
     @Override
     public int Insertar(SRIArchivo entidad) {
+           log.info("INICIO INSERTAR ARCHIVO ");
         int id = -1;
         try{
             entidad = archivoDao.Insert(entidad);
@@ -35,45 +36,55 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
                     
         }
         catch(Exception ex){
-            
+            log.info("PRUEBAAAA LOGGGG" + ex.getMessage());
         }
+        
+                   log.info("FINAL INSERTAR ARCHIVO ");
         return id;
     }
 
     @Override
     public boolean Update(SRIArchivo entidad) {
+                 log.info("INICIO ACTUALIZAR ARCHIVO ");
         boolean respuesta = false;
          try{
             archivoDao.Update(entidad);
             respuesta = true;
         }
         catch(Exception ex){
-            
+            log.info("PRUEBAAAA LOGGGG" + ex.getMessage());
         }
+            log.info("FINAL ACTUALIZAR ARCHIVO ");
          return respuesta;
-        
+       
     }
 
     @Override
     public boolean Delete(int idEntidad) {
+                   log.info("INICIO ELIMINAR ARCHIVO ");
         boolean respuesta = false;
          try{
             respuesta = archivoDao.Delete(idEntidad);
         }
         catch(Exception ex){
-            System.out.println("Error ---> " + ex.getMessage());
+            log.info("PRUEBAAAA LOGGGG" + ex.getMessage());
         }
+         
+                          log.info("FINAL ELIMINAR ARCHIVO ");
          return respuesta;
     }
 
     @Override
     public SRIArchivo Get(int idEntidad) {
+                  log.info("INICIO Get  ");
         SRIArchivo respuesta = null;
          try{
             respuesta = archivoDao.GetById(idEntidad);
         }
         catch(Exception ex){
         }
+         
+          log.info("FINAL Get  ");
          return respuesta;
     }
 
@@ -90,23 +101,30 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
 
     @Override
     public Response descargarArchivo(int id) {
+                       log.info("INICIO DESCARGAR ARCHIVO ");
         Response respuesta = null;
         try{
             respuesta = archivoDao.descargarArchivo(id);
         }
         catch(Exception ex){
+                log.info("PRUEBAAAA LOGGGG" + ex.getMessage());
         }
+        
+                    log.info("FINAL DESCARGAR ARCHIVO ");
         return respuesta;
     }
 
     @Override
     public List<SRIArchivoUtil> GetArchivosById(int id) {
+          log.info("INICIO GetArchivosById ");
         List<SRIArchivoUtil> respuesta = null;
         try{
             respuesta = archivoDao.GetArchivosById(id);
         }
         catch(Exception ex){
+                log.info("PRUEBAAAA LOGGGG" + ex.getMessage());
         }
+               log.info("FINAL GetArchivosById ");
         return respuesta;
     }
 
@@ -117,7 +135,7 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
             respuesta = archivoDao.GetTotalPaginacion(object);
         }
         catch(Exception ex){
-            System.out.println("Error =========> " + ex.getMessage());
+            log.info("PRUEBAAAA LOGGGG" + ex.getMessage());
         }
         return respuesta;
     }
@@ -129,7 +147,7 @@ public class ArchivoBusinessImp implements IArchivoBusiness {
             respuesta = archivoDao.GetPagina(object);
         }
         catch(Exception ex){
-            System.out.println("Error =========> " + ex.getMessage());
+            log.info("PRUEBAAAA LOGGGG" + ex.getMessage());
         }
         return respuesta;
     }

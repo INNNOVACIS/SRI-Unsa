@@ -186,14 +186,14 @@ public class ActividadInvestigacionRestService {
     }
     
     @GET
-    @Path("/GetTotalActividadesByTipoActividad")
+    @Path("/GetTotalActividadesByTipoActividad/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetTotalActividadesByTipoActividad(){
+    public Response GetTotalActividadesByTipoActividad(@PathParam("id") int idSemestre){
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
         List<SRITotalTipoActividad>  totalTipoActividades = null;
         try {
-            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
+            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad(idSemestre);
             respuesta.put("body", totalTipoActividades);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "GetTotalActividadesByTipoActividad - GetAll : {0}", totalTipoActividades.toString());
@@ -205,14 +205,14 @@ public class ActividadInvestigacionRestService {
     }
     
     @GET
-    @Path("GetTotalActividadesByTipoActividadFacultad/{id:[0-9][0-9]*}")
+    @Path("GetTotalActividadesByTipoActividadFacultad/{id:[0-9][0-9]*}/{idSemestre:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetTotalActividadesByTipoActividadFacultad(@PathParam("id") int id){
+    public Response GetTotalActividadesByTipoActividadFacultad(@PathParam("id") int id, @PathParam("idSemestre") int idSemestre){
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
         List<SRITotalTipoActividad>  totalTipoActividades = null;
         try {
-            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(id);
+            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadFacultad(id, idSemestre);
             respuesta.put("body", totalTipoActividades);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "GetTotalActividadesByTipoActividadFacultad - GetAll : {0}", totalTipoActividades.toString());
@@ -244,14 +244,14 @@ public class ActividadInvestigacionRestService {
     
     
     @GET
-    @Path("GetActivosInactivosByFacultad/{idTipoInvestigacion:[0-9][0-9]*}")
+    @Path("GetActivosInactivosByFacultad/{idTipoInvestigacion:[0-9][0-9]*}/{idSemestre:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetActivosInactivosByFacultad(@PathParam("idTipoInvestigacion") int idTipoInvestigacion){
+    public Response GetActivosInactivosByFacultad(@PathParam("idTipoInvestigacion") int idTipoInvestigacion, @PathParam("idSemestre") int idSemestre){
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
         List<SRIDocentesActivosInactivosFacultad>  totalTipoActividades = null;
         try {
-            totalTipoActividades = actividadInvestigacionBusiness.GetActivosInactivosByFacultad(idTipoInvestigacion);
+            totalTipoActividades = actividadInvestigacionBusiness.GetActivosInactivosByFacultad(idTipoInvestigacion, idSemestre);
             respuesta.put("body", totalTipoActividades);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "GetActivosInactivosByFacultad  : {0}", totalTipoActividades.toString());
@@ -263,14 +263,14 @@ public class ActividadInvestigacionRestService {
     }
     
     @GET
-    @Path("GetTotalActivosInactivosByDepartamento/{id:[0-9][0-9]*}/{idTipoInvestigacion:[0-9][0-9]*}")
+    @Path("GetTotalActivosInactivosByDepartamento/{id:[0-9][0-9]*}/{idTipoInvestigacion:[0-9][0-9]*}/{idSemestre:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetTotalActivosInactivosByDepartamento(@PathParam("id") int id, @PathParam("idTipoInvestigacion") int idTipoInvestigacion){
+    public Response GetTotalActivosInactivosByDepartamento(@PathParam("id") int id, @PathParam("idTipoInvestigacion") int idTipoInvestigacion, @PathParam("idSemestre") int idSemestre){
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
         List<SRIDocentesActivosInactivosFacultad>  totalTipoActividades = null;
         try {
-            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActivosInactivosByDepartamento(id, idTipoInvestigacion);
+            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActivosInactivosByDepartamento(id, idTipoInvestigacion, idSemestre);
             respuesta.put("body", totalTipoActividades);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "GetActivosInactivosByFacultad  : {0}", totalTipoActividades.toString());
@@ -282,14 +282,16 @@ public class ActividadInvestigacionRestService {
     }
     
     @GET
-    @Path("GetTotalActivosInactivosHomeDepartamento/{idDepartamento:[0-9][0-9]*}/{idTipoInvestigacion:[0-9][0-9]*}")
+    @Path("GetTotalActivosInactivosHomeDepartamento/{idDepartamento:[0-9][0-9]*}/{idTipoInvestigacion:[0-9][0-9]*}/{idSemestre:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetTotalActivosInactivosHomeDepartamento(@PathParam("idDepartamento") int idDepartamento, @PathParam("idTipoInvestigacion") int idTipoInvestigacion){
+    public Response GetTotalActivosInactivosHomeDepartamento(@PathParam("idDepartamento") int idDepartamento, 
+                                                             @PathParam("idTipoInvestigacion") int idTipoInvestigacion,
+                                                             @PathParam("idSemestre") int idSemestre){
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
         List<SRIDocentesActivosInactivosFacultad>  totalTipoActividades = null;
         try {
-            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion);
+            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion, idSemestre);
             respuesta.put("body", totalTipoActividades);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "GetTotalActivosInactivosHomeDepartamento Success : {0}", totalTipoActividades.toString());

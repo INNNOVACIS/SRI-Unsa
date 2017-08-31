@@ -1,6 +1,6 @@
 investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'UsuariosService', '$location', 
-    'SharedService', 'HomeVicerectorService', '$localStorage',function($log, $scope, UsuariosService, $location, 
-    SharedService, HomeVicerectorService, $localStorage) {
+    'SharedService', 'HomeVicerectorService', '$localStorage', 'SemestreService',function($log, $scope, UsuariosService, $location, 
+    SharedService, HomeVicerectorService, $localStorage, SemestreService) {
 
     $scope.sharedService = SharedService;
     $scope.users = [];
@@ -12,6 +12,21 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     $scope.currentTipo = 0;
     $scope.currentFacultad = false;
     $scope.loader = false;
+    
+    var getSemestreServiceSuccess = function(response){
+    	$log.debug("GetSemestre - Success");
+        console.log("Respuesta :: ", response);
+    	$scope.semestres = response;
+        $scope.semestre = verificarSemestre($scope.semestres);
+    };
+    var getSemestreServiceError = function(response){
+     	$log.debug("GetSemestre - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.getSemestres = function(){
+      	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
+    };
     
     var GetTotalDocentesActivosInactivosSuccess = function(response){
         $log.debug("GetTotalDocentesActivosInactivos - Success");
@@ -52,12 +67,12 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     };
     
     
-    $scope.GetTotalActividadesByTipoActividad = function(){
-        HomeVicerectorService.GetTotalActividadesByTipoActividad().then(GetTotalActividadesByTipoActividadSuccess, GetTotalActividadesByTipoActividadError);
+    $scope.GetTotalActividadesByTipoActividad = function(idSemestre){
+        HomeVicerectorService.GetTotalActividadesByTipoActividad(idSemestre).then(GetTotalActividadesByTipoActividadSuccess, GetTotalActividadesByTipoActividadError);
     };
     
-    $scope.GetActivosInactivosByFacultad = function(idTipoInvestigacion){
-        HomeVicerectorService.GetActivosInactivosByFacultad(idTipoInvestigacion).then(GetActivosInactivosByFacultadSuccess, GetActivosInactivosByFacultadError);
+    $scope.GetActivosInactivosByFacultad = function(idTipoInvestigacion, idSemestre){
+        HomeVicerectorService.GetActivosInactivosByFacultad(idTipoInvestigacion, idSemestre).then(GetActivosInactivosByFacultadSuccess, GetActivosInactivosByFacultadError);
     };
     
     $scope.verDetalleDocente = function(usuario){
@@ -93,8 +108,8 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
         $scope.getUsuariosByPagina();
     };
     
-    $scope.GetTotalDocentesActivosInactivos = function(){
-        UsuariosService.GetTotalDocentesActivosInactivos().then(GetTotalDocentesActivosInactivosSuccess, GetTotalDocentesActivosInactivosError);
+    $scope.GetTotalDocentesActivosInactivos = function(semestre){
+        UsuariosService.GetTotalDocentesActivosInactivos(semestre).then(GetTotalDocentesActivosInactivosSuccess, GetTotalDocentesActivosInactivosError);
     };
         
     $scope.clickBuscar = function(){
@@ -116,6 +131,17 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
         var total = docentes.nactivos + docentes.ninactivos;
         $scope.activo = (docentes.nactivos * 100 / total) + "%";
         $scope.inactivo = (docentes.ninactivos * 100 / total) + "%";
+    };
+    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
     };
     
     /**************** PAGINACION *****************/
@@ -154,14 +180,25 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     $scope.getUsuariosByPagina = function(){
         $scope.loader = true;
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
+                          idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion,
+                          idSemestre: $scope.idSemestre}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     
+    $scope.changeSemestre = function(semestre){
+        $scope.semestre = semestre;
+        $scope.GetTotalDocentesActivosInactivos($scope.semestre.nidSemestre);
+        $scope.GetTotalActividadesByTipoActividad($scope.semestre.nidSemestre);
+        $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion, $scope.semestre.nidSemestre);
+    };
+     
+    $scope.GetTotalDocentesActivosInactivos(0);
+    $scope.GetTotalActividadesByTipoActividad(0);
+    $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion, 0); //filtrar por actividad no filtra tipoActividad = 0
     $scope.getUsuariosByPagina();
-    $scope.GetTotalDocentesActivosInactivos();
-    $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion); //filtrar por actividad no filtra tipoActividad = 0
-    $scope.GetTotalActividadesByTipoActividad();
+    $scope.getSemestres();
+    
+    
     
     /******************* EXPORTAR ARCHIVOS *****************/
     

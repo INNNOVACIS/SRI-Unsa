@@ -3,13 +3,13 @@
  */
 investigacionApp.service("HomeVicerectorService", function(SRIUnsaConfig, $log, $http, $q) {
 	
-    this.GetTotalActividadesByTipoActividad = function() {
+    this.GetTotalActividadesByTipoActividad = function(idSemestre) {
         $log.debug("HomeVicerectorService - GetTotalActividadesByTipoActividad");
 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetTotalActividadesByTipoActividad'
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetTotalActividadesByTipoActividad/' + idSemestre
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			
@@ -18,13 +18,13 @@ investigacionApp.service("HomeVicerectorService", function(SRIUnsaConfig, $log, 
         return deferred.promise;
     };
     
-    this.GetTotalActividadesByTipoActividadFacultad = function(idFacultad) {
+    this.GetTotalActividadesByTipoActividadFacultad = function(idFacultad, idSemestre) {
         $log.debug("HomeVicerectorService - GetTotalActividadesByTipoActividadFacultad");
 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetTotalActividadesByTipoActividadFacultad/' + idFacultad
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetTotalActividadesByTipoActividadFacultad/' + idFacultad + '/' + idSemestre
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			
@@ -33,13 +33,13 @@ investigacionApp.service("HomeVicerectorService", function(SRIUnsaConfig, $log, 
         return deferred.promise;
     };
     
-    this.GetActivosInactivosByFacultad = function(idTipoInvestigacion) {
+    this.GetActivosInactivosByFacultad = function(idTipoInvestigacion, idSemestre) {
         $log.debug("HomeVicerectorService - GetActivosInactivosByFacultad");
 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetActivosInactivosByFacultad/' + idTipoInvestigacion
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetActivosInactivosByFacultad/' + idTipoInvestigacion + '/' + idSemestre
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			
@@ -48,13 +48,13 @@ investigacionApp.service("HomeVicerectorService", function(SRIUnsaConfig, $log, 
         return deferred.promise;
     };
     
-    this.GetTotalActivosInactivosByDepartamento = function(idFacultad, idTipoInvestigacion) {
+    this.GetTotalActivosInactivosByDepartamento = function(idFacultad, idTipoInvestigacion, idSemestre) {
         $log.debug("HomeVicerectorService - GetTotalActivosInactivosByDepartamento");
 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetTotalActivosInactivosByDepartamento/' + idFacultad + '/' + idTipoInvestigacion
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetTotalActivosInactivosByDepartamento/' + idFacultad + '/' + idTipoInvestigacion + '/' + idSemestre
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			

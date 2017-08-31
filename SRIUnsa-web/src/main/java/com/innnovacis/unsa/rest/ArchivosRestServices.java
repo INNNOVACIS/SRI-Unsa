@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -44,6 +45,9 @@ public class ArchivosRestServices {
     
     @Inject
     private Convert convert;
+    
+    @Inject
+    private Logger log;
     
     @POST
     @Path("/paginacionArchivos")
@@ -94,6 +98,8 @@ public class ArchivosRestServices {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response actualizarArchivo(MultipartFormDataInput input) throws SQLException           
     {
+        
+          log.info("INICIO ACTUALIZAR ARCHIVO REST  ");
         SRIArchivo entidad = new SRIArchivo();
         String fileName = "";
 
@@ -108,11 +114,12 @@ public class ArchivosRestServices {
                 archivoBusiness.Update(entidad);
             } catch (IOException e) {
                 e.printStackTrace();
+                 log.info("FIN ACTUALIZAR ARCHIVO REST  "+e.getMessage());
             }
         }
         
         String output = "File saved to server location : " + fileName;        
-
+      log.info("FIN ACTUALIZAR ARCHIVO REST  ");
         return Response.status(200).entity(output).build();
     }
     
@@ -120,7 +127,7 @@ public class ArchivosRestServices {
     @Path("/subirArchivos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response SubirArchivo(MultipartFormDataInput input){
-        
+         log.info("INICIO REST SubirArchivo");
         SRIArchivo archivo = new SRIArchivo();
         String fileName = "";
         int idPlanificacion = 0;
@@ -134,9 +141,10 @@ public class ArchivosRestServices {
                 InputStream istream = inputPart.getBody(InputStream.class,null);
                 archivo.setNIdPlanificacion(convert.InputStreamToInt(istream));
             } catch (IOException e) {
+                log.info("mensaje rest" + e.getMessage());
             }
         }
-        
+                log.info("MEDIO  REST SubirArchivo");
         for (InputPart inputPart : inPart) {
             try {                
                 MultivaluedMap<String, String> headers = inputPart.getHeaders();
@@ -146,9 +154,11 @@ public class ArchivosRestServices {
                 archivo.setBlobArchivo(convert.InputStreamToBlob(istream));
                 archivoBusiness.Insertar(archivo);
             } catch (IOException e) {
+                            log.info("MEDIO  REST SubirArchivo");
+                log.info("mensaje rest" + e.getMessage());
             }
         }
-        
+        log.info("FINAL REST SubirArchivo");
         String output = "File saved to server location : " + fileName; 
         return Response.status(200).entity(output).build();
     }

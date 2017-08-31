@@ -74,15 +74,18 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
       	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
     };
     
-    $scope.GetTotalActivosInactivosByDepartamento = function(idDepartamento, idTipoInvestigacion){
-        HomeDirectorDepartamentoService.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion).then(GetTotalActivosInactivosByDepartamentoSuccess, GetTotalActivosInactivosByDepartamentoError);
+    $scope.GetTotalActivosInactivosByDepartamento = function(idDepartamento, idTipoInvestigacion, idSemestre){
+        HomeDirectorDepartamentoService.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion, idSemestre)
+                    .then(GetTotalActivosInactivosByDepartamentoSuccess, GetTotalActivosInactivosByDepartamentoError);
     };
-    $scope.GetTotalActivosInactivosHomeDepartamento = function(idDepartamento, idTipoInvestigacion){
-        HomeDirectorDepartamentoService.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion).then(GetTotalActivosInactivosHomeDepartamentoSuccess, GetTotalActivosInactivosHomeDepartamentoError);
+    $scope.GetTotalActivosInactivosHomeDepartamento = function(idDepartamento, idTipoInvestigacion, idSemestre){
+        HomeDirectorDepartamentoService.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion, idSemestre)
+                    .then(GetTotalActivosInactivosHomeDepartamentoSuccess, GetTotalActivosInactivosHomeDepartamentoError);
     };
         
-    $scope.GetTotalActividadesByTipoActividadDepartamento = function(idDepartamento){
-        HomeDirectorDepartamentoService.GetTotalActividadesByTipoActividadDepartamento(idDepartamento).then(GetTotalActividadesByTipoActividadDepartamentoSuccess, GetTotalActividadesByTipoActividadDepartamentoError);
+    $scope.GetTotalActividadesByTipoActividadDepartamento = function(idDepartamento, idSemestre){
+        HomeDirectorDepartamentoService.GetTotalActividadesByTipoActividadDepartamento(idDepartamento, idSemestre)
+                    .then(GetTotalActividadesByTipoActividadDepartamentoSuccess, GetTotalActividadesByTipoActividadDepartamentoError);
     };
 
     $scope.registrar = function(usuario){
@@ -192,7 +195,7 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
     $scope.getUsuariosByPagina = function(){
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
                           idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
-                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+                          idTipoInvestigacion : $scope.idTipoInvestigacion, idSemestre: $scope.idSemestre};
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     
@@ -208,10 +211,20 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
         ActividadesGeneradasService.enviarInformeDepartamento(pagina).then(enviarInformeDepartamentoSuccess, enviarInformeDepartamentoError);
     };
     
+    $scope.changeSemestre = function(semestre){
+        $scope.semestre = semestre;
+        
+        $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, $scope.semestre.nidSemestre);
+        $scope.GetTotalActividadesByTipoActividadDepartamento($scope.sharedService.usuarioLogin.idDepartamento, $scope.semestre.nidSemestre);
+        $scope.GetTotalActivosInactivosHomeDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, $scope.semestre.nidSemestre);
+        
+    };
+       
+    
     $scope.getUsuariosByPagina();
-    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0);
-    $scope.GetTotalActivosInactivosHomeDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0);
-    $scope.GetTotalActividadesByTipoActividadDepartamento($scope.sharedService.usuarioLogin.idDepartamento);
+    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, 0);
+    $scope.GetTotalActivosInactivosHomeDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, 0);
+    $scope.GetTotalActividadesByTipoActividadDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0);
     $scope.getSemestres();
     
     var getFiltros = function(){
@@ -225,7 +238,6 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
         };
         return filtro;
     };
-        
         
     /******************* EXPORTAR ARCHIVOS *****************/
     

@@ -223,7 +223,7 @@ public class UsuarioDaoImp implements IUsuarioDao {
     }
 
     @Override
-    public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos() {
+    public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos(int idSemestre) {
         SRIDocenteActivosInactivos respuesta = null;
         try {
             Query query = em.createNativeQuery("{call GetTotalDocentesActivosInactivos()}", SRIDocenteActivosInactivos.class);

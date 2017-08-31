@@ -755,10 +755,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad() {
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad(int idSemestre) {
         List<SRITotalTipoActividad> respuesta = null;
         try{
-            respuesta = actividadInvestigacionDao.GetTotalActividadesByTipoActividad();
+            respuesta = actividadInvestigacionDao.GetTotalActividadesByTipoActividad(idSemestre);
         }
         catch(Exception ex){
             throw ex;
@@ -767,10 +767,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion) {
+    public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> respuesta = null;
         try{
-            respuesta = actividadInvestigacionDao.GetActivosInactivosByFacultad(idTipoInvestigacion);
+            respuesta = actividadInvestigacionDao.GetActivosInactivosByFacultad(idTipoInvestigacion, idSemestre);
         }
         catch(Exception ex){
             throw ex;
@@ -779,10 +779,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad) {
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad, int idSemestre) {
         List<SRITotalTipoActividad> respuesta = null;
         try{
-            respuesta = actividadInvestigacionDao.GetTotalActividadesByTipoActividadFacultad(idFacultad);
+            respuesta = actividadInvestigacionDao.GetTotalActividadesByTipoActividadFacultad(idFacultad, idSemestre);
         }
         catch(Exception ex){
             throw ex;
@@ -791,10 +791,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion) {
+    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> respuesta = null;
         try{
-            respuesta = actividadInvestigacionDao.GetTotalActivosInactivosByDepartamento(idFacultad, idTipoInvestigacion);
+            respuesta = actividadInvestigacionDao.GetTotalActivosInactivosByDepartamento(idFacultad, idTipoInvestigacion, idSemestre);
         }
         catch(Exception ex){
             throw ex;
@@ -803,10 +803,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion) {
+    public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> respuesta = null;
         try{
-            respuesta = actividadInvestigacionDao.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion);
+            respuesta = actividadInvestigacionDao.GetTotalActivosInactivosHomeDepartamento(idDepartamento, idTipoInvestigacion, idSemestre);
         }
         catch(Exception ex){
             throw ex;

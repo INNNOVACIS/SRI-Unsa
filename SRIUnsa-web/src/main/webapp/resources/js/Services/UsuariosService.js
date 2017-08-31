@@ -145,13 +145,13 @@ investigacionApp.service("UsuariosService", function (SRIUnsaConfig, $log, $http
         return deferred.promise;
     };
 
-    this.GetTotalDocentesActivosInactivos = function () {
+    this.GetTotalDocentesActivosInactivos = function (idSemestre) {
         $log.debug("Usuario Service - GetTotalDocentesActivosInactivos");
 
         var deferred = $q.defer();
         $http({
             method: 'GET',
-            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetTotalDocentesActivosInactivos',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/usuarios/GetTotalDocentesActivosInactivos/' + idSemestre,
         }).success(function (response) {
             deferred.resolve(response);
         }).error(function (response) {

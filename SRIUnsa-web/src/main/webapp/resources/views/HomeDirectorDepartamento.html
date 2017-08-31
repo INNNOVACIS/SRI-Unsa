@@ -6,6 +6,24 @@
         <div class="col-lg-12" style="margin-top:20px;">   
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-1">Periodo</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-change="changeSemestre(semestre)">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
                     <div class="progress SRI-progress">
                         <div class="progress-bar progress-bar-success SRI-progress-bar" style="width: {{activo}}">
                             <span class="progress-text"> {{ docentes.nactivos}} DOCENTES INVESTIGANDO  </span>
