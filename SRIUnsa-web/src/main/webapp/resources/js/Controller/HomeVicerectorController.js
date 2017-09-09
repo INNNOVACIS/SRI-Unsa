@@ -179,9 +179,16 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     
     $scope.getUsuariosByPagina = function(){
         $scope.loader = true;
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion,
-                          idSemestre: $scope.idSemestre}; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
+        var objPagina = { 
+                currentPage : $scope.currentPage, 
+                rango : $scope.currentRango, 
+                total : $scope.total, 
+                filtro : $scope.buscar, 
+                idFacultad : $scope.idFacultad, 
+                idDepartamento : $scope.idDepartamento, 
+                idTipoInvestigacion : $scope.idTipoInvestigacion,
+                idSemestre: $scope.sharedService.idSemestreActual
+            }; //para la facultad $scope.sharedService.usuario.nidEstructuraOrganizacion
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     
@@ -192,9 +199,9 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
         $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion, $scope.semestre.nidSemestre);
     };
      
-    $scope.GetTotalDocentesActivosInactivos(0);
-    $scope.GetTotalActividadesByTipoActividad(0);
-    $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion, 0); //filtrar por actividad no filtra tipoActividad = 0
+    $scope.GetTotalDocentesActivosInactivos($scope.sharedService.idSemestreActual);
+    $scope.GetTotalActividadesByTipoActividad($scope.sharedService.idSemestreActual);
+    $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion, $scope.sharedService.idSemestreActual); //filtrar por actividad no filtra tipoActividad = 0
     $scope.getUsuariosByPagina();
     $scope.getSemestres();
     
@@ -227,16 +234,33 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
     $scope.descargarPDF = function(){
         $scope.loader = true;
         $scope.sharedService.scrollTop();
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion};
+        var pagina = 
+            { 
+                currentPage : $scope.currentPage, 
+                rango : $scope.currentRango, 
+                total : $scope.total, 
+                filtro : $scope.buscar, 
+                idFacultad : $scope.idFacultad, 
+                idDepartamento : $scope.idDepartamento, 
+                idTipoInvestigacion : $scope.idTipoInvestigacion,
+                idSemestre: $scope.sharedService.idSemestreActual
+            };
         UsuariosService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
     };
     
     $scope.descargarExcel = function(){
         $scope.loader = true;
         $scope.sharedService.scrollTop();
-        var pagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.idFacultad, idDepartamento : $scope.idDepartamento, idTipoInvestigacion : $scope.idTipoInvestigacion};
+        var pagina = { 
+                currentPage : $scope.currentPage, 
+                rango : $scope.currentRango, 
+                total : $scope.total, 
+                filtro : $scope.buscar, 
+                idFacultad : $scope.idFacultad, 
+                idDepartamento : $scope.idDepartamento, 
+                idTipoInvestigacion : $scope.idTipoInvestigacion,
+                idSemestre: $scope.sharedService.idSemestreActual
+            };
         UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
     };
 }]);

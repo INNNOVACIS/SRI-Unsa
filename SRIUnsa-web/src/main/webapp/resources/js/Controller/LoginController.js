@@ -1,6 +1,6 @@
 investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$sce', 'SharedService', 
-    'PrivilegioService', 'LoginService', 'UsuariosService', '$localStorage', function($scope, $location, $log, $sce, SharedService, 
-    PrivilegioService, LoginService, UsuariosService, $localStorage) {
+    'PrivilegioService', 'LoginService', 'UsuariosService', '$localStorage', 'SemestreService', function($scope, $location, $log, $sce, SharedService, 
+    PrivilegioService, LoginService, UsuariosService, $localStorage, SemestreService) {
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -19,8 +19,8 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             if($scope.sharedService.usuarioLogin.codigo === null || $scope.sharedService.usuarioLogin.codigo === ""){
                 $('#modalDni').modal('show');
             }
-            
-            $scope.GetPrivilegiosByIdUsuario($scope.sharedService.usuarioLogin.idUsuario);                
+            $scope.getSemestres();
+                            
         } else {
             alert("Usuario no registrado");
             $scope.loader = false;
@@ -82,6 +82,36 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
     $scope.GetActoresByIdUsuario = function(idUsuario){
         UsuariosService.GetActoresByIdUsuario(idUsuario).then(GetActoresByIdUsuarioSuccess, GetActoresByIdUsuarioError);
     };
+    
+    ///////////////////////////////////////////////////////////////// GET SEMESTRE ACTUAL
+    var getSemestreServiceSuccess = function(response){
+    	$log.debug("GetSemestre - Success");
+        console.log("Respuesta :: ", response);
+        $scope.semestre = verificarSemestre(response);
+        $localStorage.idSemestreActual = $scope.semestre.nidSemestre;
+        $scope.sharedService.idSemestreActual = $localStorage.idSemestreActual;
+        $scope.GetPrivilegiosByIdUsuario($scope.sharedService.usuarioLogin.idUsuario);
+    };
+    var getSemestreServiceError = function(response){
+     	$log.debug("GetSemestre - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
+    };
+    
+    $scope.getSemestres = function(){
+      	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
+    };
+    /////////////////////////////////////////////////////////////////
     
     var seleccionarHome = function(actores){
         var rango = 0;

@@ -1,6 +1,7 @@
 investigacionApp.factory('SharedService', function($location, $localStorage ) {
 
     return {
+        idSemestreActual : $localStorage.idSemestreActual,
         usuarioLogin : $localStorage.usuarioLogin,
         userAutenticado : $localStorage.autenticado,
         privilegios : $localStorage.privilegios,

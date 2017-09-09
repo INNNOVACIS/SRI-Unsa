@@ -193,9 +193,16 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
     };
     
     $scope.getUsuariosByPagina = function(){
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
-                          idTipoInvestigacion : $scope.idTipoInvestigacion, idSemestre: $scope.idSemestre};
+        var objPagina = { 
+            currentPage : $scope.currentPage, 
+            rango : $scope.currentRango, 
+            total : $scope.total, 
+            filtro : $scope.buscar, 
+            idFacultad : $scope.sharedService.usuarioLogin.idFacultad, 
+            idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
+            idTipoInvestigacion : $scope.idTipoInvestigacion, 
+            idSemestre: $scope.sharedService.idSemestreActual
+        };
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     
@@ -222,9 +229,9 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
        
     
     $scope.getUsuariosByPagina();
-    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, 0);
-    $scope.GetTotalActivosInactivosHomeDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, 0);
-    $scope.GetTotalActividadesByTipoActividadDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0);
+    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, $scope.sharedService.idSemestreActual);
+    $scope.GetTotalActivosInactivosHomeDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, $scope.sharedService.idSemestreActual);
+    $scope.GetTotalActividadesByTipoActividadDepartamento($scope.sharedService.usuarioLogin.idDepartamento, $scope.sharedService.idSemestreActual);
     $scope.getSemestres();
     
     var getFiltros = function(){
@@ -265,17 +272,31 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
     
     $scope.descargarPDF = function(){
         $scope.loader = true;
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
-                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+        var objPagina = { 
+                currentPage : $scope.currentPage, 
+                rango : $scope.currentRango, 
+                total : $scope.total, 
+                filtro : $scope.buscar, 
+                idFacultad : $scope.sharedService.usuarioLogin.idFacultad, 
+                idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
+                idTipoInvestigacion : $scope.idTipoInvestigacion,
+                idSemestre: $scope.sharedService.idSemestreActual
+            };
         UsuariosService.descargarHomeDirectorDepartamentoPDF(objPagina).then(descargarPDFSuccess, descargarPDFError);
     };
     
     $scope.descargarExcel = function(){
         $scope.loader = true;
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
-                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+        var objPagina = { 
+                currentPage : $scope.currentPage, 
+                rango : $scope.currentRango, 
+                total : $scope.total, 
+                filtro : $scope.buscar, 
+                idFacultad : $scope.sharedService.usuarioLogin.idFacultad, 
+                idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
+                idTipoInvestigacion : $scope.idTipoInvestigacion,
+                idSemestre: $scope.sharedService.idSemestreActual
+            };
         UsuariosService.descargarHomeDirectorDepartamentoExcel(objPagina).then(descargarExcelSuccess, descargarExcelError);
     };
     

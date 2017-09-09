@@ -231,9 +231,16 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     };
     
     $scope.getUsuariosByPagina = function(){
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
-                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+        var objPagina = { 
+            currentPage : $scope.currentPage, 
+            rango : $scope.currentRango, 
+            total : $scope.total, 
+            filtro : $scope.buscar, 
+            idFacultad : $scope.sharedService.usuarioLogin.idFacultad, 
+            idDepartamento : $scope.idDepartamento, 
+            idTipoInvestigacion : $scope.idTipoInvestigacion,
+            idSemestre: $scope.sharedService.idSemestreActual
+        };
         UsuariosService.GetUsuariosColor(objPagina).then(paginacionUsuarioSuccess, paginacionUsuarioError);
     };
     
@@ -249,9 +256,9 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     };
     
     $scope.getUsuariosByPagina();
-    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0, 0);
-    $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad, 0);
-    $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad, 0);
+    $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0, $scope.sharedService.idSemestreActual);
+    $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad, $scope.sharedService.idSemestreActual);
+    $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad, $scope.sharedService.idSemestreActual);
     $scope.getSemestres();
     
     /******************* EXPORTAR ARCHIVOS *****************/
@@ -280,17 +287,32 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     
     $scope.descargarPDF = function(){
         $scope.loader = true;
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
-                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+        var objPagina = { 
+                currentPage : $scope.currentPage, 
+                rango : $scope.currentRango, 
+                total : $scope.total, 
+                filtro : $scope.buscar, 
+                idFacultad : $scope.sharedService.usuarioLogin.idFacultad, 
+                idDepartamento : $scope.idDepartamento, 
+                idTipoInvestigacion : $scope.idTipoInvestigacion,
+                idSemestre: $scope.sharedService.idSemestreActual
+            };
         UsuariosService.descargarHomeDirectorUnidadPDF(objPagina).then(descargarPDFSuccess, descargarPDFError);
     };
     
     $scope.descargarExcel = function(){
         $scope.loader = true;
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar, 
-                          idFacultad : $scope.sharedService.usuarioLogin.idFacultad, idDepartamento : $scope.idDepartamento, 
-                          idTipoInvestigacion : $scope.idTipoInvestigacion};
+        var objPagina = 
+            { 
+                currentPage : $scope.currentPage, 
+                rango : $scope.currentRango, 
+                total : $scope.total, 
+                filtro : $scope.buscar, 
+                idFacultad : $scope.sharedService.usuarioLogin.idFacultad, 
+                idDepartamento : $scope.idDepartamento, 
+                idTipoInvestigacion : $scope.idTipoInvestigacion,
+                idSemestre: $scope.sharedService.idSemestreActual
+            };
         UsuariosService.descargarHomeDirectorUnidadExcel(objPagina).then(descargarExcelSuccess, descargarExcelError);
     };
     
