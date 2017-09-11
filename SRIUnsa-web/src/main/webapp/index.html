@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="google-signin-client_id" content="40582335062-j0cn6k4scrj5d61mgqvkgbkbgr4cjgkc.apps.googleusercontent.com">
     <title>Sistema de Registro de Investigaciones</title>
 
     <!-- ESTILOS CSS -->
@@ -16,6 +17,9 @@
     <link rel="stylesheet" type="text/css" href="resources/css/Menu/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="resources/css/ngToast/ngToast.min.css">
     <link rel="stylesheet" type="text/css" href="resources/css/ngToast/ngToast-animations.min.css">
+    
+    <!-- API GOOGLE -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     
     <!-- TREEGRID -->
 
@@ -82,6 +86,7 @@
     <script type="text/javascript" src="resources/js/Controller/FlujoAristaController.js"></script>
     <script type="text/javascript" src="resources/js/Controller/PlantillaDocumentoController.js"></script>
     <script type="text/javascript" src="resources/js/Controller/ActividadesRevisadasMasivasController.js"></script>
+    <script type="text/javascript" src="resources/js/Controller/CategoriaDocenteController.js"></script>
     
 <!--    <script type="text/javascript" src="resources/js/Controller/ActividadesGeneradasController.min.js"></script>
     <script type="text/javascript" src="resources/js/Controller/ActividadesRevisadasController.min.js"></script>
@@ -156,6 +161,7 @@
     <script type="text/javascript" src="resources/js/Services/ReportesService.js"></script>
     <script type="text/javascript" src="resources/js/Services/HeaderService.js"></script>
     <script type="text/javascript" src="resources/js/Services/SharedService.js"></script>
+    <script type="text/javascript" src="resources/js/Services/CategoriaDocenteService.js"></script>
     
     <!-- DIRECTIVAS -->
     
@@ -166,7 +172,7 @@
     <script type="text/javascript" src="resources/js/Directivas/FormSubmitValidationDirectiva.js"></script>
     <script type="text/javascript" src="resources/js/Directivas/uploadFileDirective.js"></script>
     <script type="text/javascript" src="resources/js/Directivas/ValidFileDirectiva.js"></script>
-    
+    <script type="text/javascript" src="resources/js/Directivas/NumericOnly.js"></script>
     
     <!-- Factorias -->
 

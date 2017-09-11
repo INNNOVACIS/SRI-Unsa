@@ -247,14 +247,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+<!--                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Duraci&oacute;n del Proyecto</label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" ng-model="duracion" />
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="row" ng-show="mostrarActividad[3]">
                             <div class="col-md-12">
@@ -302,6 +302,23 @@
                                     <div class="col-md-10">
                                         <input class="form-control" ng-model="nombrePublicacion" />
                                     </div>                            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Duraci&oacute;n de la actividad</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" ng-model="duracion" numeric-only/>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select 
+                                            class="form-control" 
+                                            ng-model="modelUnidadTiempo" 
+                                            ng-options="unidad as unidad.label for unidad in unidadTiempo">
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>

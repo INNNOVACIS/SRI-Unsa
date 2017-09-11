@@ -33,6 +33,12 @@
     $scope.directores = $scope.sharedService.usuarioHome;
     $scope.director.snombre = $scope.sharedService.usuarioHome[0].nombreDirector;
     $scope.director.sapellido = $scope.sharedService.usuarioHome[0].apellidoDirector;
+    
+    $scope.unidadTiempo = [
+        { label: 'Días', value: 1 },
+        { label: 'Meses', value: 30 },
+        { label: 'Años', value: 365 }
+    ]; 
 
     console.log("USUARIOHOME :: ", $scope.sharedService.usuarioHome);
 
@@ -326,7 +332,7 @@
                     snumeroContrato : $scope.numeroContrato,
                     snombrePublicacion : $scope.nombrePublicacion,
                     sestadoProduccion : $scope.estadoProduccion,
-                    sduracionProyecto : $scope.duracion,
+                    sduracionProyecto : $scope.duracion * $scope.modelUnidadTiempo.value,
                     scodigo : $scope.codigo,
                     splazoEjecucion : $scope.plazoEjecucion,
                     suserCreacion : $scope.sharedService.usuarioLogin.nombreUsuario,
