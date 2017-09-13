@@ -60,6 +60,10 @@ investigacionApp.config(function($routeProvider){
 		templateUrl : 'resources/views/ActividadesPendientes.html',
 		controller : 'ActividadesPendientesController'
 	})
+        .when('/modulo/Exoneracion',{
+		templateUrl : 'resources/views/ModuloExoneracion.html',
+		controller : 'ModuloExoneracionController'
+	})
         .when('/relacionDocentes/sinActividad',{
 		templateUrl : 'resources/views/DocentesInactivos.html',
 		controller : 'DocentesInactivosController'
@@ -103,6 +107,10 @@ investigacionApp.config(function($routeProvider){
         .when('/categoriadocente',{
 		templateUrl : 'resources/views/CategoriaDocente.html',
 		controller : 'CategoriaDocenteController'
+	})
+        .when('/exoneracion',{
+		templateUrl : 'resources/views/Exoneracion.html',
+		controller : 'ExoneracionController'
 	})
         .when('/tipoinvestigador',{
 		templateUrl : 'resources/views/TipoInvestigador.html',
