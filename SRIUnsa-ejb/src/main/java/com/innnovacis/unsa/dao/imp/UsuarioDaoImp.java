@@ -81,6 +81,17 @@ public class UsuarioDaoImp implements IUsuarioDao {
         }
         return entidad;
     }
+    
+    @Override
+    public SRIUsuario GetByIdPersona(int idEntidad) {
+        SRIUsuario entidad = null;
+        try{
+            entidad = em.createNamedQuery("SRIUsuario.GetByIdPersona", SRIUsuario.class).setParameter("idEntidad", idEntidad).getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return entidad;
+    }
 
     @Override
     public List<SRIUsuario> GetAll() {
@@ -326,6 +337,34 @@ public class UsuarioDaoImp implements IUsuarioDao {
             throw ex;
         }
         return docente;
+    }
+    
+    @Override
+    public List<SRIUsuarioPersona> GetListaUsuarioExoneracion(SRIPaginacionObject entidad) {
+        List<SRIUsuarioPersona> listUsuarios = null;
+        try {
+            Query query = em.createNativeQuery("{call GetUsuarioExonerados(?1,?2,?3)}", SRIUsuarioPersona.class)
+                        .setParameter(1, entidad.getFiltro())
+                        .setParameter(2, entidad.getRango())
+                        .setParameter(3, entidad.getCurrentPage());
+            listUsuarios = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return listUsuarios;
+    }
+
+    @Override
+    public int GetTotalUsuarioExoneracion(SRIPaginacionObject entidad) {
+        BigInteger total = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalUsuarioExonerados(?1)}")
+                        .setParameter(1, entidad.getFiltro());
+            total = (BigInteger) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return total.intValue();
     }
 
 }

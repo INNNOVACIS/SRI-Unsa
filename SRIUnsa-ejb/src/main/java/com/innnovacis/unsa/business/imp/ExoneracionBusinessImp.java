@@ -3,7 +3,9 @@ package com.innnovacis.unsa.business.imp;
 
 import com.innnovacis.unsa.business.IExoneracionBusiness;
 import com.innnovacis.unsa.dao.IExoneracionDao;
+import com.innnovacis.unsa.dao.IUsuarioDao;
 import com.innnovacis.unsa.model.SRIExoneracion;
+import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
@@ -18,6 +20,9 @@ public class ExoneracionBusinessImp implements IExoneracionBusiness {
 
     @Inject  
     private IExoneracionDao exoneracionDao;
+    
+    @Inject  
+    private IUsuarioDao usuarioDao;
     
     @Inject
     private Logger log;
@@ -116,6 +121,21 @@ public class ExoneracionBusinessImp implements IExoneracionBusiness {
             respuesta = exoneracionDao.GetPagina(object);
         }
         catch(Exception ex){
+        }
+        return respuesta;
+    }
+
+    @Override
+    public SRIUsuario RegistrarExoneracion(int idPersona, int idExoneracion) {
+        SRIUsuario respuesta = null;
+        try{
+            SRIUsuario usuario = usuarioDao.GetByIdPersona(idPersona);
+            usuario.setNIdExoneracion(idExoneracion);
+            usuarioDao.Update(usuario);
+            respuesta = usuario;
+        }
+        catch(Exception ex){
+            throw ex;
         }
         return respuesta;
     }

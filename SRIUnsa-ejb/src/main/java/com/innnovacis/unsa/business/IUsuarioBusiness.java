@@ -50,4 +50,7 @@ public interface IUsuarioBusiness {
     boolean enviarCodigo(int idUsuario);
     SRIUsuario verificarCodigo(SRIUsuario entidad);
     SRIDocente GetDocenteReporte(int idUsuario);
+    
+    int GetTotalUsuarioExoneracion(SRIPaginacionObject entidad);
+    List<SRIUsuarioPersona> GetListaUsuarioExoneracion(SRIPaginacionObject entidad);
 }

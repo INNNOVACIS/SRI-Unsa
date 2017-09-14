@@ -6,8 +6,11 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IExoneracionBusiness;
+import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIExoneracion;
+import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
+import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +38,9 @@ public class ExoneracionRestService {
 
     @Inject
     private IExoneracionBusiness exoneracionBusiness;
+    
+    @Inject
+    private IUsuarioBusiness usuarioBusiness;
     
     @Inject
     private Logger log;
@@ -157,6 +163,47 @@ public class ExoneracionRestService {
             respuesta.put("body", ex.getMessage());
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(respuesta);
         }
+        return builder.build();
+    }
+    
+    @GET
+    @Path("/RegistrarUsuarioExoneracion/{idPersona:[0-9][0-9]*}/{idExoneracion:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response RegistrarExoneracion(
+            @PathParam("idPersona") int idPersona, 
+            @PathParam("idExoneracion") int idExoneracion
+    ) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIUsuario body = new SRIUsuario();
+        
+        try {
+            body = exoneracionBusiness.RegistrarExoneracion(idPersona, idExoneracion);
+            respuesta.put("body", body);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "RegistrarExoneracion - Success : {0}", body.toString());
+        } catch(Exception ex) {
+            log.log(Level.INFO, "RegistrarExoneracion - Error : {0}{1}", new Object[]{ex.getMessage(), body.toString()});
+            respuesta.put("body", ex.getMessage());
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(respuesta);
+        }
+        
+        return builder.build();
+    }
+    
+    @POST
+    @Path("/paginacionUsuarioExoneracion")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response paginacionUsuarioExoneracion(SRIPaginacionObject object) {
+        int total = usuarioBusiness.GetTotalUsuarioExoneracion(object);
+        List<SRIUsuarioPersona> lista = usuarioBusiness.GetListaUsuarioExoneracion(object);
+
+        Map<String, Object> responseObj = new HashMap<>();
+        responseObj.put("total", total);
+        responseObj.put("lista", lista);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
+        
         return builder.build();
     }
 }

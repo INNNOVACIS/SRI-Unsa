@@ -373,5 +373,29 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         }
         return respuesta;
     }
+
+    @Override
+    public List<SRIUsuarioPersona> GetListaUsuarioExoneracion(SRIPaginacionObject entidad) {
+        List<SRIUsuarioPersona> respuesta = null;
+         try{
+            respuesta = usuarioDao.GetListaUsuarioExoneracion(entidad);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public int GetTotalUsuarioExoneracion(SRIPaginacionObject entidad) {
+        int respuesta = -1;
+        try{
+            respuesta = usuarioDao.GetTotalUsuarioExoneracion(entidad);
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
     
 }

@@ -28,6 +28,7 @@ public interface IUsuarioDao {
     SRIUsuario Update(SRIUsuario entidad);
     boolean Delete(SRIUsuario entidad);
     SRIUsuario GetById(int idEntidad);
+    SRIUsuario GetByIdPersona(int idEntidad);
     List<SRIUsuario> GetAll();
     SRIUsuario GetByIdUsuario(int idUsuario);
     List<SRIFlujoActor> GetActoresByIdUsuario(int idUsuario);
@@ -50,4 +51,7 @@ public interface IUsuarioDao {
     List<SRIUsuarioPersona> GetDirectorDepartamentoByIdDocente(int idUsuario);
     List<SRIUsuarioPersona> GetDirectorUnidadByIdDocente(int idUsuario);
     SRIDocente GetDocenteReporte(int idUsuario);
+    
+    int GetTotalUsuarioExoneracion(SRIPaginacionObject entidad);
+    List<SRIUsuarioPersona> GetListaUsuarioExoneracion(SRIPaginacionObject entidad);
 }

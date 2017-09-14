@@ -23,6 +23,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name="SRIUsuario.GetAll",query="SELECT p FROM SRIUsuario p"),
     @NamedQuery(name="SRIUsuario.GetById",query="SELECT p FROM SRIUsuario p WHERE p.NIdUsuario  = :idEntidad"),
+    @NamedQuery(name="SRIUsuario.GetByIdPersona",query="SELECT p FROM SRIUsuario p WHERE p.NIdPersona  = :idEntidad"),
     @NamedQuery(name="SRIUsuario.Autenticar",query="SELECT p FROM SRIUsuario p WHERE p.SUsuarioLogin = :usuario and p.SUsuarioPassword = :password")
 })
 public class SRIUsuario  extends SRIEntidad implements Serializable  {
@@ -43,6 +44,9 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
     
     @Column(name = "idcategoriausuario" )
     private int NIdCategoriaUsuario;
+    
+    @Column(name = "idexoneracion" )
+    private int NIdExoneracion;
     
     @Column(name = "usuariologin")
     private String SUsuarioLogin;
@@ -89,6 +93,14 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
 
     public void setNIdCategoriaUsuario(int NIdCategoriaUsuario) {
         this.NIdCategoriaUsuario = NIdCategoriaUsuario;
+    }
+
+    public int getNIdExoneracion() {
+        return NIdExoneracion;
+    }
+
+    public void setNIdExoneracion(int NIdExoneracion) {
+        this.NIdExoneracion = NIdExoneracion;
     }
 
     public String getSUsuarioEmail() {
