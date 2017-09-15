@@ -7,6 +7,7 @@ import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.GenerarCodigo;
 import com.innnovacis.unsa.util.SRIDocente;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
+import com.innnovacis.unsa.util.SRIDocenteExoneracion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioHome;
@@ -340,10 +341,10 @@ public class UsuarioDaoImp implements IUsuarioDao {
     }
     
     @Override
-    public List<SRIUsuarioPersona> GetListaUsuarioExoneracion(SRIPaginacionObject entidad) {
-        List<SRIUsuarioPersona> listUsuarios = null;
+    public List<SRIDocenteExoneracion> GetListaUsuarioExoneracion(SRIPaginacionObject entidad) {
+        List<SRIDocenteExoneracion> listUsuarios = null;
         try {
-            Query query = em.createNativeQuery("{call GetUsuarioExonerados(?1,?2,?3)}", SRIUsuarioPersona.class)
+            Query query = em.createNativeQuery("{call GetUsuarioExonerados(?1,?2,?3)}", SRIDocenteExoneracion.class)
                         .setParameter(1, entidad.getFiltro())
                         .setParameter(2, entidad.getRango())
                         .setParameter(3, entidad.getCurrentPage());

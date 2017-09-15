@@ -65,4 +65,19 @@ investigacionApp.service("ModuloExoneracionService", function(SRIUnsaConfig, $lo
         });
         return deferred.promise;
     };
+    
+    this.DeleteExoneracion = function (idUsuario) {
+        $log.debug("ModuloExoneracionService - RegistrarExoneracion");
+
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/exoneracion/EliminarUsuarioExoneracion/' + idUsuario
+        }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
 });

@@ -27,4 +27,5 @@ public interface IExoneracionBusiness {
     List<SRIExoneracion> GetPagina(SRIPaginacionObject object);
     
     SRIUsuario RegistrarExoneracion(int idPersona, int idExoneracion);
+    SRIUsuario DeleteUsuarioExoneracion(int idUsuario);
 }

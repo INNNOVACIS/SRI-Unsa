@@ -28,6 +28,7 @@
                             <th class="colorTextoGrilla">Nombres</th>
                             <th class="colorTextoGrilla">Apellidos</th>
                             <th class="colorTextoGrilla">Email</th>
+                            <th class="colorTextoGrilla">Exoneraci&oacute;n</th>
                             <th width="10%" class="colorTextoGrilla"> Acci&oacute;n</th>
                         </tr>
                     </thead>
@@ -35,10 +36,11 @@
                         <tr ng-repeat="exoneracion in listarExoneracion">
                             <td class="colorTextoGrilla">{{ exoneracion.snombre}}</td>
                             <td class="colorTextoGrilla">{{ exoneracion.sapellido}}</td>
-                            <td class="colorTextoGrilla">{{ exoneracion.susuarioEmail}}</td>
+                            <td class="colorTextoGrilla">{{ exoneracion.semail}}</td>
+                            <td class="colorTextoGrilla">{{ exoneracion.snombreExoneracion}}</td>
                             <td nowrap>
                                 <a class="btn btn-sm btn-primary"
-                                   ng-click="update(exoneracion)"
+                                   ng-click="view(exoneracion)"
                                    data-toggle="modal"
                                    data-backdrop="static" data-keyboard="false"
                                    data-target="#popUpdateExoneracion">
@@ -141,33 +143,24 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Actualizar Exoneracion</h4>
+                <h4 class="modal-title">Detalle de exoneraci&oacute;n</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form name="formUpdateExoneracion" class="form-horizontal">
+                            <form name="formRegistroExoneracion" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Nombre</label>
-                                    <div class="col-md-10">
-                                        <input id="inpDescripcion" ng-model="exoneracion.snombre" 
-                                               type="text" class="form-control" placeholder="Nombre"
-                                               required >
-                                    </div>
+                                    <label class="control-label col-md-3" style="">Docente : </label>
+                                    <label class="control-label col-md-9 SRI-text-default">{{ docenteexoneracion.sapellido }}, {{docenteexoneracion.snombre}}</label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2" style="">Descripci&oacute;n</label>
-                                    <div class="col-md-10">
-                                        <textarea id="textDescripcion"
-                                                  name="textDescripcion" 
-                                                  ng-model="exoneracion.sdescripcion" 
-                                                  class="form-control" 
-                                                  rows="5" 
-                                                  ng-maxlength=5000 
-                                            required>
-                                        </textarea>
-                                    </div>
+                                    <label class="control-label col-md-3" style="">Exoneraci&oacute;n : </label>
+                                    <label class="control-label col-md-9 SRI-text-default">{{ docenteexoneracion.snombreExoneracion }}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="">Descripci&oacute;n : </label>
+                                    <label class="control-label col-md-9 SRI-text-default">{{ docenteexoneracion.sdescripcion }}</label>
                                 </div>
                             </form>
                         </div>
@@ -176,10 +169,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="updateExoneracion()">
-                    <span class="glyphicon glyphicon-update"></span>
-                    Actualizar
-                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                     <span class="glyphicon glyphicon-remove"></span>
                     Cerrar
@@ -211,7 +200,7 @@
                         data-dismiss="modal" 
                         ng-click="deleteExoneracion()">
                     <span class="glyphicon glyphicon-floppy-saved"></span>
-                    Guardar
+                    Aceptar
                 </button>
                 <button type="button" class="btn btn-deafult btn-sm" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remove"></span>

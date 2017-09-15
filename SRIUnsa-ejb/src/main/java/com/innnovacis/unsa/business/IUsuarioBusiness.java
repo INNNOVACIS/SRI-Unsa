@@ -9,6 +9,7 @@ import com.innnovacis.unsa.model.SRIFlujoActor;
 import com.innnovacis.unsa.model.SRIUsuario;
 import com.innnovacis.unsa.util.SRIDocente;
 import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
+import com.innnovacis.unsa.util.SRIDocenteExoneracion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioColor;
 import com.innnovacis.unsa.util.SRIUsuarioHome;
@@ -52,5 +53,5 @@ public interface IUsuarioBusiness {
     SRIDocente GetDocenteReporte(int idUsuario);
     
     int GetTotalUsuarioExoneracion(SRIPaginacionObject entidad);
-    List<SRIUsuarioPersona> GetListaUsuarioExoneracion(SRIPaginacionObject entidad);
+    List<SRIDocenteExoneracion> GetListaUsuarioExoneracion(SRIPaginacionObject entidad);
 }

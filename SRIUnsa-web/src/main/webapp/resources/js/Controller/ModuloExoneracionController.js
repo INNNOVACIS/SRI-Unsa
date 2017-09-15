@@ -4,37 +4,26 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
     $scope.sharedService = SharedService;
     $scope.listarExoneracion = [];
     $scope.exoneracion = {};
-    
-    /***************** Callback ****************/
-    
-//    var getModuloExoneracionServiceSuccess = function(response){
-//    	$log.debug("GetExoneracion - Success");
-//    	console.log("Respuesta :: ", response);  
-//        $scope.exoneracion = response;
-//    };
-//    var getModuloExoneracionServiceError = function(response){
-//     	$log.debug("GetExoneracion - Error"); 
-//        console.log("Respuesta :: ", response);
-//    };
-//
-//    
-//    
-//    
-//
-//    
-//
-//    /***************** Servicios ****************/
-//
-//    $scope.getListaExoneracion = function(){
-//      	ModuloExoneracionService.getListaExoneracion().then(getModuloExoneracionServiceSuccess, getModuloExoneracionServiceError);
-//    };
-
-    
+   
 
     // Funcion que limpia el modelo del Semestre, ya que este es usado tanto para crear como para actualizar
     $scope.cancel = function(){
         $scope.exoneracion = {};
+        $scope.docenteexoneracion = {};
+        $scope.eliminarexoneracion = {};
+        $scope.docente = "";
     };
+    
+    $scope.view = function(docenteexoneracion){
+        $scope.docenteexoneracion = docenteexoneracion;
+    };
+    
+    $scope.seleccionarEliminacionExoneracion = function(eliminarexoneracion){
+        $scope.eliminarexoneracion = eliminarexoneracion;
+    };
+    
+    
+    
     
     /**************** NOTIFICACIONES *****************/
     var openNotice = function (text, type) {
@@ -44,14 +33,6 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
                     '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
         });
     };
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     /////////////////////////////////////////////////////////////////////
@@ -64,6 +45,18 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
     $scope.total = 0;
     
     
+    var deleteExoneracionSuccess = function(response){
+        $scope.getListaUsuarioExoneracion();
+        $scope.cancel();
+        openNotice('Eliminación correcta!','success');
+    };
+    var deleteExoneracionError = function(response){
+        $log.debug("GetExoneraciones - Error");
+        console.log("Respuesta :: ", response);
+    };
+    $scope.deleteExoneracion = function(){
+        ModuloExoneracionService.DeleteExoneracion($scope.eliminarexoneracion.nidUsuario).then(deleteExoneracionSuccess, deleteExoneracionError);
+    };
     
     var getDocentesServiceSuccess = function(response){
         $log.debug("GetDocentes - Success");

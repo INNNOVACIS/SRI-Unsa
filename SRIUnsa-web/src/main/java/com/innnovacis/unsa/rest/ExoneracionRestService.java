@@ -9,6 +9,7 @@ import com.innnovacis.unsa.business.IExoneracionBusiness;
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIExoneracion;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.util.SRIDocenteExoneracion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import java.util.HashMap;
@@ -197,12 +198,36 @@ public class ExoneracionRestService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response paginacionUsuarioExoneracion(SRIPaginacionObject object) {
         int total = usuarioBusiness.GetTotalUsuarioExoneracion(object);
-        List<SRIUsuarioPersona> lista = usuarioBusiness.GetListaUsuarioExoneracion(object);
+        List<SRIDocenteExoneracion> lista = usuarioBusiness.GetListaUsuarioExoneracion(object);
 
         Map<String, Object> responseObj = new HashMap<>();
         responseObj.put("total", total);
         responseObj.put("lista", lista);
         Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(responseObj);
+        
+        return builder.build();
+    }
+    
+    @GET
+    @Path("/EliminarUsuarioExoneracion/{idUsuario:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response DeleteUsuarioExoneracion(
+            @PathParam("idUsuario") int idUsuario
+    ) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIUsuario body = new SRIUsuario();
+        
+        try {
+            body = exoneracionBusiness.DeleteUsuarioExoneracion(idUsuario);
+            respuesta.put("body", body);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "DeleteUsuarioExoneracion - Success : {0}", body.toString());
+        } catch(Exception ex) {
+            log.log(Level.INFO, "DeleteUsuarioExoneracion - Error : {0}{1}", new Object[]{ex.getMessage(), body.toString()});
+            respuesta.put("body", ex.getMessage());
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(respuesta);
+        }
         
         return builder.build();
     }

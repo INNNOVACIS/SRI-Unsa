@@ -139,4 +139,19 @@ public class ExoneracionBusinessImp implements IExoneracionBusiness {
         }
         return respuesta;
     }
+
+    @Override
+    public SRIUsuario DeleteUsuarioExoneracion(int idUsuario) {
+        SRIUsuario respuesta = null;
+        try{
+            SRIUsuario usuario = usuarioDao.GetById(idUsuario);
+            usuario.setNIdExoneracion(0);
+            usuarioDao.Update(usuario);
+            respuesta = usuario;
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        return respuesta;
+    }
 }
