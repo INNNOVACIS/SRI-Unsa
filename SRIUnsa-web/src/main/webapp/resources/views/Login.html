@@ -1,41 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>login</title>
+    <meta charset="UTF-8">
+    <title>login</title>
 </head>
-<body class="fondo_login">
+<body class="fondo_login" style="background-color: #d8d8d8 !important;">
     <div ng-show="loader" class="SRI-loader-open">
         <div class="SRI-loader"></div>
     </div>
-	<div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <h1 class="text-center login-title">Sistema de Registro de Investigaciones</h1>
-            <div class="account-wall">
-                <img class="profile-img" src="resources/images/unsa-logo.jpg" alt="">
-                <form class="form-signin">
-	                <input ng-model="usuario.susuarioLogin" type="text" class="form-control" placeholder="Usuario" required autofocus>
-	                <input ng-model="usuario.susuarioPassword" type="password" class="form-control" placeholder="Contraseña" required>
-	                <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">
-	                    Ingresar
-	                </button>
+<!--    <div class="container" >
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <h1 class="text-center login-title">Sistema de Registro de Investigaciones</h1>
+                <div class="account-wall">
+                    <img class="profile-img" src="resources/images/unsa-logo.jpg" alt="">
+                    <form class="form-signin">
+                        <input ng-model="usuario.susuarioLogin" type="text" class="form-control" placeholder="Usuario" required autofocus>
+                        <input ng-model="usuario.susuarioPassword" type="password" class="form-control" placeholder="Contraseña" required>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">
+                            Ingresar
+                        </button>
+                        <button ng-click="authenticate('google')">Sign in with Google</button>
                         <div class="g-signin2" data-onsuccess="onSignIn" style="width: 100%;"></div>
-<!--	                <label class="checkbox pull-left">
-	                    <input type="checkbox" value="recuerdame">
-	                    Remember me
-	                </label>-->
-<!--	                <a href="#" class="pull-right need-help">necesita ayuda?</a><span class="clearfix"></span>-->
-
-
-                </form>
-                <!-- <button ng-click="openPdf()">Open Pdf</button> -->
-    			<!-- <button ng-click="downloadPdf()">Download Pdf</button> -->
+                    </form>
+                </div>
             </div>
-            <!-- <a href="#" class="text-center new-account">Crear cuenta</a> -->
+        </div>
+    </div>-->
+    
+    <div id="body_container" style="background-color: #d8d8d8; height: 100vh;">
+        <div class="container">
+            <div class="center-form panel">
+                <div class="panel-body">
+                    <h4 class="text-center"><i class="ion-log-in"></i> SIRI</h4>  
+                    <form name="loginForm" novalidate>
+                        <div class="form-group has-feedback" ng-class="{ 'has-error': loginForm.email.$invalid && loginForm.email.$dirty }">
+                            <input class="form-control input-lg" 
+                                   type="text" 
+                                   name="email" 
+                                   ng-model="usuario.susuarioLogin" 
+                                   placeholder="Nombre de usuario" 
+                                   required 
+                                   >
+                            <span class="glyphicon glyphicon-user ion-at form-control-feedback"></span>
+                            <div class="help-block" ng-if="loginForm.email.$invalid && loginForm.email.$dirty" ng-messages="loginForm.email.$error">
+                                <div ng-message="required">Ingrese su nombre de usuario</div>
+                                <div ng-message="server">{{errorMessage.email}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{ 'has-error': loginForm.password.$invalid && loginForm.password.$dirty }">
+                            <input class="form-control input-lg" 
+                                   type="password" 
+                                   name="password" 
+                                   ng-model="usuario.susuarioPassword" 
+                                   placeholder="Contraseña" 
+                                   required>
+                            <span class="glyphicon glyphicon-pawn ion-key form-control-feedback"></span>
+                            <div class="help-block" ng-if="loginForm.email.$invalid && loginForm.password.$dirty" ng-messages="loginForm.password.$error">
+                                <div ng-message="required">Ingrese su contrase&ntilde;a</div>
+                                <div ng-message="server">{{errorMessage.password}}</div>
+                            </div>
+                        </div>
+
+                        <button type="submit" 
+                                class="btn btn-block btn-success" 
+                                ng-disabled="loginForm.$invalid"
+                                ng-click="login()">Iniciar sesi&oacute;n</button>
+                        <br/>
+
+                        <div class="signup-or-separator">
+                            <h6 class="text">o</h6>
+                            <hr>
+                        </div>
+                    </form>
+                    <button class="btn btn-block btn-instagram" ng-click="authenticate('google')">
+                        <i class="ion-social-instagram" ></i> Iniciar sesi&oacute;n con google
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
     <script>
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();

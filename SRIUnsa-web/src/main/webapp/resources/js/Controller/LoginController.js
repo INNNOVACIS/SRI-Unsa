@@ -1,9 +1,21 @@
 investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$sce', 'SharedService', 
-    'PrivilegioService', 'LoginService', 'UsuariosService', '$localStorage', 'SemestreService', function($scope, $location, $log, $sce, SharedService, 
-    PrivilegioService, LoginService, UsuariosService, $localStorage, SemestreService) {
+    'PrivilegioService', 'LoginService', 'UsuariosService', '$localStorage', 'SemestreService', '$auth', function($scope, $location, $log, $sce, SharedService, 
+    PrivilegioService, LoginService, UsuariosService, $localStorage, SemestreService, $auth) {
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
+    
+    $scope.authenticate = function(provider) {
+        $auth.authenticate(provider)
+            .then(function(response) {
+                console.log("Respuesta ----> ", response);
+                $window.localStorage.currentUser = JSON.stringify(response.data.user);
+                $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
+            })
+              .catch(function(response) {
+                console.log("Error --> ",response);
+            });;
+    };
     
     var loginServiceSuccess = function(response){
         $log.debug("loginService - Success");
@@ -190,7 +202,9 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             var item = "";
             var subItem = "";
             //Item padre sin Dropdown
-            if(value.sNombrePrivilegio === "Actividades Generadas" || value.sNombrePrivilegio === "Actividades Pendientes" || value.sNombrePrivilegio === "Actividades Revisadas"){
+            if(value.sNombrePrivilegio === "Actividades Generadas" || 
+                    value.sNombrePrivilegio === "Actividades Pendientes" || 
+                    value.sNombrePrivilegio === "Actividades Revisadas" ){
                 item = GetItemHtml(value.surlPrivilegio, value.sNombrePrivilegio);
                 menuVertical = menuVertical + item;
             }

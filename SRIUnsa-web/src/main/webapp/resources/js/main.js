@@ -5,7 +5,8 @@ var investigacionApp = angular.module('investigacionApp', [
         'ngToast',
         'ngStorage',
 	'ui.bootstrap',
-	'angularFileUpload'
+	'angularFileUpload',
+        'satellizer'
 ]);
 
 investigacionApp.config(['ngToastProvider', function(ngToastProvider) {
@@ -14,7 +15,7 @@ investigacionApp.config(['ngToastProvider', function(ngToastProvider) {
   });
 }]);
 
-investigacionApp.config(function($routeProvider){
+investigacionApp.config(function($routeProvider, $authProvider){
 	$routeProvider
 	.when('/home', {
 		templateUrl : 'resources/views/Home.html',
@@ -174,6 +175,23 @@ investigacionApp.config(function($routeProvider){
 	})
         .otherwise({
             redirectTo: '/homeDirectorUnidad'
+        });
+        
+        
+        
+        $authProvider.google({
+            clientId:'40582335062-j0cn6k4scrj5d61mgqvkgbkbgr4cjgkc.apps.googleusercontent.com',
+            url: '/SRIUnsa-web/rest/auth/google',
+            authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
+            redirectUri: window.location.origin,
+            requiredUrlParams: ['scope'],
+            optionalUrlParams: ['display'],
+            scope: ['profile', 'email'],
+            scopePrefix: 'openid',
+            scopeDelimiter: ' ',
+            display: 'popup',
+            oauthType: '2.0',
+            popupOptions: { width: 452, height: 633 }
         });
 });
 
