@@ -398,5 +398,17 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
         }
         return respuesta;
     }
+
+    @Override
+    public SRIUsuarioLogin LoginGoogle(String userEmail) {
+        SRIUsuarioLogin respuesta = null;
+        try{
+            respuesta = usuarioDao.LoginGoogle(userEmail);
+        }
+        catch(Exception ex){
+            throw  ex;
+        }
+        return respuesta;
+    }
     
 }

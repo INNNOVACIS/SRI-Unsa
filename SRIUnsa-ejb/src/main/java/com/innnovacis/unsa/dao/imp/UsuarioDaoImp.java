@@ -368,4 +368,17 @@ public class UsuarioDaoImp implements IUsuarioDao {
         return total.intValue();
     }
 
+    @Override
+    public SRIUsuarioLogin LoginGoogle(String userEmail) {
+        SRIUsuarioLogin usuarioLogin = null;
+        try {
+            Query query = em.createNativeQuery("{call AutenticarEmail(?1)}", SRIUsuarioLogin.class)
+                        .setParameter(1, userEmail);
+            usuarioLogin = (SRIUsuarioLogin)query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return usuarioLogin;
+    }
+
 }

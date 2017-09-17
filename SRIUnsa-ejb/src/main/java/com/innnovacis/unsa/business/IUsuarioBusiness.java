@@ -54,4 +54,6 @@ public interface IUsuarioBusiness {
     
     int GetTotalUsuarioExoneracion(SRIPaginacionObject entidad);
     List<SRIDocenteExoneracion> GetListaUsuarioExoneracion(SRIPaginacionObject entidad);
+
+    SRIUsuarioLogin LoginGoogle(String userEmail);
 }

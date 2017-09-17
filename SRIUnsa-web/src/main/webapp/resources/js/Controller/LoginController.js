@@ -8,9 +8,22 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
     $scope.authenticate = function(provider) {
         $auth.authenticate(provider)
             .then(function(response) {
-                console.log("Respuesta ----> ", response);
-                $window.localStorage.currentUser = JSON.stringify(response.data.user);
-                $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
+                if(response.data !== "") {
+                    $localStorage.usuarioLogin = response.data;
+                    $localStorage.autenticado = true;
+
+                    $scope.sharedService.usuarioLogin = $localStorage.usuarioLogin;
+                    $scope.sharedService.userAutenticado = $localStorage.autenticado;
+
+                    if($scope.sharedService.usuarioLogin.codigo === null || $scope.sharedService.usuarioLogin.codigo === ""){
+                        $('#modalDni').modal('show');
+                    }
+                    $scope.getSemestres();
+
+                } else {
+                    alert("El usuario de google no está registrado.");
+                    $scope.loader = false;
+                }
             })
               .catch(function(response) {
                 console.log("Error --> ",response);
