@@ -72,8 +72,8 @@ function($log, $scope, ngToast, ExoneracionService, SharedService) {
     $scope.registrarExoneracion = function(){
         $scope.submitted = true;
         if($scope.formRegistroExoneracion.$valid){
-            $scope.exoneracion.suserCreacion = $scope.sharedService.nombreUsuario;
-            $scope.exoneracion.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.exoneracion.suserCreacion = $scope.sharedService.usuarioLogin.nombre;
+            $scope.exoneracion.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
             $scope.exoneracion.sestado = 'A';
             ExoneracionService.registrarExoneracion($scope.exoneracion).then(registrarExoneracionSuccess,
                 registrarExoneracionError);
@@ -86,7 +86,7 @@ function($log, $scope, ngToast, ExoneracionService, SharedService) {
     $scope.updateExoneracion = function(){
         $scope.submitted = true;
         if($scope.formUpdateExoneracion.$valid){
-            $scope.exoneracion.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.exoneracion.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
             $scope.exoneracion.sestado = 'A';
             ExoneracionService.updateExoneracion($scope.exoneracion).then(updateExoneracionSuccess,
                 updateExoneracionError);
@@ -99,7 +99,7 @@ function($log, $scope, ngToast, ExoneracionService, SharedService) {
 
     $scope.deleteExoneracion = function(exoneracion){
     	$scope.exoneracion = exoneracion;
-        $scope.exoneracion.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.exoneracion.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
     	ExoneracionService.deleteExoneracion($scope.exoneracion).then(deleteExoneracionSuccess, deleteExoneracionError);
     };
 

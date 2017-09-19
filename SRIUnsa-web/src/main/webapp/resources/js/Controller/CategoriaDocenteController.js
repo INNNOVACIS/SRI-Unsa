@@ -72,7 +72,8 @@ function($log, $scope, ngToast, CategoriaDocenteService, SharedService) {
     $scope.registrarCategoriaDocente = function(){
         $scope.submitted = true;
         if($scope.formRegistroCategoriaDocente.$valid){
-            $scope.categoriaDocente.suserCreacion = $scope.sharedService.nombreUsuario;
+            $scope.categoriaDocente.suserCreacion = $scope.sharedService.usuarioLogin.nombre;
+            $scope.categoriaDocente.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
             $scope.categoriaDocente.sestado = 'A';
             CategoriaDocenteService.registrarCategoriaDocente($scope.categoriaDocente).then(registrarCategoriaDocenteSuccess,
                 registrarCategoriaDocenteError);
@@ -86,7 +87,7 @@ function($log, $scope, ngToast, CategoriaDocenteService, SharedService) {
     $scope.updateCategoriaDocente = function(){
         $scope.submitted = true;
         if($scope.formUpdateCategoriaDocente.$valid){
-            $scope.categoriaDocente.suserModificacion = $scope.sharedService.nombreUsuario;
+            $scope.categoriaDocente.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
             $scope.categoriaDocente.sestado = 'A';
             CategoriaDocenteService.updateCategoriaDocente($scope.categoriaDocente).then(updateCategoriaDocenteSuccess,
                 updateCategoriaDocenteError);
@@ -100,7 +101,7 @@ function($log, $scope, ngToast, CategoriaDocenteService, SharedService) {
 
     $scope.deleteCategoriaDocente = function(categoriaDocente){
     	$scope.categoriaDocente = categoriaDocente;
-        $scope.categoriaDocente.suserModificacion = $scope.sharedService.nombreUsuario;
+        $scope.categoriaDocente.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
     	CategoriaDocenteService.deleteCategoriaDocente($scope.categoriaDocente).then(deleteCategoriaDocenteSuccess, deleteCategoriaDocenteError);
     };
 

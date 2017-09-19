@@ -42,8 +42,8 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
     @Column(name = "iddepartamento" )
     private int NIdDepartamento;
     
-    @Column(name = "idcategoriausuario" )
-    private int NIdCategoriaUsuario;
+    @Column(name = "idcategoriadocente" )
+    private int NIdCategoriaDocente;
     
     @Column(name = "idexoneracion" )
     private int NIdExoneracion;
@@ -87,12 +87,12 @@ public class SRIUsuario  extends SRIEntidad implements Serializable  {
         this.NIdEstructuraOrganizacion = NIdEstructuraOrganizacion;
     }
 
-    public int getNIdCategoriaUsuario() {
-        return NIdCategoriaUsuario;
+    public int getNIdCategoriaDocente() {
+        return NIdCategoriaDocente;
     }
 
-    public void setNIdCategoriaUsuario(int NIdCategoriaUsuario) {
-        this.NIdCategoriaUsuario = NIdCategoriaUsuario;
+    public void setNIdCategoriaDocente(int NIdCategoriaDocente) {
+        this.NIdCategoriaDocente = NIdCategoriaDocente;
     }
 
     public int getNIdExoneracion() {
