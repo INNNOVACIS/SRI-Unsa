@@ -749,7 +749,7 @@ a:hover {
 }
 
 .center-form {
-  width: 315px;
+  width: 400px;
   margin: 10% auto;
 }
 
@@ -791,16 +791,16 @@ a:hover {
   padding-left: 42px;
 }
 
-.btn-instagram {
+.btn-google-plus {
   color: #fff;
-  background-color: #517fa4;
-  border: 1px solid #456c8c;
+  background-color: #dd4b39;
+  border: 1px solid #d54331;
 }
 
-.btn-instagram:hover,
-.btn-instagram:focus {
+.btn-google-plus:hover,
+.btn-google-plus:focus {
   color: #fff;
-  background-color: #303030;
+  background-color: #cb3927;
 }
 
 .media-object {

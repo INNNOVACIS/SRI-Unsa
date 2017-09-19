@@ -6,6 +6,7 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
     $scope.loader = false;
     
     $scope.authenticate = function(provider) {
+        $scope.loader = true;
         $auth.authenticate(provider)
             .then(function(response) {
                 if(response.data !== "") {
@@ -27,6 +28,7 @@ investigacionApp.controller('LoginController',['$scope', '$location', '$log', '$
             })
               .catch(function(response) {
                 console.log("Error --> ",response);
+                $scope.loader = false;
             });;
     };
     
