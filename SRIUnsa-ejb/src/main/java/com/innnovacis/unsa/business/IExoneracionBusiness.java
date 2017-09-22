@@ -7,6 +7,7 @@ package com.innnovacis.unsa.business;
 
 import com.innnovacis.unsa.model.SRIExoneracion;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.model.SRIUsuarioExoneracion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -26,6 +27,6 @@ public interface IExoneracionBusiness {
     int GetTotalPaginacion(SRIPaginacionObject object);
     List<SRIExoneracion> GetPagina(SRIPaginacionObject object);
     
-    SRIUsuario RegistrarExoneracion(int idPersona, int idExoneracion);
+    SRIUsuario RegistrarUsuarioExoneracion(SRIUsuarioExoneracion usuarioExoneracion);
     SRIUsuario DeleteUsuarioExoneracion(int idUsuario);
 }

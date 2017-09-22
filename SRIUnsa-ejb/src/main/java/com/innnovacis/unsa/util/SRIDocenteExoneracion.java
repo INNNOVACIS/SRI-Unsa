@@ -33,6 +33,9 @@ public class SRIDocenteExoneracion extends SRIEntidad implements Serializable{
     
     @Column(name = "idexoneracion" )
     private int NIdExoneracion;
+    
+    @Column(name = "idusuarioexoneracion" )
+    private int NIdUsuarioExoneracion;
 
     @Column(name = "email")
     private String SEmail;
@@ -71,6 +74,14 @@ public class SRIDocenteExoneracion extends SRIEntidad implements Serializable{
 
     public void setNIdExoneracion(int NIdExoneracion) {
         this.NIdExoneracion = NIdExoneracion;
+    }
+
+    public int getNIdUsuarioExoneracion() {
+        return NIdUsuarioExoneracion;
+    }
+
+    public void setNIdUsuarioExoneracion(int NIdUsuarioExoneracion) {
+        this.NIdUsuarioExoneracion = NIdUsuarioExoneracion;
     }
 
     public String getSEmail() {

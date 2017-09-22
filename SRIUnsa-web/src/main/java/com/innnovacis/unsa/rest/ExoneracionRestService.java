@@ -9,6 +9,7 @@ import com.innnovacis.unsa.business.IExoneracionBusiness;
 import com.innnovacis.unsa.business.IUsuarioBusiness;
 import com.innnovacis.unsa.model.SRIExoneracion;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.model.SRIUsuarioExoneracion;
 import com.innnovacis.unsa.util.SRIDocenteExoneracion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
@@ -167,19 +168,17 @@ public class ExoneracionRestService {
         return builder.build();
     }
     
-    @GET
-    @Path("/RegistrarUsuarioExoneracion/{idPersona:[0-9][0-9]*}/{idExoneracion:[0-9][0-9]*}")
+    @POST
+    @Path("/RegistrarUsuarioExoneracion")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response RegistrarExoneracion(
-            @PathParam("idPersona") int idPersona, 
-            @PathParam("idExoneracion") int idExoneracion
-    ) {
+    public Response RegistrarExoneracion(SRIUsuarioExoneracion usuarioExoneracion) {
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
         SRIUsuario body = new SRIUsuario();
         
         try {
-            body = exoneracionBusiness.RegistrarExoneracion(idPersona, idExoneracion);
+            body = exoneracionBusiness.RegistrarUsuarioExoneracion(usuarioExoneracion);
             respuesta.put("body", body);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "RegistrarExoneracion - Success : {0}", body.toString());
@@ -209,17 +208,17 @@ public class ExoneracionRestService {
     }
     
     @GET
-    @Path("/EliminarUsuarioExoneracion/{idUsuario:[0-9][0-9]*}")
+    @Path("/EliminarUsuarioExoneracion/{idUsuarioExoneracion:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response DeleteUsuarioExoneracion(
-            @PathParam("idUsuario") int idUsuario
+            @PathParam("idUsuarioExoneracion") int idUsuarioExoneracion
     ) {
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
         SRIUsuario body = new SRIUsuario();
         
         try {
-            body = exoneracionBusiness.DeleteUsuarioExoneracion(idUsuario);
+            body = exoneracionBusiness.DeleteUsuarioExoneracion(idUsuarioExoneracion);
             respuesta.put("body", body);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "DeleteUsuarioExoneracion - Success : {0}", body.toString());

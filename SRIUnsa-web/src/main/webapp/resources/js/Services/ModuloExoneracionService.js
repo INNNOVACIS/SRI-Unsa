@@ -51,13 +51,14 @@ investigacionApp.service("ModuloExoneracionService", function(SRIUnsaConfig, $lo
         return deferred.promise;
     };
     
-    this.RegistrarUsuarioExoneracion = function (idPersona, idExoneracion) {
+    this.RegistrarUsuarioExoneracion = function (usuarioExoneracion) {
         $log.debug("ModuloExoneracionService - RegistrarExoneracion");
 
         var deferred = $q.defer();
         $http({
-            method: 'GET',
-            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/exoneracion/RegistrarUsuarioExoneracion/' + idPersona + '/' +idExoneracion
+            method: 'POST',
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/exoneracion/RegistrarUsuarioExoneracion',
+            data: usuarioExoneracion
         }).success(function (response) {
             deferred.resolve(response);
         }).error(function (response) {
@@ -66,13 +67,13 @@ investigacionApp.service("ModuloExoneracionService", function(SRIUnsaConfig, $lo
         return deferred.promise;
     };
     
-    this.DeleteExoneracion = function (idUsuario) {
+    this.DeleteExoneracion = function (idUsuarioExoneracion) {
         $log.debug("ModuloExoneracionService - RegistrarExoneracion");
 
         var deferred = $q.defer();
         $http({
             method: 'GET',
-            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/exoneracion/EliminarUsuarioExoneracion/' + idUsuario
+            url: SRIUnsaConfig.SRIUnsaUrlServicio + '/exoneracion/EliminarUsuarioExoneracion/' + idUsuarioExoneracion
         }).success(function (response) {
             deferred.resolve(response);
         }).error(function (response) {

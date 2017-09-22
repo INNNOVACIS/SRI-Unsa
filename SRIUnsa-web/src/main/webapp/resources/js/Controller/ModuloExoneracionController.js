@@ -55,8 +55,9 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
         console.log("Respuesta :: ", response);
     };
     $scope.deleteExoneracion = function(){
-        ModuloExoneracionService.DeleteExoneracion($scope.eliminarexoneracion.nidUsuario).then(deleteExoneracionSuccess, deleteExoneracionError);
+        ModuloExoneracionService.DeleteExoneracion($scope.eliminarexoneracion.nidUsuarioExoneracion).then(deleteExoneracionSuccess, deleteExoneracionError);
     };
+    
     
     var getDocentesServiceSuccess = function(response){
         $log.debug("GetDocentes - Success");
@@ -90,7 +91,12 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
     	$scope.getListaUsuarioExoneracion();
         $scope.cancel();
         $("#popNuevoExoneracion").modal('toggle');
-        openNotice('Registrado!','success');
+        if(response.body.nidUsuario == 0){
+            openNotice('El docente no puede tener más de una exoneración por semestre!','danger');
+        } else {
+            openNotice('Registrado!','success');
+        }
+        
     };
     var registrarExoneracionError = function(response){
         $scope.cancel();
@@ -99,13 +105,18 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
     $scope.registrarExoneracion = function(){
         $scope.submitted = true;
         if($scope.formRegistroExoneracion.$valid){
-            $scope.exoneracion.suserCreacion = $scope.sharedService.usuarioLogin.nombre;
-            $scope.exoneracion.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
-            $scope.exoneracion.sestado = 'A';
+            var usuarioExoneracion = {};
+            usuarioExoneracion.nidExoneracion = $scope.exoneracion.nidExoneracion;
+            usuarioExoneracion.nidUsuario = $scope.docente.nidPersona;
+            usuarioExoneracion.nidSemestre = $scope.sharedService.idSemestreActual;
+            usuarioExoneracion.suserCreacion = $scope.sharedService.usuarioLogin.nombre;
+            usuarioExoneracion.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
+            usuarioExoneracion.dfechaCreacion = new Date();
+            usuarioExoneracion.dfechaModificacion = new Date();
+            usuarioExoneracion.sestado = 'A';
             
             ModuloExoneracionService.RegistrarUsuarioExoneracion(
-                    $scope.docente.nidPersona, 
-                    $scope.exoneracion.nidExoneracion)
+                    usuarioExoneracion)
                 .then(
                     registrarExoneracionSuccess,
                     registrarExoneracionError);

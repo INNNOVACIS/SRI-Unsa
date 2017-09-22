@@ -4,8 +4,10 @@ package com.innnovacis.unsa.business.imp;
 import com.innnovacis.unsa.business.IExoneracionBusiness;
 import com.innnovacis.unsa.dao.IExoneracionDao;
 import com.innnovacis.unsa.dao.IUsuarioDao;
+import com.innnovacis.unsa.dao.IUsuarioExoneracionDao;
 import com.innnovacis.unsa.model.SRIExoneracion;
 import com.innnovacis.unsa.model.SRIUsuario;
+import com.innnovacis.unsa.model.SRIUsuarioExoneracion;
 import com.innnovacis.unsa.util.SRIPaginacionObject;
 
 import javax.inject.Inject;
@@ -23,6 +25,9 @@ public class ExoneracionBusinessImp implements IExoneracionBusiness {
     
     @Inject  
     private IUsuarioDao usuarioDao;
+    
+    @Inject  
+    private IUsuarioExoneracionDao usuarioExoneracionDao;
     
     @Inject
     private Logger log;
@@ -126,28 +131,32 @@ public class ExoneracionBusinessImp implements IExoneracionBusiness {
     }
 
     @Override
-    public SRIUsuario RegistrarExoneracion(int idPersona, int idExoneracion) {
-        SRIUsuario respuesta = null;
+    public SRIUsuario RegistrarUsuarioExoneracion(SRIUsuarioExoneracion usuarioExoneracion) {
         try{
-            SRIUsuario usuario = usuarioDao.GetByIdPersona(idPersona);
-            usuario.setNIdExoneracion(idExoneracion);
-            usuarioDao.Update(usuario);
-            respuesta = usuario;
+            SRIUsuario usuario = usuarioDao.GetByIdPersona(usuarioExoneracion.getNIdUsuario()); //enviamos el idpersona camuflado en el idusuario
+            usuarioExoneracion.setNIdUsuario(usuario.getNIdUsuario());
+            SRIUsuarioExoneracion oUsuarioExoneracion = usuarioExoneracionDao.GetByIdUsuarioIdSemestre(
+                                        usuario.getNIdUsuario(),
+                                        usuarioExoneracion.getNIdSemestre());
+            
+            if(oUsuarioExoneracion == null){
+                oUsuarioExoneracion = usuarioExoneracionDao.Insert(usuarioExoneracion);
+                return usuario;
+            } else {
+                return new SRIUsuario();
+            }
         }
         catch(Exception ex){
             throw ex;
         }
-        return respuesta;
     }
 
     @Override
-    public SRIUsuario DeleteUsuarioExoneracion(int idUsuario) {
-        SRIUsuario respuesta = null;
+    public SRIUsuario DeleteUsuarioExoneracion(int idUsuarioExoneracion) {
+        SRIUsuario respuesta = new SRIUsuario();
         try{
-            SRIUsuario usuario = usuarioDao.GetById(idUsuario);
-            usuario.setNIdExoneracion(0);
-            usuarioDao.Update(usuario);
-            respuesta = usuario;
+            SRIUsuarioExoneracion usuarioExoneracion = usuarioExoneracionDao.GetById(idUsuarioExoneracion);
+            usuarioExoneracionDao.Delete(usuarioExoneracion);
         }
         catch(Exception ex){
             throw ex;
