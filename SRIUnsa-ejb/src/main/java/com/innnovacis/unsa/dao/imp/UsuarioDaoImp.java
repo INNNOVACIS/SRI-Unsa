@@ -344,10 +344,11 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public List<SRIDocenteExoneracion> GetListaUsuarioExoneracion(SRIPaginacionObject entidad) {
         List<SRIDocenteExoneracion> listUsuarios = null;
         try {
-            Query query = em.createNativeQuery("{call GetUsuarioExonerados(?1,?2,?3)}", SRIDocenteExoneracion.class)
+            Query query = em.createNativeQuery("{call GetUsuarioExonerados(?1,?2,?3,?4)}", SRIDocenteExoneracion.class)
                         .setParameter(1, entidad.getFiltro())
                         .setParameter(2, entidad.getRango())
-                        .setParameter(3, entidad.getCurrentPage());
+                        .setParameter(3, entidad.getCurrentPage())
+                        .setParameter(4, entidad.getIdSemestre());
             listUsuarios = query.getResultList();
         } catch(Exception ex) {
             throw ex;

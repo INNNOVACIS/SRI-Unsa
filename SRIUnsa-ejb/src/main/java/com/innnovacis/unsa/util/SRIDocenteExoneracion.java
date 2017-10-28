@@ -34,9 +34,15 @@ public class SRIDocenteExoneracion extends SRIEntidad implements Serializable{
     @Column(name = "idexoneracion" )
     private int NIdExoneracion;
     
+    @Column(name = "idsemestre" )
+    private int NIdSemestre;
+    
     @Column(name = "idusuarioexoneracion" )
     private int NIdUsuarioExoneracion;
 
+    @Column(name = "nombresemestre")
+    private String SSemestre;
+    
     @Column(name = "email")
     private String SEmail;
     
@@ -82,6 +88,22 @@ public class SRIDocenteExoneracion extends SRIEntidad implements Serializable{
 
     public void setNIdUsuarioExoneracion(int NIdUsuarioExoneracion) {
         this.NIdUsuarioExoneracion = NIdUsuarioExoneracion;
+    }
+
+    public int getNIdSemestre() {
+        return NIdSemestre;
+    }
+
+    public void setNIdSemestre(int NIdSemestre) {
+        this.NIdSemestre = NIdSemestre;
+    }
+
+    public String getSSemestre() {
+        return SSemestre;
+    }
+
+    public void setSSemestre(String SSemestre) {
+        this.SSemestre = SSemestre;
     }
 
     public String getSEmail() {

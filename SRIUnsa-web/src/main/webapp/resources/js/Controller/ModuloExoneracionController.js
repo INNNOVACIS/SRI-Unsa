@@ -51,6 +51,7 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService, Semestr
     	$scope.semestres = response;
         $scope.semestre = verificarSemestre($scope.semestres);
         $scope.semestreRegistrar = $scope.semestre;
+        $scope.getListaUsuarioExoneracion();
     };
     var getSemestreServiceError = function(response){
      	$log.debug("GetSemestre - Error");
@@ -153,7 +154,11 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService, Semestr
         console.log("Respuesta :: ", response);
     };
     $scope.getListaUsuarioExoneracion = function(){
-        var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total, filtro : $scope.buscar};
+        var objPagina = {   currentPage : $scope.currentPage, 
+                            rango : $scope.currentRango, 
+                            total : $scope.total, 
+                            filtro : $scope.buscar,
+                            idSemestre: $scope.semestre === null ? 0 : $scope.semestre.nidSemestre};
         ModuloExoneracionService.getListaUsuarioExoneracion(objPagina).then(getListaUsuarioExoneracionSuccess, getListaUsuarioExoneracionError);
     };
     $scope.clickBuscar = function(){
@@ -163,12 +168,14 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService, Semestr
       return Math.ceil($scope.total / $scope.currentRango);
     };
     $scope.$watch('currentPage + currentRango', function() {
-        $scope.getListaUsuarioExoneracion();
+        if($scope.semestre != undefined) {
+            $scope.getListaUsuarioExoneracion();
+        }
     });
     
     $scope.changeSemestre = function(semestre){
         $scope.semestre = semestre;
-        
+        $scope.getListaUsuarioExoneracion();
     };
     
     var verificarSemestre = function(semestres){
@@ -185,5 +192,5 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService, Semestr
     $scope.getSemestres();
     $scope.getDocentes();
     $scope.getExoneraciones();
-    $scope.getListaUsuarioExoneracion();
+    
 }]);
