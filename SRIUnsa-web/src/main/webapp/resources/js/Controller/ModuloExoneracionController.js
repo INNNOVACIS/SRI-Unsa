@@ -1,5 +1,5 @@
-investigacionApp.controller('ModuloExoneracionController',['$log', '$scope', 'ngToast', 'ModuloExoneracionService', 'SharedService', 
-function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
+investigacionApp.controller('ModuloExoneracionController',['$log', '$scope', 'ngToast', 'ModuloExoneracionService', 'SharedService', 'SemestreService',
+function($log, $scope, ngToast, ModuloExoneracionService, SharedService, SemestreService) {
 
     $scope.sharedService = SharedService;
     $scope.listarExoneracion = [];
@@ -44,6 +44,22 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
     $scope.maxSize = 5;
     $scope.total = 0;
     
+    
+    var getSemestreServiceSuccess = function(response){
+    	$log.debug("GetSemestre - Success");
+        console.log("Respuesta :: ", response);
+    	$scope.semestres = response;
+        $scope.semestre = verificarSemestre($scope.semestres);
+        $scope.semestreRegistrar = $scope.semestre;
+    };
+    var getSemestreServiceError = function(response){
+     	$log.debug("GetSemestre - Error");
+        console.log("Respuesta :: ", response);
+    };
+    
+    $scope.getSemestres = function(){
+      	SemestreService.getSemestres().then(getSemestreServiceSuccess, getSemestreServiceError);
+    };
     
     var deleteExoneracionSuccess = function(response){
         $scope.getListaUsuarioExoneracion();
@@ -108,7 +124,7 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
             var usuarioExoneracion = {};
             usuarioExoneracion.nidExoneracion = $scope.exoneracion.nidExoneracion;
             usuarioExoneracion.nidUsuario = $scope.docente.nidPersona;
-            usuarioExoneracion.nidSemestre = $scope.sharedService.idSemestreActual;
+            usuarioExoneracion.nidSemestre = $scope.semestreRegistrar.nidSemestre;
             usuarioExoneracion.suserCreacion = $scope.sharedService.usuarioLogin.nombre;
             usuarioExoneracion.suserModificacion = $scope.sharedService.usuarioLogin.nombre;
             usuarioExoneracion.dfechaCreacion = new Date();
@@ -124,7 +140,6 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
             openNotice('Error al registrar!','danger');
         }
     };
-    
     
     var getListaUsuarioExoneracionSuccess = function(response){
         $log.debug("Get paginacionUsuario - Success");
@@ -151,6 +166,23 @@ function($log, $scope, ngToast, ModuloExoneracionService, SharedService) {
         $scope.getListaUsuarioExoneracion();
     });
     
+    $scope.changeSemestre = function(semestre){
+        $scope.semestre = semestre;
+        
+    };
+    
+    var verificarSemestre = function(semestres){
+        var currentDate = new Date();
+        var semestre = {};
+        angular.forEach(semestres, function(value, key){
+            if(value.dinicioSemestre < currentDate && value.dfinSemestre > currentDate){
+                semestre = value;
+            }
+        });
+        return semestre;
+    };
+    
+    $scope.getSemestres();
     $scope.getDocentes();
     $scope.getExoneraciones();
     $scope.getListaUsuarioExoneracion();

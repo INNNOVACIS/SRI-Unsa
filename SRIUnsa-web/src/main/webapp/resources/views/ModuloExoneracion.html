@@ -13,12 +13,17 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-md-3">
+                            <select class="form-control" style="margin:2px;" ng-model="semestre" ng-options="opt as opt.snombreSemestre for opt in semestres" ng-change="changeSemestre(semestre)">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
                             <input ng-model="buscar" class="form-control" placeholder="Buscar" >
                         </div>
                         <div class="col-sm-2">
                             <button ng-click="clickBuscar()" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-search"></span> Buscar</button>
+                            <span class="glyphicon glyphicon-search"></span> Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -90,13 +95,17 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2" style="">Docente</label>
                                     <div class="col-md-10">
-<!--                                        <input id="inpDescripcion" ng-model="exoneracion.snombre" 
-                                               type="text" class="form-control" placeholder="Nombre"
-                                               required >-->
                                         <input type="text" 
                                                ng-model="docente" 
                                                uib-typeahead="opt as opt.sapellido + ', ' + opt.snombre + ' | ' + opt.semail for opt in docentes | filter:$viewValue | limitTo:8" 
                                                class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" style="">Semestre</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" style="margin:2px;" ng-model="semestreRegistrar" ng-options="opt as opt.snombreSemestre for opt in semestres">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
