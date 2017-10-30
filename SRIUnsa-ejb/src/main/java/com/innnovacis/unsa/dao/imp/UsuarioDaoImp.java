@@ -191,13 +191,14 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public List<SRIUsuarioColor> GetUsuariosColor(SRIPaginacionObject entidad) {
         List<SRIUsuarioColor> usuarioColor = null;
         try{
-            Query query = em.createNativeQuery("{call GetUsuarioColor(?1, ?2, ?3, ?4, ?5, ?6)}", SRIUsuarioColor.class)
+            Query query = em.createNativeQuery("{call GetUsuarioColor(?1, ?2, ?3, ?4, ?5, ?6, ?7)}", SRIUsuarioColor.class)
                     .setParameter(1, entidad.getIdFacultad())
                     .setParameter(2, entidad.getIdDepartamento())
-                    .setParameter(3, entidad.getFiltro())
-                    .setParameter(4, entidad.getIdTipoInvestigacion())
-                    .setParameter(5, entidad.getRango())
-                    .setParameter(6, entidad.getCurrentPage());
+                    .setParameter(3, entidad.getIdSemestre())
+                    .setParameter(4, entidad.getFiltro())
+                    .setParameter(5, entidad.getIdTipoInvestigacion())
+                    .setParameter(6, entidad.getRango())
+                    .setParameter(7, entidad.getCurrentPage());
             usuarioColor = query.getResultList();
         } catch(Exception ex) {
             throw ex;
@@ -209,11 +210,13 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public int GetTotalUsuariosColor(SRIPaginacionObject entidad) {
         BigInteger total = null;
         try{
-            Query query = em.createNativeQuery("{call GetTotalUsuarioColor(?1, ?2, ?3, ?4)}")
+            Query query = em.createNativeQuery("{call GetTotalUsuarioColor(?1, ?2, ?3, ?4, ?5)}")
                     .setParameter(1, entidad.getIdFacultad())
                     .setParameter(2, entidad.getFiltro())
                     .setParameter(3, entidad.getIdTipoInvestigacion())
-                    .setParameter(4, entidad.getIdDepartamento());
+                    .setParameter(4, entidad.getIdDepartamento())
+                    .setParameter(5, entidad.getIdSemestre()
+                    );
             total = (BigInteger)query.getSingleResult();
         } catch(Exception ex) {
             throw ex;
@@ -238,7 +241,8 @@ public class UsuarioDaoImp implements IUsuarioDao {
     public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos(int idSemestre) {
         SRIDocenteActivosInactivos respuesta = null;
         try {
-            Query query = em.createNativeQuery("{call GetTotalDocentesActivosInactivos()}", SRIDocenteActivosInactivos.class);
+            Query query = em.createNativeQuery("{call GetTotalDocentesActivosInactivos(?1)}", SRIDocenteActivosInactivos.class)
+                    .setParameter(1, idSemestre);
             respuesta = (SRIDocenteActivosInactivos) query.getSingleResult();
         } catch(Exception ex) {
             throw ex;
