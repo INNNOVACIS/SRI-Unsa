@@ -6,12 +6,6 @@
         <div class="panel panel-primary">
             <div class="panel-body">
                 <div class="col-md-10">
-<!--                    <label class="control-label col-md-2" style="">Investigación</label>
-                    <div class="col-md-4">
-                        <select class="form-control" style="margin:2px;" ng-model="tipoInvestigacion" ng-options="opt as opt.snombreActividadInvestigacion for opt in tipoInvestigaciones" ng-init="tipoInvestigacion=''" ng-change=actividadChange(tipoInvestigacion.snombreActividadInvestigacion)>
-                            <option></option>
-                        </select>
-                    </div>-->
                     <label class="control-label col-md-2">Facultad</label>
                     <div class="col-md-4">
                         <select ng-model="facultad"                
@@ -52,7 +46,16 @@
         </div>
         
         <div class="panel panel-primary">
-            <div class="panel-heading" style="line-height: 2;">Relación de Docentes 
+            <div class="panel-heading" style="line-height: 2; height: 55px">
+                
+                <label class="control-label col-md-2">Con Actividad</label>
+                <div class="col-md-1">
+                    <input ng-model="docentes.nactivos" type="text" class="form-control" disabled>
+                </div>
+                <label class="control-label col-md-2">Sin Actividad</label>
+                <div class="col-md-1">
+                    <input ng-model="docentes.ninactivos" type="text" class="form-control" disabled >
+                </div>
                 <button class="btn btn-danger btn-sm pull-right" ng-click="descargarPDF()">
                     <span class="glyphicon glyphicon-cloud-download"></span>
                     Descargar PDF
@@ -86,7 +89,8 @@
                                 <td>{{ actividadDocente.dni }}</td>
                                 <td width="8%">{{ actividadDocente.semestre }}</td>
                                 <td width="8%">{{ actividadDocente.cantidad }}</td>
-                                <td width="8%">Si</td>
+                                <td ng-if="actividadDocente.cantidad != 0"  width="8%">Si</td>
+                                <td ng-if="actividadDocente.cantidad == 0"  width="8%">No</td>
                             </tr>
                         </tbody>
                     </table>

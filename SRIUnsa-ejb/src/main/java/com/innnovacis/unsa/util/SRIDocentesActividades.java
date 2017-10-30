@@ -47,8 +47,8 @@ public class SRIDocentesActividades implements Serializable {
     @Column(name = "apellido")
     private String apellidos;
     
-//    @Column(name = "dni")
-//    private String dni;
+    @Column(name = "dni")
+    private String dni;
     
     @Column(name = "cantidad")
     private int cantidad;
@@ -113,13 +113,13 @@ public class SRIDocentesActividades implements Serializable {
         return apellidos;
     }
 
-//    public String getDni() {
-//        return dni;
-//    }
-//
-//    public void setDni(String dni) {
-//        this.dni = dni;
-//    }
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
@@ -140,13 +140,21 @@ public class SRIDocentesActividades implements Serializable {
         respuesta.add(this.getSemestre());
         respuesta.add(this.getNombres());
         respuesta.add(this.getApellidos());
+        respuesta.add(this.getDni());
         respuesta.add(Integer.toString(this.getCantidad()));
         
         return respuesta;
     }
     public static String[] getArrayHeaders() {
-        String[] nombreColumnas = {"Facultad", "Departamento", "Semestre", "Nombres",
-            "Apellidos", "N° de Actividades"};
+        String[] nombreColumnas = 
+            {
+                "Facultad", 
+                "Departamento", 
+                "Semestre", 
+                "Nombres",
+                "Apellidos", 
+                "DNI", 
+                "N° de Actividades"};
         return nombreColumnas;
     }
     

@@ -6,6 +6,7 @@
 package com.innnovacis.unsa.rest;
 
 import com.innnovacis.unsa.business.IActividadInvestigacionBusiness;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +51,37 @@ public class ReportesRestService {
             log.log(Level.INFO, "GetDocenteActivos - Error : {0}", ex.getMessage());
         }
         
+        return builder.build();
+    }
+    
+    @POST
+    @Path("/GetDocentesActivosInactivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetDocentesActivosInactivos(SRIPaginacion entidad) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetDocentesActivosInactivos(entidad);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetDocenteActivosInactivos - Success : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetDocenteActivosInactivos - Error : {0}", ex.getMessage());
+        }
+        
+        return builder.build();
+    }
+    
+    @POST
+    @Path("/GetTotalDocentesActivosInactivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetTotalDocentesActivosInactivos(SRIPaginacion entidad) {
+        SRIDocenteActivosInactivos docenteActivosInactivos = actividadInvestigacionBusiness.GetTotalDocentesActivosInactivos(entidad);
+        Map<String, Object> response = new HashMap<>();
+        response.put("body", docenteActivosInactivos);
+        Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(response);
         return builder.build();
     }
     

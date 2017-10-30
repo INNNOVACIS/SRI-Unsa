@@ -36,6 +36,7 @@ import com.innnovacis.unsa.util.Email;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
 import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIEnviarInformeDepartamento;
@@ -887,6 +888,34 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             int total = actividadInvestigacionDao.GetTotalDocentesActivos(entidad);
             respuesta.put("lista", lstActividadGeneral);
             respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+    
+    @Override
+    public Map<String, Object> GetDocentesActivosInactivos(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            List<SRIDocentesActividades> lstActividadGeneral = actividadInvestigacionDao.GetDocentesActivosInactivos(entidad);
+            int total = actividadInvestigacionDao.GetTotalDocentesActivosInactivos(entidad);
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+    
+    @Override
+    public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos (SRIPaginacion entidad) {
+        
+        SRIDocenteActivosInactivos respuesta = new SRIDocenteActivosInactivos();
+        try{
+           respuesta = actividadInvestigacionDao.GetTotalRelacionDocentesActivosInactivos(entidad);
+
         } catch(Exception ex) {
             throw ex;
         }

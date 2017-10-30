@@ -7,6 +7,7 @@ package com.innnovacis.unsa.dao;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIEnviarInformeDepartamento;
@@ -54,8 +55,11 @@ public interface IActividadInvestigacionDao {
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento);
     
     List<SRIDocentesActividades> GetDocentesActivos(SRIPaginacion entidad);
+    List<SRIDocentesActividades> GetDocentesActivosInactivos(SRIPaginacion entidad);
+    SRIDocenteActivosInactivos GetTotalRelacionDocentesActivosInactivos(SRIPaginacion entidad);
     List<SRIDocentesActividades> GetDocentesInactivos(SRIPaginacion entidad);
     int GetTotalDocentesActivos(SRIPaginacion entidad);
+    int GetTotalDocentesActivosInactivos(SRIPaginacion entidad);
     int GetTotalDocentesInactivos(SRIPaginacion entidad);
     boolean EliminarActividadGenerada(int idActividad);
     List<SRIEnviarInformeDepartamento> GetInformeDepartamento(SRIPaginacion entidad);

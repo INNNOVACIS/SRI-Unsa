@@ -1,9 +1,9 @@
-investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
+investigacionApp.controller('RelacionDocentesActivosInactivosController',['$log', '$scope', 'SharedService', 'FondoConcursableService', 
     'SemestreService', 'TipoInvestigacionService', 'EstructuraAreaInvestigacionService', 'TipoNivelService', 
-    'EstructuraOrganizacionService', 'RelacionDocentesService', 'SRIUnsaConfig', 'UsuariosService', 
+    'EstructuraOrganizacionService', 'RelacionDocentesActivosInactivosService', 'SRIUnsaConfig', 'UsuariosService', 
     function($log, $scope, SharedService, FondoConcursableService, SemestreService, TipoInvestigacionService, 
     EstructuraAreaInvestigacionService, TipoNivelService, EstructuraOrganizacionService, 
-    RelacionDocentesService, SRIUnsaConfig, UsuariosService) {	
+    RelacionDocentesActivosInactivosService, SRIUnsaConfig, UsuariosService) {	
     
     $scope.sharedService = SharedService;
     $scope.loader = false;
@@ -59,6 +59,7 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
     	$scope.semestres = response;
         $scope.semestre = verificarSemestre($scope.semestres);
         $scope.GetDocenteActivos();
+        $scope.GetTotalDocentesActivosInactivos();
     };
     var getSemestreServiceError = function(response){
      	$log.debug("GetSemestre - Error");
@@ -133,9 +134,7 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.usuarioLogin.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
-        UsuariosService.imprimirDocentesInvestigando(objPagina).then(descargarPDFSuccess, descargarPDFError);
-//        $scope.loader = true;
-//        RelacionDocentesService.descargarPDF().then(descargarPDFSuccess, descargarPDFError);
+        UsuariosService.descargarPdfDocentesActivosInactivos(objPagina).then(descargarPDFSuccess, descargarPDFError);
     };
     $scope.descargarExcel = function(){
         $scope.loader = true;
@@ -149,7 +148,7 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
                     idFlujoActor: "", 
                     filtro : getFiltros()
                 };
-        UsuariosService.imprimirExcelDocentesInvestigando(objPagina).then(descargarExcelSuccess, descargarExcelError);
+        UsuariosService.descargarExcelDocentesActivosInactivos(objPagina).then(descargarExcelSuccess, descargarExcelError);
     };
     
     $scope.facultadChange = function(){
@@ -171,6 +170,16 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
         return semestre;
     };
     
+    var GetTotalDocentesActivosInactivosSuccess = function(response){
+        $log.debug("GetTotalDocentesActivosInactivosFiltro - Success");
+        console.log("Respuesta :: ", response);
+        $scope.docentes = response.body;
+    };
+    var GetTotalDocentesActivosInactivosError = function(response){
+        $log.debug("GetTotalDocentesActivosInactivos - Error");
+        console.log("Respuesta :: ", response.body);
+    };
+    
     
     /**************** PAGINACION *****************/
     
@@ -185,7 +194,11 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
     };
 
     $scope.$watch('currentPage + currentRango', function() {
-        $scope.GetDocenteActivos();
+        if($scope.semestre != null && $scope.semestre != undefined) {
+            $scope.GetDocenteActivos();
+            $scope.GetTotalDocentesActivosInactivos();
+        }
+        
         $scope.row = ($scope.currentPage - 1) * $scope.currentRango + 1;
     });
     
@@ -219,11 +232,27 @@ investigacionApp.controller('RelacionDocentesController',['$log', '$scope', 'Sha
         var objPagina = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
                           idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
                           filtro : getFiltros()};
-        RelacionDocentesService.GetDocenteActivos(objPagina).then(GetActividadesByDocenteSuccess, GetActividadesByDocenteError);
+        RelacionDocentesActivosInactivosService.GetDocentesActivosInactivos(objPagina).then(GetActividadesByDocenteSuccess, GetActividadesByDocenteError);
     };
+    
+    
+    
+    
+    
+    $scope.GetTotalDocentesActivosInactivos = function(){
+        var request = { currentPage : $scope.currentPage, rango : $scope.currentRango, total : $scope.total,
+                          idUsuario: $scope.sharedService.idUsuario, idEstado: SRIUnsaConfig.CREADO, idFlujoActor: "", 
+                          filtro : getFiltros()};
+        RelacionDocentesActivosInactivosService.GetTotalDocentesActivosInactivos(request).then(GetTotalDocentesActivosInactivosSuccess, GetTotalDocentesActivosInactivosError);
+    };
+    
+    
+    
+    
     
     $scope.filtrar = function() {
         $scope.GetDocenteActivos();
+        $scope.GetTotalDocentesActivosInactivos();
     };
     
     $scope.getListaTipoNivel();

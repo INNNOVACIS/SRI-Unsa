@@ -5,6 +5,7 @@ import com.innnovacis.unsa.dao.IActividadInvestigacionDao;
 
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneralPaginacion;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIDocentesActividades;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIEnviarInformeDepartamento;
@@ -15,7 +16,6 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
@@ -525,6 +525,62 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
             throw ex;
         }
         return listActividades;
+    }
+    
+    @Override
+    public List<SRIDocentesActividades> GetDocentesActivosInactivos(SRIPaginacion entidad) {
+        List<SRIDocentesActividades> listActividades = null;
+        try {
+             Query query = em.createNativeQuery("{call GetDocentesActivosInactivos(?1,?2,?3,?4,?5,?6,?7,?8)}", SRIDocentesActividades.class)
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable())
+                        .setParameter(7, entidad.getRango())
+                        .setParameter(8, entidad.getCurrentPage());
+            listActividades = query.getResultList();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return listActividades;
+    }
+    
+    @Override
+    public SRIDocenteActivosInactivos GetTotalRelacionDocentesActivosInactivos(SRIPaginacion entidad) {
+        SRIDocenteActivosInactivos listActividades = null;
+        try {
+             Query query = em.createNativeQuery("{call GetTotalDocentesActivosInactivosFiltro(?1,?2,?3,?4,?5,?6)}", SRIDocenteActivosInactivos.class)
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable());
+            listActividades = (SRIDocenteActivosInactivos) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return listActividades;
+    }
+    
+    @Override
+    public int GetTotalDocentesActivosInactivos(SRIPaginacion entidad) {
+        BigInteger total = null;
+        try {
+            Query query = em.createNativeQuery("{call GetTotalDocentesInvestigandoNoInvestigando(?1,?2,?3,?4,?5,?6)}")
+                        .setParameter(1, entidad.getFiltro().getNIdTipoActividadInvestigacion())
+                        .setParameter(2, entidad.getFiltro().getSFacultad())
+                        .setParameter(3, entidad.getFiltro().getSDepartamento())
+                        .setParameter(4, entidad.getFiltro().getSEscuela())
+                        .setParameter(5, entidad.getFiltro().getSSemestre())
+                        .setParameter(6, entidad.getFiltro().getSFondoConcursable());
+        total = (BigInteger) query.getSingleResult();
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return total.intValue();
     }
 
     @Override

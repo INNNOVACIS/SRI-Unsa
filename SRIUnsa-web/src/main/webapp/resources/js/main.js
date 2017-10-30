@@ -73,6 +73,10 @@ investigacionApp.config(function($routeProvider, $authProvider){
 		templateUrl : 'resources/views/RelacionDocentes.html',
 		controller : 'RelacionDocentesController'
 	})
+        .when('/relacionDocentesActivosInactivos',{
+		templateUrl : 'resources/views/RelacionDocentesActivosInactivos.html',
+		controller : 'RelacionDocentesActivosInactivosController'
+	})
         .when('/relacionDocentesColaboradores',{
 		templateUrl : 'resources/views/RelacionDocentesColaboradores.html',
 		controller : 'RelacionDocentesColaboradoresController'

@@ -826,6 +826,148 @@ public class UsuarioRestServices {
     }
     
     @POST
+    @Path("/imprimirExcelDocentesInvestigando")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response imprimirExcelDocentesInvestigando(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetDocentesActivos(entidad);
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIDocentesActividades> listaObjetos
+                = (ArrayList<SRIDocentesActividades>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIDocentesActividades.getArrayHeaders();
+            
+            GenerateExcel generadorExcel =  new GenerateExcel();            
+            byte[] blobAsBytes = generadorExcel.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Informe de Docentes con Actividad",listaObjetosSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "DocentesConActividad.xlsx")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.xlsx")
+                .build();
+    }
+    
+    
+    
+    
+    @POST
+    @Path("/descargarPdfDocentesActivosInactivos")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarPdfDocentesActivosInactivos(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        SRIDocenteActivosInactivos docenteActivosInactivos = new SRIDocenteActivosInactivos();
+        
+        try {
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetDocentesActivosInactivos(entidad);
+            docenteActivosInactivos = actividadInvestigacionBusiness.GetTotalDocentesActivosInactivos(entidad);
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            ArrayList<SRIDocentesActividades> listaObjetos = (ArrayList<SRIDocentesActividades>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIDocentesActividades.getArrayHeaders();
+            
+            SRIDocente docenteReporte = usuarioBusiness.GetDocenteReporte(entidad.getIdUsuario());
+            
+            String universidad = "UNIVERSIDAD NACIONAL DE SAN AGUSTÍN DE AREQUIPA";
+            String vicerrectorado = "VICERRECTORADO DE INVESTIGACIÓN";
+            String facultad = docenteReporte.getFacultad();
+            String departamento = docenteReporte.getDepartamento(); //"DIRECCIÓN DE UNIDAD DE INVESTIGACIÓN";//docenteReporte.getDepartamento();
+            String actividades = "Informe de Docentes Activos e inactivos";
+            String periodo = "Periodo: " + entidad.getFiltro().getSSemestre();
+            String docente = "Activos: " + docenteActivosInactivos.getNActivos() + "         Inactivos: " + docenteActivosInactivos.getNInactivos();
+            String dni = "DNI: ";
+            
+            
+            GeneratePdf generadorPDF =  new GeneratePdf();            
+            byte[] blobAsBytes = generadorPDF.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Informe de Docentes Activos e inactivos",listaObjetosSend,
+                    universidad, vicerrectorado,facultad, departamento, actividades,
+                    periodo, docente, dni);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "Docentes activos e inactivos.pdf")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.pdf")
+                .build();
+    }
+    
+    
+    @POST
+    @Path("/descargarExcelDocentesActivosInactivos")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response descargarExcelDocentesActivosInactivos(SRIPaginacion entidad) {
+        
+        Map<String, Object> respuesta = new HashMap<>();
+        
+        try {
+            // establecemos como parametro de RANGO 2000 para que al momento de exportar traiga todos
+            // los elementos
+            entidad.setRango(2000);
+            respuesta = actividadInvestigacionBusiness.GetDocentesActivosInactivos(entidad);
+            
+            ArrayList<ArrayList<String>> listaObjetosSend = new ArrayList<ArrayList<String>>();
+            
+            ArrayList<SRIDocentesActividades> listaObjetos
+                = (ArrayList<SRIDocentesActividades>) respuesta.get("lista");
+            
+            for(int i = 0; i < listaObjetos.size(); i++){
+                listaObjetosSend.add(listaObjetos.get(i).getArrayDatos());
+            }
+            
+            String[] nombreColumnas = SRIDocentesActividades.getArrayHeaders();
+            
+            GenerateExcel generadorExcel =  new GenerateExcel();            
+            byte[] blobAsBytes = generadorExcel.getArrayByteFrom(respuesta, nombreColumnas.length,
+                    nombreColumnas, "Informe de Docentes Activos e Inactivos",listaObjetosSend);
+            
+            return Response
+                    .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
+                    .header("content-disposition", "DocentesActivosInactivos.xlsx")
+                    .build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response
+                .ok(new byte[0], MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition", "documentovacio.xlsx")
+                .build();
+    }
+    
+    @POST
     @Path("/imprimirDocentesNoInvestigando")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response imprimirDocentesNoInvestigando(SRIPaginacion entidad) {

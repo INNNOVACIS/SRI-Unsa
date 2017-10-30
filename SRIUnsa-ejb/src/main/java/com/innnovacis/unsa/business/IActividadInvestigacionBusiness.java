@@ -8,6 +8,7 @@ package com.innnovacis.unsa.business;
 import com.innnovacis.unsa.model.SRIActividadInvestigacion;
 import com.innnovacis.unsa.util.SRIActividadGeneral;
 import com.innnovacis.unsa.util.SRICabeceraDetalleMasiva;
+import com.innnovacis.unsa.util.SRIDocenteActivosInactivos;
 import com.innnovacis.unsa.util.SRIDocentesActivosInactivosFacultad;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
@@ -56,6 +57,8 @@ public interface IActividadInvestigacionBusiness {
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento);
     
     Map<String, Object> GetDocentesActivos(SRIPaginacion entidad);
+    Map<String, Object> GetDocentesActivosInactivos(SRIPaginacion entidad);
+    SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos(SRIPaginacion entidad);
     Map<String, Object> GetDocentesInactivos(SRIPaginacion entidad);
     boolean EliminarActividadGenerada(int idActividad);
     
