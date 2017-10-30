@@ -3,13 +3,13 @@
  */
 investigacionApp.service("HomeDirectorDepartamentoService", function(SRIUnsaConfig, $log, $http, $q) {
 	
-    this.GetActivosInactivosByFacultad = function(idTipoInvestigacion) {
+    this.GetActivosInactivosByFacultad = function(idTipoInvestigacion,idSemestre) {
         $log.debug("HomeDirectorDepartamentoService - GetActivosInactivosByFacultad");
 
         var deferred = $q.defer();
         $http({
             method : 'GET',
-            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetActivosInactivosByFacultad/' + idTipoInvestigacion
+            url : SRIUnsaConfig.SRIUnsaUrlServicio + '/actividadInvestigacion/GetActivosInactivosByFacultad/' + idTipoInvestigacion+'/'+idSemestre
         }).success(function(response) {
             deferred.resolve(response);
         }).error(function(response) {			
