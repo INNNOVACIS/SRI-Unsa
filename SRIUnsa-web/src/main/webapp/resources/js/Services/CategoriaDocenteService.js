@@ -56,7 +56,7 @@ investigacionApp.service("CategoriaDocenteService", function(SRIUnsaConfig, $log
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/categoriaDocente/updateCategoriaDocente',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/categoriaDocente/actualizarCategoriaDocente',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
@@ -72,7 +72,7 @@ investigacionApp.service("CategoriaDocenteService", function(SRIUnsaConfig, $log
 		var deferred = $q.defer();
 		$http({
 			method : 'PUT',
-			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/categoriaDocente/deleteCategoriaDocente',
+			url : SRIUnsaConfig.SRIUnsaUrlServicio + '/categoriaDocente/eliminarCategoriaDocente',
 			data : request
 		}).success(function(response) {
 			deferred.resolve(response);
