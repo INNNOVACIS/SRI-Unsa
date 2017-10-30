@@ -44,7 +44,7 @@ public interface IUsuarioDao {
     List<SRIUsuarioPersona> GetUsuarioPersonaByIdUsuario(int idUsuario);
     
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos(int idSemestre);
-    SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad);
+    SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad,int idSemestre);
     List<SRIUsuarioHome> GetUsuarioHome(int idUsuario, int idUsuarioDirector);
     
     SRIUsuario enviarCodigo(int idUsuario);

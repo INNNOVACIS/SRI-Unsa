@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -52,7 +53,7 @@ public interface IActividadInvestigacionDao {
     List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion, int idSemestre);
     List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion, int idSemestre);
     List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad, int idSemestre);
-    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento);
+    List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento,int idSemestre);
     
     List<SRIDocentesActividades> GetDocentesActivos(SRIPaginacion entidad);
     List<SRIDocentesActividades> GetDocentesActivosInactivos(SRIPaginacion entidad);
@@ -64,3 +65,4 @@ public interface IActividadInvestigacionDao {
     boolean EliminarActividadGenerada(int idActividad);
     List<SRIEnviarInformeDepartamento> GetInformeDepartamento(SRIPaginacion entidad);
 }
+

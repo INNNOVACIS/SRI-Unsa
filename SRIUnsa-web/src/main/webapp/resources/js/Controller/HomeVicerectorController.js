@@ -197,6 +197,10 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
         $scope.GetTotalDocentesActivosInactivos($scope.semestre.nidSemestre);
         $scope.GetTotalActividadesByTipoActividad($scope.semestre.nidSemestre);
         $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion, $scope.semestre.nidSemestre);
+        
+         $scope.currentPage = 1;
+        $scope.currentRango = $scope.rangoPaginas[0];
+        $scope.getUsuariosByPagina();
     };
      
     $scope.GetTotalDocentesActivosInactivos($scope.sharedService.idSemestreActual);
@@ -243,7 +247,7 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
                 idFacultad : $scope.idFacultad, 
                 idDepartamento : $scope.idDepartamento, 
                 idTipoInvestigacion : $scope.idTipoInvestigacion,
-                idSemestre: $scope.sharedService.idSemestreActual
+                idSemestre: $scope.semestre.nidSemestre
             };
         UsuariosService.descargarPDF(pagina).then(descargarPDFSuccess, descargarPDFError);
     };
@@ -259,7 +263,7 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
                 idFacultad : $scope.idFacultad, 
                 idDepartamento : $scope.idDepartamento, 
                 idTipoInvestigacion : $scope.idTipoInvestigacion,
-                idSemestre: $scope.sharedService.idSemestreActual
+                idSemestre: $scope.semestre.nidSemestre
             };
         UsuariosService.descargarExcel(pagina).then(descargarExcelSuccess, descargarExcelError);
     };

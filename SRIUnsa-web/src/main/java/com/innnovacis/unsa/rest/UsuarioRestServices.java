@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -274,10 +275,10 @@ public class UsuarioRestServices {
     }
     
     @GET
-    @Path("GetTotalActivosInactivosByFacultad/{id:[0-9][0-9]*}")
+    @Path("GetTotalActivosInactivosByFacultad/{id:[0-9][0-9]*}/{idSemestre:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetTotalActivosInactivosByFacultad(@PathParam("id") int id){
-        SRIDocenteActivosInactivos docenteActivosInactivos = usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(id);
+    public Response GetTotalActivosInactivosByFacultad(@PathParam("id") int id,@PathParam("idSemestre") int idSemestre){
+        SRIDocenteActivosInactivos docenteActivosInactivos = usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(id,idSemestre);
         Map<String, Object> response = new HashMap<>();
         response.put("body", docenteActivosInactivos);
         Response.ResponseBuilder builder = Response.status(Response.Status.OK).entity(response);
@@ -321,7 +322,7 @@ public class UsuarioRestServices {
             
             // Usuarios activos e inactivos
             SRIDocenteActivosInactivos docenteActivosInactivos = 
-                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad());
+                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad(),entidad.getIdSemestre());
             
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
@@ -367,7 +368,7 @@ public class UsuarioRestServices {
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
                     .header("content-disposition", "documentoModelo.pdf")
                     .build();
-
+ 
         } catch (Exception ex) {
             Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -390,7 +391,7 @@ public class UsuarioRestServices {
             
             // Usuarios activos e inactivos
             SRIDocenteActivosInactivos docenteActivosInactivos = 
-                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad());
+                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad(),entidad.getIdSemestre());
             
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
@@ -437,7 +438,7 @@ public class UsuarioRestServices {
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
                     .header("content-disposition", "documentoModelo.pdf")
                     .build();
-
+ 
         } catch (Exception ex) {
             Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -446,6 +447,7 @@ public class UsuarioRestServices {
                 .header("content-disposition", "documentovacio.pdf")
                 .build();
     }
+
     
     @POST
     @Path("/descargarHomeDirectorDepartamentoPDF")
@@ -538,7 +540,7 @@ public class UsuarioRestServices {
             List<SRIUsuarioColor> listaUsuarios = usuarioBusiness.GetUsuariosColor(entidad);            
             // Usuarios activos e inactivos
             SRIDocenteActivosInactivos docenteActivosInactivos = 
-                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad());
+                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad(),entidad.getIdSemestre());
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
                     //actividadInvestigacionBusiness.GetTotalActividadesByTipoActividad();
@@ -578,7 +580,7 @@ public class UsuarioRestServices {
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
                     .header("content-disposition", "documento.xlsx")
                     .build();
-
+ 
         } catch (Exception ex) {
             Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -603,7 +605,7 @@ public class UsuarioRestServices {
             
             // Usuarios activos e inactivos
             SRIDocenteActivosInactivos docenteActivosInactivos = 
-                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad());
+                    usuarioBusiness.GetTotalDocentesActivosInactivosByFacultad(entidad.getIdFacultad(),entidad.getIdSemestre());
             
             // Obtenemos el total de actividades por tipo
             List<SRITotalTipoActividad>  totalTipoActividades = 
@@ -651,7 +653,7 @@ public class UsuarioRestServices {
                     .ok(blobAsBytes, MediaType.APPLICATION_OCTET_STREAM)
                     .header("content-disposition", "documento.xlsx")
                     .build();
-
+ 
         } catch (Exception ex) {
             Logger.getLogger(ActividadInvestigacionGeneradaRestService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -660,6 +662,7 @@ public class UsuarioRestServices {
                 .header("content-disposition", "documentovacio.xlsx")
                 .build();
     }
+    
     
     @POST
     @Path("/descargarHomeDirectorDepartamentoExcel")
@@ -1017,3 +1020,4 @@ public class UsuarioRestServices {
                 .build();
     }
 }
+

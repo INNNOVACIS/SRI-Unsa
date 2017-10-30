@@ -774,7 +774,7 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
             respuesta = actividadInvestigacionDao.GetActivosInactivosByFacultad(idTipoInvestigacion, idSemestre);
         }
         catch(Exception ex){
-            throw ex;
+            throw ex;   
         }
         return respuesta;
     }
@@ -816,10 +816,10 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
     }
 
     @Override
-    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento) {
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento,int idSemestre) {
         List<SRITotalTipoActividad> respuesta = null;
         try{
-            respuesta = actividadInvestigacionDao.GetTotalActividadesByTipoActividadDepartamento(idDepartamento);
+            respuesta = actividadInvestigacionDao.GetTotalActividadesByTipoActividadDepartamento(idDepartamento,idSemestre);
         }
         catch(Exception ex){
             throw ex;

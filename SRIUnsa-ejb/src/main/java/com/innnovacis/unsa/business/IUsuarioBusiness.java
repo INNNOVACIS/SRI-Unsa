@@ -46,7 +46,7 @@ public interface IUsuarioBusiness {
     List<SRIUsuarioPersona> GetPagina(SRIPaginacionObject entidad);
     
     SRIDocenteActivosInactivos GetTotalDocentesActivosInactivos(int idSemestre);
-    SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad);
+    SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad,int idSemestre);
     List<SRIUsuarioHome> GetUsuarioHome(int idUsuario, int idUsuarioDirector);
     boolean enviarCodigo(int idUsuario);
     SRIUsuario verificarCodigo(SRIUsuario entidad);

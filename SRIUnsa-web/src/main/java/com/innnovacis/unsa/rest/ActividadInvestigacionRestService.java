@@ -224,14 +224,14 @@ public class ActividadInvestigacionRestService {
     }
     
     @GET
-    @Path("GetTotalActividadesByTipoActividadDepartamento/{id:[0-9][0-9]*}")
+    @Path("GetTotalActividadesByTipoActividadDepartamento/{id:[0-9][0-9]*}/{idSemestre:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetTotalActividadesByTipoActividadDepartamento(@PathParam("id") int id){
+    public Response GetTotalActividadesByTipoActividadDepartamento(@PathParam("id") int id,@PathParam("idSemestre") int idSemestre){
         Response.ResponseBuilder builder = null;
         Map<String, Object> respuesta = new HashMap<>();
         List<SRITotalTipoActividad>  totalTipoActividades = null;
         try {
-            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadDepartamento(id);
+            totalTipoActividades = actividadInvestigacionBusiness.GetTotalActividadesByTipoActividadDepartamento(id,idSemestre);
             respuesta.put("body", totalTipoActividades);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "GetTotalActividadesByTipoActividadDepartamento - Success : {0}", totalTipoActividades.toString());

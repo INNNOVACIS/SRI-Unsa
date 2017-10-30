@@ -224,7 +224,7 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
         $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, $scope.semestre.nidSemestre);
         $scope.GetTotalActividadesByTipoActividadDepartamento($scope.sharedService.usuarioLogin.idDepartamento, $scope.semestre.nidSemestre);
         $scope.GetTotalActivosInactivosHomeDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, $scope.semestre.nidSemestre);
-        
+        $scope.getUsuariosByPagina();
     };
        
     
@@ -280,7 +280,7 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
                 idFacultad : $scope.sharedService.usuarioLogin.idFacultad, 
                 idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
                 idTipoInvestigacion : $scope.idTipoInvestigacion,
-                idSemestre: $scope.sharedService.idSemestreActual
+                idSemestre: $scope.semestre.nidSemestre
             };
         UsuariosService.descargarHomeDirectorDepartamentoPDF(objPagina).then(descargarPDFSuccess, descargarPDFError);
     };
@@ -295,7 +295,7 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
                 idFacultad : $scope.sharedService.usuarioLogin.idFacultad, 
                 idDepartamento : $scope.sharedService.usuarioLogin.idDepartamento, 
                 idTipoInvestigacion : $scope.idTipoInvestigacion,
-                idSemestre: $scope.sharedService.idSemestreActual
+                idSemestre: $scope.semestre.nidSemestre
             };
         UsuariosService.descargarHomeDirectorDepartamentoExcel(objPagina).then(descargarExcelSuccess, descargarExcelError);
     };
