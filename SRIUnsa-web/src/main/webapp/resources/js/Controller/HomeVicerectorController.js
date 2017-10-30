@@ -197,6 +197,10 @@ investigacionApp.controller('HomeVicerectorController',['$log', '$scope', 'Usuar
         $scope.GetTotalDocentesActivosInactivos($scope.semestre.nidSemestre);
         $scope.GetTotalActividadesByTipoActividad($scope.semestre.nidSemestre);
         $scope.GetActivosInactivosByFacultad($scope.idTipoInvestigacion, $scope.semestre.nidSemestre);
+        
+         $scope.currentPage = 1;
+        $scope.currentRango = $scope.rangoPaginas[0];
+        $scope.getUsuariosByPagina();
     };
      
     $scope.GetTotalDocentesActivosInactivos($scope.sharedService.idSemestreActual);

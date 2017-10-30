@@ -224,7 +224,7 @@ investigacionApp.controller('HomeDirectorDepartamentoController',['$log', '$scop
         $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, $scope.semestre.nidSemestre);
         $scope.GetTotalActividadesByTipoActividadDepartamento($scope.sharedService.usuarioLogin.idDepartamento, $scope.semestre.nidSemestre);
         $scope.GetTotalActivosInactivosHomeDepartamento($scope.sharedService.usuarioLogin.idDepartamento, 0, $scope.semestre.nidSemestre);
-        
+        $scope.getUsuariosByPagina();
     };
        
     

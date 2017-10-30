@@ -88,8 +88,8 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
     $scope.GetTotalActivosInactivosByDepartamento = function(idFacultad, idTipoInvestigacion, idSemestre){
         HomeVicerectorService.GetTotalActivosInactivosByDepartamento(idFacultad, idTipoInvestigacion, idSemestre).then(GetTotalActivosInactivosByDepartamentoSuccess, GetTotalActivosInactivosByDepartamentoError);
     };
-    $scope.GetTotalActivosInactivosByFacultad = function(idFacultad){
-        UsuariosService.GetTotalActivosInactivosByFacultad(idFacultad).then(GetTotalActivosInactivosByFacultadSuccess, GetTotalActivosInactivosByFacultadError);
+    $scope.GetTotalActivosInactivosByFacultad = function(idFacultad,idSemestre){
+        UsuariosService.GetTotalActivosInactivosByFacultad(idFacultad,idSemestre).then(GetTotalActivosInactivosByFacultadSuccess, GetTotalActivosInactivosByFacultadError);
     };
         
     $scope.GetTotalActividadesByTipoActividadFacultad = function(idFacultad, idSemestre){
@@ -253,6 +253,7 @@ function($log, $scope, UsuariosService, $location, HomeVicerectorService, Shared
         $scope.GetTotalActivosInactivosByDepartamento($scope.sharedService.usuarioLogin.idFacultad, 0, $scope.semestre.nidSemestre);
         $scope.GetTotalActivosInactivosByFacultad($scope.sharedService.usuarioLogin.idFacultad, $scope.semestre.nidSemestre);
         $scope.GetTotalActividadesByTipoActividadFacultad($scope.sharedService.usuarioLogin.idFacultad, $scope.semestre.nidSemestre);
+         $scope.getUsuariosByPagina();
     };
     
     $scope.getUsuariosByPagina();
