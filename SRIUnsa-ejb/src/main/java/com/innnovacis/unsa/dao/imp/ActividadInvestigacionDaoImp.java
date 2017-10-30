@@ -500,11 +500,12 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     }
 
     @Override
-    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento) {
+    public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadDepartamento(int idDepartamento,int idSemestre) {
         List<SRITotalTipoActividad> totalTipoActividad = null;
         try {
-            Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividadDepartamento(?1)}", SRITotalTipoActividad.class)
-                                    .setParameter(1, idDepartamento);
+            Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividadDepartamento(?1,?2)}", SRITotalTipoActividad.class)
+                                    .setParameter(1, idDepartamento)
+                                    .setParameter(2, idSemestre);
             totalTipoActividad = query.getResultList();
         } catch(Exception ex) {
             throw ex;
