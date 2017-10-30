@@ -431,7 +431,8 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividad(int idSemestre) {
         List<SRITotalTipoActividad> totalTipoActividad = null;
         try {
-            Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividad()}", SRITotalTipoActividad.class);
+            Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividad(?1)}", SRITotalTipoActividad.class)
+                     .setParameter(1, idSemestre);
             totalTipoActividad = query.getResultList();
         } catch(Exception ex) {
             throw ex;
@@ -443,8 +444,9 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     public List<SRIDocentesActivosInactivosFacultad> GetActivosInactivosByFacultad(int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> totalTipoActividad = null;
         try {
-            Query query = em.createNativeQuery("{call GetActivosInactivosByFacultad(?1)}", SRIDocentesActivosInactivosFacultad.class)
-                                .setParameter(1, idTipoInvestigacion);
+            Query query = em.createNativeQuery("{call GetActivosInactivosByFacultad(?1,?2)}", SRIDocentesActivosInactivosFacultad.class)
+                                .setParameter(1, idTipoInvestigacion)
+                                .setParameter(2, idSemestre);
             totalTipoActividad = query.getResultList();
         } catch(Exception ex) {
             throw ex;
@@ -456,8 +458,9 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     public List<SRITotalTipoActividad> GetTotalActividadesByTipoActividadFacultad(int idFacultad, int idSemestre) {
         List<SRITotalTipoActividad> totalTipoActividad = null;
         try {
-            Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividadFacultad(?1)}", SRITotalTipoActividad.class)
-                                    .setParameter(1, idFacultad);
+            Query query = em.createNativeQuery("{call GetTotalActividadesByTipoActividadFacultad(?1,?2)}", SRITotalTipoActividad.class)
+                                    .setParameter(1, idFacultad)
+                                    .setParameter(2, idSemestre);
             totalTipoActividad = query.getResultList();
         } catch(Exception ex) {
             throw ex;
@@ -469,9 +472,11 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosByDepartamento(int idFacultad, int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> totalTipoActividad = null;
         try {
-            Query query = em.createNativeQuery("{call GetTotalActivosInactivosByDepartamento(?1, ?2)}", SRIDocentesActivosInactivosFacultad.class)
+            Query query = em.createNativeQuery("{call GetTotalActivosInactivosByDepartamento(?1, ?2,?3)}", SRIDocentesActivosInactivosFacultad.class)
                                     .setParameter(1, idFacultad)
-                                    .setParameter(2, idTipoInvestigacion);
+                                    .setParameter(2, idTipoInvestigacion)
+                                    .setParameter(3, idSemestre)
+                    ;
             totalTipoActividad = query.getResultList();
         } catch(Exception ex) {
             throw ex;
@@ -483,9 +488,10 @@ public class ActividadInvestigacionDaoImp implements IActividadInvestigacionDao 
     public List<SRIDocentesActivosInactivosFacultad> GetTotalActivosInactivosHomeDepartamento(int idDepartamento, int idTipoInvestigacion, int idSemestre) {
         List<SRIDocentesActivosInactivosFacultad> totalTipoActividad = null;
         try {
-            Query query = em.createNativeQuery("{call GetTotalActivosInactivosHomeDepartamento(?1, ?2)}", SRIDocentesActivosInactivosFacultad.class)
+            Query query = em.createNativeQuery("{call GetTotalActivosInactivosHomeDepartamento(?1, ?2, ?3)}", SRIDocentesActivosInactivosFacultad.class)
                                     .setParameter(1, idDepartamento)
-                                    .setParameter(2, idTipoInvestigacion);
+                                    .setParameter(2, idTipoInvestigacion)
+                                    .setParameter(3, idSemestre);
             totalTipoActividad = query.getResultList();
         } catch(Exception ex) {
             throw ex;
