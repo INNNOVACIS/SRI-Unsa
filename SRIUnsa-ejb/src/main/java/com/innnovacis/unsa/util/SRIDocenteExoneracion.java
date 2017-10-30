@@ -23,8 +23,7 @@ import org.hibernate.annotations.Subselect;
 @Subselect("")
 public class SRIDocenteExoneracion extends SRIEntidad implements Serializable{
     
-    @Id
-    @GeneratedValue
+  
     @Column(name = "idusuario" )
     private int NIdUsuario;
     
@@ -36,7 +35,8 @@ public class SRIDocenteExoneracion extends SRIEntidad implements Serializable{
     
     @Column(name = "idsemestre" )
     private int NIdSemestre;
-    
+      @Id
+    @GeneratedValue
     @Column(name = "idusuarioexoneracion" )
     private int NIdUsuarioExoneracion;
 

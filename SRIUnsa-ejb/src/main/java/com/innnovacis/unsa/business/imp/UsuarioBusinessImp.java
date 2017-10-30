@@ -306,10 +306,10 @@ public class UsuarioBusinessImp implements IUsuarioBusiness {
     }
 
     @Override
-    public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad) {
+    public SRIDocenteActivosInactivos GetTotalDocentesActivosInactivosByFacultad(int idFacultad,int idSemestre) {
         SRIDocenteActivosInactivos respuesta = null;
         try{
-            respuesta = usuarioDao.GetTotalDocentesActivosInactivosByFacultad(idFacultad);
+            respuesta = usuarioDao.GetTotalDocentesActivosInactivosByFacultad(idFacultad,idSemestre);
         }
         catch(Exception ex){
             throw ex;
