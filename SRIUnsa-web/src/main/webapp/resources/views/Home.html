@@ -31,7 +31,15 @@
                             <div class="col-md-6" >
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Semestre : </label>
-                                    <label class="control-label col-md-8 SRI-text-default">{{ semestre.snombreSemestre }}</label>
+<!--                                    <label class="control-label col-md-8 SRI-text-default">{{ semestre.snombreSemestre }}</label>-->
+                                    <div class="col-md-4">
+                                        <select class="form-control" 
+                                                style="margin:2px;" 
+                                                ng-model="semestre" 
+                                                ng-options="opt as opt.snombreSemestre for opt in semestres" 
+                                                ng-change="changeSemestre(semestre)">
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
