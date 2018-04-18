@@ -43,6 +43,7 @@ import com.innnovacis.unsa.util.SRIEnviarInformeDepartamento;
 import com.innnovacis.unsa.util.SRIFlujoActorUtil;
 import com.innnovacis.unsa.util.SRIPaginacion;
 import com.innnovacis.unsa.util.SRITotalTipoActividad;
+import com.innnovacis.unsa.util.SRIUsuarioLogin;
 import com.innnovacis.unsa.util.SRIUsuarioPersona;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1029,6 +1030,31 @@ public class ActividadInvestigacionBusinessImp implements IActividadInvestigacio
         try{
             List<SRIEnviarInformeDepartamento> informeDepartamento = actividadInvestigacionDao.GetInformeDepartamento(entidad);
             respuesta.put("lista", informeDepartamento);
+        } catch(Exception ex) {
+            throw ex;
+        }
+        return respuesta;
+    }
+
+    @Override
+    public Map<String, Object> GetActividadesGeneradasSiri(String userEmail, String semestre) {
+        int total = -1;
+        List<SRIActividadGeneralPaginacion> lstActividadGeneral = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try{
+            SRIPaginacion entidad = new SRIPaginacion();
+            SRIUsuarioLogin usuario = usuarioDao.LoginGoogle(userEmail);
+            
+            entidad.setFiltro(new SRIActividadInvestigacion());
+            entidad.getFiltro().setSSemestre(semestre);
+            entidad.setIdUsuario(usuario.getIdUsuario());
+            entidad.setCurrentPage(1);
+            entidad.setRango(100);
+            entidad.setTotal(100);
+            lstActividadGeneral = actividadInvestigacionDao.GetActividadesGeneradasHomeDocente(entidad);
+            total = 0;
+            respuesta.put("lista", lstActividadGeneral);
+            respuesta.put("total", total);
         } catch(Exception ex) {
             throw ex;
         }

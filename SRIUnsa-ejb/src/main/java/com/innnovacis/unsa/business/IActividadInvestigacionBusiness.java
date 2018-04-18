@@ -63,4 +63,6 @@ public interface IActividadInvestigacionBusiness {
     boolean EliminarActividadGenerada(int idActividad);
     
     Map<String, Object> GetInformeDepartamento(SRIPaginacion entidad);
+
+    public Map<String, Object> GetActividadesGeneradasSiri(String email, String semestre);
 }

@@ -25,6 +25,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -227,6 +228,25 @@ public class ActividadInvestigacionGeneradaRestService {
             respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasHomeDocente(entidad);
             builder = Response.status(Response.Status.OK).entity(respuesta);
             log.log(Level.INFO, "GetActividadesGeneradasHomeDocente - Success : {0}", entidad.toString());
+        } catch(Exception ex) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
+            log.log(Level.INFO, "GetActividadesGeneradasHomeDocente - Error : {0}", ex.getMessage());
+        }
+
+        return builder.build();
+    }
+    
+    @GET
+    @Path("/GetActividadesGeneradasSiri/{email}/{semestre}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response GetActividadesGeneradasSiri(@PathParam("email") String email, @PathParam("semestre") String semestre ) {
+        Response.ResponseBuilder builder = null;
+        Map<String, Object> respuesta = new HashMap<>();
+        try {
+            respuesta = actividadInvestigacionBusiness.GetActividadesGeneradasSiri(email, semestre);
+            builder = Response.status(Response.Status.OK).entity(respuesta);
+            log.log(Level.INFO, "GetActividadesGeneradasHomeDocente - Success : {0}", respuesta.toString());
         } catch(Exception ex) {
             builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage());
             log.log(Level.INFO, "GetActividadesGeneradasHomeDocente - Error : {0}", ex.getMessage());
